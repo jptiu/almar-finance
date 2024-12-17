@@ -96,8 +96,30 @@
                 <!-- Form -->
                 <form action="{{ route('requestcheck.store') }}" method="POST" class="mb-6">
                     @csrf
+                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <!-- Date -->
+
+                        <style>
+                            /* Custom Flatpickr styling for selected dates */
+                            .flatpickr-day.selected, .flatpickr-day.selected:hover {
+                            background-color: #6366F1; /* Indigo color */
+                            color: #fff;
+                            border-radius: 6px;
+                            }
+                            .flatpickr-day.inRange {
+                            background-color: #A5B4FC; /* Light Indigo for in-between dates */
+                            color: #fff;
+                            border-radius: 6px;
+                            }
+
+                            .flatpickr-current-month{
+                                font-size: 10px;
+                            }
+                        </style>
+                        <!-- Include Flatpickr CSS -->
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
                         <div>
                             <label for="request_date" class="block mb-1">Date</label>
                             <input type="date" name="request_date" id="request_date"
@@ -117,7 +139,7 @@
                             <!-- Add Row Button -->
                             <div class="mt-4 text-right">
                                 <button type="button" onclick="addRow()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                    Add Another Check
+                                    Submit
                                 </button>
                             </div>
                         </div>      
@@ -128,11 +150,11 @@
                         <h2 class="text-lg font-bold text-gray-700">Total: ₱<span id="total-amount">0.00</span></h2>
                     </div>
                     <!-- Submit Button -->
-                    <div class="mt-6">
+                    <!-- <div class="mt-6">
                             <button type="submit" class="w-full px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600">
                                 Submit Check Requests
                             </button>
-                        </div>
+                        </div> -->
                 </form>
 
                 <!-- Display Requested Checks -->
@@ -250,4 +272,14 @@
     }
 </style>
 
-
+ <!-- Include Flatpickr JS -->
+ <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#request_date", {
+        mode: "multiple",
+        dateFormat: "Y-m-d",
+        minDate: "today", // Optional: disable past dates
+        minDate: null, // Allow past dates
+        maxDate: null, // No upper limit
+    });
+</script>
