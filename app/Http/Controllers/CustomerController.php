@@ -80,7 +80,7 @@ class CustomerController extends Controller
         $customer->tel_number = $request->tel_number;
         $customer->cell_number = $request->cell_number;
         $customer->civil_status = $request->civil_status;
-        $customer->status = 1;
+        $customer->status = 'AC';
         $customer->birth_date = $request->birth_date;
         $customer->birth_place = $request->birth_place;
         $customer->age = $request->age;
