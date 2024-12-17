@@ -232,6 +232,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('requestcheck/store', [CheckController::class, 'store'])->name('requestcheck.store');
     Route::get('requestcheck/approve/{id}', [CheckController::class, 'approve'])->name('requestcheck.approve');
     Route::get('requestcheck/reject/{id}', [CheckController::class, 'reject'])->name('requestcheck.reject');
+    Route::get('requestcheck/print/{id}', [CheckController::class, 'printCheck'])->name('printCheck.index');
 
     // Collector
     Route::get('collector', [CollectorController::class, 'index'])->name('collector.index');
@@ -319,13 +320,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('savingscustomer/depositentry', [SavingsController::class, 'indexDeposit'])->name('depositentry.index');
     Route::get('savingscustomer/createDeposit', [SavingsController::class, 'createDeposit'])->name('depositentry.createDeposit');
     Route::post('savingscustomer/deposit/store', [SavingsController::class, 'storeDeposit'])->name('depositentry.storeDeposit');
-    Route::get('savingscustomer/depositentry/print', [SavingsController::class, 'printDeposit'])->name('printDeposit.index');
+    Route::get('savingscustomer/depositentry/print/{id}', [SavingsController::class, 'printDeposit'])->name('printDeposit.print');
 
     //Savings
     Route::get('savingscustomer/withdrawalentry', [SavingsController::class, 'indexWithdrawal'])->name('savingscustomer.index');
     Route::get('savingscustomer/createWithdrawal', [SavingsController::class, 'createWithdrawal'])->name('withdrawalentry.createWithdrawal');
     Route::post('savingscustomer/withdrawal/store', [SavingsController::class, 'storeWithdrawal'])->name('withdrawalentry.storeWithdrawal');
-    Route::get('savingscustomer/withdrawalentry/print', [SavingsController::class, 'printWithdrawal'])->name('printWithdrawal.index');
+    Route::get('savingscustomer/withdrawalentry/print/{id}', [SavingsController::class, 'printWithdrawal'])->name('printWithdrawal.print');
     
 
     // Payroll

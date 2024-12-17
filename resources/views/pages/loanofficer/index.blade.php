@@ -540,7 +540,7 @@
                                                 </td>
                                                 <td
                                                     class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    {{ $list->house }} {{ $list->street }} {{$list->bry->barangay_name}} {{$list->cty->city_town}}
+                                                    {{ $list->house }} {{ $list->street }} {{$list->bry->barangay_name??''}} {{$list->cty->city_town??''}}
                                                 </td>
                                                 <td
                                                     class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">

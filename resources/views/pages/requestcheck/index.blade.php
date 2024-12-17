@@ -113,26 +113,10 @@
                         </div>
                         <!-- Submit Button -->
                         <div class="flex items-end">
-                            
-                            <!-- Add Row Button -->
-                            <div class="mt-4 text-right">
-                                <button type="button" onclick="addRow()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                    Add Another Check
-                                </button>
-                            </div>
-                        </div>      
-                    </div>
-
-                    <!-- Total Section -->
-                    <div class="mt-6 text-left">
-                        <h2 class="text-lg font-bold text-gray-700">Total: ₱<span id="total-amount">0.00</span></h2>
-                    </div>
-                    <!-- Submit Button -->
-                    <div class="mt-6">
-                            <button type="submit" class="w-full px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600">
-                                Submit Check Requests
-                            </button>
+                            <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
                         </div>
+                    </div>
                 </form>
 
                 <!-- Display Requested Checks -->
@@ -140,20 +124,18 @@
                 <table class="table-auto border-collapse border border-gray-200 w-full">
                     <thead>
                         <tr>
+                            @can('hr_access')
+                                <th class="border px-4 py-2">Action</th>
+                                <th class="border px-4 py-2">Print</th>
+                            @endcan
                             <th class="border px-4 py-2">Date</th>
                             <th class="border px-4 py-2">Amount</th>
                             <th class="border px-4 py-2">Status</th>
-                            @can('hr_access')
-                                <th class="border px-4 py-2">Action</th>
-                            @endcan
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($lists as $list)
                             <tr>
-                                <td class="border px-4 py-2 w-1/2 text-center">{{ $list->request_date }}</td>
-                                <td class="border px-4 py-2 w-1/2 text-center">{{ number_format($list->amount, 2) }}</td>
-                                <td class="border px-4 py-2 text-center">{{ $list->status }}</td>
                                 @can('hr_access')
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                     <div class="flex items-center gap-x-6">
@@ -175,7 +157,16 @@
                                         </a>
                                     </div>
                                 </td>
+                                <td class="border px-4 py-2 text-center">
+                                    <a href="{{ route('printCheck.index', $list->id) }}"
+                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#6b7280"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Zm73-216v-153.67Q793-530 781-541t-28-11H206q-16.15 0-27.07 11.04Q168-529.92 168-513.6V-360h72v-72h480v72h73Z"/></svg>
+                                    </a>
+                                </td>
                                 @endcan
+                                <td class="border px-4 py-2 w-1/2 text-center">{{ $list->request_date }}</td>
+                                <td class="border px-4 py-2 w-1/2 text-center">{{ number_format($list->amount, 2) }}</td>
+                                <td class="border px-4 py-2 text-center">{{ $list->status }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -197,15 +188,50 @@
 
 </x-app-layout>
 <script>
-    const showModalButton = document.getElementById('show-modal');
-    const hideModalButton = document.getElementById('hide-modal');
-    const modal = document.getElementById('modal');
-
-    showModalButton.addEventListener('click', () => {
+    function openModal() {
+        const modal = document.getElementById('myModal');
+        const modalContent = document.getElementById('modalContent');
         modal.classList.remove('hidden');
+        modalContent.classList.add('animate-fade-in-down');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('myModal');
+        const modalContent = document.getElementById('modalContent');
+        modalContent.classList.remove('animate-fade-in-down');
+        modal.classList.add('hidden');
+    }
+
+    document.addEventListener('animationend', (event) => {
+        const modal = document.getElementById('myModal');
+        if (event.animationName === 'fade-in-down' && event.target.id === 'modalContent') {
+            modal.classList.remove('hidden');
+        }
     });
 
-    hideModalButton.addEventListener('click', () => {
-        modal.classList.add('hidden');
+    document.addEventListener('animationstart', (event) => {
+        const modalContent = document.getElementById('modalContent');
+        if (event.animationName === 'fade-in-down' && event.target.id === 'modalContent') {
+            modalContent.classList.add('animate-fade-in-down');
+        }
     });
 </script>
+
+<style>
+    @keyframes fade-in-down {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in-down {
+        animation: fade-in-down 0.5s ease-out;
+    }
+</style>
+
+

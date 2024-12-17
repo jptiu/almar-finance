@@ -181,7 +181,7 @@
                                             <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                 <div class="flex items-center gap-x-6">
 
-                                                    <a href="{{ route('printWithdrawal.index') }}"
+                                                    <a href="{{ route('printWithdrawal.print', $list->id) }}"
                                                         class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
                                                         <svg xmlns="http://www.w3.org/2000/svg" height="20px"
                                                             viewBox="0 -960 960 960" width="20px" fill="#6b7280">

@@ -76,13 +76,12 @@
                 <div class="text-gray-600">
                     <img class="h-auto" src="/images/almarlogo.png" alt="almar suites">
                     <div class="text-md font-semibold">Almar Freemile Financing Corporation,</div>
-                    <div class="text-md font-semibold">Therese Joy's Arcade, Pusok</div>
-                    <div class="text-md font-semibold">Lapu-Lapu City, Cebu, 6015</div>
+                    <div class="text-md font-semibold">{{$company->location}}</div>
                 </div>
             </div>
             <div class="flex items-center">
                 <div class="text-gray-600">
-                    <div class="text-md font-bold">Ref. No: 4242</div>
+                    <div class="text-md font-bold">Ref. No: {{$deposit->id}}</div>
                 </div>
             </div>
         </div>
@@ -91,7 +90,7 @@
             Deposit Slip
         </div>
         <div class="mb-4">
-            <div><strong>Account Holder Name:</strong> Jhon Doe</div>
+            <div><strong>Account Holder Name:</strong> {{$deposit->customer->first_name}} {{$deposit->customer->last_name}}</div>
         </div>
         <table>
             <thead>
@@ -103,9 +102,9 @@
             </thead>
             <tbody>
             <tr>
-                <td>3242</td>
-                <td>10,000</td>
-                <td>October 22, 2024</td>
+                <td>{{$deposit->id}}</td>
+                <td>{{$deposit->amount}}</td>
+                <td>{{$deposit->tran_date}}</td>
             </tr>
             </tbody>
         </table>

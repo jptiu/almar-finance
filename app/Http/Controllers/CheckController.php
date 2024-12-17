@@ -16,7 +16,7 @@ class CheckController extends Controller
         if(Gate::allows('branch_access')){
             $lists = Check::paginate(20);
         }else{
-            $lists = Check::where('status', '!=', null)->paginate(20);
+            $lists = Check::paginate(20);
         }
         
 
@@ -37,8 +37,10 @@ class CheckController extends Controller
     public function store(Request $request)
     {
         $check = new Check();
+        $check->requestor_name = $request->requestor_name;
         $check->amount = $request->amount;
         $check->request_date = $request->request_date;
+        $check->purpose = $request->purpose;
         $check->save();
 
         return redirect()->back()->with('success', 'Request Check Submitted');
@@ -92,5 +94,12 @@ class CheckController extends Controller
         $check->save();
 
         return redirect()->back()->with('success', 'Request Check Rejected');
+    }
+
+    public function printCheck($id)
+    {
+        $check = Check::find($id);
+
+        return view('pages.requestcheck.printCheck.index', compact('check'));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\SavingsCreateRequest;
+use App\Models\Branch;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\SavingsController;
@@ -101,16 +102,21 @@ class SavingsController extends Controller
         return redirect()->route('savingscustomer.index')->with('success', 'Withdrawal entry created successfully.');
     }
 
-    public function printDeposit(Request $request)
+    public function printDeposit($id)
     {
+        $branch = auth()->user()->branch_id;
+        $company = Branch::find($branch);
+        $deposit = SavingsDeposit::find($id);
 
-        return view('pages.savingscustomer.depositentry.printDeposit.index');
+        return view('pages.savingscustomer.depositentry.printDeposit.index', compact('deposit', 'company'));
     }
 
-    public function printWithdrawal(Request $request)
+    public function printWithdrawal($id)
     {
-
-        return view('pages.savingscustomer.withdrawalentry.printWithdrawal.index');
+        $branch = auth()->user()->branch_id;
+        $company = Branch::find($branch);
+        $withdraw = SavingsWithdrawal::find($id);
+        return view('pages.savingscustomer.withdrawalentry.printWithdrawal.index', compact('withdraw', 'company'));
     }
 
 }

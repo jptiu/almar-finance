@@ -178,7 +178,8 @@
                 <div>
                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 mb-8">
                         <div>
-                            <h1 class="text-xl md:text-xl text-slate-600 dark:text-slate-100 font-bold mb-2">Loan Information</h1>
+                            <h1 class="text-xl md:text-xl text-slate-600 dark:text-slate-100 font-bold mb-2">Loan
+                                Information</h1>
                         </div>
 
                         <div class="lg:col-span-2">
@@ -373,10 +374,11 @@
 
                 <x-section-border />
 
-                <div>
+                {{-- <div>
                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 mb-8">
                         <div>
-                            <h1 class="text-xl md:text-xl text-slate-600 dark:text-slate-100 font-bold mb-2">Deductions</h1>
+                            <h1 class="text-xl md:text-xl text-slate-600 dark:text-slate-100 font-bold mb-2">Deductions
+                            </h1>
                         </div>
 
                         <div class="lg:col-span-2">
@@ -387,54 +389,8 @@
                 <div class="mb-12">
                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1 mb-4">
                         <div class="lg:col-span-2">
-                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6 mb-4">
-
-                                <div class="md:col-span-1">
-                                    <label for="principal_amount" class="text-black font-medium">Amount</label>
-                                    <input type="text" name="principal_amount" id="principal_amount"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="₱" />
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="interest" class="text-black font-medium">Percentage %</label>
-                                    <input type="text" name="interest" id="interest"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
-                                    </select>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="months_to_pay" class="text-black font-medium">Terms</label>
-                                    <input type="number" name="months_to_pay" id="months_to_pay"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="interest" class="text-black font-medium">Interest</label>
-                                    <input type="text" name="interest" id="interest"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
-                                    </select>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label for="months_to_pay" class="text-black font-medium">Total</label>
-                                    <input type="number" name="months_to_pay" id="months_to_pay"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="₱" />
-                                </div>
-                                
-                            </div>
 
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6 mb-4">
-
-                            <div class="md:col-span-1">
-                                    <label for="months_to_pay" class="text-black font-medium">Deductions</label>
-                                    <input type="number" name="months_to_pay" id="months_to_pay"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
-                                </div>
 
                                 <div class="md:col-span-1">
                                     <label for="principal_amount" class="text-black font-medium">Loan Balance</label>
@@ -489,13 +445,14 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
                                         value="" placeholder="" />
                                 </div>
-                                
+
                             </div>
 
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6 mb-4">
 
                                 <div class="md:col-span-2">
-                                    <label for="principal_amount" class="text-black font-medium">Total Deduction</label>
+                                    <label for="principal_amount" class="text-black font-medium">Total
+                                        Deduction</label>
                                     <input type="text" name="principal_amount" id="principal_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
                                         value="" placeholder="" />
@@ -510,16 +467,17 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label for="months_to_pay" class="text-black font-medium">Payment Reduction</label>
+                                    <label for="months_to_pay" class="text-black font-medium">Payment
+                                        Deduction</label>
                                     <input type="number" name="months_to_pay" id="months_to_pay"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
                                         value="" placeholder="" />
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Cards -->
                 <section class="container mx-auto mb-12">

@@ -13,6 +13,8 @@ class Check extends Model
         'amount',
         'status',
         'request_date',
+        'requestor_name',
+        'purpose',
     ];
 
 }
