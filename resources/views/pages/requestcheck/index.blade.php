@@ -113,10 +113,26 @@
                         </div>
                         <!-- Submit Button -->
                         <div class="flex items-end">
-                            <button type="submit"
-                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
-                        </div>
+                            
+                            <!-- Add Row Button -->
+                            <div class="mt-4 text-right">
+                                <button type="button" onclick="addRow()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                    Add Another Check
+                                </button>
+                            </div>
+                        </div>      
                     </div>
+
+                    <!-- Total Section -->
+                    <div class="mt-6 text-left">
+                        <h2 class="text-lg font-bold text-gray-700">Total: ₱<span id="total-amount">0.00</span></h2>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="mt-6">
+                            <button type="submit" class="w-full px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600">
+                                Submit Check Requests
+                            </button>
+                        </div>
                 </form>
 
                 <!-- Display Requested Checks -->
@@ -174,6 +190,9 @@
         </div>
 
     </div>
+
+
+    
 
 
 </x-app-layout>
