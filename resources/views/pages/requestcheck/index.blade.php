@@ -93,70 +93,47 @@
                 class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                 <h2 class="mb-4">Branch Manager: Request Check</h2>
 
-                <!-- Create Check Request Button -->
-                <div class="flex justify-end mb-4">
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded flex items-center hover:bg-blue-600" onclick="openModal()">
-                        <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                        </svg>
-                        Create Check Request
-                    </button>
-                </div>
-                
-                <!-- Modal -->
-                <div id="myModal" class="fixed z-30 inset-0 overflow-y-auto hidden"> 
-                    <div class="flex items-center justify-center min-h-screen"> 
-                        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true"></div>
-                        <div id="modalContent" class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"> 
-                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"> 
-                                <h2 class="mb-4">Check Request Form</h2>
-                                <!-- Form -->
-                                <form action="{{ route('requestcheck.store') }}" method="POST" class="mb-6">
-                                    @csrf
-                                    <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-                                        <!-- Date -->
-                                        <div>
-                                            <label for="request_date" class="block mb-1">Date</label>
-                                            <input type="date" name="request_date" id="request_date"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                required>
-                                        </div>
-                                        <!-- Requestor -->
-                                        <div>
-                                            <label for="requestor_name" class="block mb-1">Name of Requestor</label>
-                                            <input type="text" name="requestor_name" id="requestor_name"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
-                                        </div>
-                                        <!-- Amount -->
-                                        <div>
-                                            <label for="amount" class="block mb-1">Amount</label>
-                                            <input type="number" step="0.01" name="amount" id="amount"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                required>
-                                        </div>
-                                        <!-- Purpose -->
-                                        <div>
-                                            <label for="purpose" class="block mb-1">Purpose</label>
-                                            <input type="text" name="purpose" id="purpose"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
-                                        </div>
-                                        <!-- Submit Button -->
-                                        <div class="flex justify-end">
-                                            <button 
-                                                type="button" 
-                                                class="mt-3 mr-4 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm" 
-                                                onclick="closeModal()">
-                                                Cancel
-                                            </button> 
-                                            <button type="submit"
-                                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                <!-- Form -->
+                <form action="{{ route('requestcheck.store') }}" method="POST" class="mb-6">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Date -->
+                        <div>
+                            <label for="request_date" class="block mb-1">Date</label>
+                            <input type="date" name="request_date" id="request_date"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                required>
                         </div>
+                        <!-- Amount -->
+                        <div>
+                            <label for="amount" class="block mb-1">Amount</label>
+                            <input type="number" step="0.01" name="amount" id="amount"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                required>
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="flex items-end">
+                            
+                            <!-- Add Row Button -->
+                            <div class="mt-4 text-right">
+                                <button type="button" onclick="addRow()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                    Add Another Check
+                                </button>
+                            </div>
+                        </div>      
                     </div>
-                </div>
+
+                    <!-- Total Section -->
+                    <div class="mt-6 text-left">
+                        <h2 class="text-lg font-bold text-gray-700">Total: ₱<span id="total-amount">0.00</span></h2>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="mt-6">
+                            <button type="submit" class="w-full px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600">
+                                Submit Check Requests
+                            </button>
+                        </div>
+                </form>
 
                 <!-- Display Requested Checks -->
                 <h3 class="mb-2">Requested Checks</h3>
@@ -220,6 +197,9 @@
         </div>
 
     </div>
+
+
+    
 
 
 </x-app-layout>
