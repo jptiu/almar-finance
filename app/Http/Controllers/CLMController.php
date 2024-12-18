@@ -94,9 +94,9 @@ class CLMController extends Controller
         return view('pages.customer.month.printLoan.index', compact('customer', 'branchAddress'));
     }
 
-    public function printStatement(Request $request)
+    public function printStatement($id)
     {
-        $customer = Customer::find($request->customer);
+        $customer = Customer::find($id);
         return view('pages.customer.month.printStatement.index', compact('customer'));
     }
 
