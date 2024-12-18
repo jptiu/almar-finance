@@ -102,7 +102,7 @@ class CheckController extends Controller
 
     public function printCheck($id)
     {
-        $check = Check::find($id);
+        $check = Check::with('user', 'approvedBy')->find($id);
 
         return view('pages.requestcheck.printCheck.index', compact('check'));
     }

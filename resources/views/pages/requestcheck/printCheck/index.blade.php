@@ -33,11 +33,11 @@
             </div>
 
             <div class="text-lg font-normal pt-4 pt-4">
-                Name of Requestor: <span class="text-lg font-medium underline">{{$check->requestor_name}}</span>
+                Name of Requestor: <span class="text-lg font-medium underline">{{$check->user->name}}</span>
             </div>
 
             <div class="text-lg font-normal pt-4 pt-4">
-                Amount of Check: <span class="text-lg font-medium underline">{{$check->amount}}</span>
+                Amount of Check: <span class="text-lg font-medium underline">{{number_format($check->amount, 2)}}</span>
             </div>
 
             <div class="text-lg font-normal pt-4 pt-4">
@@ -57,14 +57,14 @@
         <br>
             <div class="flex flex-col items-center" style="float: right;">
                 <img class="h-auto w-1/4" src="/images/sample signature.png" alt="almar suites">
-                <div class="text-center font-medium mt-2">JHON DOE</div>
+                <div class="text-center font-medium mt-2">{{$check->approvedBy->name}}</div>
                 <hr class="w-1/2 mt-2" />
                 <div class="text-center mt-2">Approver's Signature Over Printed Name</div>
             </div>
 
             <div class="flex flex-col items-center">
                 <img class="h-auto w-1/4" src="/images/sample signature.png" alt="almar suites">
-                <div class="text-center font-medium mt-2">{{$check->requestor_name}}</div>
+                <div class="text-center font-medium mt-2">{{$check->user->name}}</div>
                 <hr class="w-1/2 mt-2" />
                 <div class="text-center mt-2">Requestor's Signature Over Printed Name</div>
             </div>

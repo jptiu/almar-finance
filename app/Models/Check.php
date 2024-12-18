@@ -19,4 +19,14 @@ class Check extends Model
         'approved_by',
     ];
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function approvedBy()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
 }
