@@ -15,6 +15,8 @@ class Check extends Model
         'request_date',
         'requestor_name',
         'purpose',
+        'user_id',
+        'approved_by',
     ];
 
 }
