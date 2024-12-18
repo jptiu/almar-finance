@@ -79,6 +79,16 @@ class ExpensesController extends Controller
         
         return view('pages.expenses.update.index', compact('expenses'));
     }
+    
+    public function requestEdit(string $id)
+    {
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        $branch = auth()->user()->branch_id;
+        $expenses = Expenses::with('account')->where('branch_id', $branch)->where('id', $id)->first();
+        
+        return view('pages.expenses.update.index', compact('expenses'));
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -150,3 +160,5 @@ class ExpensesController extends Controller
         return redirect(route("barangay.index"))->with('success', 'CSV Data Imported Successfully');
     }
 }
+
+
