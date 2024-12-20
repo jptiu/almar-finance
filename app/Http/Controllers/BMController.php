@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Branch;
 use App\Models\Breakdown;
 use App\Models\CashBill;
@@ -27,7 +28,9 @@ class BMController extends Controller
         $lists = Customer::where('branch_id', $branch)->orderByDesc('id')->paginate(10);
         $totalCustomer = Customer::where('branch_id', $branch)->count();
 
-        return view('pages.branch.index', compact('lists', 'totalCustomer'));
+        $logs = ActivityLog::orderByDesc('id')->paginate(20);
+
+        return view('pages.branch.index', compact('lists', 'totalCustomer', 'logs'));
     }
 
     /**

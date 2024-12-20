@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoanCreateRequest;
 use App\Http\Requests\LoanUpdateRequest;
+use App\Models\ActivityLog;
 use App\Models\Customer;
 use App\Models\CustomerType;
 use App\Models\Loan;
@@ -137,6 +138,11 @@ class LoanController extends Controller
                 ]);
             }
 
+            $log = new ActivityLog();
+            $log->user_id = auth()->user()->id;
+            $log->description = auth()->user()->name . ' Created the loan request.';
+            $log->save();
+
             // Redirect back with success message
             return redirect()->back()->with('success', 'Loan created successfully and is pending approval.');
         } catch (\Throwable $th) {
@@ -195,6 +201,11 @@ class LoanController extends Controller
             $loan->payable_amount = $request->payable_amount;
             $loan->save();
 
+            $log = new ActivityLog();
+            $log->user_id = auth()->user()->id;
+            $log->description = auth()->user()->name . ' Updated the loan request.';
+            $log->save();
+
             return redirect()->back()->with('success', 'Loan Entry Updated.');
         }
     }
@@ -207,6 +218,11 @@ class LoanController extends Controller
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         $loan = Loan::find($id);
         $loan->delete();
+
+        $log = new ActivityLog();
+        $log->user_id = auth()->user()->id;
+        $log->description = auth()->user()->name . ' Deleted the loan request.';
+        $log->save();
 
         return redirect()->back()->with('success', 'Loan deleted.');
     }
@@ -252,6 +268,11 @@ class LoanController extends Controller
                 'branch_id' => $branch,
             ]);
         }
+
+        $log = new ActivityLog();
+        $log->user_id = auth()->user()->id;
+        $log->description = auth()->user()->name . ' Imported the loan list.';
+        $log->save();
 
         return redirect(route("loan.index"))->with('success', 'CSV Data Imported Successfully');
     }
@@ -302,6 +323,11 @@ class LoanController extends Controller
             ]);
         }
 
+        $log = new ActivityLog();
+        $log->user_id = auth()->user()->id;
+        $log->description = auth()->user()->name . ' Imported the loan details.';
+        $log->save();
+
         return redirect(route("loan.index"))->with('success', 'Loan Details Imported Successfully');
     }
 
@@ -313,6 +339,11 @@ class LoanController extends Controller
         $loan->user_id = auth()->user()->id;
         $loan->note = $request->input('reason');
         $loan->update();
+
+        $log = new ActivityLog();
+        $log->user_id = auth()->user()->id;
+        $log->description = auth()->user()->name . ' Approved the loan request.';
+        $log->save();
 
         return redirect()->back()->with('success', 'Loan Approved.');
     }
@@ -330,6 +361,11 @@ class LoanController extends Controller
 
         // Save the changes
         $loan->save();
+
+        $log = new ActivityLog();
+        $log->user_id = auth()->user()->id;
+        $log->description = auth()->user()->name . ' Declined the loan request.';
+        $log->save();
 
         // Redirect with a success message
         return redirect()->back()->with('success', 'Loan has been declined with the provided reason.');
