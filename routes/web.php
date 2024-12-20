@@ -373,5 +373,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Assign user to a branch
     Route::post('branches/{branch}/assign-user', [BranchController::class, 'assignUser'])->name('branches.assignUser');
 
+    Route::post('/broadcasting/auth', function () {
+        return Broadcast::auth(request());
+    });
 
 });
