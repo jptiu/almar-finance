@@ -22,12 +22,22 @@ class LoanController extends Controller
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         $branch = auth()->user()->branch_id;
         if ($request->search) {
-            $lists = Loan::with(['customer'])->where('branch_id', $branch)
-                ->where('id', $request->search)
-                ->paginate(10);
-        } else {
+            $lists = Loan::with(['customer'])
+            ->where('branch_id', $branch)
+            ->when($request->search, function ($query) use ($request) {
+                return $query->where('id', $request->search);
+            })
+            ->paginate(10);
+        } else if($request->search_name){
+            $lists = Loan::with(['customer' => function ($query) use ($request) {
+                $query->where('first_name', 'LIKE', '%' . $request->search_name . '%')
+                      ->orWhere('last_name', 'LIKE', '%' . $request->search_name . '%');
+            }])
+            ->where('branch_id', $branch)
+            ->paginate(10);
+        }else{
             $lists = Loan::where('branch_id', $branch)->paginate(10);
-        }
+        }        
         $types = CustomerType::where('branch_id', $branch)->get();
         $loan = [];
         $customer = [];
