@@ -11,6 +11,8 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.js',
+        './vendor/namu/wirechat/resources/views/**/*.blade.php',
+        './vendor/namu/wirechat/src/Livewire/**/*.php'
     ],
     darkMode: 'class',
     theme: {
@@ -19,23 +21,23 @@ export default {
                 transparent: 'transparent',
                 current: 'currentColor',
                 'primary': {
-                100: '#000D3A',
+                    100: '#000D3A',
                 },
                 'accent': {
-                100: '#0B6ECA',
-                200: '#0859A5',
+                    100: '#0B6ECA',
+                    200: '#0859A5',
                 },
                 'wshade': {
-                100: '#F9FAFC',
-                200: '#F9FAFC',
+                    100: '#F9FAFC',
+                    200: '#F9FAFC',
                 },
                 'accrej': {
-                100: '#C6131B',
-                200: '#45a240',
+                    100: '#C6131B',
+                    200: '#45a240',
                 },
                 'orange': {
-                100: '#f97316',
-                200: '#ea580c',
+                    100: '#f97316',
+                    200: '#ea580c',
                 },
             },
             boxShadow: {
@@ -93,7 +95,7 @@ export default {
             addVariant('sidebar-expanded', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);
             });
-        }),  
-              
+        }),
+
     ],
 };
