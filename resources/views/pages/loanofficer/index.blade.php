@@ -46,7 +46,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Cash Beginning</p>
-                                    <span class="text-3xl font-semibold text-gray-800">₱2,134,900</span>
+                                    <span class="text-3xl font-semibold text-gray-800">₱{{$cashBeginning}}</span>
                                 </div>
                             </div>
                         </div>

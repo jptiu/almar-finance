@@ -57,6 +57,7 @@ class ComputeCOHController extends Controller
             'details_withdraw' => 'nullable|numeric',
             'details_xerox' => 'nullable|numeric',
         ]);
+        $branch = auth()->user()->branch_id;
 
         // Store the data in the database
         $computeCashOnHand = new ComputeCashOnHand();
@@ -80,6 +81,7 @@ class ComputeCOHController extends Controller
         $computeCashOnHand->passbook = $request->passbook ?? 0;
         $computeCashOnHand->details_withdraw = $request->details_withdraw ?? 0;
         $computeCashOnHand->details_xerox = $request->details_xerox ?? 0;
+        $computeCashOnHand->branch_id = $branch;
         $computeCashOnHand->save();
 
         return redirect()->back()->with('success', 'Data saved successfully!');

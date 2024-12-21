@@ -30,5 +30,6 @@ class ComputeCashOnHand extends Model
         'details_withdraw',
         'details_xerox',
         'user_id',
+        'branch_id',
     ];
 }
