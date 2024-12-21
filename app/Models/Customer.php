@@ -93,4 +93,9 @@ class Customer extends Model
     {
         return $this->hasMany(SavingsWithdrawal::class, 'customer_id');
     }
+
+    public function collections()
+    {
+        return $this->hasMany(Collection::class, 'customer_id');
+    }
 }

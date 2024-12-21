@@ -24,13 +24,22 @@ class CustomerController extends Controller
         try {
             $branch = auth()->user()->branch_id;
             if (isset($request->search)) {
-                $lists = Customer::with('loan.details')
+                $lists = Customer::with(['loan.details', 'collections' => function ($query) {
+                    $query->select('id', 'lat', 'long', 'customer_id')
+                    ->latest('created_at');
+                }])
                     ->where('branch_id', $branch)
                     ->where('first_name', 'LIKE', '%' . $request->search . '%')
                     ->orderBy("created_at", "asc")
                     ->paginate(20);
             } else {
-                $lists = Customer::with('loan.details')->where('branch_id', $branch)->paginate(10);
+                $lists = Customer::with([
+                    'loan.details',
+                    'collections' => function ($query) {
+                        $query->select('id', 'lat', 'long', 'customer_id')
+                        ->latest('created_at');
+                    }
+                ])->where('branch_id', $branch)->paginate(10);
             }
 
             return response()->json($lists, 200);
@@ -102,7 +111,8 @@ class CustomerController extends Controller
             'customerType',
             'loan.details' => function ($query) {
                 $query->whereNull('loan_date_paid'); // Filter due today
-            }
+            },
+            'collections'
         ])->find($id);
 
         return response()->json($customer, 200);
