@@ -37,6 +37,9 @@ export default {
                 100: '#f97316',
                 200: '#ea580c',
                 },
+                'borderline': {
+                100: '#F0F0F0',
+                },
             },
             boxShadow: {
                 DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
@@ -83,6 +86,9 @@ export default {
             zIndex: {
                 60: '60',
             },
+            gap: {
+                '22': '7rem',
+              }
         },
     },
     plugins: [
