@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,7 @@ class SuperAdminController extends Controller
      */
     public function index()
     {
+        $logs = ActivityLog::orderByDesc('id')->paginate(20);
         return view('pages.superadmin.index');
     }
 

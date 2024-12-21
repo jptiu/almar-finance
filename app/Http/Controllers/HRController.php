@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
 use App\Models\Employee;
@@ -22,7 +23,9 @@ class HRController extends Controller
         $activeCount = $announcements->count(); // Count active announcements
         $currentDate = Carbon::now()->format('F d, Y'); // Get the current date
 
-        return view('pages.hr.index', compact('lists', 'announcements', 'activeCount', 'currentDate'));
+        $logs = ActivityLog::orderByDesc('id')->paginate(20);
+
+        return view('pages.hr.index', compact('lists', 'announcements', 'activeCount', 'currentDate', 'logs'));
     }
 
     /**
