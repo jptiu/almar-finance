@@ -627,10 +627,11 @@
         const serviceCharge = parseFloat(document.getElementById('svc_charge').value) || 0;
 
         const interestAmount = (principalAmount * interestPercent) / 100;
-        const payableAmount = principalAmount + interestAmount + serviceCharge;
+        const totalInterest = interestAmount * monthsToPay;
+        const payableAmount = principalAmount + totalInterest - serviceCharge;
         const monthlyDue = monthsToPay > 0 ? payableAmount / monthsToPay / 2 : 0;
 
-        updatePaymentDisplay(interestAmount, payableAmount, monthlyDue, monthsToPay, 'monthly');
+        updatePaymentDisplay(totalInterest, payableAmount, monthlyDue, monthsToPay, 'monthly');
     }
 
     function calculatePaymentsDaily() {
@@ -640,10 +641,11 @@
         const serviceCharge = parseFloat(document.getElementById('svc_charge').value) || 0;
 
         const interestAmount = (principalAmount * interestPercent) / 100;
-        const payableAmount = principalAmount + interestAmount + serviceCharge;
+        const totalInterest = interestAmount * daysToPay;
+        const payableAmount = principalAmount + totalInterest - serviceCharge;
         const dailyDue = daysToPay > 0 ? payableAmount / daysToPay : 0;
 
-        updatePaymentDisplay(interestAmount, payableAmount, dailyDue, daysToPay, 'daily');
+        updatePaymentDisplay(totalInterest, payableAmount, dailyDue, daysToPay, 'daily');
     }
 
     function updatePaymentDisplay(interestAmount, payableAmount, dueAmount, duration, type) {

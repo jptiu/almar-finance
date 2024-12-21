@@ -36,11 +36,13 @@ class CheckController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->request_date);
         $check = new Check();
         $check->requestor_name = $request->requestor_name;
         $check->amount = $request->amount;
         $check->request_date = $request->request_date;
         $check->purpose = $request->purpose;
+        $check->user_id = auth()->user()->id;
         $check->save();
 
         return redirect()->back()->with('success', 'Request Check Submitted');
@@ -82,6 +84,7 @@ class CheckController extends Controller
     {
         $check = Check::find($id);
         $check->status = 'Approved';
+        $check->approved_by = auth()->user()->id;
         $check->save();
 
         return redirect()->back()->with('success', 'Request Check Approved');
@@ -91,6 +94,7 @@ class CheckController extends Controller
     {
         $check = Check::find($id);
         $check->status = 'Rejected';
+        $check->approved_by = auth()->user()->id;
         $check->save();
 
         return redirect()->back()->with('success', 'Request Check Rejected');
@@ -98,7 +102,7 @@ class CheckController extends Controller
 
     public function printCheck($id)
     {
-        $check = Check::find($id);
+        $check = Check::with('user', 'approvedBy')->find($id);
 
         return view('pages.requestcheck.printCheck.index', compact('check'));
     }

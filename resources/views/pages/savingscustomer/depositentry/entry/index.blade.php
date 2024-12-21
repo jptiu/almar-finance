@@ -16,7 +16,7 @@
                 </div>
             </div>
         @endif
-      
+
 
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
@@ -44,15 +44,18 @@
         <form action="{{ route('depositentry.storeDeposit') }}" method="POST">
             @csrf
             <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-            <div class="flex items-center text-gray-600 mb-12">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-                <a href="{{ route('depositentry.index') }}" class="text-base font-semibold">Back</a>
-            </div>
-            <div class="relative">
-                <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Savings Deposit Entry</h1>
-            </div>
+                <div class="flex items-center text-gray-600 mb-12">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
+                    <a href="{{ route('depositentry.index') }}" class="text-base font-semibold">Back</a>
+                </div>
+                <div class="relative">
+                    <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Savings Deposit
+                        Entry</h1>
+                </div>
 
                 <div>
                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
@@ -61,20 +64,32 @@
 
                                 <div class="md:col-span-2">
                                     <label for="ref_id" class="text-black font-medium">Ref No.</label>
-                                    <input type="text" name="ref_id" id="ref_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="ref_id" id="ref_id"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                        value="" placeholder="Optional" />
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label for="customer_id" class="text-black font-medium">Customer ID</label>
-                                    <input type="text" name="customer_id" id="customer_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <label for="customer" class="text-black font-medium">Select Customer</label>
+                                    <div class="relative">
+                                        <input type="text" id="customerInput" placeholder="Type to search..."
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                            oninput="filterCustomers()" />
+                                        <ul id="customerDropdown"
+                                            class="absolute bg-white border border-gray-300 rounded-lg w-full mt-1 hidden max-h-48 overflow-y-auto z-10">
+                                            @foreach ($customers as $customer)
+                                                <li class="px-4 py-2 cursor-pointer hover:bg-blue-500 hover:text-white"
+                                                    onclick="selectCustomer('{{ $customer->id }}', '{{ $customer->first_name }} {{ $customer->last_name }}')">
+                                                    {{ $customer->first_name . ' ' . $customer->last_name }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <input type="hidden" name="customer" id="selectedCustomer">
+                                        <input type="hidden" name="customer_name" id="selectedCustomerName">
+                                    </div>
                                 </div>
 
-                                <div class="md:col-span-4">
-                                    <label for="customer_name" class="text-black font-medium">Customer Name</label>
-                                    <input type="text" name="customer_name" id="customer_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
-                                </div>
-
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,14 +103,18 @@
 
                                 <div class="md:col-span-2">
                                     <label for="tran_date" class="text-black font-medium">Transaction Date</label>
-                                    <input type="date" name="tran_date" id="tran_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="date" name="tran_date" id="tran_date"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                        value="" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="amount" class="text-black font-medium">Amount</label>
-                                    <input type="text" name="amount" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="amount" id="amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                        value="" placeholder="" />
                                 </div>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,11 +126,12 @@
                         </div>
 
                         <div class="lg:col-span-2">
-                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">                    
+                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                 <div class="md:col-span-5 text-right">
                                     <div class="inline-flex items-end">
-                                    
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">Submit</button>
+
+                                        <button type="submit"
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -123,21 +143,37 @@
 
     </div>
 </x-app-layout>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    document.getElementById('acc_no').addEventListener('input', function () {
-        var acctNo = this.value;
+    function filterCustomers() {
+        const input = document.getElementById('customerInput').value.toLowerCase();
+        const dropdown = document.getElementById('customerDropdown');
+        const items = dropdown.getElementsByTagName('li');
 
-        if (acctNo) {
-            fetch(`/get-account-data/${acctNo}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        document.getElementById('acc_class').value = data.account_class;
-                        document.getElementById('acc_type').value = data.account_type;
-                        document.getElementById('acc_title').value = data.account_title;
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+        dropdown.classList.remove('hidden'); // Show dropdown
+
+        Array.from(items).forEach(item => {
+            const name = item.textContent.toLowerCase();
+            if (name.includes(input)) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    }
+
+    function selectCustomer(id, name) {
+        document.getElementById('selectedCustomerName').value = name;
+        document.getElementById('selectedCustomer').value = id;
+        document.getElementById('customerDropdown').classList.add('hidden'); // Hide dropdown
+        getCustomer(id);
+    }
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+        const dropdown = document.getElementById('customerDropdown');
+        const input = document.getElementById('selectedCustomerName');
+        if (!dropdown.contains(event.target) && !input.contains(event.target)) {
+            dropdown.classList.add('hidden');
         }
     });
 </script>

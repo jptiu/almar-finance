@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SuperAdminController extends Controller
@@ -76,7 +77,8 @@ class SuperAdminController extends Controller
 
     public function userAccounts(Request $request)
     {
-        return view('pages.superadmin.useracc.index');
+        $users = User::paginate(20);
+        return view('pages.superadmin.useracc.index', compact('users'));
     }
 
     public function deactivateAccounts(Request $request)

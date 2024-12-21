@@ -25,7 +25,9 @@ class SavingsController extends Controller
 
     public function createDeposit()
     {
-        return view('pages.savingscustomer.depositentry.entry.index');
+        $branch = auth()->user()->branch_id;
+        $customers = Customer::where('branch_id', $branch)->get();
+        return view('pages.savingscustomer.depositentry.entry.index', compact('customers'));
     }
 
     /**
@@ -35,7 +37,7 @@ class SavingsController extends Controller
     {
         $branch = auth()->user()->branch_id;
         $dep = new SavingsDeposit();
-        $dep->customer_id = $request->customer_id;
+        $dep->customer_id = $request->customer;
         $dep->customer_name = $request->customer_name;
         $dep->tran_date = $request->tran_date;
         $dep->amount = $request->amount;
