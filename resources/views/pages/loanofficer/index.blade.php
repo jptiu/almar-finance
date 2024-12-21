@@ -81,7 +81,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Total Customer</p>
-                                    <span class="text-3xl font-semibold text-gray-800">34,900</span>
+                                    <span class="text-3xl font-semibold text-gray-800">{{$totalCustomer}}</span>
                                 </div>
                             </div>
                         </div>
