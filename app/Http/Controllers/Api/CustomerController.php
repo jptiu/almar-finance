@@ -24,10 +24,15 @@ class CustomerController extends Controller
         try {
             $branch = auth()->user()->branch_id;
             if (isset($request->search)) {
-                $lists = Customer::with(['loan.details', 'collections' => function ($query) {
-                    $query->select('id', 'lat', 'long', 'customer_id')
-                    ->latest('created_at');
-                }])
+                $lists = Customer::with([
+                    'loan.details',
+                    'collections' => function ($query) {
+                        $query->select('id', 'lat', 'long', 'customer_id')
+                            ->latest('created_at');
+                    },
+                    'bry', // Eager load Barangay relationship
+                    'cty'      // Eager load City relationship
+                ])
                     ->where('branch_id', $branch)
                     ->where('first_name', 'LIKE', '%' . $request->search . '%')
                     ->orderBy("created_at", "asc")
@@ -37,7 +42,7 @@ class CustomerController extends Controller
                     'loan.details',
                     'collections' => function ($query) {
                         $query->select('id', 'lat', 'long', 'customer_id')
-                        ->latest('created_at');
+                            ->latest('created_at');
                     }
                 ])->where('branch_id', $branch)->paginate(10);
             }
@@ -242,18 +247,20 @@ class CustomerController extends Controller
         // Fetch overdue loan details with days past due
         $overdueLoans = LoanDetails::where('branch_id', $branch)
             ->where('loan_due_date', '<', $today)
-            ->with(['loan' => function ($query) {
-                $query->where('status', 'UNPD');
-            }]) // has a relationship with Loan
+            ->with([
+                'loan' => function ($query) {
+                    $query->where('status', 'UNPD');
+                }
+            ]) // has a relationship with Loan
             ->paginate(100)
             ->map(function ($detail) use ($today) {
                 $dueDate = Carbon::parse($detail->loan_due_date);
                 $daysPastDue = $dueDate->diffInDays($today); // Calculate days overdue
                 $loan = Loan::with('customer')->find($detail->loan_id);
-    
+
                 return [
                     'loan_id' => $detail->loan_id,
-                    'customer_name' => $loan->customer->first_name.' '.$loan->customer->last_name, // Assuming Loan model has customer_name
+                    'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name, // Assuming Loan model has customer_name
                     'due_date' => $detail->loan_due_date,
                     'days_past_due' => $daysPastDue,
                 ];

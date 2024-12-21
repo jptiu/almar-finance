@@ -71,10 +71,11 @@ class CustomerController extends Controller
         $customer->first_name = $request->first_name;
         $customer->middle_name = $request->middle_name;
         $customer->last_name = $request->last_name;
-        $customer->house = $request->house??'';
-        $customer->street = $request->street??'';
+        $customer->house = $request->house??'.';
+        $customer->street = $request->street??'.';
         $customer->barangay = $request->barangay;
         $customer->city = $request->city;
+        $customer->email = $request->email;
         $customer->job_position = $request->job_position;
         $customer->salary_sched = $request->salary_sched;
         $customer->tel_number = $request->tel_number;
@@ -168,6 +169,7 @@ class CustomerController extends Controller
         $customer->tel_number = $request->tel_number;
         $customer->cell_number = $request->cell_number;
         $customer->status = $request->status;
+        $customer->email = $request->email;
         $customer->save();
 
         return redirect(route("customer.index"))->with('success', 'Updated Successfully');
