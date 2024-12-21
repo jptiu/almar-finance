@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <title>Cash Bond Loan Agreement</title>
+    <title>Check Request</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
