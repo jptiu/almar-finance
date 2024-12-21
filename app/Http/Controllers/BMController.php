@@ -9,6 +9,7 @@ use App\Models\CashBill;
 use App\Models\Collection;
 use App\Models\ComputeCashOnHand;
 use App\Models\Customer;
+use App\Models\DailyWorkOrder;
 use App\Models\Expenses;
 use App\Models\Loan;
 use App\Models\SavingsDeposit;
@@ -320,8 +321,26 @@ class BMController extends Controller
 
     public function dailyWorklist(Request $request)
     {
+        $lists = DailyWorkOrder::paginate(20);
 
-        return view('pages.dailywork.index');
+        return view('pages.requestform.dailyworkorder.index', compact('lists'));
+    }
+
+    public function dailyWorkAdd(Request $request)
+    {
+
+        return view('pages.requestform.dailyworkorder.add.index');
+    }
+
+    public function dailyWorkStore(Request $request)
+    {
+        $workorder = new DailyWorkOrder();
+        $workorder->type_of_holiday = $request->type_of_holiday;
+        $workorder->date = $request->date;
+        $workorder->user_id = auth()->user()->id;
+        $workorder->save();
+
+        return redirect()->route('dailyworkorder.index')->with('success', 'Request Daily Work Order Submitted');
     }
 
 }

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
 use App\Models\Announcement;
+use App\Models\DailyWorkOrder;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Loan;
+use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 
@@ -221,6 +223,43 @@ class HRController extends Controller
     {
 
         return view('pages.hr.loanapprovals.printStatement.index');
+    }
+
+    public function dailyWorkRequest(Request $request)
+    {
+
+        $lists = DailyWorkOrder::paginate(20);
+
+        return view('pages.hr.dailyWorkRequest.index', compact('lists'));
+
+    }
+
+    public function dailyWorkRequestPrint($id)
+    {
+         
+        $branch_address = Branch::find(auth()->user()->branch_id);
+        $list = DailyWorkOrder::find($id);
+
+        return view('pages.hr.dailyWorkRequest.print.index', compact('list','branch_address'));
+
+    }
+
+    public function dailyWorkRequestApprove($id)
+    {
+        $check = DailyWorkOrder::find($id);
+        $check->status = 'Approved';
+        $check->save();
+
+        return redirect()->back()->with('success', 'Request Daily Work Order Approved');
+    }
+
+    public function dailyWorkRequestReject($id)
+    {
+        $check = DailyWorkOrder::find($id);
+        $check->status = 'Rejected';
+        $check->save();
+
+        return redirect()->back()->with('success', 'Request Daily Work Order Rejected');
     }
 
 }

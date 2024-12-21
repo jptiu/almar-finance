@@ -199,6 +199,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('announce/show/{id}', [HRController::class, 'showAnnouncement'])->name('announce.show');
     Route::post('announce/update/{id}', [HRController::class, 'updateAnnouncement'])->name('announce.update');
     Route::delete('announce/destroy/{id}', [HRController::class, 'destroyAnnouncement'])->name('announce.destroy');
+    Route::get('dailyWorkRequest', [HRController::class, 'dailyWorkRequest'])->name('dailyWorkRequest.index');
+    Route::get('dailyWorkRequest/print/{id}', [HRController::class, 'dailyWorkRequestPrint'])->name('dailyWorkRequestPrint.index');
+    Route::get('dailyWorkRequest/approve/{id}', [HRController::class, 'dailyWorkRequestApprove'])->name('dailyWorkRequestApprove.approve');
+    Route::get('dailyWorkRequest/reject/{id}', [HRController::class, 'dailyWorkRequestReject'])->name('dailyWorkRequestReject.reject');
 
     // BranchInfo
     Route::get('branchinfo', [BranchInfoController::class, 'branchinfo'])->name('branchinfo.index');
@@ -309,19 +313,17 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('requestform/cashbond', [BMController::class, 'cashBond'])->name('cashBond.index');
     Route::get('requestform/cashbond/print', [BMController::class, 'cashBondPrint'])->name('cashBondPrint.index');
 
+    //Daily Work Order Request
+    Route::get('requestform/dailyworkorder', [BMController::class, 'dailyWorklist'])->name('dailyworkorder.index');
+    Route::get('requestform/dailyworkorder/add', [BMController::class, 'dailyWorkAdd'])->name('dailyworkorder.add');
+    Route::post('requestform/dailyworkorder/store', [BMController::class, 'dailyWorkStore'])->name('dailyworkorder.store');
+
     //Print Statement
     Route::get('branch/print/statement/{id}', [BMController::class, 'printStatement'])->name('printStatementBranch.index');
 
     //Automated Payment
     Route::get('reminder', [BMController::class, 'reminderPay'])->name('reminderPay.index');
     
-     //Daily Work Order
-     Route::get('dailywork', [BMController::class, 'dailyWorklist'])->name('dailyWorklist.index');
-
-    
-
-    
-
     //Savings
     // Route::get('savings', [SavingsController::class, 'index'])->name('savings.index');
     // Route::get('savings/create', [SavingsController::class, 'create'])->name('savings.create');

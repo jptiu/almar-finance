@@ -703,7 +703,7 @@
                             <div class="space-y-4">
                                 <!-- Card 1 -->
                                 
-                                    <div onclick="/" class="bg-white rounded-lg shadow p-4 flex items-end justify-between mb-4"> 
+                                    <div onclick="" class="bg-white rounded-lg shadow p-4 flex items-end justify-between mb-4"> 
                                         <div> 
                                             <p class="text-gray-400 text-xs mb-1">Tasks</p> 
                                             <h3 class="text-gray-800 font-semibold mb-4">Task Title</h3> 
