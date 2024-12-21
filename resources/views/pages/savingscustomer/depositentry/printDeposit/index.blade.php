@@ -103,7 +103,7 @@
             <tbody>
             <tr>
                 <td>{{$deposit->id}}</td>
-                <td>{{$deposit->amount}}</td>
+                <td>{{number_format($deposit->amount, 2)}}</td>
                 <td>{{$deposit->tran_date}}</td>
             </tr>
             </tbody>

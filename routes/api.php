@@ -49,5 +49,13 @@ Route::group(['middleware' => 'auth:api'], function () {
 
         // Payment Collection
         Route::post('payment', 'PaymentController@store')->name('payment.store');
+
+        // Collections
+        Route::get('collections', 'CustomerController@collection')->name('customer.collection');
+
+        // Past due
+        Route::get('loan/due', 'CustomerController@pastDue')->name('customer.pastDue');
+
+        Route::get('loan/bad-accounts', 'CustomerController@badAccounts')->name('customer.badAccounts');
     });
 });

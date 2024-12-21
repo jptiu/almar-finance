@@ -20,6 +20,7 @@ use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LOController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DenominationController;
+use App\Http\Controllers\UserController;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
@@ -375,5 +376,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Assign user to a branch
     Route::post('branches/{branch}/assign-user', [BranchController::class, 'assignUser'])->name('branches.assignUser');
 
+    Route::post('/broadcasting/auth', function () {
+        return Broadcast::auth(request());
+    });
+
+    Route::post('user/store', [UserController::class, 'store'])->name('user.store');
 
 });

@@ -103,7 +103,7 @@
             <tbody>
             <tr>
                 <td>{{$withdraw->id}}</td>
-                <td>{{$withdraw->net_amount}}</td>
+                <td>{{number_format($withdraw->net_amount, 2)}}</td>
                 <td>{{$withdraw->tran_date}}</td>
             </tr>
             </tbody>

@@ -57,7 +57,20 @@ class Customer extends Model
         'acc_no',
         'pin_no',
         'branch_id',
+        'email',
     ];
+
+    protected $appends = ['barangay_name', 'city_town'];
+
+    public function getBarangayNameAttribute()
+    {
+        return $this->bry ? $this->bry->barangay_name : null; // Replace 'name' with the actual column in Barangay model
+    }
+
+    public function getCityTownAttribute()
+    {
+        return $this->cty ? $this->cty->city_town : null; // Replace 'name' with the actual column in City model
+    }
 
     public function loan()
     {
@@ -92,5 +105,10 @@ class Customer extends Model
     public function withdraws()
     {
         return $this->hasMany(SavingsWithdrawal::class, 'customer_id');
+    }
+
+    public function collections()
+    {
+        return $this->hasMany(Collection::class, 'customer_id');
     }
 }

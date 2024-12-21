@@ -102,13 +102,13 @@
                     <button type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit
                     </button>
-                    <a href="#" onclick="submitForm()" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                    {{-- <a href="#" onclick="submitForm()" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                         <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                             <path
                                 d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                         </svg>
                         <span class="xs:block ml-2">Process Data</span>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
 
@@ -122,12 +122,15 @@
 <script>
     document.getElementById('checkbox').addEventListener('change', function() {
         var form = document.getElementById('loan-form');
+        var cid = document.getElementById('selectedCustomer').value;
         if (this.checked) {
-            form.action = "{{ route('printStatement.index') }}";
+            // Dynamically set the action with the cid value
+            form.action = "{{ url('monthly/print/statement') }}/" + cid;
         } else {
             form.action = "{{ route('printLoan.index') }}";
         }
     });
+
 
     function submitForm() {
         document.getElementById('loan-form').submit();

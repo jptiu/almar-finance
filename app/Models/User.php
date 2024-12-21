@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Namu\WireChat\Traits\Chatable;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Chatable;
 
     /**
      * The attributes that are mass assignable.
@@ -38,6 +40,7 @@ class User extends Authenticatable
         'remember_token',
         'email_verified_at',
         'last_login_at',
+        'signature'
     ];
 
     /**
