@@ -18,16 +18,14 @@
             </div>
         @endif
 
-        <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Setup Customer
-                Type</h1>
-        </div>
 
         <div></div>
 
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
-            <div></div>
+            <div>
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Setup Customer
+            </div>
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">

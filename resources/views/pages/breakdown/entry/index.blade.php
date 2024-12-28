@@ -16,31 +16,54 @@
                 </div>
             </div>
         @endif
-        <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Breakdown of Cash Bills
-            </h1>
-        </div>
+        <!-- <div class="relative">
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Breakdown of Cash Bills</h1>
+        </div> -->
 
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
             <div>
-                
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Breakdown of Cash Bills</h1>
+                <ol class="inline-flex items-center space-x-2">
+                    <!-- Home -->
+                    <li>
+                        <a href="/" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#A9A9A9"><path d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z"/></svg>
+                        </a>
+                    </li>
+                    <!-- Separator -->
+                    <li>
+                        <span class="text-gray-500">/</span>
+                    </li>
+                    <!-- Page -->
+                    <li>
+                        <a href="#" class="text-sm text-gray-500">Breakdown of Cash Bills</a>
+                    </li>
+                    <!-- Separator -->
+                    <li>
+                        <span class="text-gray-500">/</span>
+                    </li>
+                    <!-- Current Page -->
+                    <li>
+                        <span class="text-sm text-black font-medium">Create</span>
+                    </li>
+                </ol>
             </div>
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
-                <x-dropdown-filter align="right" />
+                <!-- <x-dropdown-filter align="right" /> -->
 
                 <!-- Add view button -->
-                <a id="show-modal-new" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                <!-- <a id="show-modal-new" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                         <path
                             d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                     </svg>
                     <span class="hidden xs:block ml-2">New</span>
-                </a>
+                </a> -->
                 <a id="show-modal-import" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg class="h-6 w-6 text-gray-300" width="24" height="24" viewBox="0 0 24 24"
                         stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"

@@ -46,7 +46,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Cash Beginning</p>
-                                    <span class="text-3xl font-semibold text-gray-800">₱{{$cashBeginning}}</span>
+                                    <span class="text-3xl font-semibold text-gray-800">₱2,134,900</span>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Total Customer</p>
-                                    <span class="text-3xl font-semibold text-gray-800">{{$totalCustomer}}</span>
+                                    <span class="text-3xl font-semibold text-gray-800">34,900</span>
                                 </div>
                             </div>
                         </div>
@@ -435,7 +435,7 @@
       labels: ['Latest Payer', 'Late Payee'],
       datasets: [{
         data: [60, 40], // Replace with your dynamic data
-        backgroundColor: ['#000D3A', '#0B6ECA'], // Tailwind green and red colors
+        backgroundColor: ['#34D399', '#0B6ECA'], // Tailwind green and red colors
         hoverBackgroundColor: ['#10B981', '#EF4444']
       }]
     };
@@ -703,7 +703,7 @@
                             <div class="space-y-4">
                                 <!-- Card 1 -->
                                 
-                                    <div onclick="" class="bg-white rounded-lg shadow p-4 flex items-end justify-between mb-4"> 
+                                    <div onclick="/" class="bg-white rounded-lg shadow p-4 flex items-end justify-between mb-4"> 
                                         <div> 
                                             <p class="text-gray-400 text-xs mb-1">Tasks</p> 
                                             <h3 class="text-gray-800 font-semibold mb-4">Task Title</h3> 

@@ -17,7 +17,7 @@
             </div>
         @endif
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Compute Cash On
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-8">Compute Cash On
                 Hand
             </h1>
         </div>
@@ -210,7 +210,7 @@
                                                         </svg>
                                                     </a> --}}
 
-                                                    <a href="{{ route('compute.edit', $list->id) }}"
+                                                    <a id="open-modal" href="{{ route('compute.edit', $list->id) }}"
                                                         class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-pencil"
@@ -220,7 +220,53 @@
                                                         </svg>
                                                     </a>
 
-                                                   
+                                                    <!-- Modal -->
+                                                    <div id="modal" class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50 flex items-center justify-center">
+                                                        <!-- Modal Content -->
+                                                        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                                    <!-- Modal Header -->
+                                                                    <div class="flex justify-between items-center p-4 mb-4">
+                                                                        <h2 class="text-lg font-semibold">Request to Edit</h2>
+                                                                        <button id="close-modal" class="text-gray-500 hover:text-gray-700">&times;</button>
+                                                                    </div>
+
+                                                                    <!-- Modal Form -->
+                                                                    <form id="modal-form" class="px-6">
+                                                                        <!-- Date Input -->
+                                                                        <div class="mb-4">
+                                                                            <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                                                                            <input type="date" id="date" name="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                                                        </div>
+
+                                                                        <div class="mb-4">
+                                                                            <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
+                                                                            <input type="time" id="time" name="time"
+                                                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                                                                required>
+                                                                        </div>
+
+                                                                        <!-- Reason Input -->
+                                                                        <div class="mb-4">
+                                                                            <label for="reason" class="block text-sm font-medium text-gray-700">Reason</label>
+                                                                            <textarea id="reason" name="reason" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter reason here..." required></textarea>
+                                                                        </div>
+
+                                                                        <!-- Modal Actions -->
+                                                                        <div class="flex justify-end mb-4">
+                                                                            <button type="button" id="close-modal-btn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2 hover:bg-gray-400">
+                                                                                Cancel
+                                                                            </button>
+                                                                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                                                                Submit
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>    
+                                                        </div>
+                                                    </div>
 
                                                     <a href="{{ route('compute.destroy', $list->id) }}"
                                                         class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">

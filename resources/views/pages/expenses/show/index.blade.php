@@ -1,13 +1,35 @@
 <x-app-layout>
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-        <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Expense Data Entry</h1>
-        </div>
-
        <!-- Dashboard actions -->
        <div class="sm:flex sm:justify-between sm:items-center mb-4">
-            <div></div>
+       <div>
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Expenses Data Entry</h1>
+                <ol class="inline-flex items-center space-x-2">
+                    <!-- Home -->
+                    <li>
+                        <a href="/" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#A9A9A9"><path d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z"/></svg>
+                        </a>
+                    </li>
+                    <!-- Separator -->
+                    <li>
+                        <span class="text-gray-500">/</span>
+                    </li>
+                    <!-- Page -->
+                    <li>
+                        <a href="#" class="text-sm text-gray-500">Expenses Data Entry</a>
+                    </li>
+                    <!-- Separator -->
+                    <li>
+                        <span class="text-gray-500">/</span>
+                    </li>
+                    <!-- Current Page -->
+                    <li>
+                        <span class="text-sm text-black font-medium">Show</span>
+                    </li>
+                </ol>
+            </div>
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">

@@ -2,18 +2,18 @@
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
         
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Customer Ledger - Daily</h1>
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-8">Customer Ledger - Daily</h1>
         </div>
 
         <!-- Dashboard actions -->
-        <div class="sm:flex sm:justify-between sm:items-center mb-8">
+        <div class="sm:flex sm:justify-between sm:items-center">
             <div></div>
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
-                <x-dropdown-filter align="right" />
+                <!-- <x-dropdown-filter align="right" /> -->
 
             </div>
 

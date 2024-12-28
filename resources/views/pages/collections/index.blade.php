@@ -16,17 +16,16 @@
                 </div>
             </div>
         @endif
-        <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Collection Data Entry
-            </h1>
-        </div>
+        <!-- <div class="relative">
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Collection Data Entry</h1>
+        </div> -->
 
         <div></div>
 
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
             <div>
-                
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Collection Data Entry</h1>
             </div>
 
             <!-- Right: Actions -->

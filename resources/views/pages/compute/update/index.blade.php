@@ -16,8 +16,36 @@
                 </div>
             </div>
         @endif
+
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Compute Cash on Hand</h1>
+            
+            <div class="mb-8">
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Compute Cash on Hand</h1>
+                <ol class="inline-flex items-center space-x-2">
+                    <!-- Home -->
+                    <li>
+                        <a href="/" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#A9A9A9"><path d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z"/></svg>
+                        </a>
+                    </li>
+                    <!-- Separator -->
+                    <li>
+                        <span class="text-gray-500">/</span>
+                    </li>
+                    <!-- Page -->
+                    <li>
+                        <a href="#" class="text-sm text-gray-500">Compute Cash on Hand</a>
+                    </li>
+                    <!-- Separator -->
+                    <li>
+                        <span class="text-gray-500">/</span>
+                    </li>
+                    <!-- Current Page -->
+                    <li>
+                        <span class="text-sm text-black font-medium">Update</span>
+                    </li>
+                </ol>
+            </div>
         </div>
 
         <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">

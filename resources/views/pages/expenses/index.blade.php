@@ -17,8 +17,7 @@
             </div>
         @endif
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Expenses Data Entry
-            </h1>
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-8">Expenses Data Entry</h1>
         </div>
 
         <div></div>

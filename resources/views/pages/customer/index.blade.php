@@ -17,7 +17,7 @@
             </div>
         @endif
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Customer Profile
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-8">Customer Profile
             </h1>
         </div>
 
@@ -47,7 +47,7 @@
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
-                <x-dropdown-filter align="right" />
+                <!-- <x-dropdown-filter align="right" /> -->
 
                 <!-- Add view button -->
                 <a href="{{ route('customer.add') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
@@ -166,7 +166,7 @@
                                                 <div class="flex items-center gap-x-2">
                                                     <div>
                                                         <h2 class="text-sm font-medium text-gray-500 dark:text-white ">
-                                                            {{ $list->house }} {{ $list->street }} {{$list->bry->barangay_name??''}} {{$list->cty->city_town??''}}    
+                                                            {{ $list->house??'' }} {{ $list->street }} {{$list->bry->barangay_name??''}} {{$list->cty->city_town??''}}    
                                                         </h2>
                                                     </div>
                                                 </div>
