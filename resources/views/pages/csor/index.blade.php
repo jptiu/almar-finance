@@ -16,17 +16,16 @@
                 </div>
             </div>
         @endif
-        <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">CSOR</h1>
-        </div>
 
         <form action="{{ route('print.index') }}" method="GET">
             @csrf
             <!-- Dashboard actions -->
             <div class="sm:flex sm:justify-between sm:items-center mb-8 ml-4">
-
+            <div class="relative">
+                <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">CSOR</h1>
+            </div>
                 <!-- Right: Actions -->
-                <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2 mr-4">
                     <div class="relative">
                         <input name="date_range" id="date_range"
                             class="datepicker form-input pl-9 dark:bg-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200 font-medium w-[15.5rem]"
@@ -1186,28 +1185,27 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="mt-8">
-                                <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
-                                    <div class="lg:col-span-2">
-                                        <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-1">
-                                            <div class="md:col-span-1">
-                                                <button type="button" id="prevBtn"
-                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2">
-                                                    Previous
-                                                </button>
-                                                <div class="inline-flex" style="float:right;">
-                                                    <button type="button" id="nextBtn"
-                                                        class="bg-primary-100 hover:bg-primary-200 text-white font-bold py-2 px-4 rounded mx-2">
-                                                        Next Step
+                                <div class="mt-8">
+                                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
+                                        <div class="lg:col-span-2">
+                                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-1">
+                                                <div class="md:col-span-1">
+                                                    <button type="button" id="prevBtn"
+                                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2">
+                                                        Previous
                                                     </button>
+                                                    <div class="inline-flex" style="float:right;">
+                                                        <button type="button" id="nextBtn"
+                                                            class="bg-primary-100 hover:bg-primary-200 text-white font-bold py-2 px-4 rounded mx-2">
+                                                            Next Step
+                                                        </button>
 
-                                                    <button type="submit" id="submitBtn"
-                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
-                                                        Generate Report
-                                                    </button>
+                                                        <button type="submit" id="submitBtn"
+                                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
+                                                            Generate Report
+                                                        </button>
 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

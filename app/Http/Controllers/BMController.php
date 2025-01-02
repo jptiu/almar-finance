@@ -273,6 +273,11 @@ class BMController extends Controller
         return view('pages.requestform.leave.index');
     }
 
+    public function loanInformation()
+    {
+        return view('pages.loaninfo.index');
+    }
+
 
     public function undertimeRequest()
     {

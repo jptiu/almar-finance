@@ -94,7 +94,7 @@
 
         <div class="px-4 w-full max-w-9xl mx-auto mt-4">
             <div class="grid grid-cols-3 gap-4 xl:grid-cols-3 2xl:gap-7.5">
-                <div class="col-span-2 rounded-md border border-stroke bg-white shadow-default dark:border-strokedark divide-y">
+                <div class="col-span-1 rounded-md border border-stroke bg-white shadow-default dark:border-strokedark divide-y">
                     <h1 class="text-xl text-slate-800 dark:text-slate-100 font-bold p-4">Total Employee</h1>
                 
 
@@ -159,7 +159,7 @@
                     </div> 
                 </div>
 
-                <div class="col-span-2 rounded-md border border-stroke bg-white shadow-default dark:border-strokedark divide-y">
+                <div class="col-span-1 rounded-md border border-stroke bg-white shadow-default dark:border-strokedark divide-y">
                     <h1 class="text-xl text-center text-slate-800 dark:text-slate-100 font-bold p-4">Employee & Client Overview</h1>
                     <div class="flex items-center justify-center text-lg p-2">
                         <div class="flex flex-col items-center">

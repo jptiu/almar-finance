@@ -304,6 +304,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     //OverdueAccounts
     Route::get('overdueacc', [BMController::class, 'overdueAcc'])->name('overdueacc.index');
 
+    //LoanInformation
+    Route::get('loaninfo', [BMController::class, 'loanInformation'])->name('loanInformation.index');
+
     //RequestForm
     Route::get('requestform/leave', [BMController::class, 'leaveRequest'])->name('leaveRequest.index');
     Route::get('requestform/undertime', [BMController::class, 'undertimeRequest'])->name('undertimeRequest.index');

@@ -47,7 +47,7 @@
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
-                <x-dropdown-filter align="right" />
+                <!-- <x-dropdown-filter align="right" /> -->
 
                 <!-- Add view button -->
                 <!-- <a href="{{ route('barangay.add') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                                 <h3 class="text-base font-semibold leading-6 text-gray-900"
-                                                    id="modal-title">Import Barangay</h3>
+                                                    id="modal-title">Import Todays Payer</h3>
                                                 <div class="mt-2">
                                                     <div class="fields">
                                                         <div class="input-group mb-3">

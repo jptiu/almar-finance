@@ -16,6 +16,9 @@
                 </div>
             </div>
         @endif
+
+        
+
         <div class="relative">
             <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Approved Loans
             </h1>
@@ -45,9 +48,25 @@
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                <form id="filterForm" method="GET" action="">
+                    <div class="relative">
+                        <input name="date_range" id="date_range"
+                            class="datepicker form-input pl-9 dark:bg-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200 font-medium w-[15.5rem]"
+                            placeholder="Select dates" data-class="flatpickr-right" />
+                        <div class="absolute inset-0 right-auto flex items-center pointer-events-none">
+                            <svg class="w-4 h-4 fill-current text-slate-500 dark:text-slate-400 ml-3"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M15 2h-2V0h-2v2H9V0H7v2H5V0H3v2H1a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1zm-1 12H2V6h12v8z" />
+                            </svg>
+                        </div>
+                        <button type="submit"
+                            class="bg-indigo-500 hover:bg-primary-200 text-white py-2 px-4 rounded">Filter</button>
+                    </div>
+                </form>
 
                 <!-- Filter button -->
-                <x-dropdown-filter align="right" />
+                <!-- <x-dropdown-filter align="right" /> -->
 
                 <!-- Add view button -->
                 <!-- <a href="{{ route('barangay.add') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
@@ -90,7 +109,7 @@
                                             </div>
                                             <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                                 <h3 class="text-base font-semibold leading-6 text-gray-900"
-                                                    id="modal-title">Import Barangay</h3>
+                                                    id="modal-title">Import Approved Loans</h3>
                                                 <div class="mt-2">
                                                     <div class="fields">
                                                         <div class="input-group mb-3">
