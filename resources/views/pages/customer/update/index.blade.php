@@ -73,443 +73,437 @@
 
                     <div id="step1" class="form-step">
                         <h2 class="text-xl font-semibold mb-6 pt-8">Personal Information</h2>
-                        <form id="loanForm1">
-                            <div class="grid grid-cols-4 gap-4">
-                                <div class="md:col-span-2">
-                                    <label for="first_name" class="block text-sm font-medium text-gray-700">Customer
-                                        Type</label>
-                                    <select name="type" id="type"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                                    @foreach ($types as $type)
-                                        <option value="{{ $type->code }}"
-                                            {{ $customer->customerType->description == $type->description ? 'selected' : '' }}>
-                                            {{ $type->description }}</option>
-                                    @endforeach
-                                    </select>
-                                    <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
-                                        required.</span>
-                                </div>
-                                <div class="md:col-span-2">
-
-                                </div>
-                                <div class="md:col-span-1">
-                                    <label for="first_name" class="block text-sm font-medium text-gray-700">First
-                                        Name</label>
-                                    <input value="{{ $customer->first_name }}" type="text" name="first_name"
-                                        id="first_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
-                                        required.</span>
-                                </div>
-
-
-                                <div class="md:col-span-1">
-                                    <label for="middle_name" class="block text-sm font-medium text-gray-700">Middle
-                                        Name</label>
-                                    <input value="{{ $customer->middle_name }}" type="text" name="middle_name"
-                                        id="middle_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="last_name" class="block text-sm font-medium text-gray-700">Last
-                                        Name</label>
-                                    <input value="{{ $customer->last_name }}" type="text" name="last_name"
-                                        id="last_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="cell_number" class="block text-sm font-medium text-gray-700">Personal
-                                        Contact Number</label>
-                                    <input value="{{ $customer->cell_number }}" type="text" name="cell_number"
-                                        id="cell_number"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_cell_number">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="birth_date"
-                                        class="block text-sm font-medium text-gray-700">Birthdate</label>
-                                    <input value="{{ $customer->birth_date }}" type="date" name="birth_date"
-                                        id="birth_date"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_birthdate">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="birth_place" class="block text-sm font-medium text-gray-700">Birth
-                                        Place</label>
-                                    <input value="{{ $customer->birth_place }}" type="text" name="birth_place"
-                                        id="birth_place"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_birth_place">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1.5">
-                                    <label for="house" class="block text-sm font-medium text-gray-700">House
-                                        Address</label>
-                                    <input value="{{ $customer->house }}" type="text" name=""
-                                        id="house" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_house">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1.5">
-                                    <label for="street" class="block text-sm font-medium text-gray-700">Street
-                                        Address</label>
-                                    <input value="{{ $customer->street }}" type="text" name=""
-                                        id="street" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_street">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1.5">
-                                    <label for="barangay" class="block text-sm font-medium text-gray-700">Barangay
-                                        Address</label>
-                                    <input value="{{ $customer->barangay }}" type="text" name=""
-                                        id="barangay" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_barangay">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1.5">
-                                    <label for="city" class="block text-sm font-medium text-gray-700">City
-                                        Address</label>
-                                    <input value="{{ $customer->city }}" type="text" name=""
-                                        id="city" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_city">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="civil_status" class="block text-sm font-medium text-gray-700">Civil
-                                        Status</label>
-                                    <input value="{{ $customer->civil_status }}" type="text" name="civil_status"
-                                        id="civil_status"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_civil_status">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
-                                    <input value="{{ $customer->age }}" type="number" name="age"
-                                        id="age" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_age">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="gender"
-                                        class="block text-sm font-medium text-gray-700">Gender</label>
-                                    <input value="{{ $customer->gender }}" type="text" name="gender"
-                                        id="gender" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_gender">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="citizenship"
-                                        class="block text-sm font-medium text-gray-700">Citizenship</label>
-                                    <input value="{{ $customer->citizenship }}" type="text" name="citizenship"
-                                        id="citizenship"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_citizenship">This field is
-                                        required.</span>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="facebook_name"
-                                        class="block text-sm font-medium text-gray-700">Facebook Name</label>
-                                    <input value="{{ $customer->facebook_name }}" type="text"
-                                        name="facebook_name" id="facebook_name"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
-                                    <span class="text-red-500 text-xs hidden" id="error_facebook_name">This field is
-                                        required.</span>
-                                </div>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="first_name" class="block text-sm font-medium text-gray-700">Customer
+                                    Type</label>
+                                <select name="type" id="type"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                @foreach ($types as $type)
+                                    <option value="{{ $type->code }}"
+                                        {{ $customer->customerType->description == $type->description ? 'selected' : '' }}>
+                                        {{ $type->description }}</option>
+                                @endforeach
+                                </select>
+                                <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
+                                    required.</span>
+                            </div>
+                            <div class="md:col-span-2">
 
                             </div>
-                        </form>
+                            <div class="md:col-span-1">
+                                <label for="first_name" class="block text-sm font-medium text-gray-700">First
+                                    Name</label>
+                                <input value="{{ $customer->first_name }}" type="text" name="first_name"
+                                    id="first_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
+                                    required.</span>
+                            </div>
+
+
+                            <div class="md:col-span-1">
+                                <label for="middle_name" class="block text-sm font-medium text-gray-700">Middle
+                                    Name</label>
+                                <input value="{{ $customer->middle_name }}" type="text" name="middle_name"
+                                    id="middle_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="last_name" class="block text-sm font-medium text-gray-700">Last
+                                    Name</label>
+                                <input value="{{ $customer->last_name }}" type="text" name="last_name" id="last_name"
+                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="cell_number" class="block text-sm font-medium text-gray-700">Personal
+                                    Contact Number</label>
+                                <input value="{{ $customer->cell_number }}" type="text" name="cell_number"
+                                    id="cell_number" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_cell_number">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="birth_date"
+                                    class="block text-sm font-medium text-gray-700">Birthdate</label>
+                                <input value="{{ $customer->birth_date }}" type="date" name="birth_date"
+                                    id="birth_date" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_birthdate">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="birth_place" class="block text-sm font-medium text-gray-700">Birth
+                                    Place</label>
+                                <input value="{{ $customer->birth_place }}" type="text" name="birth_place"
+                                    id="birth_place" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_birth_place">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-1.5">
+                                <label for="house" class="block text-sm font-medium text-gray-700">House
+                                    Address</label>
+                                <input value="{{ $customer->house }}" type="text" name="" id="house"
+                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_house">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-1.5">
+                                <label for="street" class="block text-sm font-medium text-gray-700">Street
+                                    Address</label>
+                                <input value="{{ $customer->street }}" type="text" name="" id="street"
+                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_street">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-1.5">
+                                <label for="barangay" class="block text-sm font-medium text-gray-700">Barangay
+                                    Address</label>
+                                <select name="barangay" id="barangay"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    @foreach ($barangays as $barangay)
+                                        <option value="{{ $barangay->id }}"
+                                            {{ $customer->barangay == $barangay->id ? 'selected' : '' }}>
+                                            {{ $barangay->barangay_name }}</option>
+                                    @endforeach
+                                </select>
+                                {{-- <input value="{{ $customer->barangay_name }}" type="text" name="barangay"
+                                    id="barangay" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_barangay">This field is
+                                    required.</span> --}}
+                            </div>
+
+                            <div class="md:col-span-1.5">
+                                <label for="city" class="block text-sm font-medium text-gray-700">City
+                                    Address</label>
+                                <select name="city" id="city"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}"
+                                            {{ $customer->city == $city->id ? 'selected' : '' }}>
+                                            {{ $city->city_town }}</option>
+                                    @endforeach
+                                </select>
+                                {{-- <input value="{{ $customer->city_town }}" type="text" name="city"
+                                    id="city" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_city">This field is
+                                    required.</span> --}}
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="civil_status" class="block text-sm font-medium text-gray-700">Civil
+                                    Status</label>
+                                <input value="{{ $customer->civil_status }}" type="text" name="civil_status"
+                                    id="civil_status" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_civil_status">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
+                                <input value="{{ $customer->age }}" type="number" name="age" id="age"
+                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_age">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                                <input value="{{ $customer->gender }}" type="text" name="gender" id="gender"
+                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_gender">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="citizenship"
+                                    class="block text-sm font-medium text-gray-700">Citizenship</label>
+                                <input value="{{ $customer->citizenship }}" type="text" name="citizenship"
+                                    id="citizenship" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_citizenship">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="facebook_name" class="block text-sm font-medium text-gray-700">Facebook
+                                    Name</label>
+                                <input value="{{ $customer->facebook_name }}" type="text" name="facebook_name"
+                                    id="facebook_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_facebook_name">This field is
+                                    required.</span>
+                            </div>
+
+                        </div>
                     </div>
 
                     <!-- Step 2 -->
                     <div id="step2" class="form-step hidden">
                         <h2 class="text-xl font-semibold mb-6 pt-8">Spousal Data</h2>
-                        <form id="loanForm2">
-                            <div class="grid grid-cols-4 gap-4">
-                                <div class="md:col-span-2">
-                                    <label for="spouse_name">Complete Name of Spouse/ Live in Partner</label>
-                                    <div>
-                                        <input value="{{ $customer->spouse_name }}" name="spouse_name"
-                                            id="spouse_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="spouse_number">Contact Number</label>
-                                    <div>
-                                        <input value="{{ $customer->spouse_number }}" type="number"
-                                            name="spouse_number" id="spouse_number"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="spouse_bdate">Birthdate</label>
-                                    <input value="{{ $customer->spouse_bdate }}" type="date" name="spouse_bdate"
-                                        id="spouse_bdate"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="" />
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="spouse_age">spouse_age</label>
-                                    <div>
-                                        <input value="{{ $customer->spouse_age }}" type="number" name="spouse_age"
-                                            id="spouse_age"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="occupation">Occupation</label>
-                                    <div>
-                                        <input value="{{ $customer->occupation }}" name="occupation" id="occupation"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="c_nameadd">Company Name/ Address</label>
-                                    <div>
-                                        <input value="{{ $customer->c_nameadd }}" name="c_nameadd" id="c_nameadd"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="spouse_fb">Facebook Name</label>
-                                    <div>
-                                        <input value="{{ $customer->spouse_fb }}" name="spouse_fb"
-                                            id="spouse_fb"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="spouse_name">Complete Name of Spouse/ Live in Partner</label>
+                                <div>
+                                    <input value="{{ $customer->spouse_name }}" name="spouse_name" id="spouse_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
                                 </div>
                             </div>
-                        </form>
+
+                            <div class="md:col-span-2">
+                                <label for="spouse_number">Contact Number</label>
+                                <div>
+                                    <input value="{{ $customer->spouse_number }}" type="number"
+                                        name="spouse_number" id="spouse_number"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="spouse_bdate">Birthdate</label>
+                                <input value="{{ $customer->spouse_bdate }}" type="date" name="spouse_bdate"
+                                    id="spouse_bdate"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="" />
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="spouse_age">spouse_age</label>
+                                <div>
+                                    <input value="{{ $customer->spouse_age }}" type="number" name="spouse_age"
+                                        id="spouse_age"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="occupation">Occupation</label>
+                                <div>
+                                    <input value="{{ $customer->occupation }}" name="occupation" id="occupation"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="c_nameadd">Company Name/ Address</label>
+                                <div>
+                                    <input value="{{ $customer->c_nameadd }}" name="c_nameadd" id="c_nameadd"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="spouse_fb">Facebook Name</label>
+                                <div>
+                                    <input value="{{ $customer->spouse_fb }}" name="spouse_fb" id="spouse_fb"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Step 3 -->
                     <div id="step3" class="form-step hidden">
                         <h2 class="text-xl font-semibold mb-6 pt-8">Company Information</h2>
-                        <form id="loanForm2">
-                            <div class="grid grid-cols-4 gap-4">
-                                <div class="md:col-span-2">
-                                    <label for="agency_name">Agency Name</label>
-                                    <div>
-                                        <input value="{{ $customer->agency_name }}" name="agency_name"
-                                            id="agency_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="agency_name">Agency Name</label>
+                                <div>
+                                    <input value="{{ $customer->agency_name }}" name="agency_name" id="agency_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
                                 </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="add_tel">Address / Tel. no.</label>
-                                    <div>
-                                        <input value="{{ $customer->add_tel }}" name="add_tel" id="add_tel"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="comp_name">Company Name</label>
-                                    <div>
-                                        <input value="{{ $customer->comp_name }}" name="comp_name" id="comp_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="add_telc">Address / Tel. no.</label>
-                                    <div>
-                                        <input value="{{ $customer->add_telc }}" name="add_telc" id="add_telc"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="date_hired">Date Hired</label>
-                                    <input value="{{ $customer->date_hired }}" type="date" name="date_hired"
-                                        id="date_hired"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="" />
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="day_off">Day Off</label>
-                                    <div>
-                                        <input value="{{ $customer->day_off }}" name="day_off" id="day_off"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="job_position">Position</label>
-                                    <div>
-                                        <input value="{{ $customer->job_position }}" name="job_position"
-                                            id="job_position"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="monthly_salary">Monthly Salary</label>
-                                    <div>
-                                        <input value="{{ $customer->monthly_salary }}" name="monthly_salary"
-                                            id="monthly_salary"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-1">
-                                    <label for="salary_sched">Salary Schedule</label>
-                                    <div>
-                                        <input value="{{ $customer->salary_sched }}" name="salary_sched"
-                                            id="salary_sched"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
                             </div>
-                        </form>
+
+                            <div class="md:col-span-2">
+                                <label for="add_tel">Address / Tel. no.</label>
+                                <div>
+                                    <input value="{{ $customer->add_tel }}" name="add_tel" id="add_tel"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="comp_name">Company Name</label>
+                                <div>
+                                    <input value="{{ $customer->comp_name }}" name="comp_name" id="comp_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="add_telc">Address / Tel. no.</label>
+                                <div>
+                                    <input value="{{ $customer->add_telc }}" name="add_telc" id="add_telc"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="date_hired">Date Hired</label>
+                                <input value="{{ $customer->date_hired }}" type="date" name="date_hired"
+                                    id="date_hired"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="" />
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="day_off">Day Off</label>
+                                <div>
+                                    <input value="{{ $customer->day_off }}" name="day_off" id="day_off"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="job_position">Position</label>
+                                <div>
+                                    <input value="{{ $customer->job_position }}" name="job_position"
+                                        id="job_position"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="monthly_salary">Monthly Salary</label>
+                                <div>
+                                    <input value="{{ $customer->monthly_salary }}" name="monthly_salary"
+                                        id="monthly_salary"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-1">
+                                <label for="salary_sched">Salary Schedule</label>
+                                <div>
+                                    <input value="{{ $customer->salary_sched }}" name="salary_sched"
+                                        id="salary_sched"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                     <!-- Step 4 -->
                     <div id="step4" class="form-step hidden">
                         <h2 class="text-xl font-semibold mb-6 pt-8">For Pensioners ONLY</h2>
-                        <form id="loanForm2">
-                            <div class="grid grid-cols-4 gap-4">
-                                <div class="md:col-span-2">
-                                    <label for="monthly_pension">Monthly Pension</label>
-                                    <div>
-                                        <input value="{{ $customer->monthly_pension }}" name="monthly_pension"
-                                            id="monthly_pension"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="monthly_pension">Monthly Pension</label>
+                                <div>
+                                    <input value="{{ $customer->monthly_pension }}" name="monthly_pension"
+                                        id="monthly_pension"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
                                 </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="pension_sched">Pension Schedule</label>
-                                    <div>
-                                        <input value="{{ $customer->pension_sched }}" name="pension_sched"
-                                            id="pension_sched"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="pension_type">Pension Type</label>
-                                    <div>
-                                        <input value="{{ $customer->pension_type }}" name="pension_type"
-                                            id="pension_type"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
                             </div>
-                        </form>
+
+                            <div class="md:col-span-2">
+                                <label for="pension_sched">Pension Schedule</label>
+                                <div>
+                                    <input value="{{ $customer->pension_sched }}" name="pension_sched"
+                                        id="pension_sched"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="pension_type">Pension Type</label>
+                                <div>
+                                    <input value="{{ $customer->pension_type }}" name="pension_type"
+                                        id="pension_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                     <!-- Step 5 -->
                     <div id="step5" class="form-step hidden">
                         <h2 class="text-xl font-semibold mb-6 pt-8">Background Data</h2>
-                        <form id="loanForm2">
-                            <div class="grid grid-cols-4 gap-4">
-                                <div class="md:col-span-2">
-                                    <label for="fathers_name">Father's Name</label>
-                                    <div>
-                                        <input value="{{ $customer->fathers_name }}" name="fathers_name"
-                                            id="fathers_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="fathers_name">Father's Name</label>
+                                <div>
+                                    <input value="{{ $customer->fathers_name }}" name="fathers_name"
+                                        id="fathers_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
                                 </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="cell_number">Contact No.</label>
-                                    <div>
-                                        <input value="{{ $customer->cell_number }}" type="number"
-                                            name="cell_number" id="cell_number"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="mothers_name">Mother's Name</label>
-                                    <div>
-                                        <input value="{{ $customer->mothers_name }}" name="mothers_name"
-                                            id="mothers_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="cell_number">Contact No.</label>
-                                    <div>
-                                        <input value="{{ $customer->cell_number }}" type="number"
-                                            name="cell_number" id="cell_number"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
                             </div>
-                        </form>
+
+                            <div class="md:col-span-2">
+                                <label for="cell_number">Contact No.</label>
+                                <div>
+                                    <input value="{{ $customer->cell_number }}" type="number" name="cell_number"
+                                        id="cell_number"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="mothers_name">Mother's Name</label>
+                                <div>
+                                    <input value="{{ $customer->mothers_name }}" name="mothers_name"
+                                        id="mothers_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="cell_number">Contact No.</label>
+                                <div>
+                                    <input value="{{ $customer->cell_number }}" type="number" name="cell_number"
+                                        id="cell_number"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                     <!-- Step 6 -->
                     <div id="step6" class="form-step hidden">
                         <h2 class="text-xl font-semibold mb-6 pt-8">Bank Account Informations</h2>
-                        <form id="loanForm2">
-                            <div class="grid grid-cols-4 gap-4">
-                                <div class="md:col-span-2">
-                                    <label for="branch">Bank / Branch</label>
-                                    <div>
-                                        <input value="{{ $customer->branch }}" name="branch" id="branch"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="md:col-span-2">
+                                <label for="branch">Bank / Branch</label>
+                                <div>
+                                    <input value="{{ $customer->branch }}" name="branch" id="branch"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
                                 </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="card_no">Card No.</label>
-                                    <div>
-                                        <input value="{{ $customer->card_no }}" name="card_no" id="card_no"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="acc_no">Account No.</label>
-                                    <div>
-                                        <input value="{{ $customer->acc_no }}" name="acc_no" id="acc_no"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="pin_no">Pin No.</label>
-                                    <div>
-                                        <input value="{{ $customer->pin_no }}" name="pin_no" id="pin_no"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    </div>
-                                </div>
-
                             </div>
-                        </form>
+
+                            <div class="md:col-span-2">
+                                <label for="card_no">Card No.</label>
+                                <div>
+                                    <input value="{{ $customer->card_no }}" name="card_no" id="card_no"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="acc_no">Account No.</label>
+                                <div>
+                                    <input value="{{ $customer->acc_no }}" name="acc_no" id="acc_no"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="pin_no">Pin No.</label>
+                                <div>
+                                    <input value="{{ $customer->pin_no }}" name="pin_no" id="pin_no"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
 
@@ -841,9 +835,8 @@
 
                     <!-- Navigation Buttons -->
                     <div class="mt-8 flex justify-between">
-                        <button id="prev-btn" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg"
-                            disabled>Previous</button>
-                        <button id="next-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-lg">Next</button>
+                        <a id="prev-btn" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg" disabled>Previous</a>
+                        <a id="next-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-lg">Next</a>
                         <button id="submit" type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg"
                             hidden>Submit</button>
                     </div>

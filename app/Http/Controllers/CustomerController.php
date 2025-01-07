@@ -145,7 +145,9 @@ class CustomerController extends Controller
         $branch = auth()->user()->branch_id;
         $customer = Customer::where('branch_id', $branch)->where('id', $id)->first();
         $types = CustomerType::where('branch_id', $branch)->paginate(20);
-        return view('pages.customer.update.index', compact('customer', 'types'));
+        $barangays = Barangay::all();
+        $cities = CityTown::all();
+        return view('pages.customer.update.index', compact('customer', 'types', 'barangays', 'cities'));
     }
 
     /**
@@ -160,17 +162,51 @@ class CustomerController extends Controller
         $customer->first_name = $request->first_name;
         $customer->middle_name = $request->middle_name;
         $customer->last_name = $request->last_name;
-        $customer->house = $request->house;
-        $customer->street = $request->street;
+        $customer->house = $request->house??'.';
+        $customer->street = $request->street??'.';
         $customer->barangay = $request->barangay;
         $customer->city = $request->city;
+        $customer->email = $request->email;
         $customer->job_position = $request->job_position;
         $customer->salary_sched = $request->salary_sched;
         $customer->tel_number = $request->tel_number;
         $customer->cell_number = $request->cell_number;
-        $customer->status = $request->status;
-        $customer->email = $request->email;
-        $customer->save();
+        $customer->civil_status = $request->civil_status;
+        $customer->status = 'AC';
+        $customer->birth_date = $request->birth_date;
+        $customer->birth_place = $request->birth_place;
+        $customer->age = $request->age;
+        $customer->gender = $request->gender;
+        $customer->citizenship = $request->citizenship;
+        $customer->facebook_name = $request->facebook_name;
+        $customer->spouse_name = $request->spouse_name;
+        $customer->spouse_number = $request->spouse_number;
+        $customer->spouse_age = $request->spouse_age;
+        $customer->spouse_bdate = $request->spouse_bdate;
+        $customer->spouse_fb = $request->spouse_fb;
+        $customer->occupation = $request->occupation;
+        $customer->c_nameadd = $request->c_nameadd;
+        $customer->agency_name = $request->agency_name;
+        $customer->add_tel = $request->add_tel;
+        $customer->add_telc = $request->add_telc;
+        $customer->comp_name = $request->comp_name;
+        // $customer->date_hired = $request->date_hired;
+        $customer->day_off = $request->day_off;
+        $customer->monthly_salary = $request->monthly_salary;
+        $customer->salary_sched = $request->salary_sched;
+        $customer->monthly_pension = $request->monthly_pension;
+        $customer->pension_sched = $request->pension_sched;
+        $customer->pension_type = $request->pension_type;
+        $customer->fathers_name = $request->fathers_name;
+        $customer->fathers_num = $request->fathers_num;
+        $customer->mothers_name = $request->mothers_name;
+        $customer->mothers_num = $request->mothers_num;
+        $customer->fathers_name = $request->fathers_name;
+        $customer->branch = $request->branch;
+        $customer->card_no = $request->card_no;
+        $customer->acc_no = $request->acc_no;
+        $customer->pin_no = $request->pin_no;
+        $customer->update();
 
         return redirect(route("customer.index"))->with('success', 'Updated Successfully');
 
