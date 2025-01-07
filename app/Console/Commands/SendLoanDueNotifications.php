@@ -15,6 +15,10 @@ class SendLoanDueNotifications extends Command
     public function handle()
     {
 
+        /* The code snippet ` = Loan::with([...])->get();` is using Eloquent's `with` method to
+        eager load the relationship named 'details' for the 'Loan' model. Within the closure
+        function passed to 'details', it is filtering the related 'details' based on the
+        'loan_due_date' field being equal to the date one week from the current date. */
         $loans = Loan::with([
             'details' => function ($query) {
                 $now = Carbon::now();
@@ -25,7 +29,7 @@ class SendLoanDueNotifications extends Command
         \Log::info($loans);
 
         foreach ($loans as $loan) {
-            Mail::to('jhonpatricktiu@gmail.com')->send(new LoanDueNotification($loan));
+            Mail::to($loan->customer->email)->send(new LoanDueNotification($loan));
             $this->info('Notification sent to ' . 'jhonpatricktiu@gmail.com');
         }
 
