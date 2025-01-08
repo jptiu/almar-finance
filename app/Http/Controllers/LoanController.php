@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\CustomerType;
 use App\Models\Loan;
 use App\Models\LoanDetails;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -108,7 +109,7 @@ class LoanController extends Controller
             $loan->loan_type = $request->loan_type;
             $loan->transaction_type = $request->transaction_type;
             // $loan->trans_no = $request->trans_no; // If needed, uncomment
-            $loan->date_of_loan = $request->date_of_loan;
+            $loan->date_of_loan = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
             $loan->customer_id = $request->customer_id;
             $loan->customer_type = $request->customer_type;
             $loan->status = null; // Default status (adjust based on your logic)
@@ -117,8 +118,8 @@ class LoanController extends Controller
             $loan->months_to_pay = $request->months_to_pay;
             $loan->interest = $request->interest;
             $loan->interest_amount = $request->interest_amount;
-            $loan->svc_charge = $request->svc_charge;
-            $loan->actual_record = $request->actual_record;
+            $loan->svc_charge = $request->svc_charge??'';
+            $loan->actual_record = $request->actual_record??'';
             $loan->payable_amount = $request->payable_amount;
             $loan->branch_id = $branch;
             $loan->user_id = auth()->user()->id;
@@ -197,7 +198,7 @@ class LoanController extends Controller
             $loan->loan_type = $request->loan_type;
             $loan->transaction_type = $request->transaction_type;
             $loan->trans_no = $request->trans_no;
-            $loan->date_of_loan = $request->date_of_loan;
+            $loan->date_of_loan = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');;
             $loan->customer_id = $request->customer_id;
             $loan->customer_type = $request->customer_type;
             $loan->status = $request->status;
@@ -206,8 +207,8 @@ class LoanController extends Controller
             $loan->months_to_pay = $request->months_to_pay;
             $loan->interest = $request->interest;
             $loan->interest_amount = $request->interest_amount;
-            $loan->svc_charge = $request->svc_charge;
-            $loan->actual_record = $request->actual_record;
+            $loan->svc_charge = $request->svc_charge??'';
+            $loan->actual_record = $request->actual_record??'';
             $loan->payable_amount = $request->payable_amount;
             $loan->save();
 

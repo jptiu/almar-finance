@@ -57,13 +57,13 @@
                 <!-- <x-dropdown-filter align="right" /> -->
 
                 <!-- Add view button -->
-                <!-- <a id="show-modal-new" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                <a id="show-modal-new" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                         <path
                             d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                     </svg>
                     <span class="hidden xs:block ml-2">New</span>
-                </a> -->
+                </a>
                 <a id="show-modal-import" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg class="h-6 w-6 text-gray-300" width="24" height="24" viewBox="0 0 24 24"
                         stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"

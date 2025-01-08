@@ -76,7 +76,7 @@ class CollectionController extends Controller
             ->where('loan_day_no', $request->loan_no)
             ->first();
         if($loanDetails){
-            $loanDetails->loan_date_paid = $request->date_paid;
+            $loanDetails->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_paid)->format('m/d/Y');
             $loanDetails->loan_amount_paid = $request->loan_amount_paid;
             $loanDetails->loan_amount_change = $request->loan_amount_change ?? 0;
             $loanDetails->loan_withdraw_from_bank = $request->loan_withdraw_from_bank ?? 0;
@@ -91,7 +91,7 @@ class CollectionController extends Controller
             $col->type = $request->type;
             $col->status = $request->status;
             $col->trans_no = $request->trans_no;
-            $col->date = $request->date_paid;
+            $col->date = Carbon::createFromFormat('Y-m-d', $request->date_paid)->format('m/d/Y');
             $col->paid_amount = $request->loan_amount_paid;
             $col->branch_id = $branch;
             $col->lat = $request->lat ?? 0;
