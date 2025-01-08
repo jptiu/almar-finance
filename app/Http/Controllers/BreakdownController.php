@@ -6,6 +6,7 @@ use App\Models\Breakdown;
 use App\Models\CashBill;
 use App\Models\Denomination;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -48,7 +49,7 @@ class BreakdownController extends Controller
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         $branch = auth()->user()->branch_id;
         $breakdown = new Breakdown();
-        $breakdown->date = $request->date;
+        $breakdown->date = Carbon::createFromFormat('Y-m-d', $request->date)->format('m/d/Y');
         $breakdown->user_id = auth()->user()->name;
         $breakdown->total_amount = $request->amount;
         $breakdown->branch_id = $branch;
