@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chart;
 use App\Models\Expenses;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -47,7 +48,7 @@ class ExpensesController extends Controller
         $exp->justification = $request->justification;
         $exp->or_no = $request->or_no;
         $exp->amount = $request->amount;
-        $exp->exp_date = $request->exp_date;
+        $exp->exp_date = Carbon::createFromFormat('Y-m-d', $request->exp_date)->format('m/d/Y');
         $exp->branch_id = $branch;
         $exp->user_id = auth()->user()->id;
         $exp->save();

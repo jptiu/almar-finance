@@ -84,8 +84,8 @@
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-8">
 
                                 <div class="md:col-span-2">
-                                    <label for="house" class="text-black font-medium">Expiry Date</label>
-                                    <input type="date" name="house" id="house" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <label for="exp_date" class="text-black font-medium">Expiry Date</label>
+                                    <input type="date" name="exp_date" id="exp_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
                                 </div>
 
                             </div>  
