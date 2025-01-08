@@ -178,7 +178,10 @@ class BMController extends Controller
     public function overdueAcc(Request $request)
     {
 
-        $lists = Loan::where('transaction_customer_status', '')->paginate(20);
+        $lists = Loan::with(['details' => function ($query) {
+            $query->where('loan_due_date', '<', now()->toDateString());
+        }])
+        ->where('transaction_customer_status', '')->paginate(20);
         return view('pages.overdueacc.index', compact('lists'));
 
     }

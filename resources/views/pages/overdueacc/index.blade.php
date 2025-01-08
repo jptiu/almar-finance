@@ -242,15 +242,15 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
-                                    
+                                    @foreach($lists as $list)
                                         <tr>
                                             <td
                                                 class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                1
+                                                {{$list->id}}
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                James Simene
+                                                {{$list->customer->first_name}} {{$list->customer->last_name}}
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
@@ -316,7 +316,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                   
+                                   @endforeach
                                 </tbody>
                                 
                             </table>
