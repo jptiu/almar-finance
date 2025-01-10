@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HRController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,3 +60,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('loan/bad-accounts', 'CustomerController@badAccounts')->name('customer.badAccounts');
     });
 });
+
+// Pending Loan Approval
+Route::get('loan-approved', [HRController::class, 'approvedLoansAPI']);
+Route::get('loan-rejected', [HRController::class, 'rejectedLoansAPI']);
+Route::get('loan-pending', [HRController::class, 'pendingLoansAPI']);

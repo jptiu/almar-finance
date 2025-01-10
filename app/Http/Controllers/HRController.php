@@ -130,6 +130,14 @@ class HRController extends Controller
         return view('pages.hr.loanapprovals.approved.index', compact('loans'));
     }
 
+    public function approvedLoansAPI()
+    {
+        $loans = Loan::where('principal_amount', '>', '50000')
+            ->where('status', '=', 'FULPD')->paginate(10);
+
+        return response()->json($loans, 200);
+    }
+
     public function rejectedLoans()
     {
         $branch = auth()->user()->branch_id;
@@ -138,6 +146,14 @@ class HRController extends Controller
             ->where('status', '=', 'CNCLD')->paginate(10);
 
         return view('pages.hr.loanapprovals.rejected.index', compact('loans'));
+    }
+
+    public function rejectedLoansAPI()
+    {
+        $loans = Loan::where('principal_amount', '>', '50000')
+            ->where('status', '=', 'CNCLD')->paginate(10);
+
+        return response()->json($loans, 200);
     }
 
     public function cloanHistory()
@@ -157,6 +173,15 @@ class HRController extends Controller
             ->paginate(10);
 
         return view('pages.hr.loanapprovals.pending.index', compact('loans'));
+    }
+
+    public function pendingLoansAPI()
+    {
+        $loans = Loan::where('principal_amount', '>', '50000')
+            ->where('status', '=', NULL)
+            ->paginate(10);
+
+        return response()->json($loans, 200);
     }
 
     public function announcementHr()
@@ -236,11 +261,11 @@ class HRController extends Controller
 
     public function dailyWorkRequestPrint($id)
     {
-         
+
         $branch_address = Branch::find(auth()->user()->branch_id);
         $list = DailyWorkOrder::find($id);
 
-        return view('pages.hr.dailyWorkRequest.print.index', compact('list','branch_address'));
+        return view('pages.hr.dailyWorkRequest.print.index', compact('list', 'branch_address'));
 
     }
 
