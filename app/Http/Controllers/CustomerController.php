@@ -71,8 +71,8 @@ class CustomerController extends Controller
         $customer->first_name = $request->first_name;
         $customer->middle_name = $request->middle_name;
         $customer->last_name = $request->last_name;
-        $customer->house = $request->house??'.';
-        $customer->street = $request->street??'.';
+        $customer->house = $request->house ?? '.';
+        $customer->street = $request->street ?? '.';
         $customer->barangay = $request->barangay;
         $customer->city = $request->city;
         $customer->email = $request->email;
@@ -162,8 +162,8 @@ class CustomerController extends Controller
         $customer->first_name = $request->first_name;
         $customer->middle_name = $request->middle_name;
         $customer->last_name = $request->last_name;
-        $customer->house = $request->house??'.';
-        $customer->street = $request->street??'.';
+        $customer->house = $request->house ?? '.';
+        $customer->street = $request->street ?? '.';
         $customer->barangay = $request->barangay;
         $customer->city = $request->city;
         $customer->email = $request->email;
@@ -276,16 +276,14 @@ class CustomerController extends Controller
         return redirect(route("customer.index"))->with('success', 'CSV Data Imported Successfully');
     }
 
-    public function printCustomer(Request $request)
+    public function printCustomer($id)
     {
         $branch = auth()->user()->branch_id;
         $branchAddress = Branch::find($branch);
         $customer = Customer::with([
             'loan',
-            'loan.details' => function ($query) use ($request) {
-                $query->whereBetween('loan_due_date', [$request->date_from, $request->date_to]);
-            }
-        ])->where('branch_id', $branch)->find($request->customer);
+            'loan.details'
+        ])->where('branch_id', $branch)->find($id);
 
         return view('pages.customer.print.index', compact('customer', 'branchAddress'));
     }
