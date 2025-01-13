@@ -121,4 +121,66 @@ class SavingsController extends Controller
         return view('pages.savingscustomer.withdrawalentry.printWithdrawal.index', compact('withdraw', 'company'));
     }
 
+    public function exportsavingsData()
+    {
+        $filename = 'savingsdepositData.csv';
+        $data = SavingsDeposit::all();
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=".$filename."",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0",];
+        $columns = ['customer_id', 'customer_name', 'tran_date', 'amount'];
+        $callback = function () use ($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+    
+            foreach ($data as $row) {
+                fputcsv($file, [
+                    $row->customer_id,
+                    $row->customer_name, // Replace with your actual column names
+                    $row->tran_date,
+                    $row->amount,
+                ]);
+            }
+    
+            fclose($file);
+        };
+    
+        return response()->stream($callback, 200, $headers);
+
+    }
+    
+    public function exportwithdrawalData()
+    {
+        $filename = 'savingswithdrawalData.csv';
+        $data = SavingsWithdrawal::all();
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=".$filename."",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0",];
+        $columns = ['customer_id', 'customer_name', 'tran_date', 'amount'];
+        $callback = function () use ($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+    
+            foreach ($data as $row) {
+                fputcsv($file, [
+                    $row->customer_id,
+                    $row->customer_name,
+                    $row->tran_date,
+                    $row->amount,
+                ]);
+            }
+    
+            fclose($file);
+        };
+    
+        return response()->stream($callback, 200, $headers);
+
+    }
+    
 }

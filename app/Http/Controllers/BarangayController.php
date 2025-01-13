@@ -28,7 +28,7 @@ class BarangayController extends Controller
             $lists = Barangay::where('branch_id', $branch)->paginate(20);
         }
 
-        return view('pages.barangay.index', compact('lists'));
+        return view('pages.barangay.index', compact('lists','sample'));
     }
 
     public function add()

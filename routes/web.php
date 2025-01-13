@@ -396,4 +396,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::post('user/store', [UserController::class, 'store'])->name('user.store');
 
+    //export data ro csv
+    Route::get('/exportsavings-csv', [SavingsController::class, 'exportsavingsData'])->name('savings.export');
+    Route::get('/exportwithdrawal-csv', [SavingsController::class, 'exportwithdrawalData'])->name('withdraw.export');
 });
