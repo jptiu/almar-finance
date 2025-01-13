@@ -132,8 +132,8 @@ class HRController extends Controller
 
     public function approvedLoansAPI()
     {
-        $loans = Loan::where('principal_amount', '>', '50000')
-            ->where('status', '=', 'FULPD')->paginate(10);
+        $loans = Loan::with('customer')->where('principal_amount', '>', '50000')
+            ->where('status', '!=', 'CNCLD')->paginate(10);
 
         return response()->json($loans, 200);
     }
@@ -150,7 +150,7 @@ class HRController extends Controller
 
     public function rejectedLoansAPI()
     {
-        $loans = Loan::where('principal_amount', '>', '50000')
+        $loans = Loan::with('customer')->where('principal_amount', '>', '50000')
             ->where('status', '=', 'CNCLD')->paginate(10);
 
         return response()->json($loans, 200);
@@ -177,7 +177,7 @@ class HRController extends Controller
 
     public function pendingLoansAPI()
     {
-        $loans = Loan::where('principal_amount', '>', '50000')
+        $loans = Loan::with('customer')->where('principal_amount', '>', '50000')
             ->where('status', '=', NULL)
             ->paginate(10);
 

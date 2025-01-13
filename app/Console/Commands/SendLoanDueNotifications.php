@@ -26,11 +26,10 @@ class SendLoanDueNotifications extends Command
                 $query->whereDate('loan_due_date', '=', $nextWeek->toDateString());
             }
         ])->get();
-        \Log::info($loans);
 
         foreach ($loans as $loan) {
             Mail::to($loan->customer->email)->send(new LoanDueNotification($loan));
-            $this->info('Notification sent to ' . 'jhonpatricktiu@gmail.com');
+            $this->info('Notification sent to ' . $loan->customer->email);
         }
 
         $this->info('Loan due notifications completed.');
