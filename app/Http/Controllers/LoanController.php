@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoanCreateRequest;
 use App\Http\Requests\LoanUpdateRequest;
+use App\Mail\LoanApprovalRequestMail;
 use App\Models\ActivityLog;
 use App\Models\Customer;
 use App\Models\CustomerType;
@@ -12,6 +13,7 @@ use App\Models\LoanDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Mail;
 
 class LoanController extends Controller
 {
@@ -24,21 +26,23 @@ class LoanController extends Controller
         $branch = auth()->user()->branch_id;
         if ($request->search) {
             $lists = Loan::with(['customer'])
-            ->where('branch_id', $branch)
-            ->when($request->search, function ($query) use ($request) {
-                return $query->where('id', $request->search);
-            })
-            ->paginate(10);
-        } else if($request->search_name){
-            $lists = Loan::with(['customer' => function ($query) use ($request) {
-                $query->where('first_name', 'LIKE', '%' . $request->search_name . '%')
-                      ->orWhere('last_name', 'LIKE', '%' . $request->search_name . '%');
-            }])
-            ->where('branch_id', $branch)
-            ->paginate(10);
-        }else{
+                ->where('branch_id', $branch)
+                ->when($request->search, function ($query) use ($request) {
+                    return $query->where('id', $request->search);
+                })
+                ->paginate(10);
+        } else if ($request->search_name) {
+            $lists = Loan::with([
+                'customer' => function ($query) use ($request) {
+                    $query->where('first_name', 'LIKE', '%' . $request->search_name . '%')
+                        ->orWhere('last_name', 'LIKE', '%' . $request->search_name . '%');
+                }
+            ])
+                ->where('branch_id', $branch)
+                ->paginate(10);
+        } else {
             $lists = Loan::where('branch_id', $branch)->paginate(10);
-        }        
+        }
         $types = CustomerType::where('branch_id', $branch)->get();
         $loan = [];
         $customer = [];
@@ -118,8 +122,8 @@ class LoanController extends Controller
             $loan->months_to_pay = $request->months_to_pay;
             $loan->interest = $request->interest;
             $loan->interest_amount = $request->interest_amount;
-            $loan->svc_charge = $request->svc_charge??'';
-            $loan->actual_record = $request->actual_record??'';
+            $loan->svc_charge = $request->svc_charge ?? '';
+            $loan->actual_record = $request->actual_record ?? '';
             $loan->payable_amount = $request->payable_amount;
             $loan->branch_id = $branch;
             $loan->user_id = auth()->user()->id;
@@ -154,6 +158,9 @@ class LoanController extends Controller
             $log->description = auth()->user()->name . ' Created the loan request.';
             $log->save();
 
+            // Send email to HR
+            $hrEmail = 'hr@almarfinance.com'; // Replace with HR email
+            Mail::to($hrEmail)->send(new LoanApprovalRequestMail($loan));
             // Redirect back with success message
             return redirect()->back()->with('success', 'Loan created successfully and is pending approval.');
         } catch (\Throwable $th) {
@@ -198,7 +205,8 @@ class LoanController extends Controller
             $loan->loan_type = $request->loan_type;
             $loan->transaction_type = $request->transaction_type;
             $loan->trans_no = $request->trans_no;
-            $loan->date_of_loan = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');;
+            $loan->date_of_loan = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
+            ;
             $loan->customer_id = $request->customer_id;
             $loan->customer_type = $request->customer_type;
             $loan->status = $request->status;
@@ -207,8 +215,8 @@ class LoanController extends Controller
             $loan->months_to_pay = $request->months_to_pay;
             $loan->interest = $request->interest;
             $loan->interest_amount = $request->interest_amount;
-            $loan->svc_charge = $request->svc_charge??'';
-            $loan->actual_record = $request->actual_record??'';
+            $loan->svc_charge = $request->svc_charge ?? '';
+            $loan->actual_record = $request->actual_record ?? '';
             $loan->payable_amount = $request->payable_amount;
             $loan->save();
 
@@ -359,7 +367,47 @@ class LoanController extends Controller
         return redirect()->back()->with('success', 'Loan Approved.');
     }
 
+    public function approveAPI(Request $request, $id)
+    {
+        $loan = Loan::findOrFail($id);
+        $loan->trans_no = $loan->id;
+        $loan->status = 'UNPD';
+        $loan->user_id = 3;
+        $loan->note = $request->input('reason');
+        $loan->update();
+
+        $log = new ActivityLog();
+        $log->user_id = 3;
+        $log->description = 'HR Approved the loan request.';
+        $log->save();
+
+        return response()->isSuccessful();
+    }
+
     public function decline(Request $request, $id)
+    {
+        // Find the loan by ID
+        $loan = Loan::findOrFail($id);
+
+        // Set the fields
+        $loan->trans_no = $loan->id;  // Ensure this is the correct logic for trans_no
+        $loan->status = 'CNCLD';       // Assuming 'CLOSE' is a valid status
+        $loan->user_id = auth()->user()->id;  // Ensure the user is authenticated
+        $loan->note = $request->input('reason'); // Get the reason for decline
+
+        // Save the changes
+        $loan->save();
+
+        $log = new ActivityLog();
+        $log->user_id = auth()->user()->id;
+        $log->description = auth()->user()->name . ' Declined the loan request.';
+        $log->save();
+
+        // Redirect with a success message
+        return redirect()->back()->with('success', 'Loan has been declined with the provided reason.');
+    }
+
+    public function declineAPI(Request $request, $id)
     {
         // Find the loan by ID
         $loan = Loan::findOrFail($id);

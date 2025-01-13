@@ -260,6 +260,7 @@ class CustomerController extends Controller
 
                 return [
                     'loan_id' => $detail->loan_id,
+                    'customer_id' => $loan->customer->id,
                     'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name, // Assuming Loan model has customer_name
                     'due_date' => $detail->loan_due_date,
                     'days_past_due' => $daysPastDue,

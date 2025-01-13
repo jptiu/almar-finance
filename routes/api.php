@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HRController;
+use App\Http\Controllers\LoanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -65,3 +66,5 @@ Route::group(['middleware' => 'auth:api'], function () {
 Route::get('loan-approved', [HRController::class, 'approvedLoansAPI']);
 Route::get('loan-rejected', [HRController::class, 'rejectedLoansAPI']);
 Route::get('loan-pending', [HRController::class, 'pendingLoansAPI']);
+Route::post('loan/approve/{id}', [LoanController::class, 'approveAPI']);
+Route::post('loan/decline/{id}', [LoanController::class, 'declineAPI']);

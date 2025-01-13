@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('loan:notify-due')->dailyAt('08:00');
+        $schedule->command('loans:send-past-due-emails')->daily();
     }
 
     /**
