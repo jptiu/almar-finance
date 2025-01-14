@@ -28,7 +28,7 @@
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
 
              <!-- search bar -->    
-        <div> <form method="GET" action="{{route('depositentry.index')}}" class="flex items-center max-w-sm mx-auto">
+        <div> <form method="GET" action="{{route('savingscustomer.index')}}" class="flex items-center max-w-sm mx-auto">
                     <label for="search" class="sr-only">Search</label>
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

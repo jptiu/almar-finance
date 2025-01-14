@@ -16,11 +16,20 @@ class SavingsController extends Controller
 {
 
     // Savings Deposit Methods
-    public function indexDeposit()
+    public function indexDeposit(Request $request)
     {
         $branch = auth()->user()->branch_id;
         $lists = SavingsDeposit::paginate(20);
+        if ($request->search) {
+            $lists = SavingsDeposit::where('branch_id', $branch)
+                ->where('customer_name', 'LIKE', '%' . $request->search . '%')
+                ->orderBy("created_at", "asc")
+                ->paginate(20);
+        } else {
+            $lists = SavingsDeposit::where('branch_id', $branch)->paginate(20);
+        }
         return view('pages.savingscustomer.depositentry.index', compact('lists'));
+       
     }
 
     public function createDeposit()
@@ -48,10 +57,18 @@ class SavingsController extends Controller
     }
 
     // Savings Withdrawal Methods
-    public function indexWithdrawal()
+    public function indexWithdrawal(Request $request)
     {
         $branch = auth()->user()->branch_id;
         $lists = SavingsWithdrawal::paginate(20);
+        if ($request->search) {
+            $lists = SavingsWithdrawal::where('branch_id', $branch)
+                ->where('customer_name', 'LIKE', '%' . $request->search . '%')
+                ->orderBy("created_at", "asc")
+                ->paginate(20);
+        } else {
+            $lists = SavingsWithdrawal::where('branch_id', $branch)->paginate(20);
+        }
         return view('pages.savingscustomer.withdrawalentry.index', compact('lists'));
     }
 
