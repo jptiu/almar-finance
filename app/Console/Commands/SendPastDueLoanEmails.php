@@ -23,7 +23,7 @@ class SendPastDueLoanEmails extends Command
     public function handle()
     {
         $today = Carbon::now();
-        dd($today->toDateString());
+        // dd($today->toDateString());
         // Query loans past due and not marked as paid
         $loans = Loan::with([
             'customer',

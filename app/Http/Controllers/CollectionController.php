@@ -99,6 +99,10 @@ class CollectionController extends Controller
             $col->loan_details_id = $loanDetails->id;
             $col->save();
         }
+        if($loanDetails->loan_running_balance == 0){
+            $loan->status = 'FULPD';
+            $loan->update();
+        }
 
         return redirect(route("collection.index"))->with('success', 'Payment has been made.');
     }
