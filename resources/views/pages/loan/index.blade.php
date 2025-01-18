@@ -85,13 +85,12 @@
                     <button
                         class="btn bg-white dark:bg-slate-800 border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
                         aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">
-                        <span class="sr-only">Filter</span><wbr>
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
-                            <path
-                                d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
+                        <svg class="w-4 h-4 fill-current mr-2" viewBox="0 0 16 16">
+                            <path d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
                         </svg>
+                        <span class="not-sr-only">Transaction type</span>
                     </button>
-                    <form method="GET" action="{{ route('resignation.index') }}">
+                    <form method="GET" action="{{ route('loan.index') }}">
                         <div class="origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pt-1.5 rounded shadow-lg overflow-hidden mt-1 {{ $align === 'right' ? 'md:left-auto md:right-0' : 'md:left-0 md:right-auto' }}"
                             @click.outside="open = false" @keydown.escape.window="open = false" x-show="open"
                             x-transition:enter="transition ease-out duration-200 transform"
@@ -99,27 +98,69 @@
                             x-transition:enter-end="opacity-100 translate-y-0"
                             x-transition:leave="transition ease-out duration-200" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0" x-cloak>
-                            <div
-                                class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
+                            <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
                                 Filters</div>
                             <ul class="mb-4">
                                 <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="filter[]" value="collector"
-                                            class="form-checkbox" />
-                                        <span class="text-sm font-medium ml-2">Daily</span>
+                                        <input type="checkbox" name="transactionType" value="NEW" class="form-checkbox" />
+                                        <span class="text-sm font-medium ml-2">New</span>
                                     </label>
                                 </li>
                                 <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="filter[]" value="branch manager"
-                                            class="form-checkbox" />
-                                        <span class="text-sm font-medium ml-2">Monthly</span>
+                                        <input type="checkbox" name="transactionType" value="CA" class="form-checkbox" />
+                                        <span class="text-sm font-medium ml-2">CA</span>
                                     </label>
                                 </li>
                             </ul>
-                            <div
-                                class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
+                            <div class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
+                                <ul class="flex items-center justify-between">
+                                    <li>
+                                        <button type="reset"
+                                            class="btn-xs bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 dark:text-slate-300 hover:text-slate-600 dark:hover:text-slate-200">Clear</button>
+                                    </li>
+                                    <li>
+                                        <button type="submit" class="btn-xs bg-blue-400 hover:bg-blue-700 text-white"
+                                            @click="open = false" @focusout="open = false">Apply</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!--custumer type filter -->
+                <div class="relative inline-flex" x-data="{ open: false }">
+                    <button
+                        class="btn bg-white dark:bg-slate-800 border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
+                        aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">
+                        <svg class="w-4 h-4 fill-current mr-2" viewBox="0 0 16 16">
+                            <path d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
+                        </svg>
+                        <span class="not-sr-only">Customer type</span>
+                    </button>
+                    <form method="GET" action="{{ route('loan.index') }}">
+                        <div class="origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pt-1.5 rounded shadow-lg overflow-hidden mt-1 {{ $align === 'right' ? 'md:left-auto md:right-0' : 'md:left-0 md:right-auto' }}"
+                            @click.outside="open = false" @keydown.escape.window="open = false" x-show="open"
+                            x-transition:enter="transition ease-out duration-200 transform"
+                            x-transition:enter-start="opacity-0 -translate-y-2"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-out duration-200" x-transition:leave-start="opacity-100"
+                            x-transition:leave-end="opacity-0" x-cloak>
+                            <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
+                                Filters</div>
+                            <ul class="max-h-40 overflow-y-auto mb-4">
+                                @foreach ($types as $type)
+                                <li class="py-1 px-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="filter[]" value="{{$type->code}}" class="form-checkbox" />
+                                        <span class="text-sm font-medium ml-2">{{$type->description}}</span>
+                                    </label>
+                                </li>
+                                @endforeach
+                            </ul>
+                            <div class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
                                 <ul class="flex items-center justify-between">
                                     <li>
                                         <button type="reset"
