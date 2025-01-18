@@ -6,7 +6,7 @@
         </div> -->
 
         <div class="sm:flex sm:justify-between sm:items-center mb-4">
-        <div>
+            <div>
             <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">My Profile</h1>
                 <ol class="inline-flex items-center space-x-2">
                     <!-- Home -->
@@ -338,6 +338,11 @@
                         <li class="flex flex-wrap mb-2">
                             <div class="text-gray-500 w-72">Citizenship:</div>
                             <div class="text-gray-900">{{ $customer->citizenship }}</div>
+                        </li>
+
+                        <li class="flex flex-wrap mb-2">
+                            <div class="text-gray-500 w-72">Email Address:</div>
+                            <div class="text-gray-900">{{ $customer->email }}</div>
                         </li>
 
                         <li class="flex flex-wrap mb-2">

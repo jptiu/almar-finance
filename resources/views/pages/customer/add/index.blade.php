@@ -231,6 +231,15 @@
                                 </div>
 
                                 <div class="md:col-span-2">
+                                    <label for="email"
+                                        class="block text-sm font-medium text-gray-700">Email Address</label>
+                                    <input type="text" name="email" id="email"
+                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    <span class="text-red-500 text-xs hidden" id="error_email">This field is
+                                        required.</span>
+                                </div>
+
+                                <div class="md:col-span-2">
                                     <label for="facebook_name"
                                         class="block text-sm font-medium text-gray-700">Facebook
                                         Name</label>
@@ -239,7 +248,6 @@
                                     <span class="text-red-500 text-xs hidden" id="error_facebook_name">This field is
                                         required.</span>
                                 </div>
-
                             </div>
                         </div>
 
@@ -595,10 +603,16 @@
                                     </li>
 
                                     <li class="flex flex-wrap mb-2">
+                                        <div class="text-gray-500 w-72">Email Address:</div>
+                                        <div class="text-gray-900" id="emailAddress"></div>
+                                    </li>
+
+                                    <li class="flex flex-wrap mb-2">
                                         <div class="text-gray-500 w-72">Facebook:</div>
                                         <div class="text-gray-900" id="fbName"></div>
                                     </li>
                                 </div>
+                                
 
                             </div>
 
@@ -1079,6 +1093,10 @@
             const fb = document.getElementById("facebook_name");
             const fbName = document.getElementById("fbName");
             fbName.textContent = fb.value;
+
+            const emailadd = document.getElementById("email");
+            const emailAddress = document.getElementById("emailAddress");
+            emailAddress.textContent = emailadd.value;
 
             //Spouse Data
             const sname = document.getElementById("spouse_name");
