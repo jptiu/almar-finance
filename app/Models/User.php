@@ -125,4 +125,14 @@ class User extends Authenticatable
         return $this->belongsTo(Branch::class);
     }
 
+    public function loans()
+    {
+        return $this->hasMany(Loan::class, 'user_id');
+    }
+
+    public function customers()
+    {
+        return $this->hasMany(Customer::class, 'user_id');
+    }
+
 }

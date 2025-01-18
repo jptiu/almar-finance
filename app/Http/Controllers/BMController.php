@@ -13,6 +13,7 @@ use App\Models\DailyWorkOrder;
 use App\Models\Expenses;
 use App\Models\Loan;
 use App\Models\SavingsDeposit;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -178,10 +179,12 @@ class BMController extends Controller
     public function overdueAcc(Request $request)
     {
 
-        $lists = Loan::with(['details' => function ($query) {
-            $query->where('loan_due_date', '<', now()->toDateString());
-        }])
-        ->where('transaction_customer_status', '')->paginate(20);
+        $lists = Loan::with([
+            'details' => function ($query) {
+                $query->where('loan_due_date', '<', now()->toDateString());
+            }
+        ])
+            ->where('transaction_customer_status', '')->paginate(20);
         return view('pages.overdueacc.index', compact('lists'));
 
     }
@@ -349,6 +352,28 @@ class BMController extends Controller
         $workorder->save();
 
         return redirect()->route('dailyworkorder.index')->with('success', 'Request Daily Work Order Submitted');
+    }
+
+    public function performanceRecord()
+    {
+        $branch = auth()->user()->branch_id;
+
+        $branch_managers = User::with([
+            'branch',
+            'loans' => function ($query) {
+                $query->whereRaw("STR_TO_DATE(date_of_loan, '%m/%d/%Y') >= ?", [Carbon::now()->startOfMonth()]);
+            },
+            'customers'
+        ])
+            ->where('branch_id', auth()->user()->branch_id)
+            ->whereHas('roles', function ($query) {
+                $query->where('title', 'Branch Manager');
+            })
+            ->get();
+
+
+        return view('pages.branch.performance.index', compact('branch_managers'));
+
     }
 
 }
