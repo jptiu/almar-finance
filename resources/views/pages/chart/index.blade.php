@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+    <div class="px-4 py-8 w-full max-w-9xl mx-auto">
         @if (session()->has('success'))
             <div class="alert alert-success">
                 <div class="flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
@@ -16,15 +16,13 @@
                 </div>
             </div>
         @endif
-        <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Chart Accounts</h1>
-        </div>
-
         <div></div>
 
         <!-- Dashboard actions -->
-        <div class="sm:flex sm:justify-between sm:items-center mb-8">
-            <div></div>
+        <div class="sm:flex sm:justify-between sm:items-center mb-4">
+            <div class="relative">
+                <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold ">Chart Accounts</h1>
+            </div>
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
@@ -103,7 +101,7 @@
         </div>
 
         <!-- Cards -->
-        <section class="container px-4 mx-auto">
+        <section class="container mx-auto">
             <div class="flex flex-col">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">

@@ -2,7 +2,7 @@
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Setup Barangays</h1>
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4">Setup Barangays</h1>
         </div>
 
         <form action="{{ route('barangay.update', $brgy->id) }}" method="POST" enctype="multipart/form-data">

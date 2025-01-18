@@ -21,7 +21,7 @@
         <div></div>
 
         <!-- Dashboard actions -->
-        <div class="sm:flex sm:justify-between sm:items-center mb-8">
+        <div class="sm:flex sm:justify-between sm:items-center mb-4">
             <div>
             <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold lg:px-4">Setup Cities /
             Towns</h1>

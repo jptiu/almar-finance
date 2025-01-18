@@ -17,7 +17,7 @@
             </div>
         @endif
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Savings
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4">Savings
                 Withdrawal Entry
             </h1>
         </div>
@@ -25,7 +25,7 @@
         <div></div>
 
         <!-- Dashboard actions -->
-        <div class="sm:flex sm:justify-between sm:items-center mb-8">
+        <div class="sm:flex sm:justify-between sm:items-center mb-4">
 
              <!-- search bar -->    
         <div> <form method="GET" action="{{route('savingscustomer.index')}}" class="flex items-center max-w-sm mx-auto">

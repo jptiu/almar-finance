@@ -2,14 +2,14 @@
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
         
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12">Setup Branch</h1>
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4">Setup Branch</h1>
         </div>
 
         <form action="{{ route('branches.store') }}" method="POST">
             @csrf
             <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
                 <div>
-                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 mb-12">
+                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                         <div>
                             <h1 class="text-xl md:text-xl text-slate-600 dark:text-slate-100 font-bold mb-2">Add Branch</h1>
                             <span>Fill up the inputs to add Branch.</span>

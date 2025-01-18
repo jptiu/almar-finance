@@ -16,18 +16,16 @@
                 </div>
             </div>
         @endif
-        <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Automated Payment Reminder
-            </h1>
-        </div>
+        
 
         <div></div>
 
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-4 md:px-2 lg:px-4">
-            <div>
-
-            </div>
+        <div class="relative">
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4 lg:px-4">Automated Payment Reminder
+            </h1>
+        </div>
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
