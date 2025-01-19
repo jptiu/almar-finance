@@ -59,7 +59,7 @@
                             class="text-md font-semibold">{{ number_format($loan->interest_amount, 2) }}</span>
                     </div>
                     <div class="text-md font-normal uppercase">Total Payable Amount: <span
-                            class="text-md font-semibold">{{ $loan->payable_amount }}</span>
+                            class="text-md font-semibold">{{ number_format($loan->payable_amount,2) }}</span>
                     </div>
                 </div>
             </div>
