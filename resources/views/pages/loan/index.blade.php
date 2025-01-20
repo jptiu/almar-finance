@@ -100,17 +100,38 @@
                             x-transition:leave-end="opacity-0" x-cloak>
                             <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
                                 Filters</div>
-                            <ul class="mb-4">
+                            <ul class="max-h-40 overflow-y-auto mb-4">
                                 <li class="py-1 px-3">
                                     <label class="flex items-center">
                                         <input type="checkbox" name="transactionType" value="NEW" class="form-checkbox" />
-                                        <span class="text-sm font-medium ml-2">New</span>
+                                        <span class="text-sm font-medium ml-2">NEW</span>
                                     </label>
                                 </li>
                                 <li class="py-1 px-3">
                                     <label class="flex items-center">
                                         <input type="checkbox" name="transactionType" value="CA" class="form-checkbox" />
                                         <span class="text-sm font-medium ml-2">CA</span>
+                                    </label>
+                                </li>
+                                <li class="py-1 px-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="transactionType" value="RENEW" class="form-checkbox" />
+                                        <span class="text-sm font-medium ml-2">RENEW</span>
+                                    </label>
+                                </li>                                <li class="py-1 px-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="transactionType" value="RECON" class="form-checkbox" />
+                                        <span class="text-sm font-medium ml-2">RECON</span>
+                                    </label>
+                                </li>                                <li class="py-1 px-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="transactionType" value="CBA" class="form-checkbox" />
+                                        <span class="text-sm font-medium ml-2">CBA</span>
+                                    </label>
+                                </li>                                <li class="py-1 px-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="transactionType" value="W/COLLAT" class="form-checkbox" />
+                                        <span class="text-sm font-medium ml-2">With Collat</span>
                                     </label>
                                 </li>
                             </ul>
