@@ -116,6 +116,7 @@ class CustomerController extends Controller
         $customer->acc_no = $request->acc_no;
         $customer->pin_no = $request->pin_no;
         $customer->branch_id = $branch;
+        $customer->user_id = auth()->user()->id;
         $customer->save();
 
         return redirect(route("customer.index"))->with('success', 'Created Successfully');

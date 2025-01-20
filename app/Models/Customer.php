@@ -59,6 +59,7 @@ class Customer extends Model
         'pin_no',
         'branch_id',
         'email',
+        'user_id'
     ];
 
     protected $appends = ['barangay_name', 'city_town'];

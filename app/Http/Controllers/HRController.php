@@ -156,10 +156,16 @@ class HRController extends Controller
         return response()->json($loans, 200);
     }
 
-    public function cloanHistory()
+    public function cloanHistory(Request $request)
     {
         $branch = auth()->user()->branch_id;
-        $lists = Loan::with('details')->where('branch_id', $branch)->paginate(20);
+        if($request->filter){
+            $lists = Loan::with('details')
+            ->where('transaction_type', 'LIKE', '%' . $request->filter[0] . '%')
+            ->where('branch_id', $branch)->paginate(20);
+        }else{
+            $lists = Loan::with('details')->where('branch_id', $branch)->paginate(20);
+        }
 
         return view('pages.hr.loanhistory.index', compact('lists'));
     }

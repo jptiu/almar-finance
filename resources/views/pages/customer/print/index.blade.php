@@ -68,6 +68,7 @@
                     <p><span class="font-bold">Age:</span> {{$customer->age??""}}</p>
                     <p><span class="font-bold">Gender:</span> {{$customer->gender??""}}</p>
                     <p><span class="font-bold">Citizenship:</span> {{$customer->citizenship??""}}</p>
+                    <p><span class="font-bold">Email Address:</span> {{$customer->email??""}}</p>
                     <p><span class="font-bold">Facebook:</span> {{$customer->spouse_fb??""}}</p>
                 </div>
             </div>

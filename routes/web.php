@@ -242,6 +242,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('branch', [BMController::class, 'index'])->name('branch.index');
     Route::get('csor', [BMController::class, 'csor'])->name('csor.index');
     Route::get('csor/print', [BMController::class, 'csorPrint'])->name('print.index');
+    Route::get('performance-record', [BMController::class, 'performanceRecord'])->name('performance.index');
 
     // Check
     Route::get('requestcheck', [CheckController::class, 'index'])->name('requestcheck.index');

@@ -1,7 +1,7 @@
 <x-app-layout>
 <div class="container mx-auto p-6">
     <!-- Page Header -->
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold text-gray-800">Loan Information</h1>
        
     </div>

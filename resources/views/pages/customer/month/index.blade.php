@@ -2,7 +2,7 @@
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-8">Customer Ledger - Atm
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4">Customer Ledger - Atm
             </h1>
         </div>
 

@@ -1001,7 +1001,7 @@
                             </a>
                         </li>
                         <!-- Loan Information -->
-                        <li
+                        {{-- <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['renewals'])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('loanInformation.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['renewals'])) {{ 'hover:text-slate-200' }} @endif">
@@ -1016,7 +1016,7 @@
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Loan Information</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
                         <!-- Setup Cities/Towns -->
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['city'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['city']) ? 1 : 0 }} }">
@@ -1136,7 +1136,7 @@
                             </div>
                         </li>
 
-                        <li
+                        {{-- <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('csor.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
@@ -1150,10 +1150,10 @@
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">CSOR</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <!-- Automated Payment Reminders -->
-                        <li
+                        {{-- <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('autoPaymentreq.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
@@ -1168,7 +1168,7 @@
                                         Payment</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <!-- Employee Request Forms -->
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), [
@@ -1444,7 +1444,7 @@
                             </li> -->
 
                         <!-- Payslip & Payroll -->
-                        <li
+                        {{-- <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('payroll.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loan_access'])) {{ 'hover:text-slate-200' }} @endif">
@@ -1460,10 +1460,10 @@
                                         & Payroll</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <!-- Attendance -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['leave'])) {{ 'bg-accent-100' }} @endif"
+                        {{-- <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['leave'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['leave']) ? 1 : 0 }} }">
                             <a href="{{ route('biometricsAttendance.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leave'])) {{ 'hover:text-slate-200' }} @endif">
@@ -1480,7 +1480,7 @@
                                     </div>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
@@ -2270,11 +2270,27 @@
                             </div>
                         </li>
 
+                        <li
+                            class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['performance-record'])) {{ 'bg-accent-100' }} @endif">
+                            <a href="{{ route('performance.index') }}"
+                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['performance-record'])) {{ 'hover:text-slate-200' }} @endif">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path
+                                            d="M480-80q-155 0-269-103T82-440h81q15 121 105.5 200.5T480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-86 0-159.5 42.5T204-640h116v80H88q29-140 139-230t253-90q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm112-232L440-464v-216h80v184l128 128-56 56Z" />
+                                    </svg>
+                                    <span
+                                        class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Performance Record</span>
+                                </div>
+                            </a>
+                        </li>
+
                         <!-- Customer Loan History -->
                         <li
-                            class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
+                            class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['loanhistory'])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('loanhistory.index') }}"
-                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
+                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loanhistory'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
                                         width="24px" fill="#FFFFFF">
@@ -2288,10 +2304,10 @@
                             </a>
                         </li>
                         <!-- Loan Information -->
-                        <li
-                            class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['renewals'])) {{ 'bg-accent-100' }} @endif">
+                        {{-- <li
+                            class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['loaninfo'])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('loanInformation.index') }}"
-                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['renewals'])) {{ 'hover:text-slate-200' }} @endif">
+                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loaninfo'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
                                         height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
@@ -2303,10 +2319,10 @@
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Loan Information</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <!-- CSOR -->
-                        <li
+                        {{-- <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('csor.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
@@ -2320,10 +2336,10 @@
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">CSOR</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <!-- Automated Payment Reminders -->
-                        <li
+                        {{-- <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('reminderPay.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
@@ -2338,7 +2354,7 @@
                                         Payment</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <!-- Loan Accounts -->
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['regAccount', 'badAccount', 'overdueacc'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
@@ -2574,7 +2590,7 @@
                         </li>
 
                         <!-- Payslip & Payroll -->
-                        <li
+                        {{-- <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('paroll.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
@@ -2590,10 +2606,10 @@
                                         & Payroll</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <!-- Attendance -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['leave'])) {{ 'bg-accent-100' }} @endif"
+                        {{-- <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['leave'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['leave']) ? 1 : 0 }} }">
                             <a href="{{ route('biometricsAttendance.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leave'])) {{ 'hover:text-slate-200' }} @endif">
@@ -2610,7 +2626,7 @@
                                     </div>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"

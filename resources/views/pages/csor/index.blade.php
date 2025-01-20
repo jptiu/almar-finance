@@ -20,7 +20,7 @@
         <form action="{{ route('print.index') }}" method="GET">
             @csrf
             <!-- Dashboard actions -->
-            <div class="sm:flex sm:justify-between sm:items-center mb-8 ml-4">
+            <div class="sm:flex sm:justify-between sm:items-center mb-4 ml-4">
             <div class="relative">
                 <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">CSOR</h1>
             </div>

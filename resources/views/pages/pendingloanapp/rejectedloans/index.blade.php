@@ -17,7 +17,7 @@
             </div>
         @endif
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">Rejected Loans
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4 lg:px-4">Rejected Loans
             </h1>
         </div>
 
@@ -209,7 +209,7 @@
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ $list->updated_at }}
+                                                {{ $list->updated_at->format('M d Y') }}
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
