@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ComputeCashOnHand;
 use App\Models\Customer;
+use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,7 +20,8 @@ class LOController extends Controller
         $lists = Customer::where('branch_id', $branch)->orderByDesc('id')->paginate(10);
         $totalCustomer = Customer::where('branch_id', $branch)->count();
         $cashBeginning = ComputeCashOnHand::where('branch_id', $branch)->sum('cash_beginning');
-        return view('pages.loanofficer.index', compact('lists', 'totalCustomer', 'cashBeginning'));
+        $collections = Collection::orderByDesc('id')->paginate(5);
+        return view('pages.loanofficer.index', compact('lists', 'totalCustomer', 'cashBeginning','collections'));
     }
 
     /**
