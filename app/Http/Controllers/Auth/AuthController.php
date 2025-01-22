@@ -47,42 +47,62 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        try {
+            // Validate input
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        // $validate = $request->validate([
-        //     'email' => 'required|string|email|max:255',
-        //     'password' => 'required|string|min:6',
-        //     'remember_me' => 'required',
-        //     'device_token' => 'string',
-        // ]);
+            // Find the user by email
+            $user = User::where('email', $request->email)->first();
 
-        $user = User::where('email', $request->email)->first();
+            // If user doesn't exist, return error
+            if (!$user) {
+                return response()->json(['message' => 'Wrong username or password'], 401);
+            }
 
-        // dd($validate);
-        if (isset($user)) {
-            if (isset($user->email_verified_at) && $user->email_verified_at) { //change it here kay walay is_active
-                $credentials = request(['email', 'password']);
-
-                if (!Auth::guard('web')->attempt($credentials)) {
-                    return response()->json(['message' => 'Wrong username or password'], 401);
-                }
-            } else {
+            // Check if the email is verified
+            if (!$user->email_verified_at) {
                 return response()->json(['message' => 'Email not verified'], 401);
             }
 
+            // Attempt to authenticate the user
+            $credentials = $request->only(['email', 'password']);
+            if (!Auth::guard('web')->attempt($credentials)) {
+                return response()->json(['message' => 'Wrong username or password'], 401);
+            }
+
+            // Update last login time and device token
+            $user->last_login_at = now();
+            $user->device_token = $request->device_token ?? null;
+            $user->save();
+
+            // Set token expiration if remember_me is not checked
+            if (!$request->remember_me) {
+                Passport::personalAccessTokensExpireIn(Carbon::now()->addDays(1));
+            }
+
+            // Create access token
+            $token = $user->createToken(config('app.name'))->accessToken;
+
+            // Return response
+            return response()->json([
+                "user" => $user,
+                "token" => $token,
+                "remember" => $request->remember_me,
+            ], 200);
+        } catch (\Exception $e) {
+            // Log the exception (optional)
+            \Log::error('Login Error: ' . $e->getMessage());
+
+            // Return a generic error response
+            return response()->json([
+                'message' => 'An error occurred while trying to log in. Please try again later.',
+            ], 500);
         }
-        $user->last_login_at =  now();
-        $user->device_token = $request->device_token??null;
-        $user->save();
-        if (!$request->remember_me) {
-            Passport::personalAccessTokensExpireIn(Carbon::now()->addDays(1));
-        }
-        $token = $user->createToken(config('app.name'))->accessToken;
-        return response()->json([
-            "user" => Auth::user(),
-            "token" => $token,
-            'remember' => $request->remember_me
-        ], 200);
     }
+
 
     /**
      * registers the user

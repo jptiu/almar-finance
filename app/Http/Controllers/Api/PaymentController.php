@@ -59,6 +59,7 @@ class PaymentController extends Controller
             $col->branch_id = $branch;
             $col->lat = $request->lat ?? 0;
             $col->long = $request->long ?? 0;
+            $col->loan_details_id = $loanDetails->id;
             $col->save();
         }
 
