@@ -134,6 +134,12 @@
                                         <span class="text-sm font-medium ml-2">With Collat</span>
                                     </label>
                                 </li>
+                                </li>                                <li class="py-1 px-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="transactionType" value="W/CERT" class="form-checkbox" />
+                                        <span class="text-sm font-medium ml-2">With Cert</span>
+                                    </label>
+                                </li>
                             </ul>
                             <div class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
                                 <ul class="flex items-center justify-between">
