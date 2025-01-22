@@ -119,7 +119,7 @@ class BMController extends Controller
 
     public function regAccount(Request $request)
     {
-        $lists = Loan::where('transaction_customer_status', '')->paginate(20);
+        $lists = Loan::where('transaction_customer_status', null)->paginate(20);
         return view('pages.regacc.index', compact('lists'));
     }
 
