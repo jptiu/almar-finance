@@ -50,11 +50,12 @@ class LoanController extends Controller
                 ->paginate(10);
         }  
         else if ($request->transactionType) {
+            //dd($request->list);
             $lists = Loan::with(['customer'])
-                ->distinct()
-                ->where('transaction_type', 'LIKE', '%' . $request->transactionType[0] . '%')
+                ->where('transaction_type', '=', $request->transacionType)
                 ->where('branch_id', $branch) 
                 ->paginate(10);
+                //dd($lists);
         }
 
         else {

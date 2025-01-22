@@ -45,6 +45,7 @@ class CollectionController extends Controller
                 'loan' => $loan,
             ]);
         }
+        
 
         return view('pages.collections.index', compact('lists', 'customers', 'collectors'));
     }
