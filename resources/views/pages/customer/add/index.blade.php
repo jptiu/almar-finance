@@ -94,7 +94,7 @@
                                     <label for="first_name" class="block text-sm font-medium text-gray-700">First
                                         Name</label>
                                     <input type="text" name="first_name" id="first_name"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
                                         required.</span>
                                 </div>
@@ -104,7 +104,7 @@
                                     <label for="middle_name" class="block text-sm font-medium text-gray-700">Middle
                                         Name</label>
                                     <input type="text" name="middle_name" id="middle_name"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
                                         required.</span>
                                 </div>
@@ -113,7 +113,7 @@
                                     <label for="last_name" class="block text-sm font-medium text-gray-700">Last
                                         Name</label>
                                     <input type="text" name="last_name" id="last_name"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
                                         required.</span>
                                 </div>
@@ -122,7 +122,7 @@
                                     <label for="cell_number" class="block text-sm font-medium text-gray-700">Personal
                                         Contact Number</label>
                                     <input type="number" name="cell_number" id="cell_number"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_cell_number">This field is
                                         required.</span>
                                 </div>
@@ -131,7 +131,7 @@
                                     <label for="birth_date"
                                         class="block text-sm font-medium text-gray-700">Birthdate</label>
                                     <input type="date" name="birth_date" id="birth_date"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_birthdate">This field is
                                         required.</span>
                                 </div>
@@ -140,7 +140,7 @@
                                     <label for="birth_place" class="block text-sm font-medium text-gray-700">Birth
                                         Place</label>
                                     <input type="text" name="birth_place" id="birth_place"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_birth_place">This field is
                                         required.</span>
                                 </div>
@@ -149,7 +149,7 @@
                                     <label for="house" class="block text-sm font-medium text-gray-700">House
                                         Address</label>
                                     <input type="text" name="" id="house"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_house">This field is
                                         required.</span>
                                 </div>
@@ -158,7 +158,7 @@
                                     <label for="street" class="block text-sm font-medium text-gray-700">Street
                                         Address</label>
                                     <input type="text" name="" id="street"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_street">This field is
                                         required.</span>
                                 </div>
@@ -174,7 +174,7 @@
                                     @endforeach
                                     </select>
                                     {{-- <input type="text" name="" id="barangay"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_barangay">This field is
                                         required.</span> --}}
                                 </div>
@@ -190,7 +190,7 @@
                                     @endforeach
                                     </select>
                                     {{-- <input type="text" name="" id="city"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_city">This field is
                                     required.</span> --}}
                                 </div>
@@ -199,7 +199,7 @@
                                     <label for="civil_status" class="block text-sm font-medium text-gray-700">Civil
                                         Status</label>
                                     <input type="text" name="civil_status" id="civil_status"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_civil_status">This field is
                                         required.</span>
                                 </div>
@@ -207,7 +207,7 @@
                                 <div class="md:col-span-1">
                                     <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
                                     <input type="number" name="age" id="age"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_age">This field is
                                         required.</span>
                                 </div>
@@ -216,7 +216,7 @@
                                     <label for="gender"
                                         class="block text-sm font-medium text-gray-700">Gender</label>
                                     <input type="text" name="gender" id="gender"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_gender">This field is
                                         required.</span>
                                 </div>
@@ -225,7 +225,7 @@
                                     <label for="citizenship"
                                         class="block text-sm font-medium text-gray-700">Citizenship</label>
                                     <input type="text" name="citizenship" id="citizenship"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_citizenship">This field is
                                         required.</span>
                                 </div>
@@ -234,7 +234,7 @@
                                     <label for="email"
                                         class="block text-sm font-medium text-gray-700">Email Address</label>
                                     <input type="text" name="email" id="email"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_email">This field is
                                         required.</span>
                                 </div>
@@ -244,7 +244,7 @@
                                         class="block text-sm font-medium text-gray-700">Facebook
                                         Name</label>
                                     <input type="text" name="facebook_name" id="facebook_name"
-                                        class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_facebook_name">This field is
                                         required.</span>
                                 </div>
@@ -542,13 +542,13 @@
 
                                 <div class="flex justify-between ">
                                     <h3 class="text-2xl font-semibold mb-4">Personal Information</h3>
-                                    <a href="step1" class="cursor-pointer">
+                                    <!-- <a href="" id="gostep1" class="cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24px"
                                             viewBox="0 -960 960 960" width="24px" fill="#434343">
                                             <path
                                                 d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
                                         </svg>
-                                    </a>
+                                    </a> -->
                                 </div>
 
                                 <div>
@@ -625,13 +625,6 @@
 
                                 <div class="flex justify-between ">
                                     <h3 class="text-2xl font-semibold mb-4">Spousal Data</h3>
-                                    <a href="step1" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                            viewBox="0 -960 960 960" width="24px" fill="#434343">
-                                            <path
-                                                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
-                                        </svg>
-                                    </a>
                                 </div>
 
                                 <div>
@@ -681,13 +674,6 @@
 
                                 <div class="flex justify-between ">
                                     <h3 class="text-2xl font-semibold mb-4">Company Information</h3>
-                                    <a href="step1" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                            viewBox="0 -960 960 960" width="24px" fill="#434343">
-                                            <path
-                                                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
-                                        </svg>
-                                    </a>
                                 </div>
 
                                 <div>
@@ -747,13 +733,6 @@
 
                                 <div class="flex justify-between ">
                                     <h3 class="text-2xl font-semibold mb-4">For Pensioners ONLY</h3>
-                                    <a href="step1" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                            viewBox="0 -960 960 960" width="24px" fill="#434343">
-                                            <path
-                                                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
-                                        </svg>
-                                    </a>
                                 </div>
 
                                 <div>
@@ -784,13 +763,6 @@
 
                                 <div class="flex justify-between ">
                                     <h3 class="text-2xl font-semibold mb-4">Background Data</h3>
-                                    <a href="step1" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                            viewBox="0 -960 960 960" width="24px" fill="#434343">
-                                            <path
-                                                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
-                                        </svg>
-                                    </a>
                                 </div>
 
                                 <div>
@@ -826,13 +798,6 @@
 
                                 <div class="flex justify-between ">
                                     <h3 class="text-2xl font-semibold mb-4">Bank Account Information</h3>
-                                    <a href="step1" class="cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                            viewBox="0 -960 960 960" width="24px" fill="#434343">
-                                            <path
-                                                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
-                                        </svg>
-                                    </a>
                                 </div>
 
                                 <div>
