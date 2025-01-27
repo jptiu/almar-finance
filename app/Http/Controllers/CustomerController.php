@@ -19,7 +19,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('admin_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('admin_access') || Gate::allows('auditor_access'), 404);
         try {
             $branch = auth()->user()->branch_id;
             if ($request->search) {
@@ -129,7 +129,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
         $branch = auth()->user()->branch_id;
         $customer = Customer::where('branch_id', $branch)->where('id', $id)->first();
 
