@@ -22,7 +22,7 @@ class LoanController extends Controller
      */
     public function index(Request $request)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
         $branch = auth()->user()->branch_id;
         if ($request->search) {
             $lists = Loan::with(['customer'])
@@ -188,7 +188,7 @@ class LoanController extends Controller
      */
     public function show(string $id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
         $branch = auth()->user()->branch_id;
         $loan = Loan::where('branch_id', $branch)->where('id', $id)->first();
 
