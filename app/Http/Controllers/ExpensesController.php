@@ -158,7 +158,7 @@ class ExpensesController extends Controller
             ]);
         }
 
-        return redirect(route("barangay.index"))->with('success', 'CSV Data Imported Successfully');
+        return redirect(route("barangay.index"))->with('success', 'CSV Data Imported Successfully');    
     }
 }
 
