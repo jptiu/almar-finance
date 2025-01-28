@@ -369,10 +369,30 @@ class BMController extends Controller
             ->whereHas('roles', function ($query) {
                 $query->where('title', 'Branch Manager');
             })
+            ->where('id', auth()->user()->id)
             ->get();
 
 
         return view('pages.branch.performance.index', compact('branch_managers'));
+
+    }
+
+    public function performanceRecordAPI()
+    {
+
+        $branch_managers = User::with([
+            'branch',
+            'loans' => function ($query) {
+                $query->whereRaw("STR_TO_DATE(date_of_loan, '%m/%d/%Y') >= ?", [Carbon::now()->startOfMonth()]);
+            },
+            'customers'
+        ])
+            ->whereHas('roles', function ($query) {
+                $query->where('title', 'Branch Manager');
+            })
+            ->get();
+
+        return response()->json($branch_managers, 200);
 
     }
 

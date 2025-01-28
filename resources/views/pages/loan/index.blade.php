@@ -86,7 +86,8 @@
                         class="btn bg-white dark:bg-slate-800 border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
                         aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">
                         <svg class="w-4 h-4 fill-current mr-2" viewBox="0 0 16 16">
-                            <path d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
+                            <path
+                                d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
                         </svg>
                         <span class="not-sr-only">Transaction type</span>
                     </button>
@@ -98,50 +99,63 @@
                             x-transition:enter-end="opacity-100 translate-y-0"
                             x-transition:leave="transition ease-out duration-200" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0" x-cloak>
-                            <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
+                            <div
+                                class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
                                 Filters</div>
                             <ul class="max-h-40 overflow-y-auto mb-4">
                                 <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="transactionType" value="NEW" class="form-checkbox" />
+                                        <input type="checkbox" name="transactionType" value="NEW"
+                                            class="form-checkbox" />
                                         <span class="text-sm font-medium ml-2">NEW</span>
                                     </label>
                                 </li>
                                 <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="transactionType" value="CA" class="form-checkbox" />
+                                        <input type="checkbox" name="transactionType" value="CA"
+                                            class="form-checkbox" />
                                         <span class="text-sm font-medium ml-2">CA</span>
                                     </label>
                                 </li>
                                 <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="transactionType" value="RENEW" class="form-checkbox" />
+                                        <input type="checkbox" name="transactionType" value="RENEW"
+                                            class="form-checkbox" />
                                         <span class="text-sm font-medium ml-2">RENEW</span>
                                     </label>
-                                </li>                                <li class="py-1 px-3">
+                                </li>
+                                <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="transactionType" value="RECON" class="form-checkbox" />
+                                        <input type="checkbox" name="transactionType" value="RECON"
+                                            class="form-checkbox" />
                                         <span class="text-sm font-medium ml-2">RECON</span>
                                     </label>
-                                </li>                                <li class="py-1 px-3">
+                                </li>
+                                <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="transactionType" value="CBA" class="form-checkbox" />
+                                        <input type="checkbox" name="transactionType" value="CBA"
+                                            class="form-checkbox" />
                                         <span class="text-sm font-medium ml-2">CBA</span>
                                     </label>
-                                </li>                                <li class="py-1 px-3">
+                                </li>
+                                <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="transactionType" value="W/COLLAT" class="form-checkbox" />
+                                        <input type="checkbox" name="transactionType" value="W/COLLAT"
+                                            class="form-checkbox" />
                                         <span class="text-sm font-medium ml-2">With Collat</span>
                                     </label>
                                 </li>
-                                </li>                                <li class="py-1 px-3">
+                                </li>
+                                <li class="py-1 px-3">
                                     <label class="flex items-center">
-                                        <input type="checkbox" name="transactionType" value="W/CERT" class="form-checkbox" />
+                                        <input type="checkbox" name="transactionType" value="W/CERT"
+                                            class="form-checkbox" />
                                         <span class="text-sm font-medium ml-2">With Cert</span>
                                     </label>
                                 </li>
                             </ul>
-                            <div class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
+                            <div
+                                class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
                                 <ul class="flex items-center justify-between">
                                     <li>
                                         <button type="reset"
@@ -163,7 +177,8 @@
                         class="btn bg-white dark:bg-slate-800 border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
                         aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">
                         <svg class="w-4 h-4 fill-current mr-2" viewBox="0 0 16 16">
-                            <path d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
+                            <path
+                                d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
                         </svg>
                         <span class="not-sr-only">Customer type</span>
                     </button>
@@ -173,21 +188,24 @@
                             x-transition:enter="transition ease-out duration-200 transform"
                             x-transition:enter-start="opacity-0 -translate-y-2"
                             x-transition:enter-end="opacity-100 translate-y-0"
-                            x-transition:leave="transition ease-out duration-200" x-transition:leave-start="opacity-100"
-                            x-transition:leave-end="opacity-0" x-cloak>
-                            <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
+                            x-transition:leave="transition ease-out duration-200"
+                            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak>
+                            <div
+                                class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
                                 Filters</div>
                             <ul class="max-h-40 overflow-y-auto mb-4">
                                 @foreach ($types as $type)
-                                <li class="py-1 px-3">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" name="filter[]" value="{{$type->code}}" class="form-checkbox" />
-                                        <span class="text-sm font-medium ml-2">{{$type->description}}</span>
-                                    </label>
-                                </li>
+                                    <li class="py-1 px-3">
+                                        <label class="flex items-center">
+                                            <input type="checkbox" name="filter[]" value="{{ $type->code }}"
+                                                class="form-checkbox" />
+                                            <span class="text-sm font-medium ml-2">{{ $type->description }}</span>
+                                        </label>
+                                    </li>
                                 @endforeach
                             </ul>
-                            <div class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
+                            <div
+                                class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
                                 <ul class="flex items-center justify-between">
                                     <li>
                                         <button type="reset"
@@ -326,7 +344,15 @@
                                                 </td>
                                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div class="flex items-center gap-x-6">
-
+                                                        <a href="#"
+                                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" height="20px"
+                                                                viewBox="0 -960 960 960" width="20px"
+                                                                fill="#6b7280">
+                                                                <path
+                                                                    d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Zm73-216v-153.67Q793-530 781-541t-28-11H206q-16.15 0-27.07 11.04Q168-529.92 168-513.6V-360h72v-72h480v72h73Z" />
+                                                            </svg>
+                                                        </a>
                                                         <a href="{{ route('loan.show', $list->id) }}"
                                                             class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16"
