@@ -194,9 +194,28 @@ class BMController extends Controller
         return view('pages.attendancebm.index');
     }
 
-    public function csor()
-    {
-        return view('pages.csor.index');
+    public function csor(Request $request)
+    {   
+        $branch = auth()->user()->branch_id;
+        if ($request->start_date && $request->end_date) {
+            // If both start_date and end_date are provided
+            $expenses = Expenses::where('branch_id', $branch)
+                ->whereBetween('exp_date', [$request->start_date, $request->end_date])
+                ->orderBy('exp_date', 'asc')
+                ->paginate(10);
+        } elseif ($request->start_date) {
+            // If only start_date is provided
+            $expenses = Expenses::where('branch_id', $branch)
+                ->whereDate('exp_date', $request->start_date)
+                ->orderBy('exp_date', 'asc')
+                ->paginate(10);
+                
+        } else {
+            // If no dates are provided
+            $expenses = Expenses::where('branch_id', $branch)
+                ->paginate(10);
+        }
+            return view('pages.csor.index',compact('expenses'));
     }
 
     public function csorPrint(Request $request)
@@ -376,6 +395,7 @@ class BMController extends Controller
         return view('pages.branch.performance.index', compact('branch_managers'));
 
     }
+    
 
     public function performanceRecordAPI()
     {
