@@ -89,8 +89,10 @@
         </div>
 
         <div>
+            
             <div
                 class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                @can('branch_access')
                 <h2 class="mb-4">Branch Manager: Request Check</h2>
 
                 <!-- Form -->
@@ -149,6 +151,7 @@
                     <div class="mt-6 text-left">
                         <h2 class="text-lg font-bold text-gray-700">Total: ₱<span id="total-amount">0.00</span></h2>
                     </div>
+                    @endcan
                     <!-- Submit Button -->
                     <!-- <div class="mt-6">
                             <button type="submit" class="w-full px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600">
