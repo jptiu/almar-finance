@@ -195,7 +195,7 @@ class BMController extends Controller
     }
 
     public function csor(Request $request)
-    {   
+    {
         $branch = auth()->user()->branch_id;
         if ($request->start_date && $request->end_date) {
             // If both start_date and end_date are provided
@@ -214,8 +214,49 @@ class BMController extends Controller
             // If no dates are provided
             $expenses = Expenses::where('branch_id', $branch)
                 ->paginate(10);
+            $breakdowns = Breakdown::where('branch_id', $branch)->get();
+
+            $denominations = [
+                '1000.00' => 'pbil',
+                '500.00' => 'pbil',
+                '200.00' => 'pbil',
+                '100.00' => 'pbil',
+                '50.00' => 'pbil',
+                '20.00' => 'pbil',
+                '10.00' => 'coin',
+                '5.00' => 'coin',
+                '1.00' => 'coin',
+                '0.25' => 'coin',
+            ];
+
+            $cashBillData = [];
+
+            // Loop through each breakdown
+            foreach ($breakdowns as $breakdown) {
+                foreach ($denominations as $denomination => $type) {
+                    $count = CashBill::where('branch_id', $branch)
+                        ->where('breakdown_id', $breakdown->id)
+                        ->where('denomination', $denomination)
+                        ->count();
+
+                    $sum = CashBill::where('branch_id', $branch)
+                        ->where('breakdown_id', $breakdown->id)
+                        ->where('denomination', $denomination)
+                        ->sum('amount');
+
+                    $cashBillData[] = [
+                        'breakdown_id' => $breakdown->id, // Include breakdown ID
+                        'denomination' => $denomination,
+                        'type' => $type,
+                        'count' => $count,
+                        'sum' => $sum
+                    ];
+                }
+            }
+            $comps = ComputeCashOnHand::where('branch_id', $branch)->paginate(10);
+
         }
-            return view('pages.csor.index',compact('expenses'));
+        return view('pages.csor.index', compact('expenses', 'breakdowns', 'cashBillData', 'comps'));
     }
 
     public function csorPrint(Request $request)
@@ -229,6 +270,7 @@ class BMController extends Controller
 
         // Split the date range into start and end dates
         [$startOfMonth, $endOfMonth] = explode(' - ', $dateRange);
+        // dd($startOfMonth.' - '.$endOfMonth);
 
         // Optionally convert the dates to a standard format (Y-m-d) if needed
         $startOfMonth = date('Y-m-d', strtotime($startOfMonth));
@@ -236,7 +278,7 @@ class BMController extends Controller
 
         // Fetch expenses for the current month and branch
         $expenses = Expenses::where('branch_id', $branch)
-            ->whereBetween('exp_date', [$startOfMonth, $endOfMonth])
+            ->whereBetween('exp_date', [Carbon::parse($startOfMonth)->format('m/d/Y'), Carbon::parse($endOfMonth)->format('m/d/Y')])
             ->get();
 
         $breakdown = Breakdown::where('branch_id', $branch)->latest('created_at')->first();
@@ -274,7 +316,7 @@ class BMController extends Controller
             $cashBillData[] = [
                 'denomination' => $denomination,
                 'type' => $type,
-                'count' => $count,
+                'count' => $count, // fix this for quantity count error
                 'sum' => $sum
             ];
         }
@@ -395,7 +437,7 @@ class BMController extends Controller
         return view('pages.branch.performance.index', compact('branch_managers'));
 
     }
-    
+
 
     public function performanceRecordAPI()
     {

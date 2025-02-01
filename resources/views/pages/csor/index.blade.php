@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        <form action="{{ route('csor.index') }}" method="GET">
+        <form action="{{ route('print.index') }}" method="GET">
             @csrf
             <!-- Dashboard actions -->
             <div class="sm:flex sm:justify-between sm:items-center mb-4 ml-4">
@@ -354,27 +354,34 @@
 
                                                             </tr>
                                                         </thead>
-                                                        <tbody
-                                                            class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
-                                                            <tr>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                            </tr>
+                                                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
+                                                            @php
+                                                                $grandTotal = 0; // Initialize a variable to hold the grand total sum
+                                                            @endphp
+                                                        
+                                                            @foreach ($cashBillData as $data) {{-- No need for `$denomination => $data` --}}
+                                                                @if ($data['count'] > 0)
+                                                                    <tr>
+                                                                        <td class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                                            {{ number_format((float) $data['denomination'], 2) }}
+                                                                        </td>
+                                                                        <td class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                                            {{ $data['type'] }}
+                                                                        </td>
+                                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                            {{ $data['count'] }}
+                                                                        </td>
+                                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                            {{ number_format($data['sum'], 2) }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    @php
+                                                                        $grandTotal += $data['sum']; // Add the sum of each row to the grand total
+                                                                    @endphp
+                                                                @endif
+                                                            @endforeach
                                                         </tbody>
+                                                        
                                                     </table>
                                                 </div>
                                             </div>
@@ -521,28 +528,30 @@
                                                         </thead>
                                                         <tbody
                                                             class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
-                                                            <tr>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                            </tr>
+                                                            @foreach($comps as $comp)
+                                                                <tr>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                                        {{ $comp->charge_swipe }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                                        {{ $comp->savings }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        {{ $comp->death_aid }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        {{ $comp->photocopy }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        {{ $comp->withdraw }}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
