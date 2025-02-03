@@ -119,6 +119,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('loan/import-details', [LoanController::class, 'importCSVDetails'])->name('loan.importcsvdetails');
     Route::post('loan/approve/{id}', [LoanController::class, 'approve'])->name('loan.approve');
     Route::post('loan/decline/{id}', [LoanController::class, 'decline'])->name('loan.decline');
+    Route::get('loan/print/{id}', [LoanController::class, 'printGrantLoan'])->name('printGrantLoan.index');
 
     // Collection
     Route::get('collection', [CollectionController::class, 'index'])->name('collection.index');

@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\CustomerType;
 use App\Models\Loan;
 use App\Models\LoanDetails;
+use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -441,6 +442,17 @@ class LoanController extends Controller
 
         // Redirect with a success message
         return redirect()->back()->with('success', 'Loan has been declined with the provided reason.');
+    }
+    public function printGrantLoan($id)
+    {
+        $branch = auth()->user()->branch_id;
+        $branchAddress = Branch::find($branch);
+        $customer = Customer::with([
+            'loan',
+            'loan.details'
+        ])->where('branch_id', $branch)->find($id);
+
+        return view('pages.loan.print.index', compact('customer', 'branchAddress'));
     }
 
 }
