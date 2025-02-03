@@ -46,7 +46,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Cash Beginning</p>
-                                    <span class="text-3xl font-semibold text-gray-800">₱2,134,900</span>
+                                    <span class="text-3xl font-semibold text-gray-800">₱{{ number_format($cashBeginning,2) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Cash End</p>
-                                    <span class="text-3xl font-semibold text-gray-800">₱2,134,900</span>
+                                    <span class="text-3xl font-semibold text-gray-800">₱0.00</span>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Total Customer</p>
-                                    <span class="text-3xl font-semibold text-gray-800">34,900</span>
+                                    <span class="text-3xl font-semibold text-gray-800">{{ number_format($totalCustomer) }}</span>
                                 </div>
                             </div>
                         </div>

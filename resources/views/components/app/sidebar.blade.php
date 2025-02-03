@@ -5,8 +5,8 @@
 
     <!-- Sidebar -->
     <div>
-        <a class="block" href="{{ route('dashboard') }}">
-            <img class="h-auto" src="/images/almarlogo.png" alt="image description">
+        <a class="block flex justify-center bg-primary-100 pt-8" href="{{ route('dashboard') }}">
+            <img class="h-auto" src="/images/fcc.png" alt="image description">
         </a>
     </div>
     <div id="sidebar"
