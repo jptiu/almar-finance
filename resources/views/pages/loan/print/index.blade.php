@@ -51,105 +51,80 @@
             </div>
         </div> -->
 
-        <div class="mt-4">
-            <button class="w-full text-left font-bold bg-gray-200 px-4 py-2 rounded-md focus:outline-none">
-                Personal Information
-            </button>
-            <div id="personal-info" class="p-4 bg-gray-50 rounded-md ">
-                <div class="grid grid-cols-2 gap-4">
-                    <p><span class="font-bold">Customer Type:</span> {{$customer->type??""}}</p>
-                    <p><span class="font-bold">Full Name:</span> {{$customer->first_name??""}} {{$customer->middle_name??""}} {{$customer->last_name??""}}</p>
-                    <p><span class="font-bold">Personal Contact Number:</span> {{$customer->cell_number??""}}</p>
-                    <p><span class="font-bold">Birthdate:</span> {{$customer->birth_date??""}}</p>
-                    <p><span class="font-bold">Birthdate:</span> {{$customer->birth_place??""}}</p>
-                    <p><span class="font-bold">Address:</span> {{$customer->house??""}}, {{$customer->street??""}},
-                    {{$customer->barangay??""}}, {{$customer->city??""}}</p>
-                    <p><span class="font-bold">Civil Status:</span> {{$customer->civil_status??""}}</p>
-                    <p><span class="font-bold">Age:</span> {{$customer->age??""}}</p>
-                    <p><span class="font-bold">Gender:</span> {{$customer->gender??""}}</p>
-                    <p><span class="font-bold">Citizenship:</span> {{$customer->citizenship??""}}</p>
-                    <p><span class="font-bold">Email Address:</span> {{$customer->email??""}}</p>
-                    <p><span class="font-bold">Facebook:</span> {{$customer->spouse_fb??""}}</p>
+        <div class="mt-4 border-2 border-gray-500">
+            <div class="flex flex-col justify-start p-4">
+                <div class="leading-loose mb-6">
+                    <p><span class="font-bold text-gray-900 text-base">Full Name:</span> {{$customer->first_name ?? 'N/A'}} {{$customer->middle_name ?? ''}} {{$customer->last_name ?? ""}}</p>
+                    <p><span class="font-bold text-gray-900 text-base">Customer Type:</span> {{$customer->type?? 'N/A'}}</p>
+                    <p><span class="font-bold text-gray-900 text-base">Status:</span> {{$customer->status ?? 'N/A'}}</p>
+                    <p><span class="font-bold text-gray-900 text-base">ID:</span> {{$customer->id ?? 'N/A'}}</p>
+                </div>
+                <div class="relative">
+                    <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Loan Payment Details</h2>
+                    <hr class="h-px my-4 mb-4 bg-gray-200 border-0 dark:bg-gray-700">
+                </div>
+                <div class="mb-6">
+                    <div class="grid grid-cols-2 gap-8 mt-4 mb-12 text-sm text-gray-500">
+                        <div>
+                            <p class="text-gray-900 text-sm">Transaction No.</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->trans_no?? 'N/A'}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Date of Loan </p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->date_of_loan}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Loan Type</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->loan_type ?? 'N/A'}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Transaction Type</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->transaction_type ?? 'N/A'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Terms of Payment</h2>
+                    <hr class="h-px my-4 mb-4 bg-gray-200 border-0 dark:bg-gray-700">
+                </div>
+                <div class="">
+                    <div class="grid grid-cols-2 gap-8 mt-4 mb-12 text-sm text-gray-500">
+                        <div>
+                            <p class="text-gray-900 text-sm">Principal Amount</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->principal_amount??'N/A'}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Interest</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->interest?? 'N/A'}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Interest Amount</p>
+                            <p class="font-bold text-gray-900 text-base"value="" placeholder="₱">{{$customer->loan->interest_amount?? 'N/A'}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Service Charge</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->svc_charge?? 'N/A'}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Payable Amount</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->payable_amount?? 'N/A'}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Days to Pay</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->days_to_pay}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Months to Pay</p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->months_to_pay?? 'N/A'}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-900 text-sm">Actual Record </p>
+                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->actual_record?? 'N/A'}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="mt-4">
-            <button class="w-full text-left font-bold bg-gray-200 px-4 py-2 rounded-md focus:outline-none">
-                Spousal Data
-            </button>
-            <div id="spousal-data" class="p-4 bg-gray-50 rounded-md ">
-                <div class="grid grid-cols-2 gap-4">
-                    <p><span class="font-bold">Complete Name of Spouse:</span> {{$customer->spouse_name??""}}</p>
-                    <p><span class="font-bold">Personal Contact Number:</span> {{$customer->cell_number??""}}</p>
-                    <p><span class="font-bold">Birthdate:</span> {{$customer->birth_date??""}}</p>
-                    <p><span class="font-bold">Age:</span> {{$customer->cell_age??""}}</p>
-                    <p><span class="font-bold">Occupation:</span> {{$customer->occupation??""}}</p>
-                    <p><span class="font-bold">Company Name/ Address:</span> {{$customer->c_nameadd??""}}</p>
-                    <p><span class="font-bold">Facebook:</span> {{$customer->spouse_fb??""}}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4">
-            <button class="w-full text-left font-bold bg-gray-200 px-4 py-2 rounded-md focus:outline-none">
-                Company Information
-            </button>
-            <div id="company-info" class="p-4 bg-gray-50 rounded-md ">
-                <div class="grid grid-cols-2 gap-4">
-                    <p><span class="font-bold">Agency Name:</span> {{$customer->agency_name??""}}</p>
-                    <p><span class="font-bold">Address / Tel. no:</span> {{$customer->add_tel??""}}</p>
-                    <p><span class="font-bold">Company Name:</span> {{$customer->comp_name??""}}</p>
-                    <p><span class="font-bold">Address / Tel. no:</span> {{$customer->add_telc??""}}</p>
-                    <p><span class="font-bold">Date of Hire:</span> {{$customer->date_hired??""}}</p>
-                    <p><span class="font-bold">Day Off:</span> {{$customer->day_off??""}}</p>
-                    <p><span class="font-bold">Position:</span> {{$customer->job_position??""}}</p>
-                    <p><span class="font-bold">Monthly Salary:</span> {{$customer->monthly_salary??""}}</p>
-                    <p><span class="font-bold">Salary Schedule:</span> {{$customer->salary_sched??""}}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4">
-            <button class="w-full text-left font-bold bg-gray-200 px-4 py-2 rounded-md focus:outline-none">
-                For Pensioners ONLY
-            </button>
-            <div id="bank-info" class="p-4 bg-gray-50 rounded-md ">
-                <div class="grid grid-cols-2 gap-4">
-                    <p><span class="font-bold">Monthly Pension:</span> {{$customer->monthly_pension??""}}</p>
-                    <p><span class="font-bold">Pension Schedule:</span> {{$customer->pension_sched??""}}</p>
-                    <p><span class="font-bold">Pension Type:</span> {{$customer->pension_type??""}}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4">
-            <button class="w-full text-left font-bold bg-gray-200 px-4 py-2 rounded-md focus:outline-none">
-                Background Data
-            </button>
-            <div id="bank-info" class="p-4 bg-gray-50 rounded-md ">
-                <div class="grid grid-cols-2 gap-4">
-                    <p><span class="font-bold">Bank/Branch:</span> {{$customer->fathers_name??""}}</p>
-                    <p><span class="font-bold">Contact No.:</span> {{$customer->fathers_num??""}}</p>
-                    <p><span class="font-bold">Mother's Name:</span> {{$customer->mothers_name??""}}</p>
-                    <p><span class="font-bold">Contact No.:</span> {{$customer->mothers_num??""}}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4">
-            <button class="w-full text-left font-bold bg-gray-200 px-4 py-2 rounded-md focus:outline-none">
-                Bank Information
-            </button>
-            <div id="bank-info" class="p-4 bg-gray-50 rounded-md ">
-                <div class="grid grid-cols-2 gap-4">
-                    <p><span class="font-bold">Bank/Branch:</span> {{$customer->branch??""}}</p>
-                    <p><span class="font-bold">Card No.:</span> {{$customer->card_no??""}}</p>
-                    <p><span class="font-bold">Account No.:</span> {{$customer->acc_no??""}}</p>
-                    <p><span class="font-bold">PIN No.:</span> {{$customer->pin_no??""}}</p>
-                </div>
-            </div>
-        </div>   
 
 </body>
 
