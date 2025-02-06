@@ -405,6 +405,7 @@
             <div class="flex-end items-center justify-between mt-6">
                 {{ $lists->links() }}
             </div>
+            
 
         </section>
 

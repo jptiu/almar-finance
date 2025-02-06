@@ -227,13 +227,13 @@
                                     <label for="date_of_loan" class="text-black font-medium">Date of Loan</label>
                                     <input type="date" name="date_of_loan" id="date_of_loan"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="loan_type" class="text-black font-medium">Loan Type</label>
-                                    <select name="loan_type" id="loan_type"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
+                                    <select name="loan_type" id="loan_type" required
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"/>
                                     <option>Select</option>
                                     <option value="daily">Daily</option>
                                     {{-- <option value="weekly">Weekly</option>
@@ -277,7 +277,7 @@
                                     <input onchange="getCustomerID()" type="text" name="customer_id"
                                         id="customer_id"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-2">
@@ -329,28 +329,28 @@
                                         Amount</label>
                                     <input type="text" name="principal_amount" id="principal_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="₱" />
+                                        value="" placeholder="₱"required />
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="days_to_pay" class="text-black font-medium">Days to pay</label>
                                     <input type="number" name="days_to_pay" id="days_to_pay"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="months_to_pay" class="text-black font-medium">Months to pay</label>
                                     <input type="number" name="months_to_pay" id="months_to_pay"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="interest" class="text-black font-medium">Interest %</label>
                                     <input type="text" name="interest" id="interest"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                     </select>
                                 </div>
                             </div>
@@ -368,28 +368,28 @@
                                         Amount</label>
                                     <input type="text" name="interest_amount" id="interest_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="₱" />
+                                        value="" placeholder="₱"required />
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="svc_charge" class="text-black font-medium">Service Charge</label>
                                     <input type="number" name="svc_charge" id="svc_charge"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="actual_record" class="text-black font-medium">Actual Record</label>
                                     <input type="text" name="actual_record" id="actual_record"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="payable_amount" class="text-black font-medium">Payable Amount</label>
                                     <input type="text" name="payable_amount" id="payable_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="₱" />
+                                        value="" placeholder="₱"required />
                                 </div>
                             </div>
                         </div>

@@ -77,13 +77,13 @@
                                     <label for="date_from" class="text-black font-medium">From</label>
                                     <input type="date" name="date_from" id="date_from"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                 </div>
                                 <div class="md:col-span-2">
                                     <label for="date_to" class="text-black font-medium">To</label>
                                     <input type="date" name="date_to" id="date_to"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" />
+                                        value="" placeholder="" required/>
                                 </div>
                             </div>
                         </div>

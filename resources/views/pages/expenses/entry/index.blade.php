@@ -85,7 +85,7 @@
 
                                 <div class="md:col-span-2">
                                     <label for="exp_date" class="text-black font-medium">Expiry Date</label>
-                                    <input type="date" name="exp_date" id="exp_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="date" name="exp_date" id="exp_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
                                 </div>
 
                             </div>  
@@ -102,22 +102,22 @@
 
                                 <div class="md:col-span-2">
                                     <label for="exp_ref_no" class="text-black font-medium">Exp Ref No.</label>
-                                    <input type="text" name="exp_ref_no" id="exp_ref_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="exp_ref_no" id="exp_ref_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="acc_no" class="text-black font-medium">Acct No.</label>
-                                    <input type="text" name="acc_no" id="acc_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="acc_no" id="acc_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="acc_class" class="text-black font-medium">Account Class</label>
-                                    <input type="text" name="acc_class" id="acc_class" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="acc_class" id="acc_class" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="acc_type" class="text-black font-medium">Account Type</label>
-                                    <input type="text" name="acc_type" id="acc_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="acc_type" id="acc_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
                                 </div>
                             </div>  
                         </div>
@@ -133,17 +133,17 @@
 
                                 <div class="md:col-span-2">
                                     <label for="acc_title" class="text-black font-medium">Account Title</label>
-                                    <input type="text" name="acc_title" id="acc_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="acc_title" id="acc_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="justification" class="text-black font-medium">Justification</label>
-                                    <input type="text" name="justification" id="justification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="justification" id="justification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="or_no" class="text-black font-medium">O.R No.</label>
-                                    <input type="text" name="or_no" id="or_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" />
+                                    <input type="text" name="or_no" id="or_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
                                 </div>
 
                                 <div class="md:col-span-2">

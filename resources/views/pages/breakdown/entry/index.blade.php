@@ -315,7 +315,7 @@
                                             <label class="text-black font-medium" for="ref">Ref No.</label>
                                             <input type="text" name="ref" id="ref"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                value="" placeholder="" />
+                                                value="" placeholder="" required />
                                         </div>
 
                                     </div>
@@ -332,7 +332,7 @@
                                             <label class="text-black font-medium" for="house">Date</label>
                                             <input type="date" name="house" id="house"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                value="" placeholder="" />
+                                                value="" />
                                         </div>
 
                                     </div>

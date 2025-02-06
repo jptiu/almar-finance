@@ -10,7 +10,7 @@
         </a>
     </div>
     <div id="sidebar"
-        class="flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-72 lg:sidebar-expanded:!w-72 2xl:!w-72 shrink-0 bg-primary-100 p-4 transition-all duration-200 ease-in-out"
+        class="flex flex-col mb-20 absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-72 lg:sidebar-expanded:!w-72 2xl:!w-72 shrink-0 bg-primary-100 p-4 transition-all duration-200 ease-in-out"
         :class="sidebarOpen ? 'translate-x-0' : '-translate-x-64'" @click.outside="sidebarOpen = false"
         @keydown.escape.window="sidebarOpen = false" x-cloak="lg">
 
@@ -51,7 +51,7 @@
                             </a>
                         </li>
 
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['employee', 'employee-add', 'bm-probation', 'new-hire', 'resignation'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
+                        {{-- <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['employee', 'employee-add', 'bm-probation', 'new-hire', 'resignation'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['employee', 'employee-add', 'bm-probation', 'new-hire', 'resignation']) ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (!in_array(Request::segment(1), ['employee', 'employee-add', 'bm-probation', 'new-hire', 'resignation'])) {{ 'hover:text-gray-900 dark:hover:text-white' }} @endif"
                                 href="#0" @click.prevent="open = !open; sidebarExpanded = true">
@@ -114,18 +114,14 @@
                                 </ul>
                             </div>
                         </li>
+                        --}}
 
                         <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['loanhistory'])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('loanhistory.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loanhistory'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
-                                        viewBox="0 0 24 24" width="24px" fill="#e8eaed">
-                                        <rect fill="none" height="24" width="24" />
-                                        <path
-                                            d="M17.66,9.53l-7.07,7.07l-4.24-4.24l1.41-1.41l2.83,2.83l5.66-5.66L17.66,9.53z M4,12c0-2.33,1.02-4.42,2.62-5.88L9,8.5v-6H3 l2.2,2.2C3.24,6.52,2,9.11,2,12c0,5.19,3.95,9.45,9,9.95v-2.02C7.06,19.44,4,16.07,4,12z M22,12c0-5.19-3.95-9.45-9-9.95v2.02 c3.94,0.49,7,3.86,7,7.93c0,2.33-1.02,4.42-2.62,5.88L15,15.5v6h6l-2.2-2.2C20.76,17.48,22,14.89,22,12z" />
-                                    </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M480-80q-155 0-269-103T82-440h81q15 121 105.5 200.5T480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-86 0-159.5 42.5T204-640h116v80H88q29-140 139-230t253-90q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm112-232L440-464v-216h80v184l128 128-56 56Z"/></svg>
                                     <span
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Loan
                                         History</span>
@@ -246,7 +242,7 @@
                             </div>
                         </li>
 
-                        <li
+                        {{--<li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['evaluations'])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('evaluations.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['evaluations'])) {{ 'hover:text-slate-200' }} @endif">
@@ -271,9 +267,9 @@
                                         Evaluation</span>
                                 </div>
                             </a>
-                        </li>
+                        </li>--}}
 
-                        <li
+                        {{--<li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['expenses'])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('payroll.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['expenses'])) {{ 'hover:text-slate-200' }} @endif">
@@ -290,7 +286,7 @@
                                         class="inline-flex items-center justify-center w-3 h-3 p-3 ms-6 text-sm font-semibold text-red-700 bg-red-200 rounded-full">23</span>
                                 </div>
                             </a>
-                        </li>
+                        </li>--}}
 
                         <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['expenses'])) {{ 'bg-accent-100' }} @endif">
@@ -310,7 +306,7 @@
                             </a>
                         </li>
 
-                        <li
+                        {{--<li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('hr.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
@@ -325,10 +321,10 @@
                                         Employment Period</span>
                                 </div>
                             </a>
-                        </li>
+                        </li>--}}
 
                         <!-- Employee Records -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), [
+                        {{--<li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), [
                                 'leaveRequest',
                                 'underRequest',
                                 'idRequest',
@@ -406,7 +402,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>--}}
 
                         <!-- Employee Request Forms -->
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), [
@@ -470,7 +466,7 @@
                                         'dailyWorkRequest'
                                     ])) {{ 'hidden' }} @endif"
                                     :class="open ? '!block' : 'hidden'">
-                                    <li class="mb-1 last:mb-0">
+                                    {{--<li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('leaveRequest.add')) {{ '!text-violet-500' }} @endif"
                                             href="{{ route('leaveRequest.index') }}">
                                             <span
@@ -520,7 +516,7 @@
                                             <span
                                                 class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily Work Order</span>
                                         </a>
-                                    </li>
+                                    </li>--}}
                                     <li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('cashBond.index')) {{ '!text-violet-500' }} @endif"
                                             href="{{ route('cashBond.index') }}">
@@ -587,7 +583,7 @@
                                         'cashBond',
                                     ])) {{ 'hidden' }} @endif"
                                     :class="open ? '!block' : 'hidden'">
-                                    <li class="mb-1 last:mb-0">
+                                    {{--<li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('leaveRequest.add')) {{ '!text-violet-500' }} @endif"
                                             href="#">
                                             <span
@@ -618,7 +614,7 @@
                                                 class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Resignation
                                                 Documents</span>
                                         </a>
-                                    </li>
+                                    </li>--}}
                                     <li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('idRequest.index')) {{ '!text-violet-500' }} @endif"
                                             href="#">
@@ -718,7 +714,7 @@
                         </li>
 
                         <!-- Miscellaneous -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['branchinfo'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
+                        {{--<li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['branchinfo'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['branchinfo']) ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (!in_array(Request::segment(1), ['branchinfo'])) {{ 'hover:text-gray-900 dark:hover:text-white' }} @endif"
                                 href="#0" @click.prevent="open = !open; sidebarExpanded = true">
@@ -762,9 +758,9 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>--}}
 
-                        <li
+                        {{--<li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('hr.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
@@ -779,7 +775,7 @@
                                         Loan History</span>
                                 </div>
                             </a>
-                        </li>
+                        </li>--}}
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
@@ -1136,21 +1132,19 @@
                             </div>
                         </li>
 
-                        {{-- <li
+                        <li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('csor.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
-                                        width="24px" fill="#e8eaed">
-                                        <path d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
-                                    </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                                    <path d="M320-320h200v-200H320v200Zm0-280h480v-200H320v200Zm280 280h200v-200H600v200Zm-280 80q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Z"/>
+                                </svg>
                                     <span
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">CSOR</span>
                                 </div>
                             </a>
-                        </li> --}}
+                        </li>
 
                         <!-- Automated Payment Reminders -->
                         {{-- <li
@@ -1232,7 +1226,7 @@
                                         'dailyworkorder',
                                     ])) {{ 'hidden' }} @endif"
                                     :class="open ? '!block' : 'hidden'">
-                                    <li class="mb-1 last:mb-0">
+                                    {{--<li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('leaveRequest.add')) {{ '!text-violet-500' }} @endif"
                                             href="{{ route('collector.leave') }}">
                                             <span
@@ -1278,7 +1272,7 @@
                                             <span
                                                 class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily Work Order</span>
                                         </a>
-                                    </li>
+                                    </li>--}}
                                     <li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('collector.cashbond')) {{ '!text-violet-500' }} @endif"
                                             href="{{ route('collector.cashbond') }}">
@@ -1494,6 +1488,7 @@
                                 </div>
                             </a>
                         </li>
+                        <br>
                     @endcan
                     @can('auditor_access')
                         <!-- Dashboard -->
@@ -1549,10 +1544,8 @@
                             <a href="{{ route('csor.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
-                                        width="24px" fill="#e8eaed">
-                                        <path d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                                        <path d="M320-320h200v-200H320v200Zm0-280h480v-200H320v200Zm280 280h200v-200H600v200Zm-280 80q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Z"/>
                                     </svg>
                                     <span
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">CSOR</span>
@@ -1921,12 +1914,7 @@
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chart'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
-                                            width="24px" fill="#e8eaed">
-                                            <path d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
-                                        </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h360v80H200v560h560v-360h80v360q0 33-23.5 56.5T760-120H200Zm80-160h80v-280h-80v280Zm160 0h80v-400h-80v400Zm160 0h80v-160h-80v160Zm80-320v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80ZM480-480Z"/></svg>
                                         <span
                                             class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Chart
                                             Account</span>
@@ -1995,7 +1983,7 @@
                                         'cashBond',
                                     ])) {{ 'hidden' }} @endif"
                                     :class="open ? '!block' : 'hidden'">
-                                    <li class="mb-1 last:mb-0">
+                                    {{--<li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('leaveRequest.add')) {{ '!text-violet-500' }} @endif"
                                             href="{{ route('leaveRequest.index') }}">
                                             <span
@@ -2038,7 +2026,7 @@
                                             <span
                                                 class="inline-flex items-center justify-center w-3 h-3 p-3 ms-6 text-sm font-semibold text-red-700 bg-red-200 rounded-full">2</span>
                                         </a>
-                                    </li>
+                                    </li>--}}
                                     <li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('cashBond.index')) {{ '!text-violet-500' }} @endif"
                                             href="{{ route('cashBond.index') }}">
@@ -2060,12 +2048,7 @@
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['denomination'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
-                                            width="24px" fill="#e8eaed">
-                                            <path d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
-                                        </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-280v-280h80v280h-80Zm240 0v-280h80v280h-80ZM80-120v-80h800v80H80Zm600-160v-280h80v280h-80ZM80-640v-80l400-200 400 200v80H80Zm178-80h444-444Zm0 0h444L480-830 258-720Z"/></svg>
                                         <span
                                             class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Denomination</span>
                                     </div>
@@ -2079,12 +2062,7 @@
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['branches'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
-                                            width="24px" fill="#e8eaed">
-                                            <path d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
-                                        </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M80-120v-720h400v160h400v560H80Zm80-80h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 480h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 480h320v-400H480v80h80v80h-80v80h80v80h-80v80Zm160-240v-80h80v80h-80Zm0 160v-80h80v80h-80Z"/></svg>
                                         <span
                                             class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Branches</span>
                                     </div>
@@ -2276,11 +2254,9 @@
                             <a href="{{ route('performance.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['performance-record'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#FFFFFF">
-                                        <path
-                                            d="M480-80q-155 0-269-103T82-440h81q15 121 105.5 200.5T480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-86 0-159.5 42.5T204-640h116v80H88q29-140 139-230t253-90q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm112-232L440-464v-216h80v184l128 128-56 56Z" />
-                                    </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                                    <path d="M480-160q75 0 127.5-52.5T660-340q0-75-52.5-127.5T480-520q-75 0-127.5 52.5T300-340q0 75 52.5 127.5T480-160ZM363-572q20-11 42.5-17.5T451-598L350-800H250l113 228Zm234 0 114-228H610l-85 170 19 38q14 4 27 8.5t26 11.5ZM256-208q-17-29-26.5-62.5T220-340q0-36 9.5-69.5T256-472q-42 14-69 49.5T160-340q0 47 27 82.5t69 49.5Zm448 0q42-14 69-49.5t27-82.5q0-47-27-82.5T704-472q17 29 26.5 62.5T740-340q0 36-9.5 69.5T704-208ZM480-80q-40 0-76.5-11.5T336-123q-9 2-18 2.5t-19 .5q-91 0-155-64T80-339q0-87 58-149t143-69L120-880h280l80 160 80-160h280L680-559q85 8 142.5 70T880-340q0 92-64 156t-156 64q-9 0-18.5-.5T623-123q-31 20-67 31.5T480-80Zm0-260ZM363-572 250-800l113 228Zm234 0 114-228-114 228ZM406-230l28-91-74-53h91l29-96 29 96h91l-74 53 28 91-74-56-74 56Z"/>
+                                </svg>
                                     <span
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Performance Record</span>
                                 </div>
@@ -2323,21 +2299,19 @@
                         </li> --}}
 
                         <!-- CSOR -->
-                        {{-- <li
+                        {{--<li
                             class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                             <a href="{{ route('csor.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
                                 <div class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#FFFFFF">
-                                        <path
-                                            d="M38-428q-18-36-28-73T0-576q0-112 76-188t188-76q63 0 120 26.5t96 73.5q39-47 96-73.5T696-840q112 0 188 76t76 188q0 38-10 75t-28 73q-11-19-26-34t-35-24q9-23 14-45t5-45q0-78-53-131t-131-53q-81 0-124.5 44.5T480-616q-48-56-91.5-100T264-760q-78 0-131 53T80-576q0 23 5 45t14 45q-20 9-35 24t-26 34ZM0-80v-63q0-44 44.5-70.5T160-240q13 0 25 .5t23 2.5q-14 20-21 43t-7 49v65H0Zm240 0v-65q0-65 66.5-105T480-290q108 0 174 40t66 105v65H240Zm540 0v-65q0-26-6.5-49T754-237q11-2 22.5-2.5t23.5-.5q72 0 116 26.5t44 70.5v63H780ZM480-210q-57 0-102 15t-53 35h311q-9-20-53.5-35T480-210Zm-320-70q-33 0-56.5-23.5T80-360q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T160-280Zm640 0q-33 0-56.5-23.5T720-360q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T800-280Zm-320-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-440q0 50-34.5 85T480-320Zm0-160q-17 0-28.5 11.5T440-440q0 17 11.5 28.5T480-400q17 0 28.5-11.5T520-440q0-17-11.5-28.5T480-480Zm0 40Zm1 280Z" />
-                                    </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                                    <path d="M320-320h200v-200H320v200Zm0-280h480v-200H320v200Zm280 280h200v-200H600v200Zm-280 80q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Z"/>
+                                </svg>
                                     <span
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">CSOR</span>
                                 </div>
                             </a>
-                        </li> --}}
+                        </li>--}}
 
                         <!-- Automated Payment Reminders -->
                         {{-- <li
@@ -2476,7 +2450,7 @@
                                         'dailyworkorder'
                                     ])) {{ 'hidden' }} @endif"
                                     :class="open ? '!block' : 'hidden'">
-                                    <li class="mb-1 last:mb-0">
+                                    {{--<li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('leaveRequest.add')) {{ '!text-violet-500' }} @endif"
                                             href="{{ route('leaveRequest.index') }}">
                                             <span
@@ -2526,7 +2500,7 @@
                                             <span
                                                 class="inline-flex items-center justify-center w-3 h-3 p-3 ms-6 text-sm font-semibold text-red-700 bg-red-200 rounded-full">2</span>
                                         </a>
-                                    </li>
+                                    </li>--}}
                                     <li class="mb-1 last:mb-0">
                                         <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('cashBond.index')) {{ '!text-violet-500' }} @endif"
                                             href="{{ route('cashBond.index') }}">
@@ -2558,7 +2532,7 @@
                         </li>
 
                         <!-- Employee Evaluation -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['employeeEvaluation'])) {{ 'bg-accent-100' }} @endif"
+                        {{--<li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['employeeEvaluation'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['employee-evaluation']) ? 1 : 0 }} }">
                             <a href="{{ route('employeeEvaluation.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['employeeEvaluation'])) {{ 'hover:text-slate-200' }} @endif">
@@ -2585,7 +2559,7 @@
                                     </div>
                                 </div>
                             </a>
-                        </li>
+                        </li>--}}
 
                         <!-- Payslip & Payroll -->
                         {{-- <li

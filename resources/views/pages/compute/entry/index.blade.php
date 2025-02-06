@@ -72,13 +72,13 @@
                             <div>
                                 <label for="prev_transaction" class="text-black font-medium">Prev Tran Date</label>
                                 <input type="date" name="prev_transaction" id="prev_transaction"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required/>
                             </div>
                             <div>
                                 <label for="cash_beginning" class="text-black font-medium">Cash Beginning</label>
                                 <input type="number" name="cash_beginning" id="cash_beginning"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="0.00" />
+                                    placeholder="0.00" required />
                             </div>
                         </div>
                     </div>
@@ -91,25 +91,25 @@
                             <div>
                                 <label for="transaction_date" class="text-black font-medium">Today's Tran Date</label>
                                 <input type="date" name="transaction_date" id="transaction_date"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required/>
                             </div>
                             <div>
                                 <label for="collection" class="text-black font-medium">Collection</label>
                                 <input type="number" name="collection" id="collection"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="0.00" />
+                                    placeholder="0.00" required/>
                             </div>
                             <div>
                                 <label for="add_cash" class="text-black font-medium">Add Cash</label>
                                 <input type="number" name="add_cash" id="add_cash"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="0.00" />
+                                    placeholder="0.00" required/>
                             </div>
                             <div>
                                 <label for="add_cash_2" class="text-black font-medium">Add Cash (2nd)</label>
                                 <input type="number" name="add_cash_2" id="add_cash_2"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="0.00" />
+                                    placeholder="0.00" required/>
                             </div>
                         </div>
                     </div>
@@ -123,19 +123,19 @@
                                 <label for="loan_releases" class="text-black font-medium">Today's Loan Releases</label>
                                 <input type="number" name="loan_releases" id="loan_releases"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="0.00" />
+                                    placeholder="0.00" required/>
                             </div>
                             <div>
                                 <label for="expenses" class="text-black font-medium">Today's Expenses</label>
                                 <input type="number" name="expenses" id="expenses"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="0.00" />
+                                    placeholder="0.00" required/>
                             </div>
                             <div>
                                 <label for="new_cash_on_hand" class="text-black font-medium">New Cash on Hand</label>
                                 <input type="number" name="new_cash_on_hand" id="new_cash_on_hand"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    placeholder="0.00" />
+                                    placeholder="0.00" required/>
                             </div>
                         </div>
                     </div>

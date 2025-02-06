@@ -177,7 +177,7 @@
                                             <label for="date_of_loan" class="text-black font-medium">Date</label>
                                             <input type="date" name="date_of_loan" id="date_of_loan"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                value="" placeholder="" />
+                                                value="" placeholder="" required/>
                                         </div>
 
                                     </div>
@@ -244,7 +244,7 @@
                                             <label for="date_paid" class="text-black font-medium">Date Paid</label>
                                             <input type="date" name="date_paid" id="date_paid"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                value="" placeholder="" />
+                                                value="" placeholder="" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -263,14 +263,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-8 flex flex-row-reverse">
-                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
                                 <div class="lg:col-span-2">
                                     <div
-                                        class="flex justify-between grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
+                                        class="flex justify-between grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2 mt-4">
 
                                         <div class="md:col-span-1">
                                             {{-- <button type="submit"
@@ -283,6 +278,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
 
