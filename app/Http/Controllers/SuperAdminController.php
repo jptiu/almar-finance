@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\ActivityLog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Role;
 
 class SuperAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $logs = ActivityLog::orderByDesc('id')->paginate(20);
         return view('pages.superadmin.index');
@@ -79,8 +80,20 @@ class SuperAdminController extends Controller
 
     public function userAccounts(Request $request)
     {
-        $users = User::paginate(20);
-        return view('pages.superadmin.useracc.index', compact('users'));
+        $branch = auth()->user()->branch_id;
+        $roles = Role::all();
+        
+        $usersQuery = User::with('roles')->where('branch_id', $branch);
+    
+        if ($request->has('filter') && is_array($request->filter) && isset($request->filter[0])) {
+            $usersQuery->whereHas('roles', function ($query) use ($request) {
+                $query->where('title', $request->filter[0]);
+            });
+        }
+    
+        $users = $usersQuery->paginate(20);
+    
+        return view('pages.superadmin.useracc.index', compact('users', 'roles'));
     }
 
     public function deactivateAccounts(Request $request)

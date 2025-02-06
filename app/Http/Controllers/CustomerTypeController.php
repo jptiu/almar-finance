@@ -28,9 +28,22 @@ class CustomerTypeController extends Controller
         }else{
             $lists = CustomerType::with('user')->where('branch_id', $branch)->paginate(20);
         }
+        $query = CustomerType::where('branch_id', $branch);
+
+        if ($request->filter) {
+            $query->where('user_id', $request->filter);
+        }
+
+        $lists = $query->paginate(10);
+
+        // Get distinct user_ids for filter selection
+        $distinctUserIds = CustomerType::where('branch_id', $branch)
+            ->select('user_id') // Select only the user_id column
+            ->distinct() // Get distinct user_id values
+            ->pluck('user_id');
         
 
-        return view('pages.customerType.index', compact('lists'));
+        return view('pages.customerType.index', compact('lists','distinctUserIds'));
     }
 
     public function add()
