@@ -84,9 +84,15 @@ class HRController extends Controller
      * @return A view named 'index' located in the 'renewals' folder within the 'hr' folder in the
      * 'pages' directory is being returned.
      */
-    public function loanRenewals()
+    public function loanRenewals(Request $request)
     {
+        $branch = auth()->user()->branch_id;
         $lists = Loan::where('transaction_type', 'RENEW')->paginate(10);
+        if ($request->date_from) {
+            $lists = Loan::with(['customer'])
+                ->whereBetween('updated_at', [$request->date_from, $request->date_to])
+                ->where('branch_id', $branch)->paginate(10);
+        } 
 
         return view('pages.hr.renewals.index', compact('lists'));
 
@@ -166,6 +172,11 @@ class HRController extends Controller
         }else{
             $lists = Loan::with('details')->where('branch_id', $branch)->paginate(20);
         }
+        if ($request->date_from) {
+            $lists = Loan::with(['customer'])
+                ->whereBetween('updated_at', [$request->date_from, $request->date_to])
+                ->where('branch_id', $branch)->paginate(10);
+        } 
 
         return view('pages.hr.loanhistory.index', compact('lists'));
     }

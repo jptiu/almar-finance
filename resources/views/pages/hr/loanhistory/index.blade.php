@@ -19,7 +19,7 @@
                 <!-- Filter button -->
                 <div class="relative inline-flex" x-data="{ open: false }">
                     <button
-                        class="btn bg-white dark:bg-slate-800 border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
+                        class="w-full h-10 mt-7 btn bg-white dark:bg-slate-800 border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
                         aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">
                         <span class="sr-only">Filter</span><wbr>
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
@@ -71,16 +71,25 @@
                     </form>
                 </div>
 
-                <!-- Datepicker built with flatpickr -->
-                <x-datepicker />
-
-                <!-- Add view button -->
-                <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
-                    <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
-                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-                    </svg>
-                    <span class="hidden xs:block ml-2">Add View</span>
-                </button>
+                <!--date filter-->
+                <form action="" method="GET" class="relative flex items-center space-x-4">
+                    <div>
+                        <label for="date_from" class="text-black font-medium">From</label>
+                        <input type="date" name="date_from" id="date_from"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                            value="" placeholder="" required/>
+                    </div>
+                    <div>
+                        <label for="date_to" class="text-black font-medium">To</label>
+                        <input type="date" name="date_to" id="date_to"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                            value="" placeholder="" required/>
+                    </div>
+                    <div>
+                        <button type="submit"
+                        class="bg-indigo-500 hover:bg-primary-200 text-white text-sm py-2.5 px-4 mt-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
                 
             </div>
 

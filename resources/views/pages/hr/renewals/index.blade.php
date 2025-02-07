@@ -17,10 +17,24 @@
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
-            
-
-                <!-- Datepicker built with flatpickr -->
-                <x-datepicker />
+                <form action="" method="GET" class="relative flex items-center space-x-4">
+                    <div>
+                        <label for="date_from" class="text-black font-medium">From</label>
+                        <input type="date" name="date_from" id="date_from"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                            value="" placeholder="" required/>
+                    </div>
+                    <div>
+                        <label for="date_to" class="text-black font-medium">To</label>
+                        <input type="date" name="date_to" id="date_to"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                            value="" placeholder="" required/>
+                    </div>
+                    <div>
+                        <button type="submit"
+                        class="bg-indigo-500 hover:bg-primary-200 text-white text-sm py-2.5 px-4 mt-6 rounded-lg">Filter</button>
+                    </div>
+                </form>
 
                 <!-- Add view button -->
                 <!-- <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
@@ -111,7 +125,7 @@
                                                     </a> --}}
 
                                                     {{-- <form action="{{ route('denomination.destroy', $list->id) }}"
-                                                        method="post">
+                                                        method="">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
