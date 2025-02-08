@@ -15,7 +15,7 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('hr_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('hr_access') || Gate::allows('auditor_access'), 404);
         $branch = auth()->user()->branch_id;
         $lists = Expenses::where('branch_id', $branch)->paginate(10);
 
@@ -27,10 +27,10 @@ class ExpensesController extends Controller
      */
     public function create()
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
-
-
-        return view('pages.expenses.entry.index');
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
+        $branch = auth()->user()->branch_id;
+        $lists = Chart::where('branch_id', $branch)->get();
+        return view('pages.expenses.entry.index', compact('lists'));
     }
 
     /**

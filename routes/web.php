@@ -238,6 +238,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Auditor
     Route::get('auditor', [AuditorController::class, 'index'])->name('auditor.index');
+    Route::get('ba-monthly-report', [AuditorController::class, 'baMonth'])->name('bamonth.index');
+    Route::get('ba-monthly-report-export', [AuditorController::class, 'baMonthExport'])->name('bamonth.export');
+    Route::get('ba-daily-report', [AuditorController::class, 'baDaily'])->name('badaily.index');
+    Route::get('ba-daily-report-export', [AuditorController::class, 'baDailyExport'])->name('badaily.export');
+    Route::get('ba-collection-report', [AuditorController::class, 'baCollection'])->name('bacollection.index');
+    Route::get('ba-collection-report-export', [AuditorController::class, 'baCollectionExport'])->name('bacollection.export');
 
     // Branch
     Route::get('branch', [BMController::class, 'index'])->name('branch.index');

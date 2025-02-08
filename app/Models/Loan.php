@@ -52,7 +52,7 @@ class Loan extends Model
 
     public function latestDue()
     {
-        return $this->hasOne(LoanDetails::class, 'loan_id')->latestOfMany();
+        return $this->hasOne(LoanDetails::class, 'loan_id')->latest();
     }
 
     public function startDue()

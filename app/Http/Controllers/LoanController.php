@@ -232,7 +232,10 @@ class LoanController extends Controller
             $loan->svc_charge = $request->svc_charge ?? '';
             $loan->actual_record = $request->actual_record ?? '';
             $loan->payable_amount = $request->payable_amount;
-            $loan->save();
+            // if($loan->transaction_customer_status == 'BA'){
+            //     $loan->transaction_customer_status = null;
+            // }
+            $loan->update();
 
             $log = new ActivityLog();
             $log->user_id = auth()->user()->id;

@@ -35,7 +35,11 @@ class SendPastDueLoanEmails extends Command
 
         foreach ($loans as $loan) {
             Mail::to($loan->customer->email)->send(new LoanPastDueNotification($loan));
-            $this->info('Notification sent to ' . $loan->customer->email);
+            // $this->info('Notification sent to ' . $loan->customer->email);
+            if($loan->transaction_customer_status == null){
+                $loan->transaction_customer_status = 'BA';
+                $loan->update();
+            }
         }
 
         $this->info('Past-due loan email notifications have been sent.');

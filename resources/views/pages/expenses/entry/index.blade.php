@@ -106,8 +106,16 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label for="acc_no" class="text-black font-medium">Acct No.</label>
-                                    <input type="text" name="acc_no" id="acc_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
+                                    {{-- <label for="acc_no" class="text-black font-medium">Acct No.</label>
+                                    <input type="text" name="acc_no" id="acc_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/> --}}
+                                    <label for="acc_no" class="text-black font-medium">Account No.</label>
+                                    <select name="acc_no" id="acc_no"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
+                                        <option value>Select</option>
+                                        @foreach ($lists as $list)
+                                            <option value="{{ $list->acc_no }}">{{ $list->acc_no }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="md:col-span-2">
