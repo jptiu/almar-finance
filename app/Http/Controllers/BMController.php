@@ -209,7 +209,7 @@ class BMController extends Controller
                 ->whereDate('exp_date', $request->start_date)
                 ->orderBy('exp_date', 'asc')
                 ->paginate(10);
-                
+
         } else {
             // If no dates are provided
             $expenses = Expenses::where('branch_id', $branch)
@@ -254,9 +254,44 @@ class BMController extends Controller
                 }
             }
             $comps = ComputeCashOnHand::where('branch_id', $branch)->paginate(10);
-
+            $customerCountRegular = Loan::where('branch_id', $branch)
+                ->where('transaction_type', 'NEW')
+                ->orWhere('transaction_type', 'RENEW')
+                ->count();
+            $receivableAmountRegular = Loan::where('branch_id', $branch)
+                ->where('transaction_type', 'NEW')
+                ->orWhere('transaction_type', 'RENEW')
+                ->sum('payable_amount');
+            $collectionAmountRegular = Collection::where('branch_id', $branch)
+                ->whereHas('loanDetails.loan', function ($query) {
+                    $query->where('transaction_type', 'NEW')
+                    ->orWhere('transaction_type', 'RENEW');
+                })
+                ->sum('paid_amount');
+            $customerCountCA = Loan::where('branch_id', $branch)
+                ->where('transaction_type', 'CA')
+                ->count();
+            $receivableAmountCA = Loan::where('branch_id', $branch)
+                ->where('transaction_type', 'CA')
+                ->sum('payable_amount');
+            $collectionAmountCA = Collection::where('branch_id', $branch)
+                ->whereHas('loanDetails.loan', function ($query) {
+                    $query->where('transaction_type', 'CA');
+                })
+                ->sum('paid_amount');
         }
-        return view('pages.csor.index', compact('expenses', 'breakdowns', 'cashBillData', 'comps'));
+        return view('pages.csor.index', compact(
+            'expenses',
+            'breakdowns',
+            'cashBillData',
+            'comps',
+            'customerCountRegular',
+            'receivableAmountRegular',
+            'collectionAmountRegular',
+            'customerCountCA',
+            'receivableAmountCA',
+            'collectionAmountCA'
+        ));
     }
 
     public function csorPrint(Request $request)

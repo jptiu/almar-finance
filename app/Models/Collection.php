@@ -38,5 +38,10 @@ class Collection extends Model
     {
         return $this->belongsTo(LoanDetails::class, 'loan_details_id');
     }
+
+    public function loan()
+    {
+        return $this->belongsTo(Loan::class, 'trans_no', 'id');
+    }
     
 }

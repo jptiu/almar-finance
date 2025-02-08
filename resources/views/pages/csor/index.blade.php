@@ -27,18 +27,18 @@
                 <!-- Right: Actions -->
                 <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2 mr-4">
                     <div class="relative">
-                            <input name="date_range" id="date_range"
-                                class="datepicker form-input pl-9 dark:bg-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200 font-medium w-[15.5rem]"
-                                placeholder="Select dates" data-class="flatpickr-right" />
-                            <div class="absolute inset-0 right-auto flex items-center pointer-events-none">
-                                <svg class="w-4 h-4 fill-current text-slate-500 dark:text-slate-400 ml-3"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                        d="M15 2h-2V0h-2v2H9V0H7v2H5V0H3v2H1a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1zm-1 12H2V6h12v8z" />
-                                </svg>
-                            </div>
+                        <input name="date_range" id="date_range"
+                            class="datepicker form-input pl-9 dark:bg-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200 font-medium w-[15.5rem]"
+                            placeholder="Select dates" data-class="flatpickr-right" />
+                        <div class="absolute inset-0 right-auto flex items-center pointer-events-none">
+                            <svg class="w-4 h-4 fill-current text-slate-500 dark:text-slate-400 ml-3"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M15 2h-2V0h-2v2H9V0H7v2H5V0H3v2H1a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1zm-1 12H2V6h12v8z" />
+                            </svg>
+                        </div>
                         <button type="sumbit"
-                                class="bg-indigo-500 hover:bg-primary-200 text-white py-2 px-4 rounded">Apply</button>
+                            class="bg-indigo-500 hover:bg-primary-200 text-white py-2 px-4 rounded">Apply</button>
                     </div>
                 </div>
 
@@ -199,15 +199,15 @@
                                                                 <tr>
                                                                     <td
                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                       {{$exp->acc_title}}
+                                                                        {{ $exp->acc_title }}
                                                                     </td>
                                                                     <td
                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                        {{$exp->justification}}
+                                                                        {{ $exp->justification }}
                                                                     </td>
                                                                     <td
                                                                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                        {{$exp->amount}}
+                                                                        {{ $exp->amount }}
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -354,24 +354,30 @@
 
                                                             </tr>
                                                         </thead>
-                                                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
+                                                        <tbody
+                                                            class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
                                                             @php
                                                                 $grandTotal = 0; // Initialize a variable to hold the grand total sum
                                                             @endphp
-                                                        
-                                                            @foreach ($cashBillData as $data) {{-- No need for `$denomination => $data` --}}
+
+                                                            @foreach ($cashBillData as $data)
+                                                                {{-- No need for `$denomination => $data` --}}
                                                                 @if ($data['count'] > 0)
                                                                     <tr>
-                                                                        <td class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                                        <td
+                                                                            class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
                                                                             {{ number_format((float) $data['denomination'], 2) }}
                                                                         </td>
-                                                                        <td class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                                        <td
+                                                                            class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
                                                                             {{ $data['type'] }}
                                                                         </td>
-                                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        <td
+                                                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                                             {{ $data['count'] }}
                                                                         </td>
-                                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        <td
+                                                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                                             {{ number_format($data['sum'], 2) }}
                                                                         </td>
                                                                     </tr>
@@ -381,7 +387,7 @@
                                                                 @endif
                                                             @endforeach
                                                         </tbody>
-                                                        
+
                                                     </table>
                                                 </div>
                                             </div>
@@ -528,7 +534,7 @@
                                                         </thead>
                                                         <tbody
                                                             class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
-                                                            @foreach($comps as $comp)
+                                                            @foreach ($comps as $comp)
                                                                 <tr>
                                                                     <td
                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
@@ -719,24 +725,26 @@
                                                         </thead>
                                                         <tbody
                                                             class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
-                                                            <tr>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                    test
-                                                                </td>
-                                                            </tr>
+                                                            @foreach ($comps as $comp)
+                                                                <tr>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                                        {{ $comp->cash_beginning }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                                        {{ $comp->collection }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        {{ $comp->add_cash }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                        {{ $comp->add_cash2 }}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -890,15 +898,15 @@
                                                                                 <tr>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ $customerCountRegular }}
                                                                                     </td>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ number_format($receivableAmountRegular, 2) }}
                                                                                     </td>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ number_format($collectionAmountRegular, 2) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -936,15 +944,15 @@
                                                                                 <tr>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ $customerCountCA }}
                                                                                     </td>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ number_format($receivableAmountCA, 2) }}
                                                                                     </td>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ number_format($collectionAmountCA, 2) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
