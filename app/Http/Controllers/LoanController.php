@@ -14,6 +14,7 @@ use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Mail;
 
 class LoanController extends Controller
@@ -196,6 +197,22 @@ class LoanController extends Controller
         return view('pages.loan.show.index', compact('loan'));
     }
 
+    public function updateDueDate(Request $request, string $id)
+    {
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
+        $branch = auth()->user()->branch_id;
+        $loan = Loan::where('branch_id', $branch)->where('id', $id)->first();
+    
+        // Update the due date
+        $loanDetail = $loan->details()->where('id', $request->detail_id)->first();
+        if ($loanDetail) {
+            $loanDetail->loan_due_date = $request->due_date;
+            $loanDetail->save();
+        }
+    
+        return response()->json(['success' => true, 'message' => 'Loan Entry Updated.']);
+    }
+    
     /**
      * Show the form for editing the specified resource.
      */

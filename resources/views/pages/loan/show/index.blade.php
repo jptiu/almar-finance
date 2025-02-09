@@ -255,7 +255,7 @@
                             </div>
                         </div>
 
-                        <section class="container mx-auto">
+                            <section class="container mx-auto">
                                 <div class="flex flex-col">
                                     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -311,8 +311,7 @@
                                                                     class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
                                                                     {{$details->loan_day_no}}
                                                                 </td>
-                                                                <td
-                                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap due-date" data-detail-id="{{ $details->id }}" data-due-date="{{ $details->loan_due_date }}">
                                                                     {{$details->loan_due_date}}
                                                                 </td>
                                                                 <td
@@ -354,13 +353,10 @@
                                 <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
                                     <div class="lg:col-span-2">
                                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
-
                                             <div class="md:col-span-1">
-                                                <input type="checkbox" name="house" id="house"
-                                                    class="border px-2 py-2 bg-gray-50" value="" placeholder="" />
-                                                <label for="house" class="mt-2 ml-1">Allow Grace period</label>
+                                                <input type="checkbox" name="grace" id="allowGracePeriod" class="border px-2 py-2 bg-gray-50" value="" placeholder="" />
+                                                <label for="grace" class="mt-2 ml-1">Allow Grace period</label>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -381,7 +377,7 @@
                                     </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
 
                             
                 </div>
@@ -421,6 +417,7 @@
                     }
 
 
+                    
                     // Handle the special case for "trans_no" input field
                     // if (transactionField && loanData.id) {
                     //     // console.log(loanData.id);
@@ -511,5 +508,51 @@
         // Optional: Reset form
         modalForm.reset();
     });
+</script>
+
+<script>
+const updateDueDateUrl = '{{ route('loan.duedateupdate', ['detail' => 'DETAIL_ID']) }}';
+
+document.getElementById('allowGracePeriod').addEventListener('change', function() {
+    const checkboxes = document.querySelectorAll('.due-date');
+    checkboxes.forEach((date) => {
+        if (this.checked) {
+            const currentDate = date.dataset.dueDate;
+            date.innerHTML = `<input type="text" class="border px-2 py-2 bg-gray-50" value="${currentDate}" /> 
+            <button class="confirm-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded ml-2">Confirm</button>`;
+            
+            date.querySelector('.confirm-button').addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const newDate = date.querySelector('input').value;
+                const detailId = date.dataset.detailId; // Assuming the detail ID is stored in a data attribute
+                
+                // Replace DETAIL_ID in the URL with the actual detail ID
+                const url = updateDueDateUrl.replace('DETAIL_ID', detailId);
+                
+                // Send the AJAX request to update the date
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ due_date: newDate })
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          window.location.reload(); // Reload the page on success
+                      }
+                  });
+            });
+        } else {
+            const input = date.querySelector('input');
+            if (input) {
+                date.innerHTML = input.value;
+            }
+        }
+    });
+});
+
 </script>
 
