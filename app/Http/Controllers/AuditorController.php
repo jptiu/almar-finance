@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\CustomerType;
+use App\Models\Expenses;
 use App\Models\Loan;
 use App\Models\LoanDetails;
 use Carbon\Carbon;
@@ -135,7 +136,7 @@ class AuditorController extends Controller
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
         $loans = LoanDetails::with([
-            'loan' => function ($query)use ($branch, $startOfMonth, $endOfMonth) {
+            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'monthly')
                     ->where('transaction_customer_status', 'BA')
@@ -157,7 +158,7 @@ class AuditorController extends Controller
 
         $filename = 'loans_export_bamonth.csv';
         $data = LoanDetails::with([
-            'loan' => function ($query)use ($branch, $startOfMonth, $endOfMonth) {
+            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'monthly')
                     ->where('transaction_customer_status', 'BA')
@@ -220,7 +221,7 @@ class AuditorController extends Controller
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
         $loans = LoanDetails::with([
-            'loan' => function ($query)use ($branch, $startOfMonth, $endOfMonth) {
+            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'daily')
                     ->where('transaction_customer_status', 'BA')
@@ -242,7 +243,7 @@ class AuditorController extends Controller
 
         $filename = 'loans_export_bamonth.csv';
         $data = LoanDetails::with([
-            'loan' => function ($query)use ($branch, $startOfMonth, $endOfMonth) {
+            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'daily')
                     ->where('transaction_customer_status', 'BA')
@@ -305,7 +306,7 @@ class AuditorController extends Controller
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
         $loans = LoanDetails::with([
-            'loan' => function ($query)use ($branch, $startOfMonth, $endOfMonth) {
+            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'monthly')
                     ->where('transaction_customer_status', 'BA')
@@ -328,7 +329,7 @@ class AuditorController extends Controller
 
         $filename = 'loans_export_ba_collection.csv';
         $data = LoanDetails::with([
-            'loan' => function ($query)use ($branch, $startOfMonth, $endOfMonth) {
+            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'monthly')
                     ->where('transaction_customer_status', 'BA')
@@ -375,5 +376,19 @@ class AuditorController extends Controller
 
         return response()->stream($callback, 200, $headers);
 
+    }
+
+    public function worksheetMonth()
+    {
+        $branch = auth()->user()->branch_id;
+        $now = Carbon::now();
+        $startOfMonth = $now->startOfMonth()->toDateTimeString(); // Start of the current month
+        $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
+
+        $expenses = Expenses::where('branch_id', $branch)
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->get();
+
+        return view('pages.auditor.worksheet.monthly.index', compact('expenses'));
     }
 }
