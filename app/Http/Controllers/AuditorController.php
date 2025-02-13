@@ -135,15 +135,16 @@ class AuditorController extends Controller
         $startOfMonth = $now->startOfMonth()->toDateTimeString(); // Start of the current month
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
-        $loans = LoanDetails::with([
-            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
+        $loans = LoanDetails::whereHas(
+            'loan',
+            function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'monthly')
                     ->where('transaction_customer_status', 'BA')
                     ->whereBetween('updated_at', [$startOfMonth, $endOfMonth])
                     ->orderBy('updated_at', 'asc');
             }
-        ])
+        )
             // ->where('loan_amount_paid', null)
             ->get();
 
@@ -157,15 +158,16 @@ class AuditorController extends Controller
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
         $filename = 'loans_export_bamonth.csv';
-        $data = LoanDetails::with([
-            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
+        $data = LoanDetails::whereHas(
+            'loan',
+            function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'monthly')
                     ->where('transaction_customer_status', 'BA')
                     ->whereBetween('updated_at', [$startOfMonth, $endOfMonth])
                     ->orderBy('updated_at', 'asc');
             }
-        ])
+        )
             // ->where('loan_amount_paid', null)
             ->get();
         $headers = [
@@ -220,15 +222,16 @@ class AuditorController extends Controller
         $startOfMonth = $now->startOfMonth()->toDateTimeString(); // Start of the current month
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
-        $loans = LoanDetails::with([
-            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
+        $loans = LoanDetails::whereHas(
+            'loan',
+            function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'daily')
                     ->where('transaction_customer_status', 'BA')
                     ->whereBetween('updated_at', [$startOfMonth, $endOfMonth])
                     ->orderBy('updated_at', 'asc');
             }
-        ])
+        )
             ->where('loan_amount_paid', null)
             ->get();
 
@@ -242,15 +245,16 @@ class AuditorController extends Controller
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
         $filename = 'loans_export_bamonth.csv';
-        $data = LoanDetails::with([
-            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
+        $data = LoanDetails::whereHas(
+            'loan',
+            function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'daily')
                     ->where('transaction_customer_status', 'BA')
                     ->whereBetween('updated_at', [$startOfMonth, $endOfMonth])
                     ->orderBy('updated_at', 'asc');
             }
-        ])
+        )
             ->where('loan_amount_paid', null)
             ->get();
         $headers = [
@@ -305,15 +309,16 @@ class AuditorController extends Controller
         $startOfMonth = $now->startOfMonth()->toDateTimeString(); // Start of the current month
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
-        $loans = LoanDetails::with([
-            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
+        $loans = LoanDetails::whereHas(
+            'loan',
+            function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'monthly')
                     ->where('transaction_customer_status', 'BA')
                     ->whereBetween('updated_at', [$startOfMonth, $endOfMonth])
                     ->orderBy('updated_at', 'asc');
             }
-        ])
+        )
             ->where('loan_amount_paid', '!=', null)
             ->get();
 
@@ -328,15 +333,16 @@ class AuditorController extends Controller
         $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
 
         $filename = 'loans_export_ba_collection.csv';
-        $data = LoanDetails::with([
-            'loan' => function ($query) use ($branch, $startOfMonth, $endOfMonth) {
+        $data = LoanDetails::whereHas(
+            'loan',
+            function ($query) use ($branch, $startOfMonth, $endOfMonth) {
                 $query->where('branch_id', $branch)
                     ->where('loan_type', 'monthly')
                     ->where('transaction_customer_status', 'BA')
                     ->whereBetween('updated_at', [$startOfMonth, $endOfMonth])
                     ->orderBy('updated_at', 'asc');
             }
-        ])
+        )
             ->where('loan_amount_paid', '!=', null)
             ->get();
         $headers = [

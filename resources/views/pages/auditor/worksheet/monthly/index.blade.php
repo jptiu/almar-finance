@@ -58,23 +58,6 @@
                                         @foreach($expenses as $expense)
                                         <tr class="hover:bg-gray-100">
                                             <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
-                                            <td class="py-2 px-4 border text-xs">{{ $expense->acc_title }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
