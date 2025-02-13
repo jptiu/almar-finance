@@ -200,17 +200,15 @@ class LoanController extends Controller
     public function updateDueDate(Request $request, string $id)
     {
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
-        $branch = auth()->user()->branch_id;
-        $loan = Loan::where('branch_id', $branch)->where('id', $id)->first();
-    
+
         // Update the due date
-        $loanDetail = $loan->details()->where('id', $request->detail_id)->first();
+        $loanDetail = LoanDetails::findOrFail($id);
         if ($loanDetail) {
             $loanDetail->loan_due_date = $request->due_date;
             $loanDetail->save();
         }
     
-        return response()->json(['success' => true, 'message' => 'Loan Entry Updated.']);
+        return redirect()->back()->with('success', 'Updated Successfuly!');
     }
     
     /**

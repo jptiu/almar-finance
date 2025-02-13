@@ -255,28 +255,45 @@ class BMController extends Controller
             }
             $comps = ComputeCashOnHand::where('branch_id', $branch)->paginate(10);
             $customerCountRegular = Loan::where('branch_id', $branch)
+                ->where('transaction_customer_status', '!=', 'BA')
                 ->where('transaction_type', 'NEW')
                 ->orWhere('transaction_type', 'RENEW')
                 ->count();
             $receivableAmountRegular = Loan::where('branch_id', $branch)
+                ->where('transaction_customer_status', '!=', 'BA')
                 ->where('transaction_type', 'NEW')
                 ->orWhere('transaction_type', 'RENEW')
                 ->sum('payable_amount');
             $collectionAmountRegular = Collection::where('branch_id', $branch)
                 ->whereHas('loanDetails.loan', function ($query) {
-                    $query->where('transaction_type', 'NEW')
-                    ->orWhere('transaction_type', 'RENEW');
+                    $query->where('transaction_customer_status', '!=', 'BA')
+                        ->where('transaction_type', 'NEW')
+                        ->orWhere('transaction_type', 'RENEW');
                 })
                 ->sum('paid_amount');
             $customerCountCA = Loan::where('branch_id', $branch)
+                ->where('transaction_customer_status', '!=', 'BA')
                 ->where('transaction_type', 'CA')
                 ->count();
             $receivableAmountCA = Loan::where('branch_id', $branch)
+                ->where('transaction_customer_status', '!=', 'BA')
                 ->where('transaction_type', 'CA')
                 ->sum('payable_amount');
             $collectionAmountCA = Collection::where('branch_id', $branch)
                 ->whereHas('loanDetails.loan', function ($query) {
-                    $query->where('transaction_type', 'CA');
+                    $query->where('transaction_customer_status', '!=', 'BA')
+                        ->where('transaction_type', 'CA');
+                })
+                ->sum('paid_amount');
+            $customerCountBad = Loan::where('branch_id', $branch)
+                ->where('transaction_customer_status', 'BA')
+                ->count();
+            $receivableAmountBA = Loan::where('branch_id', $branch)
+                ->where('transaction_customer_status', 'BA')
+                ->sum('payable_amount');
+            $collectionAmountBA = Collection::where('branch_id', $branch)
+                ->whereHas('loanDetails.loan', function ($query) {
+                    $query->where('transaction_customer_status', 'BA');
                 })
                 ->sum('paid_amount');
         }
@@ -290,7 +307,10 @@ class BMController extends Controller
             'collectionAmountRegular',
             'customerCountCA',
             'receivableAmountCA',
-            'collectionAmountCA'
+            'collectionAmountCA',
+            'customerCountBad',
+            'receivableAmountBA',
+            'collectionAmountBA'
         ));
     }
 

@@ -538,12 +538,9 @@ document.getElementById('allowGracePeriod').addEventListener('change', function(
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({ due_date: newDate })
-                }).then(response => response.json())
-                  .then(data => {
-                      if (data.success) {
-                          window.location.reload(); // Reload the page on success
-                      }
-                  });
+                }).then((response) => {
+                    window.location.reload();
+                })
             });
         } else {
             const input = date.querySelector('input');

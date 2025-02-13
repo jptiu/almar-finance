@@ -1012,15 +1012,15 @@
                                                                                 <tr>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ $customerCountBad }}
                                                                                     </td>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ number_format($receivableAmountBA, 2) }}
                                                                                     </td>
                                                                                     <td
                                                                                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                                        test
+                                                                                        {{ number_format($collectionAmountBA, 2) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
