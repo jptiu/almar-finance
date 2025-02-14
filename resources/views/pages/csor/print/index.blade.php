@@ -179,16 +179,18 @@
                     <tbody>
                         <tr class="border-b-2 border-gray-200">
                             <td class="text-black p-2 border text-xs">Joyce</td>
-                            <td class="text-black p-2 border text-xs">323,424.00</td>
-                            <td class="text-black p-2 border text-xs">3,722.00</td>
-                            <td class="text-black p-2 border text-xs">63,324.00</td>
+                            <td class="text-black p-2 border text-xs">{{ $customerCountRegular }}</td>
+                            <td class="text-black p-2 border text-xs">{{ number_format($receivableAmountRegular, 2) }}
+                            </td>
+                            <td class="text-black p-2 border text-xs">{{ number_format($collectionAmountRegular, 2) }}
+                            </td>
                         </tr>
-                        <tr class="border-b-2 border-gray-200 font-bold">
+                        {{-- <tr class="border-b-2 border-gray-200 font-bold">
                             <td class="text-black p-2 border text-xs">Total</td>
                             <td class="text-black p-2 border text-xs">323,424.00</td>
                             <td class="text-black p-2 border text-xs">3,722.00</td>
                             <td class="text-black p-2 border text-xs">63,324.00</td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -207,15 +209,15 @@
                     </thead>
                     <tbody>
                         <tr class="border-b-2 border-gray-200">
+                            <td class="text-black p-2 border text-xs">{{ $customerCountCA }}</td>
+                            <td class="text-black p-2 border text-xs">{{ number_format($receivableAmountCA, 2) }}</td>
+                            <td class="text-black p-2 border text-xs">{{ number_format($collectionAmountCA, 2) }}</td>
+                        </tr>
+                        {{-- <tr class="border-b-2 border-gray-200 font-bold">
                             <td class="text-black p-2 border text-xs">323,424.00</td>
                             <td class="text-black p-2 border text-xs">3,722.00</td>
                             <td class="text-black p-2 border text-xs">63,324.00</td>
-                        </tr>
-                        <tr class="border-b-2 border-gray-200 font-bold">
-                            <td class="text-black p-2 border text-xs">323,424.00</td>
-                            <td class="text-black p-2 border text-xs">3,722.00</td>
-                            <td class="text-black p-2 border text-xs">63,324.00</td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -239,16 +241,16 @@
                     <tbody>
                         <tr class="border-b-2 border-gray-200">
                             <td class="text-black p-2 border text-xs">Joyce</td>
-                            <td class="text-black p-2 border text-xs">323,424.00</td>
-                            <td class="text-black p-2 border text-xs">3,722.00</td>
-                            <td class="text-black p-2 border text-xs">63,324.00</td>
+                            <td class="text-black p-2 border text-xs">{{ $customerCountBad }}</td>
+                            <td class="text-black p-2 border text-xs">{{ number_format($receivableAmountBA, 2) }}</td>
+                            <td class="text-black p-2 border text-xs">{{ number_format($collectionAmountBA, 2) }}</td>
                         </tr>
-                        <tr class="border-b-2 border-gray-200 font-bold">
+                        {{-- <tr class="border-b-2 border-gray-200 font-bold">
                             <td class="text-black p-2 border text-xs">Total</td>
                             <td class="text-black p-2 border text-xs">323,424.00</td>
                             <td class="text-black p-2 border text-xs">3,722.00</td>
                             <td class="text-black p-2 border text-xs">63,324.00</td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -267,15 +269,17 @@
                     </thead>
                     <tbody>
                         <tr class="border-b-2 border-gray-200">
+                            <td class="text-black p-2 border text-xs">{{ $customerCountCABad }}</td>
+                            <td class="text-black p-2 border text-xs">{{ number_format($receivableAmountCABA, 2) }}
+                            </td>
+                            <td class="text-black p-2 border text-xs">{{ number_format($collectionAmountCABA, 2) }}
+                            </td>
+                        </tr>
+                        {{-- <tr class="border-b-2 border-gray-200 font-bold">
                             <td class="text-black p-2 border text-xs">323,424.00</td>
                             <td class="text-black p-2 border text-xs">3,722.00</td>
                             <td class="text-black p-2 border text-xs">63,324.00</td>
-                        </tr>
-                        <tr class="border-b-2 border-gray-200 font-bold">
-                            <td class="text-black p-2 border text-xs">323,424.00</td>
-                            <td class="text-black p-2 border text-xs">3,722.00</td>
-                            <td class="text-black p-2 border text-xs">63,324.00</td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
