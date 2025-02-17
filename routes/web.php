@@ -113,6 +113,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('loan/show/{id}', [LoanController::class, 'show'])->name('loan.show');
     Route::get('loan/edit/{id}', [LoanController::class, 'edit'])->name('loan.edit');
     Route::post('loan/store', [LoanController::class, 'store'])->name('loan.store');
+    Route::post('loan/allow-grace-period', [LoanController::class, 'gracePeriod'])->name('loan.gracePeriod');
     Route::post('loan/update/{id}', [LoanController::class, 'update'])->name('loan.update');
     Route::delete('loan/destroy/{id}', [LoanController::class, 'destroy'])->name('loan.destroy');
     Route::post('loan/import', [LoanController::class, 'importCSV'])->name('loan.importcsv');

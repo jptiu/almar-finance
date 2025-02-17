@@ -185,6 +185,51 @@ class LoanController extends Controller
 
     }
 
+    public function gracePeriod(LoanCreateRequest $request)
+    {
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        // dd($request->all());
+        try {
+            // Retrieve authenticated user's branch ID
+            $branch = auth()->user()->branch_id;
+            // Validate the input data
+            $validatedData = $request->validate([
+                'rows.*.id' => 'required|numeric',
+                'rows.*.due_date' => 'required|date',
+                'rows.*.due_amount' => 'required|numeric',
+                'rows.*.remaining_balance' => 'required|numeric',
+            ]);
+            $amountDue = LoanDetails::where('id', $request->id)->first();
+            $amountDue->loan_running_balance = $request->loan_due_amount;
+            $amountDue->loan_date_paid = now()->format('m/d/Y');
+            $amountDue->update();
+
+            // Save each payment row as LoanDetails
+            foreach ($validatedData['rows'] as $row) {
+                LoanDetails::create([
+                    'loan_id' => $amountDue->loan_id,
+                    'loan_due_date' => $row['due_date'],
+                    'loan_due_amount' => $row['due_amount'],
+                    'loan_running_balance' => $row['remaining_balance'],
+                    'user_id' => auth()->user()->id,
+                    'branch_id' => $branch,
+                    'loan_day_no' => $row['id'],
+                ]);
+            }
+
+            $log = new ActivityLog();
+            $log->user_id = auth()->user()->id;
+            $log->description = auth()->user()->name . ' Allowed Grace Period, Loan #' . $request->id;
+            $log->save();
+
+            return redirect()->back()->with('success', 'Allowed Grace Period.');
+        } catch (\Throwable $th) {
+            // Redirect back with the error message
+            return redirect()->back()->with('error', 'Error: ' . $th->getMessage());
+        }
+
+    }
+
     /**
      * Display the specified resource.
      */
@@ -193,8 +238,12 @@ class LoanController extends Controller
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
         $branch = auth()->user()->branch_id;
         $loan = Loan::where('branch_id', $branch)->where('id', $id)->first();
+        $amountDue = LoanDetails::where('loan_id', $loan->id)
+            ->where('loan_amount_paid', null)
+            ->where('loan_running_balance', '0.00')
+            ->first();
 
-        return view('pages.loan.show.index', compact('loan'));
+        return view('pages.loan.show.index', compact('loan', 'amountDue'));
     }
 
     public function updateDueDate(Request $request, string $id)
@@ -207,10 +256,10 @@ class LoanController extends Controller
             $loanDetail->loan_due_date = $request->due_date;
             $loanDetail->save();
         }
-    
+
         return redirect()->back()->with('success', 'Updated Successfuly!');
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
