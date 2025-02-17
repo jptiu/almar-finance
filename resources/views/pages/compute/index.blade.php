@@ -27,7 +27,7 @@
         <!-- Dashboard actions -->
         
             <!-- Right: Actions -->
-            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2 mb-4">
 
                 <!-- Add view button -->
                 <a href="{{ route('compute.create') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
@@ -96,11 +96,7 @@
                     </div>
                 </div>
             </div>
-
-        </div>
-
-        <!-- Cards -->
-        <section class="container px-4 mx-auto">
+            <section class="container px-4 mx-auto">
             <div class="flex flex-col">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-4">
@@ -272,7 +268,9 @@
             </div>
         </section>
 
+        </div>
 
+        <!-- Cards -->
     </div>
 </x-app-layout>
 <script>
