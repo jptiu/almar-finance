@@ -32,11 +32,15 @@ class CollectionController extends Controller
             $loan = Loan::with('customer')->find($request->transaction_no);
         }
         if ($request->customer_id) {
-            $customer = Customer::with(['loan' => function ($query) {
-                $query->where('status', '!=', null);
-            } ,'customerType','loan.details' => function ($query) {
-                $query->whereNull('loan_date_paid'); // Filter due today
-            }])->find($request->customer_id);
+            $customer = Customer::with([
+                'loan' => function ($query) {
+                    $query->where('status', '!=', null);
+                },
+                'customerType',
+                'loan.details' => function ($query) {
+                    $query->whereNull('loan_date_paid'); // Filter due today
+                }
+            ])->find($request->customer_id);
         }
         // Check if the request is an AJAX call
         if ($request->ajax()) {
@@ -45,7 +49,7 @@ class CollectionController extends Controller
                 'loan' => $loan,
             ]);
         }
-        
+
 
         return view('pages.collections.index', compact('lists', 'customers', 'collectors'));
     }
@@ -75,8 +79,10 @@ class CollectionController extends Controller
         $loan = Loan::findOrFail($request->trans_no);
         $loanDetails = LoanDetails::where('loan_id', $loan->id)
             ->where('loan_day_no', $request->loan_no)
+            ->where('loan_amount_paid', null)
             ->first();
-        if($loanDetails){
+        // dd($loanDetails);
+        if ($loanDetails) {
             $loanDetails->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_paid)->format('m/d/Y');
             $loanDetails->loan_amount_paid = $request->loan_amount_paid;
             $loanDetails->loan_amount_change = $request->loan_amount_change ?? 0;
@@ -100,7 +106,7 @@ class CollectionController extends Controller
             $col->loan_details_id = $loanDetails->id;
             $col->save();
         }
-        if($loanDetails->loan_running_balance == 0){
+        if ($loanDetails->loan_running_balance == 0) {
             $loan->status = 'FULPD';
             $loan->update();
         }
@@ -122,7 +128,7 @@ class CollectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request,string $id)
+    public function edit(Request $request, string $id)
     {
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         $branch = auth()->user()->branch_id;
@@ -135,11 +141,15 @@ class CollectionController extends Controller
         $loan = [];
         $customer = [];
         if ($request->customer_id) {
-            $customer = Customer::with(['loan' => function ($query) {
-                $query->where('status', '!=', null);
-            } ,'customerType','loan.details' => function ($query) {
-                $query->whereNull('loan_date_paid'); // Filter due today
-            }])->find($request->customer_id);
+            $customer = Customer::with([
+                'loan' => function ($query) {
+                    $query->where('status', '!=', null);
+                },
+                'customerType',
+                'loan.details' => function ($query) {
+                    $query->whereNull('loan_date_paid'); // Filter due today
+                }
+            ])->find($request->customer_id);
         }
         // Check if the request is an AJAX call
         if ($request->ajax()) {

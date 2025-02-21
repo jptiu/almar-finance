@@ -202,7 +202,8 @@ class LoanController extends Controller
             $amountDue = LoanDetails::where('id', $request->id)->first();
             $amountDue->loan_running_balance = $request->loan_due_amount;
             $amountDue->loan_date_paid = now()->format('m/d/Y');
-            $amountDue->loan_remarks = 'Add Grace Period';
+            $amountDue->loan_amount_paid = 0;
+            $amountDue->loan_remarks = 'Added Grace Period';
             $amountDue->update();
 
             // Save each payment row as LoanDetails

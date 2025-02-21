@@ -699,8 +699,8 @@
 
 <script>
     function calculatePayments() {
-        const loanDue = @json($amountDue->loan_due_amount);
-        const loanID = @json($amountDue->id);
+        const loanDue = @json($amountDue->loan_due_amount??0);
+        const loanID = @json($amountDue->id??'');
         // const principalAmount = parseFloat(document.getElementById('principal_amount').value) || 0;
         const monthsToPay = parseInt(document.getElementById('months_to_pay').value) || 0;
         const interestPercent = parseFloat(document.getElementById('interest').value) || 0;
@@ -799,9 +799,8 @@
 
     showModalButtonImportnew.addEventListener('click', () => {
         modalImportnew.classList.remove('hidden');
-        console.log(@json($amountDue->loan_due_amount));
-        let loanDue = @json($amountDue->loan_due_amount);
-        let loanID = @json($amountDue->id);
+        let loanDue = @json($amountDue->loan_due_amount??0);
+        let loanID = @json($amountDue->id??'');
         document.getElementById('loan_due_amount').value = loanDue;
         document.getElementById('id').value = loanID;
         document.getElementById('interest').addEventListener('input', calculatePayments);
