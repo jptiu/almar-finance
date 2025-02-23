@@ -42,6 +42,7 @@ class CustomerController extends Controller
 
     public function add()
     {
+
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         $branch = auth()->user()->branch_id;
         $types = CustomerType::where('branch_id', $branch)->paginate(20);
