@@ -54,10 +54,10 @@
         <div class="mt-4 border-2 border-gray-500">
             <div class="flex flex-col justify-start p-4">
                 <div class="leading-loose mb-6">
-                    <p><span class="font-bold text-gray-900 text-base">Full Name:</span> {{$customer->first_name ?? 'N/A'}} {{$customer->middle_name ?? ''}} {{$customer->last_name ?? ""}}</p>
-                    <p><span class="font-bold text-gray-900 text-base">Customer Type:</span> {{$customer->type?? 'N/A'}}</p>
-                    <p><span class="font-bold text-gray-900 text-base">Status:</span> {{$customer->status ?? 'N/A'}}</p>
-                    <p><span class="font-bold text-gray-900 text-base">ID:</span> {{$customer->id ?? 'N/A'}}</p>
+                    <p><span class="font-bold text-gray-900 text-base">Full Name:</span> {{$loan->customer->first_name ?? 'N/A'}} {{$loan->customer->middle_name ?? ''}} {{$loan->customer->last_name ?? ""}}</p>
+                    <p><span class="font-bold text-gray-900 text-base">Customer Type:</span> {{$loan->customer->type?? 'N/A'}}</p>
+                    <p><span class="font-bold text-gray-900 text-base">Status:</span> {{$loan->customer->status ?? 'N/A'}}</p>
+                    <p><span class="font-bold text-gray-900 text-base">ID:</span> {{$loan->customer->id?? 'N/A'}}</p>
                 </div>
                 <div class="relative">
                     <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Loan Payment Details</h2>
@@ -67,19 +67,19 @@
                     <div class="grid grid-cols-2 gap-8 mt-4 mb-12 text-sm text-gray-500">
                         <div>
                             <p class="text-gray-900 text-sm">Transaction No.</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->trans_no?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->trans_no?? 'N/A'}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Date of Loan </p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->date_of_loan}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->date_of_loan}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Loan Type</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->loan_type ?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->loan_type ?? 'N/A'}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Transaction Type</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->transaction_type ?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->transaction_type ?? 'N/A'}}</p>
                         </div>
                     </div>
                 </div>
@@ -91,35 +91,35 @@
                     <div class="grid grid-cols-2 gap-8 mt-4 mb-12 text-sm text-gray-500">
                         <div>
                             <p class="text-gray-900 text-sm">Principal Amount</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->principal_amount??'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->principal_amount??'N/A'}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Interest</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->interest?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->interest?? 'N/A'}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Interest Amount</p>
-                            <p class="font-bold text-gray-900 text-base"value="" placeholder="₱">{{$customer->loan->interest_amount?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base"value="" placeholder="₱">{{$loan->interest_amount?? 'N/A'}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Service Charge</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->svc_charge?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->svc_charge?? 'N/A'}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Payable Amount</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->payable_amount?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->payable_amount?? 'N/A'}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Days to Pay</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->days_to_pay}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->days_to_pay}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Months to Pay</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->months_to_pay?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->months_to_pay?? 'N/A'}}</p>
                         </div>
                         <div>
                             <p class="text-gray-900 text-sm">Actual Record </p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->actual_record?? 'N/A'}}</p>
+                            <p class="font-bold text-gray-900 text-base">{{$loan->actual_record?? 'N/A'}}</p>
                         </div>
                     </div>
                 </div>
