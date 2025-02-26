@@ -49,7 +49,7 @@
                                             <td class="py-2 px-4 border">{{ $loan['loan_date_paid'] }}</td>
                                             <td class="py-2 px-4 border">{{ $loan->loan->customer->first_name }} {{ $loan->loan->customer->last_name }}</td>
                                             <td class="py-2 px-4 border">{{ $loan->loan->customer->comp_name }}</td>
-                                            <td class="py-2 px-4 border">{{ number_format($loan['loan_amount_paid'], 2) }}</td>
+                                            <td class="py-2 px-4 border">{{ $loan['loan_amount_paid'] }}</td>
                                             <td class="py-2 px-4 border">{{ number_format($loan['loan_running_balance'] ?? 0, 2) }}</td>
                                             <td class="py-2 px-4 border">{{ $loan->loan->transaction_customer_status }}</td>
                                             <td class="py-2 px-4 border">{{ $loan['loan_running_balance'] == '0.00'? 'Fully Paid':'' }}</td>
