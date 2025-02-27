@@ -236,7 +236,7 @@
                             <!-- Example Row -->
                             @foreach ($customer->loans as $loan)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="border border-gray-200 px-4 py-2">{{ $loan->loan_type }}</td>
+                                    <td class="border border-gray-200 px-4 py-2">{{ $loan->loan_type == 'monthly' ? str_replace('monthly', 'MONTHLY', $loan->loan_type): str_replace('daily', 'DAILY', $loan->loan_type)}}</td>
                                     <td class="border border-gray-200 px-4 py-2">{{ $loan->transaction_type }}</td>
                                     <td class="border border-gray-200 px-4 py-2">
                                         <a href="{{ route('loan.show', $loan->id) }}"
@@ -253,7 +253,7 @@
                                         {{ $loan->transaction_with_collateral }}</td>
                                     <td class="border border-gray-200 px-4 py-2 text-center">
                                         {{ $loan->transaction_with_cert }}</td>
-                                    <td class="border border-gray-200 px-4 py-2">{{ $loan->principal_amount }}</td>
+                                    <td class="border border-gray-200 px-4 py-2">{{ number_format($loan->principal_amount,2) }}</td>
                                     <td class="border border-gray-200 px-4 py-2">{{ $loan->days_to_pay }}</td>
                                     <td class="border border-gray-200 px-4 py-2">{{ $loan->months_to_pay }}</td>
                                     <td class="border border-gray-200 px-4 py-2">{{ $loan->interest }}</td>
