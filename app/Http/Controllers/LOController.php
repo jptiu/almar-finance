@@ -19,9 +19,13 @@ class LOController extends Controller
         $branch = auth()->user()->branch_id;
         $lists = Customer::where('branch_id', $branch)->orderByDesc('id')->paginate(10);
         $totalCustomer = Customer::where('branch_id', $branch)->count();
-        $cashBeginning = ComputeCashOnHand::where('branch_id', $branch)->sum('cash_beginning');
+        $latestRecord = ComputeCashOnHand::where('branch_id', $branch)
+            ->latest()
+            ->first();
+        $cashBeginning = $latestRecord ? $latestRecord->cash_beginning : 0;
+        $cashEnd = $latestRecord ? $latestRecord->new_cash_on_hand : 0;
         $collections = Collection::orderByDesc('id')->paginate(5);
-        return view('pages.loanofficer.index', compact('lists', 'totalCustomer', 'cashBeginning','collections'));
+        return view('pages.loanofficer.index', compact('lists', 'totalCustomer', 'cashBeginning', 'collections', 'cashEnd'));
     }
 
     /**
@@ -82,12 +86,12 @@ class LOController extends Controller
         return view('pages.addloan.index');
     }
 
-    public function autoPaymentreq (Request $request)
+    public function autoPaymentreq(Request $request)
     {
         return view('pages.loanofficer.autopayment.index');
     }
 
-    public function dailyWorkorder (Request $request)
+    public function dailyWorkorder(Request $request)
     {
         return view('pages.loanofficer.dailyworkorder.index');
     }

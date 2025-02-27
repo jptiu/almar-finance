@@ -131,50 +131,58 @@ class LoanController extends Controller
                 ->where('customer_id', $request->customer_id)
                 ->where('status', 'UNPD')
                 ->first();
+            // dd($check);
 
             // $checkDetails = $check->details;
+            if (isset($check)) {
+                // Count the number of unpaid details
+                $unpaidCount = $check->details->count();
+                // Calculate the equivalent months (2 unpaid details = 1 month)
+                $equivalentMonths = floor($unpaidCount / 2); // Use floor() to round down
 
-            // Count the number of unpaid details
-            $unpaidCount = $check->details->count();
-            // Calculate the equivalent months (2 unpaid details = 1 month)
-            $equivalentMonths = floor($unpaidCount / 2); // Use floor() to round down
+                // Add the equivalent_months field to the loan
+                $check->equivalent_months = $equivalentMonths;
 
-            // Add the equivalent_months field to the loan
-            $check->equivalent_months = $equivalentMonths;
-            
-            if (number_format($equivalentMonths, 0) > 1) {
-                return redirect()->back()->with('loan_restriction', 'Attention: This customer has a ' . number_format($check->equivalent_months, 0) . ' month pending loan and is not eligible for renewal at this time.');
-            }
+                if (number_format($equivalentMonths, 0) > 1) {
+                    return redirect()->back()->with('loan_restriction', 'Attention: This customer has a ' . number_format($check->equivalent_months, 0) . ' month pending loan and is not eligible for renewal at this time.');
+                }
 
-            if (isset($check->details)) {
-                $totalRemaining = 0;
+                if (isset($check->details)) {
+                    $totalRemaining = 0;
 
-                foreach ($check->details as $detail) {
-                    if ($detail->loan_date_paid === null) {
-                        $totalRemaining += $detail->loan_due_amount;
-                        $detail->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
-                        $detail->loan_amount_paid = number_format($detail->loan_due_amount, 2);
-                        $detail->save();
+                    foreach ($check->details as $detail) {
+                        if ($detail->loan_date_paid === null) {
+                            $totalRemaining += $detail->loan_due_amount;
+                            $detail->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
+                            $detail->loan_amount_paid = number_format($detail->loan_due_amount, 2);
+                            $detail->save();
+                        }
+                    }
+                    $check->remaining = $totalRemaining;
+
+                    // Check if all details are paid
+                    $unpaidDetailsCount = $check->details()->where('loan_date_paid', null)->count();
+                    if ($unpaidDetailsCount === 0) {
+                        // Set loan status to FULPD if all details are paid
+                        $loanCheck = Loan::with([
+                            'details' => function ($query) {
+                                $query->where('loan_date_paid', '!=', null); // Only include unpaid details
+                            }
+                        ])
+                            ->where('customer_id', $request->customer_id)
+                            ->where('status', 'UNPD')
+                            ->first();
+                        $loanCheck->status = 'FULPD';
+                        $loanCheck->save();
+
+                        $log = new ActivityLog();
+                        $log->user_id = auth()->user()->id;
+                        $log->description = 'Client ' . $check->customer->first_name . ' ' . $check->customer->last_name . ' renewed a loan with a remaining balance of ' . $equivalentMonths . ' months, amounting to ' . number_format($totalRemaining, 2) . ', which will be deducted from the renewed loan.';
+                        $log->save();
                     }
                 }
-                $check->remaining = $totalRemaining;
-
-                // Check if all details are paid
-                $unpaidDetailsCount = $check->details()->where('loan_date_paid', null)->count();
-                if ($unpaidDetailsCount === 0) {
-                    // Set loan status to FULPD if all details are paid
-                    $loanCheck = Loan::with([
-                        'details' => function ($query) {
-                            $query->where('loan_date_paid', '!=', null); // Only include unpaid details
-                        }
-                    ])
-                        ->where('customer_id', $request->customer_id)
-                        ->where('status', 'UNPD')
-                        ->first();
-                    $loanCheck->status = 'FULPD';
-                    $loanCheck->save();
-                }
             }
+
 
             // Create the loan entry
             $loan = new Loan();
