@@ -401,7 +401,7 @@
                                 <div
                                     class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                                     <div
-                                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all md:my-8 md:w-full md:max-w-lg">
+                                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all md:my-10 md:w-full md:max-w-2xl">
                                         <form action="{{ route('loan.gracePeriod') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
