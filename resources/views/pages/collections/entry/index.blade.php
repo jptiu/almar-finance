@@ -9,12 +9,16 @@
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
             <div>
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Collection Data Entry</h1>
+                <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Collection Data Entry</h1>
                 <ol class="inline-flex items-center space-x-2">
                     <!-- Home -->
                     <li>
                         <a href="/" class="text-gray-500 hover:text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#A9A9A9"><path d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                                fill="#A9A9A9">
+                                <path
+                                    d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z" />
+                            </svg>
                         </a>
                     </li>
                     <!-- Separator -->
@@ -148,7 +152,8 @@
                                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
 
                                         <div class="md:col-span-1">
-                                            <label for="trans_no" class="text-black font-medium">Transaction No.</label>
+                                            <label for="trans_no" class="text-black font-medium">Transaction
+                                                No.</label>
                                             <input type="text" name="trans_no" id="trans_no"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
                                                 value="" placeholder="" />
@@ -177,7 +182,7 @@
                                             <label for="date_of_loan" class="text-black font-medium">Date</label>
                                             <input type="date" name="date_of_loan" id="date_of_loan"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                value="" placeholder="" required/>
+                                                value="" placeholder="" required />
                                         </div>
 
                                     </div>
@@ -244,7 +249,7 @@
                                             <label for="date_paid" class="text-black font-medium">Date Paid</label>
                                             <input type="date" name="date_paid" id="date_paid"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                value="" placeholder="" required/>
+                                                value="" placeholder="" required />
                                         </div>
                                     </div>
                                 </div>
@@ -411,6 +416,65 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="mb-4">
+                                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
+                                                <div class="lg:col-span-2">
+                                                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
+
+                                                        <div class="md:col-span-1">
+                                                            <h1 class="text-lg mt-2 font-medium">Interest Amount
+                                                            </h1>
+                                                        </div>
+
+                                                        <div class="md:col-span-1">
+                                                            <input type="text" name="interest_amount"
+                                                                id="interest_amount"
+                                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4" id="rebate_percent_div" hidden>
+                                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
+                                                <div class="lg:col-span-2">
+                                                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
+
+                                                        <div class="md:col-span-1">
+                                                            <h1 class="text-lg mt-2 font-medium">Rebate %
+                                                            </h1>
+                                                        </div>
+
+                                                        <div class="md:col-span-1">
+                                                            <input type="text" name="rebate_percent"
+                                                                id="rebate_percent"
+                                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4" id="rebate_amount_div" hidden>
+                                            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
+                                                <div class="lg:col-span-2">
+                                                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
+
+                                                        <div class="md:col-span-1">
+                                                            <h1 class="text-lg mt-2 font-medium">Rebate</h1>
+                                                        </div>
+
+                                                        <div class="md:col-span-1">
+                                                            <input type="text" name="rebate_amount"
+                                                                id="rebate_amount"
+                                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" disabled/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -446,6 +510,7 @@
                 const loans = document.getElementById("loans");
                 const customerType = document.getElementById("type");
                 const prevBal = document.getElementById("prev_balance");
+                const interestAmount = document.getElementById("interest_amount");
                 let bal = 0.00;
                 loans.innerHTML = '';
                 if (response.customer) {
@@ -461,6 +526,10 @@
                         if (transactionField && loanData.id) {
                             console.log(loanData.id)
                             transactionField.value = `${loanData.id}`;
+                        }
+
+                        if(interestAmount && loanData.interest_amount) {
+                            interestAmount.value = `${loanData.interest_amount}`;
                         }
 
                         if (customerType && customerData.customer_type) {
@@ -568,6 +637,23 @@
         const input = document.getElementById('customerInput');
         if (!dropdown.contains(event.target) && !input.contains(event.target)) {
             dropdown.classList.add('hidden');
+        }
+    });
+
+    document.getElementById('loan_amount_paid').addEventListener('input', () => {
+        // Get the values of loan_amount_paid and prev_balance
+        const loanAmountPaid = parseFloat(document.getElementById('loan_amount_paid').value.replace(/,/g, '')) || 0;
+        const previousBalance = parseFloat(document.getElementById('prev_balance').value.replace(/,/g, '')) || 0;
+        const rebateInput = document.getElementById('rebate_amount_div');
+        const rebate_percent_div = document.getElementById('rebate_percent_div');
+
+        // Check if loan_amount_paid is equal to prev_balance
+        if (loanAmountPaid === previousBalance) {
+            rebateInput.hidden = false; // Show the rebate input
+            rebate_percent_div.hidden = false;
+        } else {
+            rebateInput.hidden = true; // Hide the rebate input
+            rebate_percent_div.hidden = true;
         }
     });
 </script>
