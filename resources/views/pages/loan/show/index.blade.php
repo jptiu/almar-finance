@@ -379,6 +379,95 @@
                         </div>
                     </section>
 
+                    <div class="relative mt-4">
+                        <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Amoritization Table</h2>
+                        <hr class="h-px my-4 mb-4 bg-gray-200 border-0 dark:bg-gray-700">
+                    </div>
+                    <section class="container mx-auto">
+                        <div class="flex flex-col">
+                            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                                    <div
+                                        class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                            <thead class="bg-blue-700 dark:bg-gray-800">
+                                                <tr>
+                                                    <th scope="col"
+                                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">
+                                                        Installment
+                                                    </th>
+
+                                                    <th scope="col"
+                                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">
+                                                        Principal
+                                                    </th>
+
+                                                    <th scope="col"
+                                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">
+                                                        Interest
+                                                    </th>
+
+                                                    <th scope="col"
+                                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">
+                                                        Service Charge
+                                                    </th>
+
+                                                    <th scope="col"
+                                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">
+                                                        Total
+                                                    </th>
+
+                                                    <th scope="col"
+                                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-white dark:text-white">
+                                                        Outstanding Balance
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+                                                class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
+                                                @php
+                                                    $totalPrincipal = $loan->principal_amount;
+                                                    $totalInterest = $loan->interest_amount;
+                                                    $totalInstallments = $loan->details->count();
+                                                    $principalAmount = number_format($totalPrincipal / $totalInstallments, 2);
+                                                    $interestAmount = number_format($totalInterest / $totalInstallments, 2);
+                                                @endphp
+                                                @foreach ($loan->details as $key => $details)
+                                                    <tr>
+                                                        <td
+                                                            class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
+                                                            {{ $details->loan_day_no }}
+                                                        </td>
+                                                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap due-date"
+                                                            >
+                                                            {{ $principalAmount }}
+                                                        </td>
+                                                        <td
+                                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            {{ $interestAmount }}
+                                                        </td>
+                                                        <td
+                                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            {{-- {{ $details->loan_running_balance }} --}}
+                                                        </td>
+                                                        <td
+                                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            {{ $details->loan_due_amount }}
+                                                        </td>
+                                                        <td
+                                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                            {{ $details->loan_running_balance }}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
 
                     <div class="mb-8 mt-8">
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
@@ -401,7 +490,7 @@
                                 <div
                                     class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                                     <div
-                                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all md:my-8 md:w-full md:max-w-lg">
+                                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all md:my-10 md:w-full md:max-w-2xl">
                                         <form action="{{ route('loan.gracePeriod') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
@@ -549,7 +638,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        {{-- <div>
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                                 <div class="text-gray-600">
                                     <p class="font-medium text-lg"></p>
@@ -567,7 +656,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
