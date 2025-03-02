@@ -14,12 +14,21 @@ class ExpensesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('hr_access') || Gate::allows('auditor_access'), 404);
         $branch = auth()->user()->branch_id;
-        $lists = Expenses::where('branch_id', $branch)->paginate(10);
-
+        
+        if($request->date_range){
+            $dateRange = $request->input('date_range'); // "Aug 31, 2024 - Sep 6, 2024"
+            $dates = explode(' - ', $dateRange);
+            $from = \Carbon\Carbon::parse($dates[0])->format('m/d/Y');
+            $to = \Carbon\Carbon::parse($dates[1])->format('m/d/Y');
+            $lists = Expenses::where('branch_id', $branch)->where(function ($query) use ($from, $to) {$query->whereBetween('exp_date', [$from, $to]);})->paginate(10);
+        }else{
+            $lists = Expenses::where('branch_id', $branch)->paginate(10);
+        }
+       
         return view('pages.expenses.index', compact('lists'));
     }
 
