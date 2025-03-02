@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryExpense;
 use App\Models\Chart;
 use App\Models\Expenses;
 use Carbon\Carbon;
@@ -30,7 +31,8 @@ class ExpensesController extends Controller
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
         $branch = auth()->user()->branch_id;
         $lists = Chart::where('branch_id', $branch)->get();
-        return view('pages.expenses.entry.index', compact('lists'));
+        $categories = CategoryExpense::all();
+        return view('pages.expenses.entry.index', compact('lists', 'categories'));
     }
 
     /**
@@ -51,6 +53,7 @@ class ExpensesController extends Controller
         $exp->exp_date = Carbon::createFromFormat('Y-m-d', $request->exp_date)->format('m/d/Y');
         $exp->branch_id = $branch;
         $exp->user_id = auth()->user()->id;
+        $exp->category_expense_id = $request->category;
         $exp->save();
 
         return redirect(route("expenses.index"))->with('success', 'Created Successfully');
@@ -77,16 +80,16 @@ class ExpensesController extends Controller
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         $branch = auth()->user()->branch_id;
         $expenses = Expenses::with('account')->where('branch_id', $branch)->where('id', $id)->first();
-        
+
         return view('pages.expenses.update.index', compact('expenses'));
     }
-    
+
     public function requestEdit(string $id)
     {
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         $branch = auth()->user()->branch_id;
         $expenses = Expenses::with('account')->where('branch_id', $branch)->where('id', $id)->first();
-        
+
         return view('pages.expenses.update.index', compact('expenses'));
     }
 
@@ -158,7 +161,7 @@ class ExpensesController extends Controller
             ]);
         }
 
-        return redirect(route("barangay.index"))->with('success', 'CSV Data Imported Successfully');    
+        return redirect(route("barangay.index"))->with('success', 'CSV Data Imported Successfully');
     }
 }
 

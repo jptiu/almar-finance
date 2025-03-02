@@ -4,6 +4,7 @@ use App\Http\Controllers\AuditorController;
 use App\Http\Controllers\BMController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BreakdownController;
+use App\Http\Controllers\CategoryExpenseController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CheckController;
 use App\Http\Controllers\CityTownController;
@@ -69,7 +70,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('barangay/store', [BarangayController::class, 'store'])->name('barangay.store');
     Route::post('barangay/update/{id}', [BarangayController::class, 'update'])->name('barangay.update');
     Route::get('barangay/show/{id}', [BarangayController::class, 'show'])->name('barangay.show');
-    Route::delete('barangay/destroy/{id}', [BarangayController::class, 'destroy'])->name('barangay.destroy');
+    Route::delete('worksheet-monthly-report/destroy/{id}', [BarangayController::class, 'destroy'])->name('barangay.destroy');
     Route::post('barangay/import', [BarangayController::class, 'importCSV'])->name('barangay.importcsv');
 
     // Customer
@@ -135,7 +136,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Breakdown
     Route::get('breakdown', [BreakdownController::class, 'index'])->name('breakdown.index');
     Route::get('breakdown/create', [BreakdownController::class, 'create'])->name('breakdown.create');
-    
+
     Route::post('breakdown/store', [BreakdownController::class, 'store'])->name('breakdown.store');
     Route::post('breakdown/update/{id}', [BreakdownController::class, 'update'])->name('breakdown.update');
     Route::delete('breakdown/destroy/{id}', [BreakdownController::class, 'destroy'])->name('breakdown.destroy');
@@ -280,7 +281,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Employee Evaluation
     Route::get('branch/employee-evaluation', [BMController::class, 'employeeEvaluation'])->name('employeeEvaluation.index');
-    
+
 
     // Bad Account
     Route::get('branch/bad-account', [BMController::class, 'badAccount'])->name('badAccount.index');
@@ -337,7 +338,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     //Automated Payment
     Route::get('reminder', [BMController::class, 'reminderPay'])->name('reminderPay.index');
-    
+
     //Savings
     // Route::get('savings', [SavingsController::class, 'index'])->name('savings.index');
     // Route::get('savings/create', [SavingsController::class, 'create'])->name('savings.create');
@@ -355,7 +356,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('savingscustomer/createWithdrawal', [SavingsController::class, 'createWithdrawal'])->name('withdrawalentry.createWithdrawal');
     Route::post('savingscustomer/withdrawal/store', [SavingsController::class, 'storeWithdrawal'])->name('withdrawalentry.storeWithdrawal');
     Route::get('savingscustomer/withdrawalentry/print/{id}', [SavingsController::class, 'printWithdrawal'])->name('printWithdrawal.print');
-    
+
 
     // Payroll
     Route::get('payroll', [PayrollController::class, 'index'])->name('payroll.index');
@@ -379,6 +380,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     //Chart
     Route::get('chart', [ChartController::class, 'index'])->name('chart.index');
+    Route::get('chart/edit/{id}', [ChartController::class, 'edit'])->name('chart.edit');
     Route::post('chart/store', [ChartController::class, 'store'])->name('chart.store');
     Route::get('chart/create', [ChartController::class, 'create'])->name('chart.create');
     Route::post('chart/update/{id}', [ChartController::class, 'update'])->name('chart.update');
@@ -410,4 +412,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     //export data ro csv
     Route::get('/exportsavings-csv', [SavingsController::class, 'exportsavingsData'])->name('savings.export');
     Route::get('/exportwithdrawal-csv', [SavingsController::class, 'exportwithdrawalData'])->name('withdraw.export');
+
+
+    Route::post('category-expenses/store', [CategoryExpenseController::class, 'store'])->name('category-expenses.store');
+    Route::post('category-expenses/update/{id}', [CategoryExpenseController::class, 'update'])->name('category-expenses.update');
+    Route::delete('category-expenses/destroy/{id}', [CategoryExpenseController::class, 'destroy'])->name('category-expenses.destroy');
 });

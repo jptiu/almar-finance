@@ -10,8 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('expenses', function (Blueprint $table) {
-            $table->foreignId('branch_id')->nullable()->constrained('branches')->onDelete('set null');
+        Schema::create('category_expenses', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('name');
         });
     }
 
@@ -20,8 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('expenses', function (Blueprint $table) {
-            $table->foreignId('branch_id')->nullable()->constrained('branches')->onDelete('set null');
-        });
+        Schema::dropIfExists('category_expenses');
     }
 };
