@@ -16,17 +16,45 @@
                 </div>
             </div>
         @endif
-       
+        @if (session()->has('loan_restriction'))
+            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full dark:bg-gray-800">
+                    <div class="flex items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                        role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <div>
+                            <span class="font-medium">{{ session()->get('loan_restriction') }}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button onclick="closeModal()"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none dark:bg-gray-700 dark:text-gray-300">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endif
+
 
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center">
             <div>
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Grant Loan Entry</h1>   
+                <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Grant Loan Entry</h1>
                 <ol class="inline-flex items-center space-x-2">
                     <!-- Home -->
                     <li>
                         <a href="/" class="text-gray-500 hover:text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#A9A9A9"><path d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                width="20px" fill="#A9A9A9">
+                                <path
+                                    d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z" />
+                            </svg>
                         </a>
                     </li>
                     <!-- Separator -->
@@ -227,13 +255,13 @@
                                     <label for="date_of_loan" class="text-black font-medium">Date of Loan</label>
                                     <input type="date" name="date_of_loan" id="date_of_loan"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        value="" placeholder="" required/>
+                                        value="" placeholder="" required />
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="loan_type" class="text-black font-medium">Loan Type</label>
                                     <select name="loan_type" id="loan_type" required
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"/>
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
                                     <option>Select</option>
                                     <option value="daily">Daily</option>
                                     {{-- <option value="weekly">Weekly</option>
@@ -277,7 +305,7 @@
                                     <input onchange="getCustomerID()" type="text" name="customer_id"
                                         id="customer_id"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" required/>
+                                        value="" placeholder="" required />
                                 </div>
 
                                 <div class="md:col-span-2">
@@ -336,21 +364,21 @@
                                     <label for="days_to_pay" class="text-black font-medium">Days to pay</label>
                                     <input type="number" name="days_to_pay" id="days_to_pay"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" required/>
+                                        value="" placeholder="" required />
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="months_to_pay" class="text-black font-medium">Months to pay</label>
                                     <input type="number" name="months_to_pay" id="months_to_pay"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" required/>
+                                        value="" placeholder="" required />
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="interest" class="text-black font-medium">Interest %</label>
                                     <input type="text" name="interest" id="interest"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" required/>
+                                        value="" placeholder="" required />
                                     </select>
                                 </div>
                             </div>
@@ -375,14 +403,14 @@
                                     <label for="svc_charge" class="text-black font-medium">Service Charge</label>
                                     <input type="number" name="svc_charge" id="svc_charge"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" required/>
+                                        value="" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="actual_record" class="text-black font-medium">Actual Record</label>
                                     <input type="text" name="actual_record" id="actual_record"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" required/>
+                                        value="" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-1">
@@ -887,4 +915,9 @@
             fileUploadField.classList.add('hidden');
         }
     });
+</script>
+<script>
+    function closeModal() {
+        document.querySelector('.fixed.inset-0').remove();
+    }
 </script>

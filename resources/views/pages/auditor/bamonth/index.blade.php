@@ -51,7 +51,7 @@
                                             <td class="py-2 px-4 border">{{ $loan->loan->customer->comp_name }}</td>
                                             <td class="py-2 px-4 border">{{ number_format($loan->loan_due_amount ?? 0, 2) }}</td>
                                             <td class="py-2 px-4 border">{{ number_format($loan->loan->interest_amount, 2) }}</td>
-                                            <td class="py-2 px-4 border">{{ number_format($loan->loan_amount_paid ?? 0, 2) }}</td>
+                                            <td class="py-2 px-4 border">{{ $loan->loan_amount_paid ?? 0 }}</td>
                                             <td class="py-2 px-4 border">{{ number_format($loan->loan_running_balance ?? 0, 2) }}</td>
                                         </tr>
                                         @endforeach

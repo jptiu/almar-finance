@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Collection;
 use App\Models\Loan;
 use App\Models\LoanDetails;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -31,16 +32,19 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(true);
+        // Sanitize loan_amount_paid by removing commas
+        $loanAmountPaid = str_replace(',', '', $request->loan_amount_paid);
+
         $branch = auth()->user()->branch_id;
-        // dd($branch);
         $loan = Loan::findOrFail($request->trans_no);
         $loanDetails = LoanDetails::where('loan_id', $loan->id)
             ->where('loan_day_no', $request->loan_no)
+            ->where('loan_amount_paid', null)
             ->first();
-        if($loanDetails){
-            $loanDetails->loan_date_paid = $request->date_paid;
-            $loanDetails->loan_amount_paid = $request->loan_amount_paid;
+
+        if ($loanDetails) {
+            $loanDetails->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_paid)->format('m/d/Y');
+            $loanDetails->loan_amount_paid = $loanAmountPaid; // Use sanitized value
             $loanDetails->loan_amount_change = $request->loan_amount_change ?? 0;
             $loanDetails->loan_withdraw_from_bank = $request->loan_withdraw_from_bank ?? 0;
             $loanDetails->update();
@@ -54,13 +58,53 @@ class PaymentController extends Controller
             $col->type = $request->type;
             $col->status = $request->status;
             $col->trans_no = $request->trans_no;
-            $col->date = $request->date_paid;
-            $col->paid_amount = $request->loan_amount_paid;
+            $col->date = Carbon::createFromFormat('Y-m-d', $request->date_paid)->format('m/d/Y');
+            $col->paid_amount = $loanAmountPaid; // Use sanitized value
             $col->branch_id = $branch;
             $col->lat = $request->lat ?? 0;
             $col->long = $request->long ?? 0;
             $col->loan_details_id = $loanDetails->id;
             $col->save();
+        }
+
+        if ($loanDetails->loan_running_balance == 0) {
+            $loan->status = 'FULPD';
+            $loan->update();
+        }
+
+        // Sanitize loan_due_amount as well (if it contains commas)
+        $loanDueAmount = str_replace(',', '', $loanDetails->loan_due_amount);
+
+        if ($loanAmountPaid > $loanDueAmount) {
+            $remaining = $loanAmountPaid - $loanDueAmount;
+            $nextLoanDetails = LoanDetails::where('loan_id', $loan->id)
+                ->where('loan_day_no', '>', $request->loan_no)
+                ->orderBy('loan_day_no', 'asc')
+                ->first();
+
+            if ($nextLoanDetails) {
+                $nextLoanDetails->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_paid)->format('m/d/Y');
+                $nextLoanDetails->loan_amount_paid = $remaining;
+                $nextLoanDetails->update();
+            } else {
+                $nextLoanDetails = LoanDetails::where('loan_id', $loan->id)
+                    ->orderBy('loan_day_no', 'asc')
+                    ->first();
+                $nextLoanDetails->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_paid)->format('m/d/Y');
+                $nextLoanDetails->loan_amount_paid = $remaining;
+                $nextLoanDetails->update();
+            }
+
+            // Recalculate the total remaining balance after applying the overpayment
+            $totalRemainingBalance = LoanDetails::where('loan_id', $loan->id)
+                ->whereNull('loan_amount_paid')
+                ->sum('loan_due_amount');
+
+            // If the total remaining balance is fully paid after overpayment, update the loan status to FULPD
+            if ($totalRemainingBalance <= 0) {
+                $loan->status = 'FULPD';
+                $loan->update();
+            }
         }
 
         return response()->json([

@@ -108,7 +108,7 @@ class LoanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LoanCreateRequest $request)
+    public function store(Request $request)
     {
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         try {
@@ -122,6 +122,67 @@ class LoanController extends Controller
                 'rows.*.due_amount' => 'required|numeric',
                 'rows.*.remaining_balance' => 'required|numeric',
             ]);
+
+            $check = Loan::with([
+                'details' => function ($query) {
+                    $query->where('loan_date_paid', null); // Only include unpaid details
+                }
+            ])
+                ->where('customer_id', $request->customer_id)
+                ->where('status', 'UNPD')
+                ->first();
+            // dd($check);
+
+            // $checkDetails = $check->details;
+            if (isset($check)) {
+                // Count the number of unpaid details
+                $unpaidCount = $check->details->count();
+                // Calculate the equivalent months (2 unpaid details = 1 month)
+                $equivalentMonths = floor($unpaidCount / 2); // Use floor() to round down
+
+                // Add the equivalent_months field to the loan
+                $check->equivalent_months = $equivalentMonths;
+
+                if (number_format($equivalentMonths, 0) > 1) {
+                    return redirect()->back()->with('loan_restriction', 'Attention: This customer has a ' . number_format($check->equivalent_months, 0) . ' month pending loan and is not eligible for renewal at this time.');
+                }
+
+                if (isset($check->details)) {
+                    $totalRemaining = 0;
+
+                    foreach ($check->details as $detail) {
+                        if ($detail->loan_date_paid === null) {
+                            $totalRemaining += $detail->loan_due_amount;
+                            $detail->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
+                            $detail->loan_amount_paid = number_format($detail->loan_due_amount, 2);
+                            $detail->save();
+                        }
+                    }
+                    $check->remaining = $totalRemaining;
+
+                    // Check if all details are paid
+                    $unpaidDetailsCount = $check->details()->where('loan_date_paid', null)->count();
+                    if ($unpaidDetailsCount === 0) {
+                        // Set loan status to FULPD if all details are paid
+                        $loanCheck = Loan::with([
+                            'details' => function ($query) {
+                                $query->where('loan_date_paid', '!=', null); // Only include unpaid details
+                            }
+                        ])
+                            ->where('customer_id', $request->customer_id)
+                            ->where('status', 'UNPD')
+                            ->first();
+                        $loanCheck->status = 'FULPD';
+                        $loanCheck->save();
+
+                        $log = new ActivityLog();
+                        $log->user_id = auth()->user()->id;
+                        $log->description = 'Client ' . $check->customer->first_name . ' ' . $check->customer->last_name . ' renewed a loan with a remaining balance of ' . $equivalentMonths . ' months, amounting to ' . number_format($totalRemaining, 2) . ', which will be deducted from the renewed loan.';
+                        $log->save();
+                    }
+                }
+            }
+
 
             // Create the loan entry
             $loan = new Loan();
@@ -139,7 +200,9 @@ class LoanController extends Controller
             $loan->interest_amount = $request->interest_amount;
             $loan->svc_charge = $request->svc_charge ?? '';
             $loan->actual_record = $request->actual_record ?? '';
+            // dd((float)$request->payable_amount - (float)$check->remaining);
             $loan->payable_amount = $request->payable_amount;
+            // $loan->note = 'Deducted amount from previous loan: ' . number_format($check->remaining??0, 2);
             $loan->branch_id = $branch;
             $loan->user_id = auth()->user()->id;
             if (isset($image) == true) {
@@ -147,13 +210,6 @@ class LoanController extends Controller
                 $loan->file = $imageBase64;
             }
             $loan->save();
-
-            // if ($image) {
-            //     // Convert the image to base64
-            //     $imageBase64 = base64_encode(file_get_contents($image));
-            //     $loan->file = $imageBase64;
-            //     $loan->update();
-            // }
 
             // Save each payment row as LoanDetails
             foreach ($validatedData['rows'] as $row) {
@@ -175,7 +231,7 @@ class LoanController extends Controller
 
             // Send email to HR
             $hrEmail = 'hr@almarfinance.com'; // Replace with HR email
-            Mail::to($hrEmail)->send(new LoanApprovalRequestMail($loan));
+            // Mail::to($hrEmail)->send(new LoanApprovalRequestMail($loan));
             // Redirect back with success message
             return redirect()->back()->with('success', 'Loan created successfully and is pending approval.');
         } catch (\Throwable $th) {
@@ -202,6 +258,8 @@ class LoanController extends Controller
             $amountDue = LoanDetails::where('id', $request->id)->first();
             $amountDue->loan_running_balance = $request->loan_due_amount;
             $amountDue->loan_date_paid = now()->format('m/d/Y');
+            $amountDue->loan_amount_paid = 0;
+            $amountDue->loan_remarks = 'Added Grace Period';
             $amountDue->update();
 
             // Save each payment row as LoanDetails
@@ -514,12 +572,10 @@ class LoanController extends Controller
     {
         $branch = auth()->user()->branch_id;
         $branchAddress = Branch::find($branch);
-        $customer = Customer::with([
-            'loan',
-            'loan.details'
+        $loan = Loan::with([
+            'customer',
         ])->where('branch_id', $branch)->find($id);
-
-        return view('pages.loan.print.index', compact('customer', 'branchAddress'));
+        return view('pages.loan.print.index', compact('loan', 'branchAddress'));
     }
 
 }

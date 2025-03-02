@@ -3,24 +3,53 @@
 <head>
     <title>Print Statement</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .label-column {
+            width: 30%;
+        }
+        .data-column {
+            width: 70%;
+        }
+        @media print {
+            body {
+                font-size: 12pt;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="px-2 py-1 max-w-5xl mx-auto">
-        <div class="text-center mb-2 mt-2">
-            <div class="text-gray-600">
-                <div class="text-base font-bold border-b-2 border-gray-300 pb-2">Customer Profile Report</div>
-            </div>
-        </div>
-
-        <div class="flex justify-between items-center mb-12">
+        <div class="flex justify-center items-center mb-4">
             <div class="flex items-center">
                 <div class="text-gray-600">
                     <img class="h-auto" src="/images/almarlogo.png" alt="almar suites">
-                    <div class="text-base font-semibold">Almar Freemile Financing Corporation,</div>
+                    <div class="text-base font-semibold">Almar Freemile Financing Corporation</div>
                     <div class="text-base font-semibold"></div>
-                    {{-- <div class="text-md font-semibold">Lapu-Lapu City, Cebu, 6015</div> --}}
                 </div>
             </div>
             <div class="flex items-center">
@@ -30,101 +59,113 @@
             </div>
         </div>
 
-        <!-- Date Filed and Customer ID -->
-        <!-- <div class="flex justify-between mb-4">
-            <p><span class="font-bold">Date Filed:</span> 11/13/24</p>
-            <p><span class="font-bold">Date Released:</span> 11/14/24</p>
-            <p><span class="font-bold">Customer ID:</span> 10257</p>
-        </div> -->
+        <hr class="h-px mb-12 bg-gray-200 border-0 dark:bg-gray-700">
 
-        <!-- Section Template -->
-        <!-- <div>
-            <button class="w-full text-left font-bold bg-gray-200 px-4 py-2 rounded-md focus:outline-none">
-                Loan Details
-            </button>
-            <div id="loan-details" class="p-4 bg-gray-50 rounded-md ">
-                <div class="grid grid-cols-2 gap-4">
-                    <p><span class="font-bold">Proposed Loan:</span> ₱20,000.00</p>
-                    <p><span class="font-bold">Terms:</span> 4 months</p>
-                    <p><span class="font-bold">Interest:</span> 4%</p>
-                </div>
-            </div>
-        </div> -->
-
-        <div class="mt-4 border-2 border-gray-500">
-            <div class="flex flex-col justify-start p-4">
-                <div class="leading-loose mb-6">
-                    <p><span class="font-bold text-gray-900 text-base">Full Name:</span> {{$customer->first_name ?? 'N/A'}} {{$customer->middle_name ?? ''}} {{$customer->last_name ?? ""}}</p>
-                    <p><span class="font-bold text-gray-900 text-base">Customer Type:</span> {{$customer->type?? 'N/A'}}</p>
-                    <p><span class="font-bold text-gray-900 text-base">Status:</span> {{$customer->status ?? 'N/A'}}</p>
-                    <p><span class="font-bold text-gray-900 text-base">ID:</span> {{$customer->id ?? 'N/A'}}</p>
-                </div>
-                <div class="relative">
-                    <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Loan Payment Details</h2>
-                    <hr class="h-px my-4 mb-4 bg-gray-200 border-0 dark:bg-gray-700">
-                </div>
-                <div class="mb-6">
-                    <div class="grid grid-cols-2 gap-8 mt-4 mb-12 text-sm text-gray-500">
-                        <div>
-                            <p class="text-gray-900 text-sm">Transaction No.</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->trans_no?? 'N/A'}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Date of Loan </p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->date_of_loan}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Loan Type</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->loan_type ?? 'N/A'}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Transaction Type</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->transaction_type ?? 'N/A'}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative">
-                    <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Terms of Payment</h2>
-                    <hr class="h-px my-4 mb-4 bg-gray-200 border-0 dark:bg-gray-700">
-                </div>
-                <div class="">
-                    <div class="grid grid-cols-2 gap-8 mt-4 mb-12 text-sm text-gray-500">
-                        <div>
-                            <p class="text-gray-900 text-sm">Principal Amount</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->principal_amount??'N/A'}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Interest</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->interest?? 'N/A'}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Interest Amount</p>
-                            <p class="font-bold text-gray-900 text-base"value="" placeholder="₱">{{$customer->loan->interest_amount?? 'N/A'}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Service Charge</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->svc_charge?? 'N/A'}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Payable Amount</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->payable_amount?? 'N/A'}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Days to Pay</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->days_to_pay}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Months to Pay</p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->months_to_pay?? 'N/A'}}</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-900 text-sm">Actual Record </p>
-                            <p class="font-bold text-gray-900 text-base">{{$customer->loan->actual_record?? 'N/A'}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="relative text-center">
+            <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Data and Information of the Borrower</h2>
         </div>
+
+        <table>
+            <tr>
+                <th class="label-column">Subject Matter</th>
+                <th class="data-column">Particulars</th>
+            </tr>
+            <tr>
+                <td class="label-column">Full Name</td>
+                <td class="data-column">{{$loan->customer->first_name ?? 'N/A'}} {{$loan->customer->middle_name ?? ''}} {{$loan->customer->last_name ?? ""}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Customer Type</td>
+                <td class="data-column">{{$loan->customer->type?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">ID</td>
+                <td class="data-column">{{$loan->customer->id?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Phone Number</td>
+                <td class="data-column">{{$loan->customer->cell_number?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Email Address</td>
+                <td class="data-column">{{$loan->customer->email?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Status:</td>
+                <td class="data-column">{{$loan->customer->status ?? 'N/A'}}</td>
+            </tr>
+        </table>
+
+        <div class="relative text-center pt-4">
+            <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Loan Details</h2>
+        </div>
+
+        <table>
+            <tr>
+                <th class="label-column">Subject Matter</th>
+                <th class="data-column">Particulars</th>
+            </tr>
+            <tr>
+                <td class="label-column">Transaction No.</td>
+                <td class="data-column">{{$loan->trans_no?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Loan Type</td>
+                <td class="data-column">{{$loan->loan_type ?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Date of Loan</td>
+                <td class="data-column">{{$loan->date_of_loan}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Transaction Type</td>
+                <td class="data-column">{{$loan->transaction_type ?? 'N/A'}}</td>
+            </tr>
+        </table>
+
+        <div class="relative text-center pt-4">
+            <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Terms of Payment</h2>
+        </div>
+
+        <table>
+            <tr>
+                <th class="label-column">Subject Matter</th>
+                <th class="data-column">Particulars</th>
+            </tr>
+            <tr>
+                <td class="label-column">Principal Amount</td>
+                <td class="data-column">{{$loan->principal_amount??'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Interest</td>
+                <td class="data-column">{{$loan->interest?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Interest Amount</td>
+                <td class="data-column">{{$loan->interest_amount?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Service Charge</td>
+                <td class="data-column">{{$loan->svc_charge?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Payable Amount</td>
+                <td class="data-column">{{$loan->payable_amount?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Days to Pay</td>
+                <td class="data-column">{{$loan->days_to_pay}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Months to Pay</td>
+                <td class="data-column">{{$loan->months_to_pay?? 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td class="label-column">Actual Record</td>
+                <td class="data-column">{{$loan->actual_record?? 'N/A'}}</td>
+            </tr>
+        </table>
+
 
 </body>
 

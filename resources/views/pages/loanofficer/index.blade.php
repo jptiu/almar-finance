@@ -63,7 +63,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Cash End</p>
-                                    <span class="text-3xl font-semibold text-gray-800">₱0.00</span>
+                                    <span class="text-3xl font-semibold text-gray-800">{{ number_format($cashEnd, 2) }}</span>
                                 </div>
                             </div>
                         </div>

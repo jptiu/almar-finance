@@ -130,7 +130,7 @@
                                 <div class="md:col-span-2">
                                     <label for="birth_date"
                                         class="block text-sm font-medium text-gray-700">Birthdate</label>
-                                    <input type="date" name="birth_date" id="birth_date"
+                                    <input type="date" name="birth_date" id="birth_date" onchange="calculateAge()"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_birthdate">This field is
                                         required.</span>
@@ -190,9 +190,9 @@
                                     @endforeach
                                     </select>
                                     {{-- <input type="text" name="" id="city"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
-                                <span class="text-red-500 text-xs hidden" id="error_city">This field is
-                                    required.</span> --}}
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
+                                    <span class="text-red-500 text-xs hidden" id="error_city">This field is
+                                        required.</span> --}}
                                 </div>
 
                                 <div class="md:col-span-1">
@@ -206,15 +206,14 @@
 
                                 <div class="md:col-span-1">
                                     <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
-                                    <input type="number" name="age" id="age"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
+                                    <input type="number" name="age" id="age" readonly
+                                        class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_age">This field is
                                         required.</span>
                                 </div>
 
                                 <div class="md:col-span-1">
-                                    <label for="gender"
-                                        class="block text-sm font-medium text-gray-700">Gender</label>
+                                    <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
                                     <input type="text" name="gender" id="gender"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_gender">This field is
@@ -231,8 +230,8 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label for="email"
-                                        class="block text-sm font-medium text-gray-700">Email Address</label>
+                                    <label for="email" class="block text-sm font-medium text-gray-700">Email
+                                        Address</label>
                                     <input type="text" name="email" id="email"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                     <span class="text-red-500 text-xs hidden" id="error_email">This field is
@@ -240,8 +239,7 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label for="facebook_name"
-                                        class="block text-sm font-medium text-gray-700">Facebook
+                                    <label for="facebook_name" class="block text-sm font-medium text-gray-700">Facebook
                                         Name</label>
                                     <input type="text" name="facebook_name" id="facebook_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
@@ -612,7 +610,7 @@
                                         <div class="text-gray-900" id="fbName"></div>
                                     </li>
                                 </div>
-                                
+
 
                             </div>
 
@@ -910,7 +908,7 @@
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const formContainer = document.getElementById("formData");
         const overviewPage = document.getElementById("overview-page");
         const nextBtn = document.getElementById("next-btn");
@@ -990,7 +988,7 @@
         }
 
         // Navigation: Next
-        nextBtn.addEventListener("click", function() {
+        nextBtn.addEventListener("click", function () {
             if (currentStep < steps.length - 1) {
                 currentStep++;
                 showStep(currentStep);
@@ -1183,7 +1181,7 @@
 
 
         // Navigation: Previous
-        prevBtn.addEventListener("click", function() {
+        prevBtn.addEventListener("click", function () {
             if (currentStep > 0) {
                 currentStep--;
                 showStep(currentStep);
@@ -1211,7 +1209,7 @@
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const nextButton = document.getElementById("next-btn");
         // const fields = [
         //     "first_name",
@@ -1267,6 +1265,24 @@
         // Initial check on page load
         // checkFields();
     });
+    function calculateAge() {
+        const birthDateInput = document.getElementById('birth_date');
+        const ageInput = document.getElementById('age');
+
+        if (birthDateInput.value) {
+            const birthDate = new Date(birthDateInput.value);
+            const today = new Date();
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            ageInput.value = age;
+        }
+    }
 </script>
 
 <style>
