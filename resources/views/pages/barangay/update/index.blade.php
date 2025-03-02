@@ -62,7 +62,7 @@
                                 <div class="md:col-span-1">
                                     <label for="code">Area Code</label>
                                     <input type="text" name="code" id="code"
-                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                         value="{{ $brgy->code }}" placeholder="" />
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                 <div class="md:col-span-1">
                                     <label for="city">City/Town</label>
                                     <input type="text" name="city" id="city"
-                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                         value="{{ $brgy->city }}" placeholder="" />
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                 <div class="md:col-span-1">
                                     <label for="barangay_name">Barangay Name</label>
                                     <input type="text" name="barangay_name" id="barangay_name"
-                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                         value="{{ $brgy->barangay_name }}" placeholder="" />
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
                                 <div class="md:col-span-1">
                                     <select name="user_id" id="user_id"
-                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                                     @foreach ($collectors as $collector)
                                         <option value="{{ $collector->user_id }}" {{ $collector->user_id == $brgy->user_id ? 'selected' : '' }}>{{ $collector->name }}</option>
                                     @endforeach

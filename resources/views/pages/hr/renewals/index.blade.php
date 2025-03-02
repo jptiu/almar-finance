@@ -1,160 +1,125 @@
 <x-app-layout>
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-        
-        <!-- Welcome banner -->
-        <x-dashboard.welcome-banner />
-
-        
-        
-        <!-- Cards -->
-        <div class="flex justify-between relative items-center mb-4">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold lg:px-4">Loan Renewal</h1>
-            <!-- Dashboard actions -->
-        <div class="sm:flex sm:justify-between sm:items-center">
-            <div></div>
-
-            <!-- Right: Actions -->
-            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-
-                <!-- Filter button -->
-                <form action="" method="GET" class="relative flex items-center space-x-4">
-                    <div>
-                        <label for="date_from" class="text-black font-medium">From</label>
-                        <input type="date" name="date_from" id="date_from"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                            value="" placeholder="" required/>
-                    </div>
-                    <div>
-                        <label for="date_to" class="text-black font-medium">To</label>
-                        <input type="date" name="date_to" id="date_to"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                            value="" placeholder="" required/>
-                    </div>
-                    <div>
-                        <button type="submit"
-                        class="bg-indigo-500 hover:bg-primary-200 text-white text-sm py-2.5 px-4 mt-6 rounded-lg">Filter</button>
-                    </div>
-                </form>
-
-                <!-- Add view button -->
-                <!-- <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
-                    <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
-                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+        @if (session()->has('success'))
+            <div class="alert alert-success">
+                <div class="flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+                    role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                     </svg>
-                    <span class="hidden xs:block ml-2">Add View</span>
-                </button> -->
-                
-            </div>
-
-        </div>
-        </div>
-        <section class="container px-4 mx-auto">
-            <div class="flex flex-col">
-                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gray-50 dark:bg-gray-800">
-                                    <tr>
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
-                                            ID
-                                        </th>
-
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
-                                            Name
-                                        </th>
-
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
-                                            Address
-                                        </th>
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
-                                            Loan Amount
-                                        </th>
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
-                                            Approval Date
-                                        </th>
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
-                                            Status
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
-                                    @foreach ($lists as $list)
-                                        <tr>
-                                            <td
-                                                class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-200 whitespace-nowrap">
-                                                {{ $list->id }}
-                                            </td>
-                                            <td
-                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ $list->customer->first_name }} {{$list->customer->last_name}}
-                                            </td>
-                                            <td
-                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ $list->customer->house }} {{ $list->customer->street }} {{$list->customer->bry->barangay_name}} {{$list->customer->cty->city_town}}
-                                            </td>
-                                            <td
-                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ $list->principal_amount }}
-                                            </td>
-                                            <td
-                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{$list->updated_at->format('M d Y')}}
-                                            </td>
-                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div class="flex items-center gap-x-6">
-                                                    <button
-                                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                        View
-                                                    </button>
-
-                                                   {{--  <a href="{{ route('denomination.show', $list->id) }}"
-                                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                            height="16" fill="currentColor" class="bi bi-pencil"
-                                                            viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                                                        </svg>
-                                                    </a> --}}
-
-                                                    {{-- <form action="{{ route('denomination.destroy', $list->id) }}"
-                                                        method="">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="text-gray-500 mt-1 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" fill="currentColor"
-                                                                class="bi bi-trash" viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                            </svg>
-                                                        </button>
-                                                    </form> --}}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                    <span class="sr-only">Info</span>
+                    <div>
+                        <span class="font-medium">{{ session()->get('success') }}</span>
                     </div>
                 </div>
             </div>
+        @endif
+        <div class="relative">
+            <h1 class="text-2xl md:text-2xl text-fonts-200 dark:text-slate-100 font-bold mb-4">Loan Renewal
+            </h1>
+        </div>
 
-            <div class="flex-end items-center justify-between mt-6">
-                {{$lists->links()}}
+        <div></div>
+
+        <!-- Dashboard actions -->
+        
+
+        <!-- Cards -->
+        <section class="container">
+            <div class="p-6 w-full max-w-[1500px] mx-auto bg-white rounded-lg border border-bgbody-200">
+                <div class="sm:flex sm:justify-between sm:items-center mb-4">
+                    <div>
+                    
+
+                    </div>
+                    <!-- Right: Actions -->
+                   
+                    <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                    <!-- Filter button -->
+                    <form id="filterForm" method="GET" action="">
+                            <div class="relative">
+                                <input name="date_range" id="date_range"
+                                    class="datepicker form-input pl-9 px-4 py-3  dark:bg-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200 rounded-full font-medium w-[15.5rem]"
+                                    placeholder="Select dates" data-class="flatpickr-right" />
+                                <div class="absolute inset-0 right-auto flex items-center pointer-events-none">
+                                    <svg class="w-4 h-4 fill-current text-slate-500 dark:text-slate-400 ml-3"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M15 2h-2V0h-2v2H9V0H7v2H5V0H3v2H1a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1zm-1 12H2V6h12v8z" />
+                                    </svg>
+                                </div>
+                                <button type="submit"
+                                    class="bg-indigo-500 hover:bg-primary-200 text-white px-4 py-3 rounded-full">Filter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                
+
+                <table class="w-full border-collapse text-left text-sm rounded-md overflow-hidden border border-black">
+                    <thead class="bg-bgbody-100 rounded-2xl w-full">
+                        <tr class=" text-fonts-100 font-extrabold">
+                            <th class="p-4 text-fonts-100 font-normal">ID</th>
+                            <th class="p-4 text-fonts-100 font-normal">Name</th>
+                            <th class="p-4 text-fonts-100 font-normal">Address</th>
+                            <th class="p-4 text-fonts-100 font-normal">Loan Amount</th>
+                            <th class="p-4 text-fonts-100 font-normal ">Approval Date</th>
+                            <th class="p-4 text-fonts-100 font-normal ">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 font-semibold text-sm">
+                        @foreach ($lists as $list)
+                        <tr class="border-b hover:bg-gray-50">
+                            <td
+                                class="p-4">
+                                {{ $list->id }}
+                            </td>
+                            <td
+                                class="p-4">
+                                {{ $list->customer->first_name }} {{$list->customer->last_name}}
+                            </td>
+                            <td
+                                class="p-4">
+                                {{ $list->customer->house }} {{ $list->customer->street }} {{$list->customer->bry->barangay_name}} {{$list->customer->cty->city_town}}
+                            </td>
+                            <td
+                                class="p-4">
+                                {{ $list->principal_amount }}
+                            </td>
+                            <td
+                                class="p-4">
+                                {{$list->updated_at->format('M d Y')}}
+                            </td>
+                            <button
+                                class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                View
+                            </button>
+                        </tr>
+
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <div class="mt-6">
+                    {{ $lists->links() }}
+                </div>
             </div>
         </section>
-
     </div>
 </x-app-layout>
+<script>
+    const showModalButton = document.getElementById('show-modal');
+    const hideModalButton = document.getElementById('hide-modal');
+    const modal = document.getElementById('modal');
+
+    showModalButton.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+    });
+
+    hideModalButton.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+</script>

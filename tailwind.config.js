@@ -23,6 +23,15 @@ export default {
                 'primary': {
                     100: '#000D3A',
                 },
+                'bgbody': {
+                    100: '#f9f9f9',
+                    200: '#e4e4e7',
+                    300: '#f9fafb',
+                },
+                'fonts': {
+                    100: '#667085',
+                    200: '#18181b',
+                },
                 'accent': {
                     100: '#0B6ECA',
                     200: '#0859A5',
@@ -41,6 +50,9 @@ export default {
                 },
                 'borderline': {
                 100: '#F0F0F0',
+                },
+                'late': {
+                100: '#0B6ECA',
                 },
             },
             boxShadow: {
