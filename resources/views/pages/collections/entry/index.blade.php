@@ -179,6 +179,12 @@
                                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
 
                                         <div class="md:col-span-1">
+                                            <label for="principal_amount" class="text-black font-medium">Total Loan</label>
+                                            <input type="text" name="principal_amount" id="principal_amount"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                                value="" placeholder="" required />
+                                        </div>
+                                        <div class="md:col-span-1">
                                             <label for="date_of_loan" class="text-black font-medium">Date</label>
                                             <input type="date" name="date_of_loan" id="date_of_loan"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
@@ -511,6 +517,7 @@
                 const customerType = document.getElementById("type");
                 const prevBal = document.getElementById("prev_balance");
                 const interestAmount = document.getElementById("interest_amount");
+                const principalAmount = document.getElementById("principal_amount");
                 let bal = 0.00;
                 loans.innerHTML = '';
                 if (response.customer) {
@@ -530,6 +537,10 @@
 
                         if(interestAmount && loanData.interest_amount) {
                             interestAmount.value = `${loanData.interest_amount}`;
+                        }
+
+                        if(principalAmount && loanData.principal_amount) {
+                            principalAmount.value = `${loanData.principal_amount}`;
                         }
 
                         if (customerType && customerData.customer_type) {
@@ -656,4 +667,62 @@
             rebate_percent_div.hidden = true;
         }
     });
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //         // Get all input fields
+    //         const prevBalanceInput = document.getElementById('prev_balance');
+    //         const loanWithdrawFromBankInput = document.getElementById('loan_withdraw_from_bank');
+    //         const totalDueAmountInput = document.getElementById('total_due_amount');
+    //         const loanAmountPaidInput = document.getElementById('loan_amount_paid');
+    //         const interestAmountInput = document.getElementById('interest_amount');
+    //         const rebatePercentInput = document.getElementById('rebate_percent');
+    //         const rebateAmountInput = document.getElementById('rebate_amount');
+    //         const rebatePercentDiv = document.getElementById('rebate_percent_div');
+    //         const rebateAmountDiv = document.getElementById('rebate_amount_div');
+    //         const payableAmount = document.getElementById('payable_amount');
+
+    //         const rebate = payableAmount * rebatePercentInput.value * 
+
+    //         // Add event listeners
+    //         loanWithdrawFromBankInput.addEventListener('input', calculateTotalDueAmount);
+    //         loanAmountPaidInput.addEventListener('input', calculateRebate);
+    //         interestAmountInput.addEventListener('input', calculateRebate);
+
+    //         // Function to calculate total due amount
+    //         function calculateTotalDueAmount() {
+    //             const prevBalance = parseFloat(prevBalanceInput.value) || 0;
+    //             const loanWithdrawFromBank = parseFloat(loanWithdrawFromBankInput.value) || 0;
+
+    //             const totalDueAmount = prevBalance + loanWithdrawFromBank;
+    //             totalDueAmountInput.value = totalDueAmount.toFixed(2);
+    //         }
+
+    //         // Function to calculate rebate percent and amount
+    //         function calculateRebate() {
+    //             const loanAmountPaid = parseFloat(loanAmountPaidInput.value);
+    //             const interestAmount = parseFloat(interestAmountInput.value);
+
+    //             // Validate inputs
+    //             if (isNaN(loanAmountPaid) || loanAmountPaid <= 0) {
+    //                 alert('Please enter a valid number for the loan amount paid (greater than zero).');
+    //                 return;
+    //             }
+    //             if (isNaN(interestAmount) || interestAmount <= 0) {
+    //                 alert('Please enter a valid number for the interest amount (greater than zero).');
+    //                 return;
+    //             }
+
+    //             // Calculate rebate percent and amount
+    //             const rebatePercent = (interestAmount / loanAmountPaid) * 100;
+    //             const rebateAmount = (loanAmountPaid * rebatePercent) / 100;
+
+    //             // Update rebate fields
+    //             rebatePercentInput.value = rebatePercent.toFixed(2); // Display with 2 decimal places
+    //             rebateAmountInput.value = rebateAmount.toFixed(2); // Display with 2 decimal places
+
+    //             // Show the rebate fields
+    //             rebatePercentDiv.hidden = false;
+    //             rebateAmountDiv.hidden = false;
+    //         }
+    //     });
 </script>

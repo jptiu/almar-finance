@@ -380,7 +380,7 @@
                     </section>
 
                     <div class="relative mt-4">
-                        <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Amoritization Table</h2>
+                        <h2 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">Amortization Table</h2>
                         <hr class="h-px my-4 mb-4 bg-gray-200 border-0 dark:bg-gray-700">
                     </div>
                     <section class="container mx-auto">
