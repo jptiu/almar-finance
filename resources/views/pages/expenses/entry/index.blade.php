@@ -131,12 +131,6 @@
                                                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
                                             </svg>
                                         </button>
-                                        <button type="button" data-modal-target="confirmationModal"
-                                            id="confirmationButton" onclick="openConfirmationModal()"
-                                            data-modal-toggle="confirmationModal"
-                                            class="px-3 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">
-                                            Confirm
-                                        </button>
                                     </div>
                                 </div>
 

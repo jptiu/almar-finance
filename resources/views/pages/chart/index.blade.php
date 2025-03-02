@@ -44,6 +44,37 @@
                         <span class="hidden xs:block ml-2 text-sm">Import</span>
                     </a>
 
+<<<<<<< HEAD
+                    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <div
+                                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <form action="{{ route('chart.importcsv') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                        <div class="sm:flex sm:items-start">
+                                            <div
+                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                                <svg class="h-6 w-6 text-blue-500" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <polyline points="16 16 12 12 8 16" />
+                                                    <line x1="12" y1="12" x2="12" y2="21" />
+                                                    <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+                                                    <polyline points="16 16 12 12 8 16" />
+                                                </svg>
+                                            </div>
+                                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                                <h3 class="text-base font-semibold leading-6 text-gray-900"
+                                                    id="modal-title">Import Chart</h3>
+                                                <div class="mt-2">
+                                                    <div class="fields">
+                                                        <div class="input-group mb-3">
+                                                            <input type="file" class="form-control" id="file"
+                                                                name="file" accept=".csv">
+                                                            <label class="input-group-text" for="file">Upload</label>
+=======
                         <div id="modal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
                             <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -77,6 +108,7 @@
                                                                     <label class="input-group-text" for="file">Upload</label>
                                                                 </div>
                                                             </div>
+>>>>>>> 9df373afabe6a4e40e095b76ca41ecbc97ccdee4
                                                         </div>
                                                     </div>
                                                 </div>
@@ -144,6 +176,7 @@
                     
                 </table>
 
+<<<<<<< HEAD
         <!-- Cards -->
         <section class="container mx-auto">
             <div class="flex flex-col">
@@ -252,6 +285,10 @@
                             </table>
                         </div>
                     </div>
+=======
+                <div class="mt-6">
+                    {{ $lists->links() }}
+>>>>>>> 9df373afabe6a4e40e095b76ca41ecbc97ccdee4
                 </div>
             </div>
         </section>
