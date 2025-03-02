@@ -260,7 +260,7 @@ class LoanController extends Controller
             $amountDue->loan_date_paid = now()->format('m/d/Y');
             $amountDue->loan_amount_paid = 0;
             $amountDue->loan_remarks = 'Added Grace Period';
-            $amountDue->update();
+            $amountDue->update(); // this part need to be changed, update all the remaining balance, date paid, and amount paid
 
             // Save each payment row as LoanDetails
             foreach ($validatedData['rows'] as $row) {

@@ -137,7 +137,7 @@
                 <td class="data-column">{{$loan->principal_amount??'N/A'}}</td>
             </tr>
             <tr>
-                <td class="label-column">Interest</td>
+                <td class="label-column">Interest ( % )</td>
                 <td class="data-column">{{$loan->interest?? 'N/A'}}</td>
             </tr>
             <tr>
