@@ -248,7 +248,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('ba-collection-report', [AuditorController::class, 'baCollection'])->name('bacollection.index');
     Route::get('ba-collection-report-export', [AuditorController::class, 'baCollectionExport'])->name('bacollection.export');
     Route::get('worksheet-monthly-report', [AuditorController::class, 'worksheetMonth'])->name('worksheet.index');
-
+    Route::post('worksheet-monthly-report-export', [AuditorController::class, 'worksheetExport'])->name('worksheet.export');
     // Branch
     Route::get('branch', [BMController::class, 'index'])->name('branch.index');
     Route::get('csor', [BMController::class, 'csor'])->name('csor.index');

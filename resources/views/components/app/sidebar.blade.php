@@ -1622,25 +1622,21 @@
                                     </div>
                                 </div>
                             </a>
-                            <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                                <ul class="pl-10 mt-1 @if (!in_array(Request::segment(1), ['worksheet-monthly-report'])) {{ 'hidden' }} @endif"
-                                    :class="open ? '!block' : 'hidden'">
-                                    <li class="mb-1 last:mb-0">
-                                        <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('worksheet.index')) {{ '!text-violet-500' }} @endif"
-                                            href="{{ route('worksheet.index') }}">
-                                            <span
-                                                class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Monthly</span>
-                                        </a>
-                                    </li>
-                                    <li class="mb-1 last:mb-0">
-                                        <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('badAccount.index')) {{ '!text-violet-500' }} @endif"
-                                            href="{{ route('badAccount.index') }}">
-                                            <span
-                                                class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <li
+                            class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['worksheet-monthly-report'])) {{ 'bg-accent-100' }} @endif">
+                            <a href="{{ route('worksheet.index') }}"
+                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['worksheet'])) {{ 'hover:text-slate-200' }} @endif">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                        width="24px" fill="#e8eaed">
+                                        <path d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" />
+                                    </svg>
+                                    <span
+                                        class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Worksheet</span>
+                                </div>
+                            </a>
                         </li>
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['regAccount', 'badAccount', 'overdueacc'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['worksheet-monthly-report']) ? 1 : 0 }} }">
