@@ -293,6 +293,15 @@
             const data = []
             let rowData = []
 
+            const sheetNameMonthly = "WORKSHEET MONTH OF " + monthFilter.options[monthFilter.selectedIndex].text;
+            const sheetNameDaily = "WORKSHEET FOR " + new Date(dateFilter.value).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            const isMonthly = reportType.value === 'monthly';
+
             const tbody = document.querySelector('tbody');
             const rows = tbody.querySelectorAll('tr');
             rows.forEach(row => {
@@ -317,7 +326,7 @@
                     body: JSON.stringify({
                         columns: columns,
                         data: data,
-                        sheet_name: document.getElementById('reportTitle').textContent.trim()
+                        sheet_name: isMonthly ? sheetNameMonthly : sheetNameDaily
                     })
                 });
 
@@ -329,13 +338,14 @@
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'worksheet.xlsx';
+                a.download = isMonthly ? sheetNameMonthly+ '.csv' : sheetNameDaily + '.csv';
                 document.body.appendChild(a);
                 a.click();
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
 
             } catch (error) {
+                
                 console.error('Error:', error);
                 alert('Failed to export data');
             }

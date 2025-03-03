@@ -434,6 +434,7 @@ class AuditorController extends Controller
 
 
 
+
         $callback = function () use ($data, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
@@ -445,7 +446,7 @@ class AuditorController extends Controller
             fclose($file);
         };
 
-        return response()->stream($callback, 200, $columns);
+        return response()->stream($callback, 200, []);
     }
 
 
