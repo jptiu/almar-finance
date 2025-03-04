@@ -18,6 +18,7 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LOController;
+use App\Http\Controllers\RebateController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DenominationController;
 use App\Http\Controllers\UserController;
@@ -131,6 +132,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('collection/store', [CollectionController::class, 'store'])->name('collection.store');
     Route::post('collection/update/{id}', [CollectionController::class, 'update'])->name('collection.update');
     Route::delete('collection/destroy/{id}', [CollectionController::class, 'destroy'])->name('collection.destroy');
+
+    // Rebates
+    Route::get('rebates', [RebateController::class, 'index'])->name('rebates.index');
 
     // Breakdown
     Route::get('breakdown', [BreakdownController::class, 'index'])->name('breakdown.index');

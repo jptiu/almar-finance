@@ -100,10 +100,10 @@
                         <div class="lg:col-span-2">
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-8">
 
-                                {{-- <div class="md:col-span-2">
+                                <div class="md:col-span-2">
                                     <label for="exp_ref_no" class="text-black font-medium">Exp Ref No.</label>
-                                    <input type="text" name="exp_ref_no" id="exp_ref_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="Optional"/>
-                                </div> --}}
+                                    <input type="text" name="exp_ref_no" id="exp_ref_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
+                                </div>
 
                                 <div class="md:col-span-2">
                                     {{-- <label for="acc_no" class="text-black font-medium">Acct No.</label>

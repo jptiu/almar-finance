@@ -23,7 +23,7 @@
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
             <div>
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Expenses Data Entry</h1>
+                <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Expenses Data Entry</h1>
                 <ol class="inline-flex items-center space-x-2">
                     <!-- Home -->
                     <li>
@@ -45,17 +45,17 @@
                     </li>
                     <!-- Current Page -->
                     <li>
-                        <span class="text-sm text-black font-medium">Create</span>
+                        <span class="text-sm text-black font-medium">Update</span>
                     </li>
                 </ol>
             </div>
+            
 
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
-            
-
+               
                 <!-- Add view button -->
                 <!-- <a href="{{ route('expenses.index') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
@@ -69,7 +69,7 @@
 
         </div>
 
-        <form action="{{ route('expenses.store') }}" method="POST">
+        <form action="{{ route('expenses.update', $expenses->id) }}" method="POST">
             @csrf
             <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
             <div class="flex items-center text-gray-600 mb-12">
@@ -85,7 +85,7 @@
 
                                 <div class="md:col-span-2">
                                     <label for="exp_date" class="text-black font-medium">Expiry Date</label>
-                                    <input type="date" name="exp_date" id="exp_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
+                                    <input type="date" name="exp_date" id="exp_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->exp_date }}" placeholder="" />
                                 </div>
 
                             </div>  
@@ -100,32 +100,24 @@
                         <div class="lg:col-span-2">
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-8">
 
-                                {{-- <div class="md:col-span-2">
+                                <div class="md:col-span-2">
                                     <label for="exp_ref_no" class="text-black font-medium">Exp Ref No.</label>
-                                    <input type="text" name="exp_ref_no" id="exp_ref_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="Optional"/>
-                                </div> --}}
+                                    <input type="text" name="exp_ref_no" id="exp_ref_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->exp_ref_no }}" placeholder="" />
+                                </div>
 
                                 <div class="md:col-span-2">
-                                    {{-- <label for="acc_no" class="text-black font-medium">Acct No.</label>
-                                    <input type="text" name="acc_no" id="acc_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/> --}}
-                                    <label for="acc_no" class="text-black font-medium">Account No.</label>
-                                    <select name="acc_no" id="acc_no"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
-                                        <option value>Select</option>
-                                        @foreach ($lists as $list)
-                                            <option value="{{ $list->acc_no }}">{{ $list->acc_no }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="acc_no" class="text-black font-medium">Acct No.</label>
+                                    <input type="text" name="acc_no" id="acc_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->acc_no }}" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="acc_class" class="text-black font-medium">Account Class</label>
-                                    <input type="text" name="acc_class" id="acc_class" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
+                                    <input type="text" name="acc_class" id="acc_class" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->acc_class }}" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="acc_type" class="text-black font-medium">Account Type</label>
-                                    <input type="text" name="acc_type" id="acc_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
+                                    <input type="text" name="acc_type" id="acc_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->acc_type }}" placeholder="" />
                                 </div>
                             </div>  
                         </div>
@@ -141,22 +133,22 @@
 
                                 <div class="md:col-span-2">
                                     <label for="acc_title" class="text-black font-medium">Account Title</label>
-                                    <input type="text" name="acc_title" id="acc_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
+                                    <input type="text" name="acc_title" id="acc_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->acc_title }}" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="justification" class="text-black font-medium">Justification</label>
-                                    <input type="text" name="justification" id="justification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
+                                    <input type="text" name="justification" id="justification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->justification }}" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="or_no" class="text-black font-medium">O.R No.</label>
-                                    <input type="text" name="or_no" id="or_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="" required/>
+                                    <input type="text" name="or_no" id="or_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->or_no }}" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label for="amount" class="text-black font-medium">Amount</label>
-                                    <input type="number" name="amount" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="₱" />
+                                    <input type="number" name="amount" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="{{ $expenses->amount }}" placeholder="₱" />
                                 </div>
                             </div>  
                         </div>

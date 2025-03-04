@@ -40,7 +40,7 @@ class ExpensesController extends Controller
     {
         $branch = auth()->user()->branch_id;
         $exp = new Expenses();
-        $exp->exp_ref_no = $request->exp_ref_no;
+        // $exp->exp_ref_no = $request->exp_ref_no;
         $exp->acc_no = $request->acc_no;
         $exp->acc_class = $request->acc_class;
         $exp->acc_type = $request->acc_type;
