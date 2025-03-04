@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryExpense;
+use App\Models\ComputeCashOnHand;
 use App\Models\Customer;
 use App\Models\CustomerType;
 use App\Models\Expenses;
@@ -384,17 +386,70 @@ class AuditorController extends Controller
 
     }
 
-    public function worksheetMonth()
+    public function worksheetMonth(Request $request)
     {
+
+        // type == monthly
+        // type == daily
         $branch = auth()->user()->branch_id;
-        $now = Carbon::now();
-        $startOfMonth = $now->startOfMonth()->toDateTimeString(); // Start of the current month
-        $endOfMonth = $now->endOfMonth()->toDateTimeString();     // End of the current month
+        switch ($request->type) {
+            case 'daily':
+                $selectedDate = $request->date;
+                //convert to carbon
+                $selectedDate = Carbon::parse($selectedDate);
+                break;
+            default:
+                $selectedMonth = $request->month ?? Carbon::now()->startOfMonth()->toDateTimeString();
+                $selectedMonth = Carbon::parse($selectedMonth);
+                $startOfMonth = $selectedMonth->startOfMonth()->toDateTimeString(); // Start of the current month
+                $endOfMonth = $selectedMonth->endOfMonth()->toDateTimeString();
+                break;
+        }
 
-        $expenses = Expenses::where('branch_id', $branch)
-            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-            ->get();
 
-        return view('pages.auditor.worksheet.monthly.index', compact('expenses'));
+
+
+
+        $columns = CategoryExpense::get();
+
+        $capital = ComputeCashOnHand::where('branch_id', $branch)->whereBetween('created_at', [$selectedDate ?? $startOfMonth, $selectedDate ?? $endOfMonth])->get();
+        $expenses = Expenses::where('branch_id', $branch)->whereBetween('created_at', [$selectedDate ?? $startOfMonth, $selectedDate ?? $endOfMonth])->get();
+        return view('pages.auditor.worksheet.monthly.index', compact('expenses', 'columns', 'capital'));
     }
+    public function worksheetExport(Request $request)
+    {
+
+
+
+
+
+
+        $columns = $request->columns ?? [];
+        $data = $request->data ?? [];
+
+
+        $sheetName = $request->sheet_name ?? '';
+
+        $sheetName = str_replace('', '', $sheetName);
+
+
+
+
+        $callback = function () use ($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($data as $row) {
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, []);
+    }
+
+
+
+
 }

@@ -24,33 +24,45 @@
         <div></div>
 
         <!-- Dashboard actions -->
-        
+
 
         <!-- Cards -->
         <section class="container">
             <div class="p-6 w-full max-w-[1500px] mx-auto bg-white rounded-lg border border-bgbody-200">
                 <!-- Right: Actions -->
                 <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2 mb-4">
-        
+
                     <!-- Add view button -->
-                    <a href="{{ route('compute.create') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-6 py-3 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                    <a href="{{ route('compute.create') }}"
+                        class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-6 py-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-plus">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 12h8" />
+                            <path d="M12 8v8" />
+                        </svg>
                         <span class="hidden xs:block ml-2">New</span>
                     </a>
-                    <a id="show-modal" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-6 py-3 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M8 12h8"/>
-                            <path d="M12 8v8"/>
+                    <a id="show-modal" href="#"
+                        class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-6 py-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-plus">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 12h8" />
+                            <path d="M12 8v8" />
                         </svg>
                         <span class="hidden xs:block ml-2">Import</span>
                     </a>
                     <div id="modal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog"
                         aria-modal="true">
-                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-        
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true">
+                        </div>
+
                         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <div
+                                class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                                 <div
                                     class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                                     <form action="{{ route('barangay.importcsv') }}" method="POST"
@@ -111,118 +123,139 @@
                     </thead>
                     <tbody class="text-gray-600 font-semibold text-sm">
                         @foreach ($lists as $list)
-                        <tr class="border-b hover:bg-gray-50">
-                            <td
-                                class="p-4">
-                                {{ $list->id }}
-                            </td>
-                            <td
-                                class="p-4">
-                                {{ $list->prev_transaction_date }}
-                            </td>
-                            <td
-                                class="p-4">
-                                {{ $list->transaction_date }}
-                            </td>
-                            <td
-                                class="p-4">
-                                {{ $list->cash_beginning }}
-                            </td>
-                            <td
-                                class="p-4">
-                                {{ $list->collection }}
-                            </td>
-                            <td
-                                class="p-4">
-                                
-                            </td>
-                            <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                <div class="flex items-center gap-x-6">
-        
-                                    {{-- <a href="{{ route('compute.show') }}"
-                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                            height="16" fill="currentColor" class="bi bi-eye"
-                                            viewBox="0 0 16 16">
-                                            <path
-                                                d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                                            <path
-                                                d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
-                                        </svg>
-                                    </a> --}}
-        
-                                    <a id="open-modal" href="{{ route('compute.edit', $list->id) }}"
-                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
-                                    </a>
-        
-                                    <!-- Modal -->
-                                    <div id="modal" class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50 flex items-center justify-center">
-                                        <!-- Modal Content -->
-                                        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                                            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                                    <!-- Modal Header -->
-                                                    <div class="flex justify-between items-center p-4 mb-4">
-                                                        <h2 class="text-lg font-semibold">Request to Edit</h2>
-                                                        <button id="close-modal" class="text-gray-500 hover:text-gray-700">&times;</button>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-4">
+                                    {{ $list->id }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $list->prev_transaction_date }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $list->transaction_date }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $list->cash_beginning }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $list->collection }}
+                                </td>
+                                <td class="p-4">
+
+                                </td>
+                                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                    <div class="flex items-center gap-x-6">
+
+                                        {{-- <a href="{{ route('compute.show') }}"
+                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                                <path
+                                                    d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                            </svg>
+                                        </a> --}}
+
+                                        <a id="open-modal" href="{{ route('compute.edit', $list->id) }}"
+                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
+                                                <path
+                                                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                                                <path d="m15 5 4 4" />
+                                            </svg>
+                                        </a>
+
+                                        <!-- Modal -->
+                                        <div id="modal"
+                                            class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50 flex items-center justify-center">
+                                            <!-- Modal Content -->
+                                            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                <div
+                                                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                    <div
+                                                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                        <!-- Modal Header -->
+                                                        <div class="flex justify-between items-center p-4 mb-4">
+                                                            <h2 class="text-lg font-semibold">Request to Edit</h2>
+                                                            <button id="close-modal"
+                                                                class="text-gray-500 hover:text-gray-700">&times;</button>
+                                                        </div>
+
+                                                        <!-- Modal Form -->
+                                                        <form id="modal-form" class="px-6">
+                                                            <!-- Date Input -->
+                                                            <div class="mb-4">
+                                                                <label for="date"
+                                                                    class="block text-sm font-medium text-gray-700">Date</label>
+                                                                <input type="date" id="date" name="date"
+                                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                                                    required>
+                                                            </div>
+
+                                                            <div class="mb-4">
+                                                                <label for="time"
+                                                                    class="block text-sm font-medium text-gray-700">Time</label>
+                                                                <input type="time" id="time" name="time"
+                                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                                                    required>
+                                                            </div>
+
+                                                            <!-- Reason Input -->
+                                                            <div class="mb-4">
+                                                                <label for="reason"
+                                                                    class="block text-sm font-medium text-gray-700">Reason</label>
+                                                                <textarea id="reason" name="reason" rows="3"
+                                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                                                    placeholder="Enter reason here..." required></textarea>
+                                                            </div>
+
+                                                            <!-- Modal Actions -->
+                                                            <div class="flex justify-end mb-4">
+                                                                <button type="button" id="close-modal-btn"
+                                                                    class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2 hover:bg-gray-400">
+                                                                    Cancel
+                                                                </button>
+                                                                <button type="submit"
+                                                                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                        </form>
                                                     </div>
-        
-                                                    <!-- Modal Form -->
-                                                    <form id="modal-form" class="px-6">
-                                                        <!-- Date Input -->
-                                                        <div class="mb-4">
-                                                            <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                                                            <input type="date" id="date" name="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required>
-                                                        </div>
-        
-                                                        <div class="mb-4">
-                                                            <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
-                                                            <input type="time" id="time" name="time"
-                                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                                                                required>
-                                                        </div>
-        
-                                                        <!-- Reason Input -->
-                                                        <div class="mb-4">
-                                                            <label for="reason" class="block text-sm font-medium text-gray-700">Reason</label>
-                                                            <textarea id="reason" name="reason" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter reason here..." required></textarea>
-                                                        </div>
-        
-                                                        <!-- Modal Actions -->
-                                                        <div class="flex justify-end mb-4">
-                                                            <button type="button" id="close-modal-btn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2 hover:bg-gray-400">
-                                                                Cancel
-                                                            </button>
-                                                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                                                Submit
-                                                            </button>
-                                                        </div>
-                                                    </form>
                                                 </div>
-                                            </div>    
+                                            </div>
                                         </div>
+
+                                        <a href="{{ route('compute.destroy', $list->id) }}"
+                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-trash-2">
+                                                <path d="M3 6h18" />
+                                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                                <line x1="10" x2="10" y1="11" y2="17" />
+                                                <line x1="14" x2="14" y1="11" y2="17" />
+                                            </svg>
+                                        </a>
                                     </div>
-        
-                                    <a href="{{ route('compute.destroy', $list->id) }}"
-                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-        
+                                </td>
+                            </tr>
+
                         @endforeach
                     </tbody>
                 </table>
-        
+
             </div>
-        
-                <div class="mt-6">
-                    {{ $lists->links() }}
-                </div>
+
+            <div class="mt-6">
+                {{ $lists->links() }}
             </div>
-        </section>
+    </div>
+    </section>
     </div>
 </x-app-layout>
 <script>
@@ -280,7 +313,3 @@
         modalForm.reset();
     });
 </script>
-
-
-
-

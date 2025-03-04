@@ -57,7 +57,7 @@ class ChartController extends Controller
     public function edit(string $id)
     {
         $chart = Chart::find($id);
-        
+
         return view('pages.chart.edit.index', compact('chart'));
     }
 
