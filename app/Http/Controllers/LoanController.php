@@ -578,4 +578,54 @@ class LoanController extends Controller
         return view('pages.loan.print.index', compact('loan', 'branchAddress'));
     }
 
+    public function exportloanHistory($id)
+    {
+        $customer = Customer::findOrFail($id);
+        $filename = 'loanHistory_'.$customer->first_name.'_'.$customer->last_name.'.csv';
+        $data = Loan::where('customer_id', $id)->get();
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=".$filename."",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0",];
+        $columns = ['loan_type', 'transaction_type', 'trans_no', 'date_of_loan',
+        'customer_id','customer_type','status','transaction_with_collateral',
+        'transaction_with_cert','principal_amount','days_to_pay','months_to_pay',
+        'interest','interest_amount','svc_charge','payable_amount','branch_id','file','note'];
+        $callback = function () use ($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+    
+            foreach ($data as $row) {
+                fputcsv($file, [
+                    $row->loan_type,
+                    $row->transaction_type,
+                    $row->trans_no,
+                    $row->date_of_loan,
+                    $row->customer_id,
+                    $row->customer_type,
+                    $row->status,
+                    $row->transaction_with_collateral,
+                    $row->transaction_with_cert,
+                    $row->principal_amount,
+                    $row->days_to_pay,
+                    $row->months_to_pay,
+                    $row->interest,
+                    $row->interest_amount,
+                    $row->svc_charge,
+                    $row->payable_amount,
+                    $row->branch_id,
+                    $row->file,
+                    $row->note,
+                ]);
+            }
+    
+            fclose($file);
+        };
+    
+        return response()->stream($callback, 200, $headers);
+
+    }
+
 }

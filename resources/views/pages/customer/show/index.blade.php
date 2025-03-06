@@ -178,7 +178,7 @@
             </div>
 
             <!-- Tabs Section -->
-            <div class="mt-6 mb-8 border-b border-gray-200">
+            <div class="mt-6 mb-0 border-b border-gray-200">
                 <!-- Tabs -->
                 <nav class="flex space-x-4">
                     <!-- Profile Tab -->
@@ -205,6 +205,13 @@
                     Add New Loan
                     </button>
                 </div> -->
+                <!--export btn-->
+                <div class="flex flex-wrap justify-end items-center mb-2 mt-0">
+                    <a id="show-modal" href="{{ route('loanhistory.export', ['id' => $customer->id]) }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white flex items-center px-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                            <span class="hidden xs:block ml-2 text-sm">Export</span>
+                    </a>
+                </div>
 
                 <!-- Table -->
                 <div class="overflow-x-auto">
