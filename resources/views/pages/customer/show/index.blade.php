@@ -42,6 +42,52 @@
                 <!-- <x-dropdown-filter align="right" /> -->
 
                 <!-- Add view button -->
+                <a id="open-modal1" href="#" class="btn bg-violet-500 hover:bg-violet-600 text-white">
+                <svg class="h-6 w-6 text-gray-300" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"></path>  <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>  <line x1="12" y1="11" x2="12" y2="17"></line>  <polyline points="9 14 12 17 15 14"></polyline></svg>
+                    <span class="hidden xs:block ml-2">Export Customer Savings</span>
+                </a>
+
+                <!-- Link Button -->
+                <a id="open-modal2" href="#" 
+                    class="btn bg-violet-500 hover:bg-violet-600 text-white" 
+                    onclick="openModal(event)">
+                    <svg class="h-6 w-6 text-gray-300" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z"></path>
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+                        <line x1="12" y1="11" x2="12" y2="17"></line>
+                        <polyline points="9 14 12 17 15 14"></polyline>
+                    </svg>
+                    <span class="hidden xs:block ml-2">Export Customer Loan</span>
+                </a>
+
+                <!-- Modal -->
+                <div id="modal2" class="z-50 hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+                    <div class="bg-white rounded-lg w-1/3 p-6 shadow-lg">
+                        <!-- Modal Header -->
+                        <div class="flex justify-between items-center border-b pb-3">
+                            <h3 class="text-lg font-semibold">Select Transaction</h3>
+                            <button class="text-gray-500 hover:text-red-500" onclick="closeModal(event)">
+                                &times;
+                            </button>
+                        </div>
+                        <!-- Modal Body -->
+                        <div class="mt-4">
+                            <label for="transaction-select" class="block text-sm font-medium text-gray-700">Select Transaction No.</label>
+                            <select id="transaction-select" class="mt-2 block w-full px-3 py-2 bg-white border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                                <option value="">Transaction 1</option>
+                                <option value="">Transaction 2</option>
+                                <option value="">Transaction 3</option>
+                            </select>
+                        </div>
+                        <!-- Modal Footer -->
+                        <div class="mt-6 flex justify-end">
+                            <button class="btn bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md mr-2" onclick="closeModal(event)">Cancel</button>
+                            <button class="btn bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-md">Export</button>
+                        </div>
+                    </div>
+                </div>
+
                 <a id="open-modal" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
                         fill="#FFFFFF">
@@ -62,7 +108,7 @@
                                 <!-- Modal Header -->
                                 <div class="flex justify-between items-center p-4 mb-4">
                                     <h2 class="text-lg font-semibold">Request to Edit</h2>
-                                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">&times;</button>
+                                  <button id="close-modal" class="text-gray-500 hover:text-gray-700">&times;</button>
                                 </div>
 
                                 <!-- Modal Form -->
@@ -617,4 +663,15 @@
         // Optional: Reset form
         modalForm.reset();
     });
+
+    function openModal(event) {
+    event.preventDefault();
+    document.getElementById('modal2').classList.remove('hidden');
+    }
+
+    function closeModal(event) {
+        event.preventDefault();
+        document.getElementById('modal2').classList.add('hidden');
+    }
+
 </script>
