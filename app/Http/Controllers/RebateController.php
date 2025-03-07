@@ -65,4 +65,22 @@ class RebateController extends Controller
     {
         //
     }
+
+    public function approve($id)
+    {
+        $rebate = Rebate::find($id);
+        $rebate->status = 'Approved';
+        $rebate->save();
+
+        return redirect()->back()->with('success', 'Rebate Approved');
+    }
+
+    public function decline($id)
+    {
+        $rebate = Rebate::find($id);
+        $rebate->status = 'Decline';
+        $rebate->save();
+
+        return redirect()->back()->with('success', 'Rebate Declined');
+    }
 }
