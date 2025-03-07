@@ -42,6 +42,16 @@
                 <!-- <x-dropdown-filter align="right" /> -->
 
                 <!-- Add view button -->
+                <a href="{{route('customersavings.export', ['id' => $customer->id])}}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                    <span class="hidden xs:block ml-2">Export Customer Savings</span>
+                </a>
+
+                <a id="open-transaction-modal" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                    <span class="hidden xs:block ml-2">Export Customer Loan</span>
+                </a>
+
                 <a id="open-modal" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
                         fill="#FFFFFF">
@@ -50,6 +60,39 @@
                     </svg>
                     <span class="hidden xs:block ml-2">Request to Edit</span>
                 </a>
+
+                <div id="transaction-modal" class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50 flex items-center justify-center">
+                    <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+                        <!-- Modal Header -->
+                        <div class="flex justify-between items-center border-b pb-2 mb-4">
+                            <h2 class="text-lg font-semibold">Select Transaction</h2>
+                            <button id="close-transaction-modal" class="text-gray-500 hover:text-gray-700">&times;</button>
+                        </div>
+
+                        <!-- Transaction Selection -->
+                        <div class="mb-4">
+                            <label for="transaction" class="block text-sm font-medium text-gray-700">Transaction</label>
+                            <select id="transaction" name="transaction_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select a transaction</option>
+                                @foreach ($customer->loans as $loan)
+                                    <option value="{{ $loan->id }}">{{ $loan->id }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Modal Actions -->
+                        <div class="flex justify-end">
+                            <button type="button" id="close-transaction-btn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2 hover:bg-gray-400">Cancel</button>
+                            <!-- Export Button -->
+                            <form id="export-form" action="{{ route('loan.export') }}" method="GET">
+                                <input type="hidden" name="transaction_id" id="selected-transaction">
+                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                                    Export CSV
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Modal -->
                 <div id="modal"
@@ -109,64 +152,9 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div id="modal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog"
-                    aria-modal="true">
-                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-                    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                            <div
-                                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <form action="{{ route('barangay.importcsv') }}" method="POST"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                        <div class="sm:flex sm:items-start">
-                                            <div
-                                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                <svg class="h-6 w-6 text-blue-500" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <polyline points="16 16 12 12 8 16" />
-                                                    <line x1="12" y1="12" x2="12" y2="21" />
-                                                    <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
-                                                    <polyline points="16 16 12 12 8 16" />
-                                                </svg>
-                                            </div>
-                                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                                <h3 class="text-base font-semibold leading-6 text-gray-900"
-                                                    id="modal-title">Import Barangay</h3>
-                                                <div class="mt-2">
-                                                    <div class="fields">
-                                                        <div class="input-group mb-3">
-                                                            <input type="file" class="form-control" id="file"
-                                                                name="file" accept=".csv">
-                                                            <label class="input-group-text"
-                                                                for="file">Upload</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                        <button type="submit"
-                                            class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Upload</button>
-                                        <button id="hide-modal" type="button"
-                                            class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
-
-
 
         <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
             <div class="flex items-center text-gray-600 mb-12">
@@ -625,3 +613,20 @@
         modalForm.reset();
     });
 </script>
+
+<script>
+    document.getElementById("open-transaction-modal").addEventListener("click", function () {
+        document.getElementById("transaction-modal").classList.remove("hidden");
+    });
+    document.getElementById("close-transaction-modal").addEventListener("click", function () {
+        document.getElementById("transaction-modal").classList.add("hidden");
+    });
+    document.getElementById("close-transaction-btn").addEventListener("click", function () {
+        document.getElementById("transaction-modal").classList.add("hidden");
+    });
+
+    document.getElementById('transaction').addEventListener('change', function() {
+        document.getElementById('selected-transaction').value = this.value;
+    });
+</script>
+

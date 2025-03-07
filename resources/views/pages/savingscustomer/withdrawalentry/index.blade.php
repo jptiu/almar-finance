@@ -84,13 +84,12 @@
                     <tbody class="text-gray-600 font-semibold text-sm">
                         @foreach ($lists as $list)
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="p-4">{{ $list->id }}</td>
                                 <td class="p-4">{{ $list->customer_id }}</td>
                                 <td class="p-4">{{ $list->customer->first_name ?? '' }} {{ $list->customer->last_name ?? '' }}</td>
-                                <td class="p-4">{{ $list->id }}</td>
-                                <td class="p-4">{{ $list->created_at->toDateString() }}</td>
-                                <td class="p-4">{{ number_format($list->net_amount, 2) }}</td>
-                                <td class="p-4"></td>
+                                <td class="p-4">{{ $list->tran_id }}</td>
+                                <td class="p-4">{{ $list->tran_date }}</td>
+                                <td class="p-4">{{ $list->amount }}</td>
+                                <td class="p-4">{{ $list->status }}</td>
                                 <td class="p-4">
                                     <div class="flex items-center gap-x-6">
                                         <a href="{{ route('printWithdrawal.print', $list->id) }}"

@@ -628,4 +628,76 @@ class LoanController extends Controller
 
     }
 
+
+    public function exportTransaction(Request $request)
+    {
+        $loanId = $request->query('transaction_id');
+        $loan = Loan::with(['customer', 'details'])->findOrFail($loanId); // Load loan with details
+        $filename = 'Loan_Transaction_'.$loan->id.'.csv';
+
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=".$filename,
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0",
+        ];
+
+        $columns = [
+            'Customer Name', 'Customer ID', 'Customer Type', 'Status',
+            'Transaction No.', 'Date of Loan', 'Loan Type', 'Transaction Type',
+            'Principal Amount', 'Interest', 'Interest Amount', 'Service Charge',
+            'Payable Amount', 'Days to Pay', 'Months to Pay', 'Actual Record'
+        ];
+
+        $installmentColumns = [
+            'Installment', 'Principal', 'Interest', 'Service Charge', 'Total', 'Outstanding Balance'
+        ];
+
+        $callback = function () use ($loan, $columns, $installmentColumns) {
+            $file = fopen('php://output', 'w');
+            
+            // Write Loan Summary
+            fputcsv($file, ['Loan Summary']);
+            fputcsv($file, $columns);
+            fputcsv($file, [
+                $loan->customer->first_name . ' ' . $loan->customer->last_name,
+                $loan->id,
+                $loan->customer->type,
+                $loan->customer->status,
+                $loan->id,
+                $loan->date_of_loan,
+                $loan->loan_type,
+                $loan->transaction_type,
+                $loan->principal_amount,
+                $loan->interest,
+                $loan->interest_amount,
+                $loan->svc_charge,
+                $loan->payable_amount,
+                $loan->days_to_pay,
+                $loan->months_to_pay,
+                'Business'
+            ]);
+
+            // Write Installment Table
+            fputcsv($file, []); // Blank row
+            fputcsv($file, ['Installment Breakdown']);
+            fputcsv($file, $installmentColumns);
+
+            foreach ($loan->details as $details) {
+                fputcsv($file, [
+                    $details->loan_day_no,
+                    number_format($loan->principal_amount / $loan->details->count(), 2),
+                    number_format($loan->interest_amount / $loan->details->count(), 2),
+                    '', // Service Charge (if available, modify)
+                    $details->loan_due_amount,
+                    $details->loan_running_balance
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

@@ -11,6 +11,8 @@ use App\Models\Branch;
 use App\Models\CustomerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Models\SavingsDeposit;
+use App\Models\SavingsWithdrawal;
 
 class CustomerController extends Controller
 {
@@ -277,6 +279,64 @@ class CustomerController extends Controller
 
         return redirect(route("customer.index"))->with('success', 'CSV Data Imported Successfully');
     }
+
+    public function exportCustomerSavings($id)
+{
+    $customer = Customer::findOrFail($id);
+    $filename = 'Savings_of_' . $customer->first_name . '_' . $customer->last_name . '.csv';
+
+    // Fetch the customer's savings data
+    $savingsData = SavingsDeposit::where('customer_id', $id)->get();
+
+    $headers = [
+        "Content-Type" => "text/csv; charset=UTF-8",
+        "Content-Disposition" => "attachment; filename=\"$filename\"",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0",
+    ];
+
+    $callback = function () use ($customer, $savingsData) {
+        $file = fopen('php://output', 'w');
+
+        // Add BOM for UTF-8 encoding (fixes Excel special character issues)
+        fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+        // --- CUSTOMER DETAILS SECTION ---
+        fputcsv($file, ['Customer Information']); // Title
+        fputcsv($file, ['Full Name', $customer->first_name . ' ' . $customer->middle_name . ' ' . $customer->last_name]);
+        fputcsv($file, ['Birth Date', $customer->birth_date ?? '']);
+        fputcsv($file, ['Birth Place', $customer->birth_place ?? '']);
+        fputcsv($file, ['Age', $customer->age ?? '']);
+        fputcsv($file, ['Gender', $customer->gender ?? '']);
+        fputcsv($file, ['Civil Status', $customer->civil_status ?? '']);
+        fputcsv($file, ['Cell Number', $customer->cell_number ?? '']);
+        fputcsv($file, ['Email', $customer->email ?? '']);
+        fputcsv($file, ['Facebook Name', $customer->facebook_name ?? '']);
+
+        // Add empty row for spacing
+        fputcsv($file, []);
+        fputcsv($file, ['Savings Transactions']); // Savings Title
+        fputcsv($file, ['Transaction Date', 'Deposit Amount', 'Withdrawal Amount', 'Balance']);
+
+        // --- SAVINGS TRANSACTIONS SECTION ---
+        foreach ($savingsData as $row) {
+            fputcsv($file, [
+                $row->tran_date ?? '',
+                $row->amount ?? '',
+                $row->status ?? '',
+                $row->balance ?? '',
+            ]);
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
+
+
 
     public function printCustomer($id)
     {

@@ -418,6 +418,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/exportwithdrawal-csv', [SavingsController::class, 'exportwithdrawalData'])->name('withdraw.export');
     Route::get('/exportloanHistory/{id}-csv', [LoanController::class, 'exportloanHistory'])->name('loanhistory.export');
 
+    Route::get('/exportcustomerSavings/{id}-csv', [CustomerController::class, 'exportcustomerSavings'])->name('customersavings.export');
+
+    Route::get('/exportTransaction-csv', [LoanController::class, 'exportTransaction'])->name('loan.export');
+
+
 
     Route::post('category-expenses/store', [CategoryExpenseController::class, 'store'])->name('category-expenses.store');
     Route::post('category-expenses/update/{id}', [CategoryExpenseController::class, 'update'])->name('category-expenses.update');
