@@ -175,6 +175,35 @@
                                             <span class="hidden xs:block ml-2">Decline</span>
                                         </button>
 
+                                        <!-- Decline Modal -->
+                                        <div id="decline-modal"
+                                            class="fixed z-10 inset-0 overflow-y-auto hidden opacity-0 transition-opacity duration-300">
+                                            <div class="flex items-center justify-center min-h-screen">
+                                                <div
+                                                    class="bg-white p-6 rounded shadow-md max-w-lg w-full">
+                                                    <h2 class="text-lg font-bold">Are you sure you want to
+                                                        decline this loan?</h2>
+                                                    <label for="decline-reason"
+                                                        class="block text-sm font-medium text-gray-700 mt-4">Reason
+                                                        for
+                                                        Disapproval</label>
+                                                    <textarea id="decline-reason" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+                                                    <div class="mt-4 flex justify-end">
+                                                        <button id="hide-decline-modal"
+                                                            class="px-4 py-2 bg-gray-300 rounded-md">Cancel</button>
+                                                        <button id="decline-confirm-btn" class="px-4 py-2 bg-red-500 text-white rounded-md ml-2">Confirm</button>
+                                                    <!-- Hidden form to submit the decline reason -->
+                                                    <form id="decline-form"
+                                                        action="{{ route('loan.decline', $list->id) }}"
+                                                        method="POST" class="hidden">
+                                                        @csrf
+                                                        <input type="hidden" name="reason"
+                                                            id="decline-reason-input">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
                                         <!-- Approve Button -->
                                         <button id="show-approve-modal"
                                             class="bg-indigo-500 hover:bg-indigo-600 text-white hover:bg-green-600 flex items-center px-4 py-2 font-semibold rounded-full">
@@ -183,14 +212,42 @@
                                             </svg>
                                             <span class="hidden xs:block ml-2">Approve</span>
                                         </button>
-                                        
-                                        
+                                        <!-- Approve Modal -->
+                                        <div id="approve-modal"
+                                            class="fixed z-10 inset-0 overflow-y-auto hidden opacity-0 transition-opacity duration-300">
+                                            <div class="flex items-center justify-center min-h-screen">
+                                                <div
+                                                    class="bg-white p-6 rounded shadow-md max-w-lg w-full">
+                                                    <h2 class="text-lg font-bold">Are you sure you want to
+                                                        approve this loan?</h2>
+                                                    <label for="approve-reason"
+                                                        class="block text-sm font-medium text-gray-700 mt-4">Reason
+                                                        for
+                                                        Approval</label>
+                                                    <textarea id="approve-reason" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+                                                    <div class="mt-4 flex justify-end">
+                                                        <button id="hide-approve-modal"
+                                                            class="px-4 py-2 bg-gray-300 rounded-md">Cancel</button>
+                                                        <button id="approve-confirm-btn"
+                                                            class="px-4 py-2 bg-red-500 text-white rounded-md ml-2">Confirm</button>
+                                                    </div>
+
+                                                    <!-- Hidden form to submit the approve reason -->
+                                                    <form id="approve-form"
+                                                        action="{{ route('loan.approve', $list->id) }}"
+                                                        method="POST" class="hidden">
+                                                        @csrf
+                                                        <input type="hidden" name="reason"
+                                                            id="approve-reason-input">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </td>
+                                </td>    
                             </tr>
                         @endforeach
                     </tbody>
-                    
                 </table>
 
                 <div class="mt-6">
@@ -200,16 +257,68 @@
         </section>
     </div>
 </x-app-layout>
-<script>
-    const showModalButton = document.getElementById('show-modal');
-    const hideModalButton = document.getElementById('hide-modal');
-    const modal = document.getElementById('modal');
+<!--  -->
 
-    showModalButton.addEventListener('click', () => {
-        modal.classList.remove('hidden');
+<script>
+    // Approve Modal
+    const showApproveModalButton = document.getElementById('show-approve-modal');
+    const hideApproveModalButton = document.getElementById('hide-approve-modal');
+    const approveModal = document.getElementById('approve-modal');
+    const approveConfirmBtn = document.getElementById('approve-confirm-btn');
+    const approveReasonInput = document.getElementById('approve-reason');
+    const approveForm = document.getElementById('approve-form');
+
+    showApproveModalButton.addEventListener('click', () => {
+        approveModal.classList.remove('hidden');
+        setTimeout(() => approveModal.classList.remove('opacity-0'), 10);
     });
 
-    hideModalButton.addEventListener('click', () => {
-        modal.classList.add('hidden');
+    hideApproveModalButton.addEventListener('click', () => {
+        approveModal.classList.add('opacity-0');
+        setTimeout(() => approveModal.classList.add('hidden'), 300);
+    });
+
+    approveConfirmBtn.addEventListener('click', () => {
+        // Capture the approve reason
+        const reason = approveReasonInput.value.trim();
+
+        // If there's a reason, set it in the form input and submit
+        if (reason) {
+            document.getElementById('approve-reason-input').value = reason;
+            approveForm.submit();
+        } else {
+            alert('Please provide a reason for the approve.');
+        }
+    });
+
+    // Decline Modal
+    const showDeclineModalButton = document.getElementById('show-decline-modal');
+    const hideDeclineModalButton = document.getElementById('hide-decline-modal');
+    const declineModal = document.getElementById('decline-modal');
+    const declineConfirmBtn = document.getElementById('decline-confirm-btn');
+    const declineReasonInput = document.getElementById('decline-reason');
+    const declineForm = document.getElementById('decline-form');
+
+    showDeclineModalButton.addEventListener('click', () => {
+        declineModal.classList.remove('hidden');
+        setTimeout(() => declineModal.classList.remove('opacity-0'), 10);
+    });
+
+    hideDeclineModalButton.addEventListener('click', () => {
+        declineModal.classList.add('opacity-0');
+        setTimeout(() => declineModal.classList.add('hidden'), 300);
+    });
+
+    declineConfirmBtn.addEventListener('click', () => {
+        // Capture the decline reason
+        const reason = declineReasonInput.value.trim();
+
+        // If there's a reason, set it in the form input and submit
+        if (reason) {
+            document.getElementById('decline-reason-input').value = reason;
+            declineForm.submit();
+        } else {
+            alert('Please provide a reason for the decline.');
+        }
     });
 </script>

@@ -63,7 +63,7 @@
                             <div class="ml-4">
                                 <div class="self-center">
                                     <p class="text-gray-400 text-sm">Cash End</p>
-                                    <span class="text-3xl font-semibold text-gray-800">{{ number_format($cashEnd, 2) }}</span>
+                                    <span class="text-3xl font-semibold text-gray-800">₱0.00</span>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
             </div>
 
                 <div class="col-span-2 rounded-md border border-stroke bg-white shadow-default dark:border-strokedark divide-y">
-                    <div class="bg-white rounded-lg border border-slate-200 shadow-[0px_8px_20px_rgba(0,0,0,0.08)] mb-4 flex items-center justify-center ">
+                    <div class="bg-white rounded-lg border border-slate-200 shadow-[0px_8px_20px_rgba(0,0,0,0.08)] mb-8 flex items-center justify-center ">
                         <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
                             <h2 class="text-xl text-slate-800 dark:text-slate-100 font-bold">Recent Collection</h2>
                         </header>

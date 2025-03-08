@@ -1716,7 +1716,7 @@
 
                     @can('admin_access')
                         <!-- Dashboard -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'bg-accent-100' }} @endif"
+                        <li class="px-3 py-3 @if (in_array(Request::segment(1), ['customer'])) bg-accent-100 @else hover:bg-hoverbg-100 @endif rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['dashboard']) ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'hover:text-slate-200' }} @endif"
                                 href="/">
@@ -1735,10 +1735,11 @@
                         </li>
 
                         <!-- Monthly Report -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['monthlyReport'])) {{ 'bg-accent-100' }} @endif"
-                            x-data="{ open: {{ in_array(Request::segment(1), ['customer']) ? 1 : 0 }} }">
+                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 
+                            @if (in_array(Request::segment(1), ['monthlyReport'])) bg-accent-100 @else hover:bg-hoverbg-100 @endif"
+                            x-data="{ open: {{ in_array(Request::segment(1), ['monthlyReport']) ? 1 : 0 }} }">
                             <a href="{{ route('monthlyReport.index') }}"
-                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['monthlyReport'])) {{ 'hover:text-slate-200' }} @endif">
+                                class="block text-slate-200 hover:text-white truncate transition duration-150">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
@@ -1754,17 +1755,20 @@
                                             </g>
                                         </svg>
                                         <span
-                                            class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Monthly
-                                            Report</span>
+                                            class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                            Monthly Report
+                                        </span>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <!-- Customer Profile -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['customer'])) {{ 'bg-accent-100' }} @endif"
+
+                        <!-- Customer Profile Sidebar Item -->
+                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 
+                            @if (in_array(Request::segment(1), ['customer'])) bg-accent-100 @else hover:bg-hoverbg-100 @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['customer']) ? 1 : 0 }} }">
                             <a href="{{ route('customer.index') }}"
-                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['customer'])) {{ 'hover:text-slate-200' }} @endif">
+                                class="block text-slate-200 hover:text-white truncate transition duration-150">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
@@ -1774,14 +1778,16 @@
                                                 d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
                                         </svg>
                                         <span
-                                            class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Customer
-                                            Profile</span>
+                                            class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                            Customer Profile
+                                        </span>
                                     </div>
                                 </div>
                             </a>
                         </li>
+
                         <!-- Chart of Account ID -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chart'])) {{ 'bg-accent-100' }} @endif"
+                        <li class="px-3 py-3 @if (in_array(Request::segment(1), ['customer'])) bg-accent-100 @else hover:bg-hoverbg-100 @endif rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chart'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['chart']) ? 1 : 0 }} }">
                             <a href="{{ route('chart.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chart'])) {{ 'hover:text-slate-200' }} @endif">
@@ -1802,7 +1808,7 @@
 
 
                         <!-- Employee Request Forms -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), [
+                        <li class="px-3 py-3 @if (in_array(Request::segment(1), ['customer'])) bg-accent-100 @else hover:bg-hoverbg-100 @endif rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), [
                                 'leaveRequest',
                                 'underRequest',
                                 'idRequest',
@@ -1919,7 +1925,7 @@
                         </li>
 
                         <!-- Denomination -->
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['denomination'])) {{ 'bg-accent-100' }} @endif"
+                        <li class="px-3 py-3 @if (in_array(Request::segment(1), ['customer'])) bg-accent-100 @else hover:bg-hoverbg-100 @endif rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['denomination'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['denomination']) ? 1 : 0 }} }">
                             <a href="{{ route('denomination.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['denomination'])) {{ 'hover:text-slate-200' }} @endif">
@@ -1937,7 +1943,7 @@
                             </a>
                         </li>
                         {{-- Branch --}}
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['branches'])) {{ 'bg-accent-100' }} @endif"
+                        <li class="px-3 py-3 @if (in_array(Request::segment(1), ['customer'])) bg-accent-100 @else hover:bg-hoverbg-100 @endif rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['branches'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['branches']) ? 1 : 0 }} }">
                             <a href="{{ route('branches.index') }}"
                                 class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['branches'])) {{ 'hover:text-slate-200' }} @endif">
@@ -1954,7 +1960,7 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
+                        <li class="px-3 py-3 @if (in_array(Request::segment(1), ['customer'])) bg-accent-100 @else hover:bg-hoverbg-100 @endif rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
                                 href="/chats">

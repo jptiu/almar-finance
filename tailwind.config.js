@@ -54,6 +54,9 @@ export default {
                 'late': {
                 100: '#0B6ECA',
                 },
+                'hoverbg': {
+                100: '#001A66',
+                },
             },
             boxShadow: {
                 DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
