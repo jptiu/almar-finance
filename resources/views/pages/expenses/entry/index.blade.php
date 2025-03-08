@@ -42,8 +42,8 @@
                     <!-- Home -->
                     <li>
                         <a href="/" class="text-gray-500 hover:text-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
-                                fill="#A9A9A9">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                width="20px" fill="#A9A9A9">
                                 <path
                                     d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z" />
                             </svg>
@@ -102,7 +102,7 @@
                                         <select name="category" id="category"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                             <option value="">Select Category</option>
-                                            @foreach($categories as $category)
+                                            @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                             <option value="new_category" class="font-medium text-blue-600">+ Add New
@@ -113,8 +113,8 @@
                                             data-modal-toggle="editCategoryModal"
                                             class="px-3 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
                                                 <path d="m15 5 4 4" />
                                             </svg>
@@ -124,8 +124,8 @@
                                             data-modal-toggle="deleteCategoryModal"
                                             class="px-3 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <path d="M3 6h18" />
                                                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
                                                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
@@ -150,16 +150,23 @@
                                     <label for="exp_ref_no" class="text-black font-medium">Exp Ref No.</label>
                                     <input type="text" name="exp_ref_no" id="exp_ref_no" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value="" placeholder="Optional"/>
                                 </div> --}}
-
                                 <div class="md:col-span-2">
-                                    <label for="acc_no" class="text-black font-medium">Account No.</label>
-                                    <select name="acc_no" id="acc_no"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
-                                        <option value>Select</option>
-                                        @foreach ($lists as $list)
-                                            <option value="{{ $list->acc_no }}">{{ $list->acc_no }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="acc_no" class="text-black font-medium">Search Account Title</label>
+                                    <div class="relative">
+                                        <input type="text" id="chartInput" placeholder="Type to search..."
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                            oninput="filterCharts()" />
+                                        <ul id="chartDropdown"
+                                            class="absolute bg-white border border-gray-300 rounded-lg w-full mt-1 hidden max-h-48 overflow-y-auto z-10">
+                                            @foreach ($lists as $list)
+                                                <li class="px-4 py-2 cursor-pointer hover:bg-blue-500 hover:text-white"
+                                                    onclick="selectChart('{{ $list->acc_no }}', '{{ $list->acc_title }}', '{{ $list->acc_class }}', '{{ $list->acc_type }}')">
+                                                    {{ $list->acc_title }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <input type="hidden" name="acc_no" id="selectedChart">
+                                    </div>
                                 </div>
 
                                 <div class="md:col-span-2">
@@ -187,11 +194,11 @@
                         <div class="lg:col-span-2">
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-8">
 
-                                <div class="md:col-span-2">
+                                <div class="md:col-span-2 hidden">
                                     <label for="acc_title" class="text-black font-medium">Account Title</label>
                                     <input type="text" name="acc_title" id="acc_title"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" required />
+                                        value="" placeholder="" />
                                 </div>
 
                                 <div class="md:col-span-2">
@@ -278,8 +285,8 @@
                         <button type="button" id="closeNewCategoryModal" onclick="closeNewCategoryModal()"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                             data-modal-toggle="newCategoryModal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 14 14">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                             </svg>
@@ -320,8 +327,8 @@
                         <button type="button" id="closeEditCategoryModal" onclick="closeEditCategoryModal()"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                             data-modal-toggle="editCategoryModal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 14 14">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                             </svg>
@@ -329,7 +336,7 @@
                         </button>
                     </div>
 
-                    @if(isset($category) && $category)
+                    @if (isset($category) && $category)
                         <form id="editCategoryForm" action="{{ route('category-expenses.update', $category) }}"
                             method="POST">
                             @csrf
@@ -371,32 +378,35 @@
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                             data-modal-toggle="deleteCategoryModal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 14 14">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                             </svg>
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
-                    @if(isset($category) && $category)
-                        <form id="deleteCategoryForm" action="{{ route('category-expenses.destroy', $category->id) }}"
-                            method="POST">
+                    @if (isset($category) && $category)
+                        <form id="deleteCategoryForm"
+                            action="{{ route('category-expenses.destroy', $category->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <div class="p-4 md:p-5 text-center">
-                                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
-                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you
+                                    want
                                     to delete this category?</h3>
                                 <button type="submit"
                                     class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
                                     Yes, I'm sure
                                 </button>
-                                <button type="submit" id="cancelDeleteCategoryButton" onclick="closeDeleteCategoryModal()"
+                                <button type="submit" id="cancelDeleteCategoryButton"
+                                    onclick="closeDeleteCategoryModal()"
                                     class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                                     data-modal-toggle="deleteCategoryModal">
                                     No, cancel
@@ -412,11 +422,11 @@
 </x-app-layout>
 <script>
     // Require category field
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const categorySelect = document.getElementById('category');
         const form = categorySelect.closest('form');
 
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             if (!categorySelect.value || categorySelect.value === '') {
                 e.preventDefault();
                 alert('Please select a category');
@@ -425,37 +435,38 @@
         });
     });
 
-    document.getElementById('acc_no').addEventListener('input', function () {
-        var acctNo = this.value;
+    // document.getElementById('acc_no').addEventListener('input', function() {
+    //     var acctNo = this.value;
 
-        if (acctNo) {
-            fetch(`/get-account-data/${acctNo}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        document.getElementById('acc_class').value = data.account_class;
-                        document.getElementById('acc_type').value = data.account_type;
-                        document.getElementById('acc_title').value = data.account_title;
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    });
+    //     if (acctNo) {
+    //         fetch(`/get-account-data/${acctNo}`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 if (data) {
+    //                     document.getElementById('acc_class').value = data.account_class;
+    //                     document.getElementById('acc_type').value = data.account_type;
+    //                     document.getElementById('acc_title').value = data.account_title;
+    //                 }
+    //             })
+    //             .catch(error => console.error('Error:', error));
+    //     }
+    // });
 
-    document.getElementById('category').addEventListener('change', function () {
+    document.getElementById('category').addEventListener('change', function() {
         if (this.value === 'new_category') {
             const modal = document.getElementById('newCategoryModal');
             modal.classList.remove('hidden');
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const editButtons = document.querySelectorAll('[data-modal-target="editCategoryModal"]');
 
         editButtons.forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 const categoryId = document.getElementById('category').value;
-                const categoryName = document.getElementById('category').options[document.getElementById('category').selectedIndex].text;
+                const categoryName = document.getElementById('category').options[document
+                    .getElementById('category').selectedIndex].text;
 
                 document.getElementById('categoryName').value = categoryName;
             });
@@ -478,7 +489,7 @@
     }
 
     // Show edit/delete buttons only when a valid category is selected
-    document.getElementById('category').addEventListener('change', function () {
+    document.getElementById('category').addEventListener('change', function() {
         const editButton = document.getElementById('editCategoryButton');
         const deleteButton = document.querySelector('[data-modal-target="deleteCategoryModal"]');
 
@@ -492,7 +503,7 @@
     });
 
     // Hide buttons initially on page load
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const editButton = document.getElementById('editCategoryButton');
         const deleteButton = document.querySelector('[data-modal-target="deleteCategoryModal"]');
 
@@ -514,4 +525,39 @@
         const modal = document.getElementById('deleteCategoryModal');
         modal.classList.add('hidden');
     }
+
+
+    function filterCharts() {
+        const input = document.getElementById('chartInput').value.toLowerCase();
+        const dropdown = document.getElementById('chartDropdown');
+        const items = dropdown.getElementsByTagName('li');
+
+        dropdown.classList.remove('hidden'); // Show dropdown
+
+        Array.from(items).forEach(item => {
+            const name = item.textContent.toLowerCase();
+            if (name.includes(input)) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    }
+
+    function selectChart(id, name, clas, type) {
+        document.getElementById('chartInput').value = name;
+        document.getElementById('selectedChart').value = id;
+        document.getElementById('acc_class').value = clas;
+        document.getElementById('acc_type').value = type;
+        document.getElementById('acc_title').value = name;
+        document.getElementById('chartDropdown').classList.add('hidden'); // Hide dropdown
+    }
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+        const dropdown = document.getElementById('customerDropdown');
+        const input = document.getElementById('customerInput');
+        if (!dropdown.contains(event.target) && !input.contains(event.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
 </script>

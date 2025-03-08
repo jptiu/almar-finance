@@ -136,6 +136,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Rebates
     Route::get('rebates', [RebateController::class, 'index'])->name('rebates.index');
+    Route::get('rebates/approve/{id}', [RebateController::class, 'approve'])->name('rebates.approve');
+    Route::get('rebates/decline/{id}', [RebateController::class, 'decline'])->name('rebates.decline');
 
     // Breakdown
     Route::get('breakdown', [BreakdownController::class, 'index'])->name('breakdown.index');

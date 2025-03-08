@@ -125,10 +125,14 @@
                         <tr class="text-fonts-100 font-extrabold">
                             <th class="p-4 text-fonts-100 font-normal">ID.</th>
                             <th class="p-4 text-fonts-100 font-normal">Loan ID</th>
+                            <th class="p-4 text-fonts-100 font-normal">Date</th>
                             <th class="p-4 text-fonts-100 font-normal">Rebate Amount</th>
                             <th class="p-4 text-fonts-100 font-normal">Rebate ( % )</th>
                             <th class="p-4 text-fonts-100 font-normal">Mode Of Payment</th>
-                            <th class="p-4 text-fonts-100 font-normal">Action</th>
+                            <th class="p-4 text-fonts-100 font-normal">Status</th>
+                            @can('admin_access')
+                                <th class="p-4 text-fonts-100 font-normal">Action</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 font-semibold text-sm">
@@ -139,37 +143,44 @@
                                 <td class="px-4 py-4 text-sm  dark:text-gray-200 whitespace-nowrap">
                                     {{ $list->loan_id }}</td>
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                    {{ $list->rebate_amount }}</td>
+                                    {{ Date::parse($list->date)->format('M d, Y') }}</td>
+                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                    {{ number_format($list->rebate_amount, 2) }}</td>
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                     {{ $list->rebate_percent }}</td>
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                     {{ $list->mode_of_payment }}</td>
-                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                    <div class="flex items-center gap-x-6">
-                                        <a href="{{ route('expenses.show', $list->id) }}"
-                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-eye">
-                                                <path
-                                                    d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
-                                                <circle cx="12" cy="12" r="3" />
-                                            </svg>
-                                        </a>
-                                        <a href="{{ route('expenses.edit', $list->id) }}"
-                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-pencil">
-                                                <path
-                                                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                                                <path d="m15 5 4 4" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </td>
+                                {{-- @can('loan_access') --}}
+                                <td
+                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap {{ $list->status == 'Approved' ? 'text-green-500' : 'text-red-500' }}">
+                                    {{ $list->status }}</td>
+                                {{-- @endcan --}}
+                                @can('admin_access')
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                        <div class="flex items-center gap-x-2">
+                                            <!-- Approve Button -->
+                                            <a href="{{ route('rebates.approve', $list->id) }}"
+                                                class="bg-green-500 text-white hover:bg-green-700 flex items-center gap-x-2 px-4 py-2 font-semibold rounded-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px"
+                                                    viewBox="0 -960 960 960" width="20px" fill="#F3F3F3">
+                                                    <path d="M389-267 195-460l51-52 143 143 325-324 51 51-376 375Z" />
+                                                </svg>
+                                                <span class="hidden xs:block ml-2">Accept</span>
+                                            </a>
+
+                                            <!-- Decline Button -->
+                                            <a href="{{ route('rebates.decline', $list->id) }}"
+                                                class="bg-red-500 text-white hover:bg-red-700 flex items-center gap-x-2 px-4 py-2 font-semibold rounded-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px"
+                                                    viewBox="0 -960 960 960" width="20px" fill="#F3F3F3">
+                                                    <path
+                                                        d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
+                                                </svg>
+                                                <span class="hidden xs:block ml-2">Decline</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

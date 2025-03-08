@@ -179,7 +179,8 @@
                                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
 
                                         <div class="md:col-span-1">
-                                            <label for="principal_amount" class="text-black font-medium">Total Loan</label>
+                                            <label for="principal_amount" class="text-black font-medium">Total
+                                                Loan</label>
                                             <input type="text" name="principal_amount" id="principal_amount"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
                                                 value="" placeholder="" required />
@@ -202,12 +203,8 @@
                                     <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
 
                                         <div class="md:col-span-1">
-                                            <label for="loans" class="text-black font-medium">Select which unpaid
-                                                Loan to pay</label>
-                                            <select name="loans" id="loans"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                            <option>Select</option>
-                                            </select>
+                                            <label for="loans" class="text-black font-medium">Remaining #</label>
+                                            <input type="number" name="loans" id="loans" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" value/>
                                         </div>
 
                                     </div>
@@ -263,7 +260,7 @@
                         </div>
                         <div class="mb-8">
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-1">
-                                <div class="lg:col-span-2">
+                                {{-- <div class="lg:col-span-2">
                                     <div
                                         class="flex justify-between grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
 
@@ -273,7 +270,7 @@
                                             <label for="house" class="mt-2 ml-1">Allow Grace period</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="lg:col-span-2">
                                     <div
                                         class="flex justify-between grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2 mt-4">
@@ -475,7 +472,7 @@
                                                         <div class="md:col-span-1">
                                                             <input type="text" name="rebate_amount"
                                                                 id="rebate_amount"
-                                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" disabled/>
+                                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -526,8 +523,13 @@
                     if (loanData.status == 'CLOSE') {
                         alert('No Transactions');
                     } else {
+                        console.log(loanData.details.length);
                         if (nameField && customerData.first_name && customerData.last_name) {
                             nameField.value = `${customerData.first_name} ${customerData.last_name}`;
+                        }
+
+                        if(loans && loanData.details.length) {
+                            loans.value = loanData.details.length;
                         }
 
                         if (transactionField && loanData.id) {
@@ -535,11 +537,11 @@
                             transactionField.value = `${loanData.id}`;
                         }
 
-                        if(interestAmount && loanData.interest_amount) {
+                        if (interestAmount && loanData.interest_amount) {
                             interestAmount.value = `${loanData.interest_amount}`;
                         }
 
-                        if(principalAmount && loanData.principal_amount) {
+                        if (principalAmount && loanData.principal_amount) {
                             principalAmount.value = `${loanData.principal_amount}`;
                         }
 
@@ -566,9 +568,9 @@
 
                         // Assuming loanData.details is an array
                         for (let i = 0; i < loanData.details.length; i++) {
-                            const row =
-                                `<option value="${loanData.details[i].loan_day_no}">${loanData.details[i].loan_day_no}</option>`;
-                            loans.innerHTML += row;
+                            // const row =
+                            //     `<option value="${loanData.details[i].loan_day_no}">${loanData.details[i].loan_day_no}</option>`;
+                            // loans.innerHTML += row;
                             bal += parseFloat(loanData.details[i].loan_due_amount) || 0;
                         }
                         prevBal.value = new Intl.NumberFormat('en-US', {
@@ -653,8 +655,10 @@
 
     document.getElementById('loan_amount_paid').addEventListener('input', () => {
         // Get the values of loan_amount_paid and prev_balance
-        const loanAmountPaid = parseFloat(document.getElementById('loan_amount_paid').value.replace(/,/g, '')) || 0;
-        const previousBalance = parseFloat(document.getElementById('prev_balance').value.replace(/,/g, '')) || 0;
+        const loanAmountPaid = parseFloat(document.getElementById('loan_amount_paid').value.replace(/,/g,
+            '')) || 0;
+        const previousBalance = parseFloat(document.getElementById('prev_balance').value.replace(/,/g, '')) ||
+        0;
         const rebateInput = document.getElementById('rebate_amount_div');
         const rebate_percent_div = document.getElementById('rebate_percent_div');
 
@@ -668,70 +672,55 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-            // Get all input fields
-            const prevBalanceInput = document.getElementById('prev_balance');
-            const loanWithdrawFromBankInput = document.getElementById('loan_withdraw_from_bank');
-            const totalDueAmountInput = document.getElementById('total_due_amount');
-            const loanAmountPaidInput = document.getElementById('loan_amount_paid');
-            const interestAmountInput = document.getElementById('interest_amount');
-            const rebatePercentInput = document.getElementById('rebate_percent');
-            const rebateAmountInput = document.getElementById('rebate_amount');
-            const rebatePercent = document.getElementById('rebate_percent');
-            const rebateAmountDiv = document.getElementById('rebate_amount_div');
-            const rebateAmount = document.getElementById('rebate_amount');
-            const payableAmount = document.getElementById('payable_amount');
-            const principalAmount = document.getElementById("principal_amount");
-            const loans = document.getElementById("loans");
-            
-            const loansSelected = document.getElementById('loans').selectedOptions;
-            const loansSelectedValues = Array.from(loansSelected).map(option => parseFloat(option.value));
-            const loansSelectedSum = loansSelectedValues.reduce((acc, curr) => acc + curr, 0);
-            const monthsToPay = loansSelectedSum === 2 ? 1 : loansSelectedSum;
-            // const rebate = principalAmount * rebatePercentInput.value * monthsToPay;
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all input fields
+        const prevBalanceInput = document.getElementById('prev_balance');
+        const loanWithdrawFromBankInput = document.getElementById('loan_withdraw_from_bank');
+        const totalDueAmountInput = document.getElementById('total_due_amount');
+        const loanAmountPaidInput = document.getElementById('loan_amount_paid');
+        const interestAmountInput = document.getElementById('interest_amount');
+        const rebatePercentInput = document.getElementById('rebate_percent');
+        const rebateAmountInput = document.getElementById('rebate_amount');
+        const rebatePercent = document.getElementById('rebate_percent');
+        const rebateAmountDiv = document.getElementById('rebate_amount_div');
+        const rebateAmount = document.getElementById('rebate_amount');
+        const payableAmount = document.getElementById('payable_amount');
+        const principalAmount = document.getElementById("principal_amount");
+        const loans = document.getElementById("loans");
+        console.log(loans);
+        const monthsToPay = loans.value === 2 ? 1 : loans;
+        // const rebate = principalAmount * rebatePercentInput.value * monthsToPay;
 
-            // Add event listeners
-            // loanWithdrawFromBankInput.addEventListener('input', calculateTotalDueAmount);
-            rebatePercent.addEventListener('input', calculateRebate);
-            // interestAmountInput.addEventListener('input', calculateRebate);
+        // Add event listeners
+        // loanWithdrawFromBankInput.addEventListener('input', calculateTotalDueAmount);
+        rebatePercent.addEventListener('input', calculateRebate);
+        // interestAmountInput.addEventListener('input', calculateRebate);
 
-            // Function to calculate total due amount
-            function calculateTotalDueAmount() {
-                const prevBalance = parseFloat(prevBalanceInput.value) || 0;
-                const loanWithdrawFromBank = parseFloat(loanWithdrawFromBankInput.value) || 0;
+        // Function to calculate total due amount
+        function calculateTotalDueAmount() {
+            const prevBalance = parseFloat(prevBalanceInput.value) || 0;
+            const loanWithdrawFromBank = parseFloat(loanWithdrawFromBankInput.value) || 0;
 
-                const totalDueAmount = prevBalance + loanWithdrawFromBank;
-                totalDueAmountInput.value = totalDueAmount.toFixed(2);
+            const totalDueAmount = prevBalance + loanWithdrawFromBank;
+            totalDueAmountInput.value = totalDueAmount.toFixed(2);
+        }
+
+        // Function to calculate rebate percent and amount
+        function calculateRebate() {
+            // Ensure all values are numbers
+            const principalAmountValue = parseFloat(principalAmount.value); // Assuming principalAmount comes from an input field
+            const rebatePercent = parseFloat(rebatePercentInput.value) / 100; // Convert percentage to decimal
+            const months = parseFloat(monthsToPay.value); // Assuming monthsToPay comes from an input field
+            console.log(monthsToPay.value);
+            // Validate inputs
+            if (isNaN(principalAmountValue) || isNaN(rebatePercent) || isNaN(months)) {
+                console.error("Invalid input values");
+                return;
             }
-
-            // Function to calculate rebate percent and amount
-            function calculateRebate() {
-                const rebate = principalAmount * rebatePercentInput.value * monthsToPay;
-                // const loanAmountPaid = parseFloat(loanAmountPaidInput.value);
-                // const interestAmount = parseFloat(interestAmountInput.value);
-                rebateAmount.value = rebate;
-
-                // // Validate inputs
-                // if (isNaN(loanAmountPaid) || loanAmountPaid <= 0) {
-                //     alert('Please enter a valid number for the loan amount paid (greater than zero).');
-                //     return;
-                // }
-                // if (isNaN(interestAmount) || interestAmount <= 0) {
-                //     alert('Please enter a valid number for the interest amount (greater than zero).');
-                //     return;
-                // }
-
-                // // Calculate rebate percent and amount
-                // const rebatePercent = (interestAmount / loanAmountPaid) * 100;
-                // const rebateAmount = (loanAmountPaid * rebatePercent) / 100;
-
-                // // Update rebate fields
-                // rebatePercentInput.value = rebatePercent.toFixed(2); // Display with 2 decimal places
-                // rebateAmountInput.value = rebateAmount.toFixed(2); // Display with 2 decimal places
-
-                // // Show the rebate fields
-                // rebatePercentDiv.hidden = false;
-                // rebateAmountDiv.hidden = false;
-            }
-        });
+            finalmonth = months == 2? 1: months;
+            // Calculate rebate
+            const rebate = principalAmountValue * rebatePercent * finalmonth;
+            rebateAmount.value = rebate.toFixed(2); // Format to 2 decimal places
+        }
+    });
 </script>

@@ -6,6 +6,7 @@ use App\Models\Collection;
 use App\Models\Customer;
 use App\Models\Loan;
 use App\Models\LoanDetails;
+use App\Models\Rebate;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -147,6 +148,16 @@ class CollectionController extends Controller
             if ($totalRemainingBalance <= 0) {
                 $loan->status = 'FULPD';
                 $loan->update();
+            }
+
+            if(isset($request->rebate_amount)) {
+                $rebate = new Rebate();
+                $rebate->loan_id = $loan->id;
+                $rebate->rebate_amount = $request->rebate_amount;
+                $rebate->rebate_percent = $request->rebate_percent;
+                $rebate->status = 'PENDING';
+                $rebate->branch_id = $branch;
+                $rebate->save();
             }
         }
 

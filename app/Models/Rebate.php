@@ -14,6 +14,7 @@ class Rebate extends Model
         'rebate_amount',
         'rebate_percent',
         'mode_of_payment',
-        'status'
+        'status',
+        'branch_id'
     ];
 }
