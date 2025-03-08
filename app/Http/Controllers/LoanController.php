@@ -144,7 +144,7 @@ class LoanController extends Controller
                 $check->equivalent_months = $equivalentMonths;
 
                 if (number_format($equivalentMonths, 0) > 1) {
-                    return redirect()->back()->with('loan_restriction', 'Attention: This customer has a ' . number_format($check->equivalent_months, 0) . ' month pending loan and is not eligible for renewal at this time.');
+                    return redirect()->back()->with('loan_restriction', 'This customer has a ' . number_format($check->equivalent_months, 0) . ' month pending loan and is not eligible for renewal at this time.');
                 }
 
                 if (isset($check->details)) {

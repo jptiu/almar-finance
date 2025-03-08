@@ -17,28 +17,40 @@
             </div>
         @endif
         @if (session()->has('loan_restriction'))
-            <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full dark:bg-gray-800">
-                    <div class="flex items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
-                        role="alert">
-                        <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                <div id="alert-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <div class="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-xl max-w-sm w-full relative">
+                <!-- Close Button -->
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    &times;
+                </button>
+
+                <!-- Icon -->
+                <div class="flex justify-center">
+                    <div class="bg-red-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                         </svg>
-                        <span class="sr-only">Info</span>
-                        <div>
-                            <span class="font-medium">{{ session()->get('loan_restriction') }}</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex justify-end">
-                        <button onclick="closeModal()"
-                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none dark:bg-gray-700 dark:text-gray-300">
-                            Close
-                        </button>
                     </div>
                 </div>
+
+                <!-- Title -->
+                <h2 class="text-xl font-semibold text-center text-gray-900 dark:text-white mt-4">
+                    Attention
+                </h2>
+
+                <!-- Message -->
+                <p class="text-center text-gray-600 dark:text-gray-300 mt-2">
+                {{ session()->get('loan_restriction') }}
+                </p>
+
+                <!-- Buttons -->
+                <div class="mt-6 flex gap-4">
+                    <button onclick="closeModal()" class="w-full py-2 border rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800">
+                        Cancel
+                    </button>
+                </div>
             </div>
+        </div>
         @endif
 
 
@@ -919,5 +931,11 @@
 <script>
     function closeModal() {
         document.querySelector('.fixed.inset-0').remove();
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("alert-modal");
+        modal.classList.add("opacity-0");
+        setTimeout(() => modal.remove(), 300);
     }
 </script>
