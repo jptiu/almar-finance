@@ -52,7 +52,7 @@
     <div class="email-container">
         <h2>New Loan Pending Approval</h2>
         <p>Dear HR,</p>
-        <p>A new loan request has been submitted by <strong>{{ $customer }}</strong>.</p>
+        <p>A new loan request has been submitted by <strong>{{ $loan->customer->first_name.' '.$loan->customer->last_name }}</strong>.</p>
         <p><strong>Loan Details:</strong></p>
         <ul>
             <li><strong>Amount:</strong> {{ number_format($loan->principal_amount, 2) }}</li>

@@ -115,14 +115,39 @@ class LoanController extends Controller
         try {
             // Retrieve authenticated user's branch ID
             $branch = auth()->user()->branch_id;
-            $image = $request->file('upload_file');
+
             // Validate the input data
             $validatedData = $request->validate([
                 'rows.*.id' => 'required|numeric',
                 'rows.*.due_date' => 'required|date',
                 'rows.*.due_amount' => 'required|numeric',
                 'rows.*.remaining_balance' => 'required|numeric',
+                'upload_file.*' => 'required|file|mimes:jpeg,png,pdf|max:2048', // Adjust validation rules as needed
             ]);
+
+            // Initialize an array to store file data
+            $filesData = [];
+            // Check if files are uploaded
+            if ($request->hasFile('upload_file')) {
+                $files = $request->file('upload_file');
+
+                foreach ($files as $file) {
+                    if ($file->isValid()) {
+                        // Encode file content to base64
+                        $imageBase64 = base64_encode(file_get_contents($file->path()));
+
+                        // Add file data to the array
+                        $filesData[] = [
+                            'file_name' => $file->getClientOriginalName(), // Original file name
+                            'mime_type' => $file->getMimeType(), // MIME type (e.g., image/jpeg)
+                            'size' => $file->getSize(), // File size in bytes
+                            'base64' => $imageBase64, // Base64-encoded file content
+                        ];
+                    }
+                }
+            }
+            // Convert the array to JSON
+            $filesJson = json_encode($filesData);
 
             $check = Loan::with([
                 'details' => function ($query) {
@@ -206,9 +231,8 @@ class LoanController extends Controller
             // $loan->note = 'Deducted amount from previous loan: ' . number_format($check->remaining??0, 2);
             $loan->branch_id = $branch;
             $loan->user_id = auth()->user()->id;
-            if (isset($image) == true) {
-                $imageBase64 = base64_encode(file_get_contents($image));
-                $loan->file = $imageBase64;
+            if (isset($filesJson) == true) {
+                $loan->file = $filesJson;
             }
             $loan->save();
 

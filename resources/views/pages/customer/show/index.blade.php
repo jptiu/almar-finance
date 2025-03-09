@@ -285,12 +285,20 @@
                                     <td class="border border-gray-200 px-4 py-2">{{ $loan->branch_id }}</td>
                                     <td class="border border-gray-200 px-4 py-2">
                                         @if ($loan->file)
-                                            <a href="data:application/pdf;base64,{{ $loan->file }}"
-                                                download="Download" class="underline text-blue-500">
-                                                Download File
-                                            </a>
-                                        @endif
-                                        @if ($loan->file == null)
+                                            @php
+                                                // Decode the JSON string to an array
+                                                $files = json_decode($loan->file, true);
+                                            @endphp
+                                    
+                                            @foreach ($files as $file)
+                                                <div class="mb-2">
+                                                    <a href="data:{{ $file['mime_type'] }};base64,{{ $file['base64'] }}"
+                                                       download="{{ $file['file_name'] }}" class="underline text-blue-500">
+                                                        Download {{ $file['file_name'] }}
+                                                    </a>
+                                                </div>
+                                            @endforeach
+                                        @else
                                             NO FILE UPLOADED
                                         @endif
                                     </td>

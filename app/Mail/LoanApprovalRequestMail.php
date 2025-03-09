@@ -19,7 +19,7 @@ class LoanApprovalRequestMail extends Mailable
     public function __construct($loan)
     {
         $this->loan = $loan;
-        $this->customer = $loan->customer->first_name.' '.$loan->customer->last_name;
+        // $this->customer = $loan->customer->first_name.' '.$loan->customer->last_name;
     }
 
     /**
