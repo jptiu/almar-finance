@@ -184,12 +184,12 @@ class HRController extends Controller
     public function pendingLoans()
     {
         $branch = auth()->user()->branch_id;
-        $loans = Loan::where('principal_amount', '>', '50000')
+        $lists = Loan::where('principal_amount', '>', '49000')
             ->where('branch_id', $branch)
             ->where('status', '=', NULL)
             ->paginate(10);
 
-        return view('pages.hr.loanapprovals.pending.index', compact('loans'));
+        return view('pages.hr.loanapprovals.pending.index', compact('lists'));
     }
 
     public function pendingLoansAPI()

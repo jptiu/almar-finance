@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoanCreateRequest;
 use App\Http\Requests\LoanUpdateRequest;
 use App\Mail\LoanApprovalRequestMail;
+use App\Mail\LoanApprovedMail;
 use App\Models\ActivityLog;
 use App\Models\Customer;
 use App\Models\CustomerType;
@@ -229,9 +230,13 @@ class LoanController extends Controller
             $log->description = auth()->user()->name . ' Created the loan request.';
             $log->save();
 
+            $loanDetails = Loan::with([
+                'customer',
+            ])->findOrFail($loan->id);
+
             // Send email to HR
             $hrEmail = 'hr@almarfinance.com'; // Replace with HR email
-            // Mail::to($hrEmail)->send(new LoanApprovalRequestMail($loan));
+            Mail::to($hrEmail)->send(new LoanApprovalRequestMail($loanDetails));
             // Redirect back with success message
             return redirect()->back()->with('success', 'Loan created successfully and is pending approval.');
         } catch (\Throwable $th) {
@@ -503,6 +508,13 @@ class LoanController extends Controller
         $log->description = auth()->user()->name . ' Approved the loan request.';
         $log->save();
 
+        $loanDetails = Loan::with([
+            'customer',
+        ])->findOrFail($id);
+
+        // Send email to customer
+        Mail::to($loan->customer->email)->send(new LoanApprovedMail($loanDetails));
+
         return redirect()->back()->with('success', 'Loan Approved.');
     }
 
@@ -581,22 +593,40 @@ class LoanController extends Controller
     public function exportloanHistory($id)
     {
         $customer = Customer::findOrFail($id);
-        $filename = 'loanHistory_'.$customer->first_name.'_'.$customer->last_name.'.csv';
+        $filename = 'loanHistory_' . $customer->first_name . '_' . $customer->last_name . '.csv';
         $data = Loan::where('customer_id', $id)->get();
         $headers = [
             "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=".$filename."",
+            "Content-Disposition" => "attachment; filename=" . $filename . "",
             "Pragma" => "no-cache",
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-            "Expires" => "0",];
-        $columns = ['loan_type', 'transaction_type', 'trans_no', 'date_of_loan',
-        'customer_id','customer_type','status','transaction_with_collateral',
-        'transaction_with_cert','principal_amount','days_to_pay','months_to_pay',
-        'interest','interest_amount','svc_charge','payable_amount','branch_id','file','note'];
+            "Expires" => "0",
+        ];
+        $columns = [
+            'loan_type',
+            'transaction_type',
+            'trans_no',
+            'date_of_loan',
+            'customer_id',
+            'customer_type',
+            'status',
+            'transaction_with_collateral',
+            'transaction_with_cert',
+            'principal_amount',
+            'days_to_pay',
+            'months_to_pay',
+            'interest',
+            'interest_amount',
+            'svc_charge',
+            'payable_amount',
+            'branch_id',
+            'file',
+            'note'
+        ];
         $callback = function () use ($data, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
-    
+
             foreach ($data as $row) {
                 fputcsv($file, [
                     $row->loan_type,
@@ -620,10 +650,10 @@ class LoanController extends Controller
                     $row->note,
                 ]);
             }
-    
+
             fclose($file);
         };
-    
+
         return response()->stream($callback, 200, $headers);
 
     }
@@ -633,30 +663,47 @@ class LoanController extends Controller
     {
         $loanId = $request->query('transaction_id');
         $loan = Loan::with(['customer', 'details'])->findOrFail($loanId); // Load loan with details
-        $filename = 'Loan_Transaction_'.$loan->id.'.csv';
+        $filename = 'Loan_Transaction_' . $loan->id . '.csv';
 
         $headers = [
             "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=".$filename,
+            "Content-Disposition" => "attachment; filename=" . $filename,
             "Pragma" => "no-cache",
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
             "Expires" => "0",
         ];
 
         $columns = [
-            'Customer Name', 'Customer ID', 'Customer Type', 'Status',
-            'Transaction No.', 'Date of Loan', 'Loan Type', 'Transaction Type',
-            'Principal Amount', 'Interest', 'Interest Amount', 'Service Charge',
-            'Payable Amount', 'Days to Pay', 'Months to Pay', 'Actual Record'
+            'Customer Name',
+            'Customer ID',
+            'Customer Type',
+            'Status',
+            'Transaction No.',
+            'Date of Loan',
+            'Loan Type',
+            'Transaction Type',
+            'Principal Amount',
+            'Interest',
+            'Interest Amount',
+            'Service Charge',
+            'Payable Amount',
+            'Days to Pay',
+            'Months to Pay',
+            'Actual Record'
         ];
 
         $installmentColumns = [
-            'Installment', 'Principal', 'Interest', 'Service Charge', 'Total', 'Outstanding Balance'
+            'Installment',
+            'Principal',
+            'Interest',
+            'Service Charge',
+            'Total',
+            'Outstanding Balance'
         ];
 
         $callback = function () use ($loan, $columns, $installmentColumns) {
             $file = fopen('php://output', 'w');
-            
+
             // Write Loan Summary
             fputcsv($file, ['Loan Summary']);
             fputcsv($file, $columns);
