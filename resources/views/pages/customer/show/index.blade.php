@@ -41,43 +41,29 @@
                 <!-- Filter button -->
                 <!-- <x-dropdown-filter align="right" /> -->
 
+
                 <!-- Add view button -->
-                <a href="{{route('customersavings.export', ['id' => $customer->id])}}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                
+                <a href="{{ route('printcustomerSavings.index', ['id' => $customer->id]) }}" 
+                class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" 
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+                        stroke-linejoin="round" class="lucide lucide-external-link">
+                        <path d="M15 3h6v6"/>
+                        <path d="M10 14 21 3"/>
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    </svg>
                     <span class="hidden xs:block ml-2">Export Customer Savings</span>
                 </a>
+
+                
 
                 <a id="open-transaction-modal" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                     <span class="hidden xs:block ml-2">Export Customer Loan</span>
                 </a>
 
-                <!-- Modal -->
-                <div id="modal2" class="z-50 hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-                    <div class="bg-white rounded-lg w-1/3 p-6 shadow-lg">
-                        <!-- Modal Header -->
-                        <div class="flex justify-between items-center border-b pb-3">
-                            <h3 class="text-lg font-semibold">Select Transaction</h3>
-                            <button class="text-gray-500 hover:text-red-500" onclick="closeModal(event)">
-                                &times;
-                            </button>
-                        </div>
-                        <!-- Modal Body -->
-                        <div class="mt-4">
-                            <label for="transaction-select" class="block text-sm font-medium text-gray-700">Select Transaction No.</label>
-                            <select id="transaction-select" class="mt-2 block w-full px-3 py-2 bg-white border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
-                                <option value="">Transaction 1</option>
-                                <option value="">Transaction 2</option>
-                                <option value="">Transaction 3</option>
-                            </select>
-                        </div>
-                        <!-- Modal Footer -->
-                        <div class="mt-6 flex justify-end">
-                            <button class="btn bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md mr-2" onclick="closeModal(event)">Cancel</button>
-                            <button class="btn bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-md">Export</button>
-                        </div>
-                    </div>
-                </div>
+               
 
                 <a id="open-modal" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
@@ -111,10 +97,10 @@
                         <div class="flex justify-end">
                             <button type="button" id="close-transaction-btn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2 hover:bg-gray-400">Cancel</button>
                             <!-- Export Button -->
-                            <form id="export-form" action="{{ route('loan.export') }}" method="GET">
+                            <form id="export-form" action="{{ route('printcustomerLoan.index', $loan->id) }}" method="GET">
                                 <input type="hidden" name="transaction_id" id="selected-transaction">
                                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                    Export CSV
+                                    Print
                                 </button>
                             </form>
                         </div>

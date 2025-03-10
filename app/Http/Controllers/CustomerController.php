@@ -8,6 +8,7 @@ use App\Models\Barangay;
 use App\Models\CityTown;
 use App\Models\Customer;
 use App\Models\Branch;
+use App\Models\Loan;
 use App\Models\CustomerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -304,6 +305,7 @@ class CustomerController extends Controller
 
         // --- CUSTOMER DETAILS SECTION ---
         fputcsv($file, ['Customer Information']); // Title
+
         fputcsv($file, ['Full Name', $customer->first_name . ' ' . $customer->middle_name . ' ' . $customer->last_name]);
         fputcsv($file, ['Birth Date', $customer->birth_date ?? '']);
         fputcsv($file, ['Birth Place', $customer->birth_place ?? '']);
@@ -335,10 +337,7 @@ class CustomerController extends Controller
     return response()->stream($callback, 200, $headers);
 }
 
-
-
-
-    public function printCustomer($id)
+public function printCustomer($id)
     {
         $branch = auth()->user()->branch_id;
         $branchAddress = Branch::find($branch);
@@ -349,4 +348,45 @@ class CustomerController extends Controller
 
         return view('pages.customer.print.index', compact('customer', 'branchAddress'));
     }
+
+    public function printcustomerSavings($id)
+    {
+        $branch = auth()->user()->branch_id;
+        $withdraw = SavingsWithdrawal::where('customer_id', $id)
+    ->orderBy('created_at', 'desc') // Ensure it gets the latest record
+    ->first();
+
+        $deposits = SavingsDeposit::where('customer_id', $id)->get();
+        $total_deposit = SavingsDeposit::where('customer_id', $id)->sum('amount');
+        $branchAddress = Branch::find($branch);
+        $customer = Customer::with([
+            'loan',
+            'loan.details'
+        ])->where('branch_id', $branch)->find($id);
+
+        return view('pages.customer.show.printsavings.index', compact('customer', 'branchAddress', 'withdraw','deposits','total_deposit'));
+    }
+
+    public function printcustomerLoan($id)
+{
+    $branch = auth()->user()->branch_id;
+    $branchAddress = Branch::find($branch);
+
+    // Fetch the loan with customer and loan details
+    $loan = Loan::with([
+        'customer',       // Ensure the loan's customer is loaded
+        'details'         // Load loan details if needed
+    ])->where('branch_id', $branch)->find($id);
+
+    // Check if the loan exists and belongs to the authenticated user's branch
+    if (!$loan) {
+        return redirect()->back()->with('error', 'Transaction not found or unauthorized.');
+    }
+
+    return view('pages.customer.show.printloan.index', compact('loan', 'branchAddress'));
 }
+
+
+
+}
+
