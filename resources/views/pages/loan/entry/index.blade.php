@@ -298,7 +298,7 @@
                                 </div>
                                 <div class="md:col-span-2 hidden" id="file_upload_field">
                                     <label for="upload_file" class="text-black font-medium">Upload File</label>
-                                    <input type="file" id="upload_file" name="upload_file"
+                                    <input type="file" id="upload_file" name="upload_file[]" multiple
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2" />
                                 </div>
                             </div>

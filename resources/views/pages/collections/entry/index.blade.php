@@ -189,7 +189,7 @@
                                             <label for="date_of_loan" class="text-black font-medium">Date</label>
                                             <input type="date" name="date_of_loan" id="date_of_loan"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                                value="" placeholder="" required />
+                                                value="" placeholder="" />
                                         </div>
 
                                     </div>

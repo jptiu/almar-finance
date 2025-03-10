@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class LoanApprovalRequestMail extends Mailable
+class LoanApprovedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -14,12 +16,11 @@ class LoanApprovalRequestMail extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $loan
      */
     public function __construct($loan)
     {
         $this->loan = $loan;
-        // $this->customer = $loan->customer->first_name.' '.$loan->customer->last_name;
     }
 
     /**
@@ -29,7 +30,8 @@ class LoanApprovalRequestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('New Loan Pending Approval')
-                    ->view('emails.loan_approval_request');
+        return $this->subject('Loan Approved')
+                    ->view('emails.loan_approved')
+                    ->with(['loan' => $this->loan]);
     }
 }
