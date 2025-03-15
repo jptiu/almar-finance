@@ -25,21 +25,32 @@ class CustomerController extends Controller
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('admin_access') || Gate::allows('auditor_access'), 404);
         try {
             $branch = auth()->user()->branch_id;
-            if ($request->search) {
-                $lists = Customer::where('branch_id', $branch)
-                    ->where('first_name', 'LIKE', '%' . $request->search . '%')
-                    ->orderBy("created_at", "asc")
-                    ->paginate(20);
-            } else {
-                $lists = Customer::where('branch_id', $branch)->paginate(20);
+            $query = Customer::with('branches')->where('branch_id', $branch);
+            $branches = Branch::all();
+    
+            // Search filter (first name or last name)
+            if ($request->filled('search')) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('first_name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('last_name', 'LIKE', '%' . $request->search . '%');
+                });
             }
-
-
-            return view('pages.customer.index', compact('lists'));
+    
+            // Filter by selected branches (Only apply if specific branches are selected)
+            if ($request->filled('branch_id')) {
+                $selectedBranches = (array) $request->branch_id;
+                $query->whereIn('branch_id', $selectedBranches);
+            }
+    
+            // Paginate results
+            $lists = $query->orderBy('created_at', 'asc')->paginate(20);
+    
+            return view('pages.customer.index', compact('lists','branches'));
         } catch (\Throwable $th) {
-            //throw $th;
+            // Handle any unexpected errors gracefully
             $lists = Customer::where('branch_id', $branch)->paginate(20);
-            return view('pages.customer.index', compact('lists'));
+            $branches = Branch::all();
+            return view('pages.customer.index', compact('lists','branches'));
         }
     }
 

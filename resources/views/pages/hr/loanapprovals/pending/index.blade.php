@@ -168,11 +168,11 @@
                                     <div class="flex items-center gap-x-2">
                                         <!-- Decline Button -->
                                         <button id="show-decline-modal"
-                                            class="bg-bgbody-100 border border-bgbody-200  text-red hover:bg-red-600 hover:text-white flex items-center px-4 py-2 font-semibold rounded-full">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000">
+                                            class="cursor-pointer text-xs text-center w-full font-semibold bg-white-500 border border-red-600 hover:text-white hover:bg-red-600 py-2 rounded-full">
+                                            <!--<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000">
                                                 <path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
-                                            </svg>
-                                            <span class="hidden xs:block ml-2">Decline</span>
+                                            </svg>-->
+                                            <span class="hidden xs:block">Decline</span>
                                         </button>
 
                                         <!-- Decline Modal -->
@@ -206,11 +206,11 @@
                                         </div>
                                         <!-- Approve Button -->
                                         <button id="show-approve-modal"
-                                            class="bg-indigo-500 hover:bg-indigo-600 text-white hover:bg-green-600 flex items-center px-4 py-2 font-semibold rounded-full">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#F3F3F3">
+                                            class="cursor-pointer text-xs text-center w-full font-semibold bg-white-500 border border-green-600 hover:text-white hover:bg-green-600 px-4 py-2 rounded-full">
+                                            <!--<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="black">
                                                 <path d="M389-267 195-460l51-52 143 143 325-324 51 51-376 375Z" />
-                                            </svg>
-                                            <span class="hidden xs:block ml-2">Approve</span>
+                                            </svg>-->
+                                            <span class="hidden xs:block">Approve</span>
                                         </button>
                                         <!-- Approve Modal -->
                                         <div id="approve-modal"
