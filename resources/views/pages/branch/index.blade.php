@@ -242,30 +242,31 @@
                 <div class="space-y-4">
                     <!-- Card 1 -->
 
-                    <div onclick="/" class="bg-white rounded-lg shadow p-4 flex items-end justify-between mb-4">
-                        <div>
-                            <p class="text-gray-400 text-xs mb-1">Tasks</p>
-                            <h3 class="text-gray-800 font-semibold mb-4">Task Title</h3>
-                            <div class="flex items-center space-x-2">
-                                <!-- Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                    width="24px" fill="#789DE5">
-                                    <path
-                                        d="M760-200H320q-33 0-56.5-23.5T240-280v-560q0-33 23.5-56.5T320-920h280l240 240v400q0 33-23.5 56.5T760-200ZM560-640v-200H320v560h440v-360H560ZM160-40q-33 0-56.5-23.5T80-120v-560h80v560h440v80H160Zm160-800v200-200 560-560Z" />
-                                </svg>
-                                <!-- Text -->
-                                <span class="text-gray-500 text-sm">Collect Payment</span>
+                    <div class="max-h-96 overflow-y-auto p-3">
+                        <div onclick="/" class="bg-white rounded-lg shadow p-4 flex items-end justify-between mb-4">
+                            <div>
+                                <p class="text-gray-400 text-xs mb-1">Tasks</p>
+                                <h3 class="text-gray-800 font-semibold mb-4">Task Title</h3>
+                                <div class="flex items-center space-x-2">
+                                    <!-- Icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#789DE5">
+                                        <path
+                                            d="M760-200H320q-33 0-56.5-23.5T240-280v-560q0-33 23.5-56.5T320-920h280l240 240v400q0 33-23.5 56.5T760-200ZM560-640v-200H320v560h440v-360H560ZM160-40q-33 0-56.5-23.5T80-120v-560h80v560h440v80H160Zm160-800v200-200 560-560Z" />
+                                    </svg>
+                                    <!-- Text -->
+                                    <span class="text-gray-500 text-sm">Collect Payment</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex items-center space-y-2">
-                            <div class="shrink-0 self-end ml-2">
-                                <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                    href="#0">View<span class="hidden sm:inline"> -&gt;</span></a>
+                            <div class="flex items-center space-y-2">
+                                <div class="shrink-0 self-end ml-2">
+                                    <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
+                                        href="#0">View<span class="hidden sm:inline"> -&gt;</span></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
+                    
                     <!-- Modal Overlay -->
                     <div id="modal-overlay"
                         class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
@@ -323,11 +324,10 @@
                 <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
                     <h2 class="font-semibold text-slate-800 dark:text-slate-100">Recent Logs</h2>
                 </header>
-                <div class="p-3">
+                <div class="p-3 max-h-96 overflow-y-auto">
                     @foreach ($logs as $log)
                         <div>
-                            <header
-                                class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm font-semibold p-2">
+                            <header class="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm font-semibold p-2">
                                 {{ $log->created_at->toDateString() }}
                             </header>
                             <ul class="my-1">
@@ -335,26 +335,17 @@
                                 <li class="flex px-2">
                                     <div class="w-9 h-9 rounded-full shrink-0 bg-indigo-500 my-2 mr-3">
                                         <svg class="w-9 h-9 fill-current text-indigo-50" viewBox="0 0 36 36">
-                                            <path
-                                                d="M18 10c-4.4 0-8 3.1-8 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L18.9 22H18c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z" />
+                                            <path d="M18 10c-4.4 0-8 3.1-8 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L18.9 22H18c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z"/>
                                         </svg>
                                     </div>
-                                    <div
-                                        class="grow flex items-center border-b border-slate-100 dark:border-slate-700 text-sm py-2">
+                                    <div class="grow flex items-center border-b border-slate-100 dark:border-slate-700 text-sm py-2">
                                         <div class="grow flex justify-between">
                                             <div class="self-center">
-                                                <a
-                                                    class="font-medium text-slate-800 hover:text-slate-900 dark:text-slate-100 dark:hover:text-white"
-                                                    href="#0">
-                                                    <p>{{$log->user->name}}</p>
-                                                    <span class="text-gray-400 text-xs">{{$log->description}}</span>
+                                                <a class="font-medium text-slate-800 hover:text-slate-900 dark:text-slate-100 dark:hover:text-white" href="#0">
+                                                    <p>{{ $log->user->name }}</p>
+                                                    <span class="text-gray-400 text-xs">{{ $log->description }}</span>
                                                 </a>
                                             </div>
-                                            {{-- <div class="shrink-0 self-end ml-2">
-                                                <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                                    href="#0">View<span class="hidden sm:inline">
-                                                        -&gt;</span></a>
-                                            </div> --}}
                                         </div>
                                     </div>
                                 </li>
@@ -362,6 +353,7 @@
                         </div>
                     @endforeach
                 </div>
+
             </div>
         </div>
     </div>
