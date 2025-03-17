@@ -12,6 +12,7 @@ use App\Models\CustomerType;
 use App\Models\Loan;
 use App\Models\LoanDetails;
 use App\Models\Branch;
+use App\Models\RenewalRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -168,9 +169,9 @@ class LoanController extends Controller
 
                 // Add the equivalent_months field to the loan
                 $check->equivalent_months = $equivalentMonths;
-
+                $message = 'This customer has a ' . number_format($check->equivalent_months, 0) . ' month pending loan and is not eligible for renewal at this time.';
                 if (number_format($equivalentMonths, 0) > 1) {
-                    return redirect()->back()->with('loan_restriction', 'This customer has a ' . number_format($check->equivalent_months, 0) . ' month pending loan and is not eligible for renewal at this time.');
+                    return redirect()->back()->with('loan_restriction', compact('check', 'message'));
                 }
 
                 if (isset($check->details)) {
@@ -322,7 +323,7 @@ class LoanController extends Controller
      */
     public function show(string $id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('auditor_access') || Gate::allows('hr_access'), 404);
         $branch = auth()->user()->branch_id;
         $loan = Loan::where('branch_id', $branch)->where('id', $id)->first();
         $amountDue = LoanDetails::where('loan_id', $loan->id)

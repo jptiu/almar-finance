@@ -229,7 +229,7 @@
                             </div>
                             <div>
                                 <p class="text-gray-900 text-sm">Loan Type</p>
-                                <p class="font-bold text-gray-900 text-base">{{ $loan->loan_type }}</p>
+                                <p class="font-bold text-gray-900 text-base">{{ ucfirst($loan->loan_type) }}</p>
                             </div>
                             <div>
                                 <p class="text-gray-900 text-sm">Transaction Type</p>

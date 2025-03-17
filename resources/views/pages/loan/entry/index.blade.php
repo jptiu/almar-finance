@@ -40,10 +40,76 @@
 
                 <!-- Message -->
                 <p class="text-center text-gray-600 dark:text-gray-300 mt-2">
-                {{ session()->get('loan_restriction') }}
+                    @if(session()->has('loan_restriction'))
+                    @php
+                        $loanRestriction = session()->get('loan_restriction');
+                        $check = $loanRestriction['check'];
+                        $message = $loanRestriction['message'];
+                    @endphp
+                
+                    <div class="alert alert-{{ $check ? 'success' : 'danger' }}">
+                        {{ $message }}
+                    </div>
+                @endif
                 </p>
 
                 <!-- Buttons -->
+                <div class="mt-6 flex gap-4">
+                    <button id="request-renewal-btn" class="w-full text-center py-2 border bg-blue-400 rounded-lg font-semibold text-white hover:bg-blue-300 transition dark:border-blue-600 dark:text-blue-300 dark:hover:bg-blue-800">
+                        Request Renewal
+                    </button>
+
+                    <!-- Modal Input Interest Rate, Tenure and Renew Amount -->
+                    <div id="modal-interest" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+                        <div class="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-xl max-w-sm w-full relative">
+                            <!-- Close Button -->
+                            <button id="request-renewal-btn-cnl" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                                &times;
+                            </button>
+
+                            <!-- Title -->
+                            <h2 class="text-xl font-semibold text-center text-gray-900 dark:text-white mt-4">
+                                Request Renewal
+                            </h2>
+
+                            <!-- Form -->
+                            <form method="POST" action="{{ route('loan.request', ['id' => $check->id]) }}" class="mt-6">
+                                @csrf
+
+                                <div class="mb-4">
+                                    <label for="requested_renewal_amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Requested Renewal Amount</label>
+                                    <input type="number" name="requested_renewal_amount" id="requested_renewal_amount" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" step="0.01" required />
+                                </div>
+
+                                {{-- <div class="mb-4">
+                                    <label for="renewed_amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Renewed Amount</label>
+                                    <input type="number" name="renewed_amount" id="renewed_amount" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" step="0.01" required />
+                                </div> --}}
+
+                                <div class="mb-4">
+                                    <label for="renewal_tenure" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Renewal Tenure</label>
+                                    <input type="number" name="renewal_tenure" id="renewal_tenure" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" required />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="renewal_interest_rate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Renewal Interest Rate</label>
+                                    <input type="number" name="renewal_interest_rate" id="renewal_interest_rate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" step="0.01" required />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Notes</label>
+                                    <textarea name="notes" id="notes" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" rows="3"></textarea>
+                                </div>
+
+                                <div class="mt-6 flex justify-center">
+                                    <button type="submit" class="w-full text-center py-2 border bg-blue-400 rounded-lg font-semibold text-white hover:bg-blue-300 transition dark:border-blue-600 dark:text-blue-300 dark:hover:bg-blue-800">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="mt-6 flex gap-4">
                     <button onclick="closeModal()" class="w-full py-2 border rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800">
                         Cancel
@@ -938,4 +1004,21 @@
         modal.classList.add("opacity-0");
         setTimeout(() => modal.remove(), 300);
     }
+</script>
+<script>
+    document.getElementById('request-renewal-btn').addEventListener('click', () => {
+        openModalInterest();
+    });
+
+    function openModalInterest() {
+        document.getElementById('modal-interest').classList.remove('hidden');
+    }
+
+    function openModalInterest() {
+        document.getElementById('modal-interest').classList.remove('hidden');
+    }
+
+    document.getElementById('request-renewal-btn-cnl').addEventListener('click', () => {
+        document.getElementById('modal-interest').classList.add('hidden');
+    });
 </script>

@@ -20,10 +20,12 @@ use App\Http\Controllers\HRController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LOController;
 use App\Http\Controllers\RebateController;
+use App\Http\Controllers\RenewalRequestController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DenominationController;
 use App\Http\Controllers\UserController;
 use App\Models\Employee;
+use App\Models\RenewalRequest;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\DashboardController;
@@ -124,6 +126,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('loan/decline/{id}', [LoanController::class, 'decline'])->name('loan.decline');
     Route::get('loan/print/{id}', [LoanController::class, 'printGrantLoan'])->name('printGrantLoan.index');
     Route::post('/update-due-date/{detail}', [LoanController::class, 'updateDueDate'])->name('loan.duedateupdate');
+    Route::post('loan/request/renew/{id}', [RenewalRequestController::class, 'renew'])->name('loan.request');
+    Route::get('request-renewals', [RenewalRequestController::class, 'index'])->name('request-renewals.index');
+    Route::get('request-renewals/approve/{id}', [RenewalRequestController::class, 'renewApprove'])->name('request-renewals.approve');
+    Route::get('request-renewals/decline/{id}', [RenewalRequestController::class, 'renewDecline'])->name('request-renewals.decline');
 
     // Collection
     Route::get('collection', [CollectionController::class, 'index'])->name('collection.index');

@@ -152,6 +152,23 @@
                             </a>
                         </li>
 
+                        <li
+                            class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['request-renewals'])) {{ 'bg-accent-100' }} @endif">
+                            <a href="{{ route('request-renewals.index') }}"
+                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['request-renewals'])) {{ 'hover:text-slate-200' }} @endif">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                        viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                        <rect fill="none" height="24" width="24" />
+                                        <path
+                                            d="M17.66,9.53l-7.07,7.07l-4.24-4.24l1.41-1.41l2.83,2.83l5.66-5.66L17.66,9.53z M4,12c0-2.33,1.02-4.42,2.62-5.88L9,8.5v-6H3 l2.2,2.2C3.24,6.52,2,9.11,2,12c0,5.19,3.95,9.45,9,9.95v-2.02C7.06,19.44,4,16.07,4,12z M22,12c0-5.19-3.95-9.45-9-9.95v2.02 c3.94,0.49,7,3.86,7,7.93c0,2.33-1.02,4.42-2.62,5.88L15,15.5v6h6l-2.2-2.2C20.76,17.48,22,14.89,22,12z" />
+                                    </svg>
+                                    <span
+                                        class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Request Renewal</span>
+                                </div>
+                            </a>
+                        </li>
+
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['requestcheck'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['requestcheck']) ? 1 : 0 }} }">
                             <a href="{{ route('requestcheck.index') }}"
@@ -779,6 +796,24 @@
                                 </div>
                             </a>
                         </li>
+
+                        <li
+                            class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['request-renewals'])) {{ 'bg-accent-100' }} @endif">
+                            <a href="{{ route('request-renewals.index') }}"
+                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['request-renewals'])) {{ 'hover:text-slate-200' }} @endif">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                        viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                        <rect fill="none" height="24" width="24" />
+                                        <path
+                                            d="M17.66,9.53l-7.07,7.07l-4.24-4.24l1.41-1.41l2.83,2.83l5.66-5.66L17.66,9.53z M4,12c0-2.33,1.02-4.42,2.62-5.88L9,8.5v-6H3 l2.2,2.2C3.24,6.52,2,9.11,2,12c0,5.19,3.95,9.45,9,9.95v-2.02C7.06,19.44,4,16.07,4,12z M22,12c0-5.19-3.95-9.45-9-9.95v2.02 c3.94,0.49,7,3.86,7,7.93c0,2.33-1.02,4.42-2.62,5.88L15,15.5v6h6l-2.2-2.2C20.76,17.48,22,14.89,22,12z" />
+                                    </svg>
+                                    <span
+                                        class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Request Renewal</span>
+                                </div>
+                            </a>
+                        </li>
+
                         <!-- Collection Data Entry -->
                         <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['collection'])) {{ 'bg-accent-100' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['collection']) ? 1 : 0 }} }">
@@ -1729,6 +1764,25 @@
                                         </svg>
                                         <span
                                             class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Dashboard</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="px-3 py-3 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['rebates'])) {{ 'bg-accent-100' }} @endif"
+                            x-data="{ open: {{ in_array(Request::segment(1), ['rebates']) ? 1 : 0 }} }">
+                            <a href="{{ route('rebates.index') }}"
+                                class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['rebates'])) {{ 'hover:text-slate-200' }} @endif">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                            width="24px" fill="#e8eaed">
+                                            <path d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+                                        </svg>
+                                        <span
+                                            class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Rebates</span>
                                     </div>
                                 </div>
                             </a>

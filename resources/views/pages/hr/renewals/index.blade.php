@@ -24,21 +24,21 @@
         <div></div>
 
         <!-- Dashboard actions -->
-        
+
 
         <!-- Cards -->
         <section class="container">
             <div class="p-6 w-full max-w-[1500px] mx-auto bg-white rounded-lg border border-bgbody-200">
                 <div class="sm:flex sm:justify-between sm:items-center mb-4">
                     <div>
-                    
+
 
                     </div>
                     <!-- Right: Actions -->
-                   
+
                     <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                    <!-- Filter button -->
-                    <form id="filterForm" method="GET" action="">
+                        <!-- Filter button -->
+                        <form id="filterForm" method="GET" action="">
                             <div class="relative">
                                 <input name="date_range" id="date_range"
                                     class="datepicker form-input pl-9 px-4 py-3  dark:bg-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200 rounded-full font-medium w-[15.5rem]"
@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                
+
 
                 <table class="w-full border-collapse text-left text-sm rounded-md overflow-hidden border border-black">
                     <thead class="bg-bgbody-100 rounded-2xl w-full">
@@ -72,33 +72,30 @@
                     </thead>
                     <tbody class="text-gray-600 font-semibold text-sm">
                         @foreach ($lists as $list)
-                        <tr class="border-b hover:bg-gray-50">
-                            <td
-                                class="p-4">
-                                {{ $list->id }}
-                            </td>
-                            <td
-                                class="p-4">
-                                {{ $list->customer->first_name }} {{$list->customer->last_name}}
-                            </td>
-                            <td
-                                class="p-4">
-                                {{ $list->customer->house }} {{ $list->customer->street }} {{$list->customer->bry->barangay_name}} {{$list->customer->cty->city_town}}
-                            </td>
-                            <td
-                                class="p-4">
-                                {{ $list->principal_amount }}
-                            </td>
-                            <td
-                                class="p-4">
-                                {{$list->updated_at->format('M d Y')}}
-                            </td>
-                            <button
-                                class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                View
-                            </button>
-                        </tr>
-
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-4">
+                                    {{ $list->id }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $list->customer->first_name }} {{ $list->customer->last_name }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $list->customer->house }} {{ $list->customer->street }}
+                                    {{ $list->customer->bry->barangay_name }} {{ $list->customer->cty->city_town }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $list->principal_amount }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $list->updated_at->format('M d Y') }}
+                                </td>
+                                <td>
+                                    <button
+                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

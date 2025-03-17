@@ -30,7 +30,7 @@
         <section class="container">
             <div class="p-6 w-full max-w-[1500px] mx-auto bg-white rounded-lg border border-bgbody-200">
                 <div class="sm:flex sm:justify-between sm:items-center mb-4">
-                <div class="flex flex-wrap gap-4 justify-center">
+                    <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                     <form method="GET" action="{{ route('loan.index') }}" class="flex items-center">
                         <label for="search1" class="sr-only">Search</label>
                         <div class="relative w-[280px]">
@@ -316,7 +316,7 @@
                                 </td>
                                 <td
                                     class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                    {{ $list->loan_type }}
+                                    {{ ucfirst($list->loan_type) }}
                                 </td>
                                 <td
                                     class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">

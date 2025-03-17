@@ -192,6 +192,10 @@
                                                 value="" placeholder="" />
                                         </div>
 
+                                        <div class="md:col-span-1 mt-4">
+                                            <p class="hidden text-white p-4 bg-blue-500 rounded" id="view_details"><a href="" id="view_details_link">View Details</a></p>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -515,6 +519,8 @@
                 const prevBal = document.getElementById("prev_balance");
                 const interestAmount = document.getElementById("interest_amount");
                 const principalAmount = document.getElementById("principal_amount");
+                const view_details = document.getElementById("view_details");
+                const view_details_link = document.getElementById("view_details_link");
                 let bal = 0.00;
                 loans.innerHTML = '';
                 if (response.customer) {
@@ -523,6 +529,8 @@
                     if (loanData.status == 'CLOSE') {
                         alert('No Transactions');
                     } else {
+                        view_details.classList.remove('hidden');
+                        view_details_link.href = '{{ route('loan.show', ':id') }}'.replace(':id', loanData.id);
                         console.log(loanData.details.length);
                         if (nameField && customerData.first_name && customerData.last_name) {
                             nameField.value = `${customerData.first_name} ${customerData.last_name}`;
