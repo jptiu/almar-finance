@@ -54,6 +54,63 @@
                     </div>
                     <!-- Right: Actions -->
                     <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                    <div class="relative inline-flex" x-data="{ open: false }">
+                        <button
+                            class="bg-white border border-gray-300 gap-2 text-gray-700 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 px-4 py-2 flex items-center hover:bg-indigo-500 hover:text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600"
+                            aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open.toString()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-filter">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                            </svg>
+                            <span>Select Branch</span>
+                        </button>
+
+                        <!-- Filter Form -->
+                        <form method="GET" action="{{ route('customer.index') }}">
+                            <div class="origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pt-1.5 rounded shadow-lg overflow-hidden mt-1"
+                                @click.outside="open = false" @keydown.escape.window="open = false" x-show="open"
+                                x-transition:enter="transition ease-out duration-200 transform"
+                                x-transition:enter-start="opacity-0 -translate-y-2"
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                                x-transition:leave="transition ease-out duration-200"
+                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak>
+                                
+                                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3">
+                                    Filters
+                                </div>
+
+                                <ul class="max-h-40 overflow-y-auto mb-4 px-3 space-y-2">
+                                    @foreach($branches as $branch)
+                                        <li>
+                                            <label class="flex items-center space-x-2">
+                                                <input type="checkbox" name="branch_id[]" value="{{ $branch->id }}" 
+                                                    class="rounded border-gray-300 focus:ring-blue-500"
+                                                    @if(in_array($branch->id, (array) request('branch_id', []))) checked @endif>
+                                                <span>{{ $branch->name }}</span>
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                                <div class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
+                                    <ul class="flex items-center justify-between">
+                                        <li>
+                                            <button type="button" id="clear-filters" class="btn-xs bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 dark:text-slate-300 hover:text-slate-600 dark:hover:text-slate-200"
+                                                onclick="clearFilters()">
+                                                Clear
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="submit" class="btn-xs bg-blue-400 hover:bg-blue-700 text-white"
+                                                @click="open = false" @focusout="open = false">
+                                                Apply
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
                     <a href="{{ route('customer.add') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-4 py-3 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
                         <span class="hidden xs:block ml-2 text-sm">Add Customer</span>
@@ -128,6 +185,9 @@
                             <th class="p-4 text-fonts-100 font-normal">Customer ID</th>
                             <th class="p-4 text-fonts-100 font-normal">Name</th>
                             <th class="p-4 text-fonts-100 font-normal">Address</th>
+                            @can('auditor_access')
+                            <th class="p-4 text-fonts-100 font-normal">Branch</th>
+                            @endcan
                             <th class="p-4 text-fonts-100 font-normal">Action</th>
                         </tr>
                     </thead>
@@ -142,6 +202,9 @@
                                         {{ $list->cty->city_town ?? '' }}
                                     </div>
                                 </td>
+                                @can('auditor_access')
+                                <td class="p-4">{{ $list->branches->name}}</td>
+                                @endcan
                                 <td class="p-4 flex gap-4">
                                     <a href="{{ route('printCustomer.index', $list->id) }}"
                                         class="text-gray-500 hover:text-indigo-500">
@@ -187,4 +250,13 @@
     hideModalButton.addEventListener('click', () => {
         modal.classList.add('hidden');
     });
+
+    document.getElementById('clear-filters').addEventListener('click', function() {
+    document.querySelectorAll('input[name="branch_id[]"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // Redirect to the customer index route
+    window.location.href = "{{ route('customer.index') }}";
+});
 </script>

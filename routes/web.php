@@ -80,6 +80,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Route::resource('customer', App\Http\Controllers\CustomerController::class);
     Route::get('customer-add', [CustomerController::class, 'add'])->name('customer.add');
     Route::get('customer/print/{id}', [CustomerController::class, 'printCustomer'])->name('printCustomer.index');
+    Route::get('customer/show/printsavings/{id}', [CustomerController::class, 'printcustomerSavings'])->name('printcustomerSavings.index');
+    Route::get('customer/show/printloan/{id}', [CustomerController::class, 'printcustomerLoan'])->name('printcustomerLoan.index');
     Route::get('customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::get('customer-daily', [CustomerController::class, 'daily'])->name('customer.daily');
     Route::get('customer-month', [CustomerController::class, 'month'])->name('customer.month');

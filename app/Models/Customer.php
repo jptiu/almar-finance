@@ -113,4 +113,8 @@ class Customer extends Model
     {
         return $this->hasMany(Collection::class, 'customer_id');
     }
+    public function branches()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
 }
