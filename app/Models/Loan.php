@@ -59,4 +59,12 @@ class Loan extends Model
     {
         return $this->hasOne(LoanDetails::class, 'loan_id');
     }
+
+    public function getLatestRunningBalance()
+    {
+        return $this->details()
+            ->whereNotNull('loan_date_paid')
+            ->orderBy('loan_date_paid', 'desc')
+            ->value('loan_running_balance') ?? 0;
+    }
 }

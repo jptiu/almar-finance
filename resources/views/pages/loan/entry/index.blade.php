@@ -38,20 +38,34 @@
                     Attention
                 </h2>
 
-                <!-- Message -->
-                <p class="text-center text-gray-600 dark:text-gray-300 mt-2">
+                <!-- Loan Restriction Message -->
+                <div class="text-center mt-4">
                     @if(session()->has('loan_restriction'))
-                    @php
-                        $loanRestriction = session()->get('loan_restriction');
-                        $check = $loanRestriction['check'];
-                        $message = $loanRestriction['message'];
-                    @endphp
-                
-                    <div class="alert alert-{{ $check ? 'success' : 'danger' }}">
-                        {{ $message }}
-                    </div>
-                @endif
-                </p>
+                        @php
+                            $loanRestriction = session()->get('loan_restriction');
+                            $previousLoan = $loanRestriction['previousLoan'] ?? null;
+                            $message = $loanRestriction['message'] ?? '';
+                        @endphp
+                    
+                        <div class="alert alert-warning border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/30 p-4 mb-4">
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-yellow-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                                <span class="font-medium text-yellow-700 dark:text-yellow-200">{{ $message }}</span>
+                            </div>
+                            @if($previousLoan)
+                                <div class="mt-2 text-sm text-yellow-600 dark:text-yellow-300">
+                                    Previous loan details:
+                                    <ul class="list-disc list-inside mt-1">
+                                        <li>Equivalent months: {{ number_format($previousLoan->equivalent_months, 0) }}</li>
+                                        <li>Total remaining: {{ number_format($previousLoan->getLatestRunningBalance(), 2) }}</li>
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                </div>
 
                 <!-- Buttons -->
                 <div class="mt-6 flex gap-4">
@@ -73,7 +87,7 @@
                             </h2>
 
                             <!-- Form -->
-                            <form method="POST" action="{{ route('loan.request', ['id' => $check->id]) }}" class="mt-6">
+                            <form method="POST" action="{{ route('loan.request', ['id' => $previousLoan->id]) }}" class="mt-6">
                                 @csrf
 
                                 <div class="mb-4">

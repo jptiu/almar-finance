@@ -17,7 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class LoanController extends Controller
 {
@@ -123,7 +123,7 @@ class LoanController extends Controller
                 'rows.*.due_date' => 'required|date',
                 'rows.*.due_amount' => 'required|numeric',
                 'rows.*.remaining_balance' => 'required|numeric',
-                'upload_file.*' => 'required|file|mimes:jpeg,png,pdf|max:2048', // Adjust validation rules as needed
+                'upload_file.*' => 'required|file|mimes:jpeg,png,pdf|max:2048',
             ]);
 
             // Initialize an array to store file data
@@ -131,95 +131,76 @@ class LoanController extends Controller
             // Check if files are uploaded
             if ($request->hasFile('upload_file')) {
                 $files = $request->file('upload_file');
-
                 foreach ($files as $file) {
                     if ($file->isValid()) {
-                        // Encode file content to base64
                         $imageBase64 = base64_encode(file_get_contents($file->path()));
-
-                        // Add file data to the array
                         $filesData[] = [
-                            'file_name' => $file->getClientOriginalName(), // Original file name
-                            'mime_type' => $file->getMimeType(), // MIME type (e.g., image/jpeg)
-                            'size' => $file->getSize(), // File size in bytes
-                            'base64' => $imageBase64, // Base64-encoded file content
+                            'file_name' => $file->getClientOriginalName(),
+                            'mime_type' => $file->getMimeType(),
+                            'size' => $file->getSize(),
+                            'base64' => $imageBase64,
                         ];
                     }
                 }
             }
-            // Convert the array to JSON
             $filesJson = json_encode($filesData);
 
-            $check = Loan::with([
+            // Check for existing unpaid loan
+            $previousLoan = Loan::with([
                 'details' => function ($query) {
-                    $query->where('loan_date_paid', null); // Only include unpaid details
-                }
+                    $query->where('loan_date_paid', null);
+                },
+                'customer'
             ])
                 ->where('customer_id', $request->customer_id)
                 ->where('status', 'UNPD')
                 ->first();
-            // dd($check);
 
-            // $checkDetails = $check->details;
-            if (isset($check)) {
-                // Count the number of unpaid details
-                $unpaidCount = $check->details->count();
-                // Calculate the equivalent months (2 unpaid details = 1 month)
-                $equivalentMonths = floor($unpaidCount / 2); // Use floor() to round down
+            $totalRemaining = 0;
+            if ($previousLoan) {
+                // Count unpaid details and calculate equivalent months
+                $unpaidCount = $previousLoan->details->count();
+                $equivalentMonths = floor($unpaidCount / 2);
+                $previousLoan->equivalent_months = $equivalentMonths;
 
-                // Add the equivalent_months field to the loan
-                $check->equivalent_months = $equivalentMonths;
-                $message = 'This customer has a ' . number_format($check->equivalent_months, 0) . ' month pending loan and is not eligible for renewal at this time.';
-                if (number_format($equivalentMonths, 0) > 1) {
-                    return redirect()->back()->with('loan_restriction', compact('check', 'message'));
+                // Check if customer is eligible for renewal
+                if ($equivalentMonths > 1) {
+                    $message = 'This customer has a ' . number_format($equivalentMonths, 0) . ' month pending loan and is not eligible for renewal at this time.';
+                    return redirect()->back()->with('loan_restriction', compact('previousLoan', 'message'));
                 }
 
-                if (isset($check->details)) {
-                    $totalRemaining = 0;
-
-                    foreach ($check->details as $detail) {
-                        if ($detail->loan_date_paid === null) {
-                            $totalRemaining += $detail->loan_due_amount;
-                            $detail->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
-                            $detail->loan_amount_paid = number_format($detail->loan_due_amount, 2);
-                            $detail->save();
-                        }
-                    }
-                    $check->remaining = $totalRemaining;
-
-                    // Check if all details are paid
-                    $unpaidDetailsCount = $check->details()->where('loan_date_paid', null)->count();
-                    if ($unpaidDetailsCount === 0) {
-                        // Set loan status to FULPD if all details are paid
-                        $loanCheck = Loan::with([
-                            'details' => function ($query) {
-                                $query->where('loan_date_paid', '!=', null); // Only include unpaid details
-                            }
-                        ])
-                            ->where('customer_id', $request->customer_id)
-                            ->where('status', 'UNPD')
-                            ->first();
-                        $loanCheck->status = 'FULPD';
-                        $loanCheck->save();
-
-                        $log = new ActivityLog();
-                        $log->user_id = auth()->user()->id;
-                        $log->description = 'Client ' . $check->customer->first_name . ' ' . $check->customer->last_name . ' renewed a loan with a remaining balance of ' . $equivalentMonths . ' months, amounting to ' . number_format($totalRemaining, 2) . ', which will be deducted from the renewed loan.';
-                        $log->save();
+                // Calculate total remaining balance and mark previous loan details as paid
+                foreach ($previousLoan->details as $detail) {
+                    if ($detail->loan_date_paid === null) {
+                        $totalRemaining += $detail->loan_due_amount;
+                        $detail->loan_date_paid = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
+                        $detail->loan_amount_paid = number_format($detail->loan_due_amount, 2);
+                        $detail->save();
                     }
                 }
+
+                // Update previous loan status
+                $previousLoan->status = 'FULPD';
+                $previousLoan->save();
+
+                // Log the renewal
+                $log = new ActivityLog();
+                $log->user_id = auth()->user()->id;
+                $log->description = 'Client ' . $previousLoan->customer->first_name . ' ' . $previousLoan->customer->last_name . 
+                                   ' renewed a loan with a remaining balance of ' . $equivalentMonths . 
+                                   ' months, amounting to ' . number_format($totalRemaining, 2) . 
+                                   ', which will be deducted from the renewed loan.';
+                $log->save();
             }
 
-
-            // Create the loan entry
+            // Create the new loan with adjusted amounts
             $loan = new Loan();
             $loan->loan_type = $request->loan_type;
             $loan->transaction_type = $request->transaction_type;
-            // $loan->trans_no = $request->trans_no; // If needed, uncomment
             $loan->date_of_loan = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
             $loan->customer_id = $request->customer_id;
             $loan->customer_type = $request->customer_type;
-            $loan->status = null; // Default status (adjust based on your logic)
+            $loan->status = null;
             $loan->principal_amount = $request->principal_amount;
             $loan->days_to_pay = $request->days_to_pay;
             $loan->months_to_pay = $request->months_to_pay;
@@ -227,48 +208,49 @@ class LoanController extends Controller
             $loan->interest_amount = $request->interest_amount;
             $loan->svc_charge = $request->svc_charge ?? '';
             $loan->actual_record = $request->actual_record ?? '';
-            // dd((float)$request->payable_amount - (float)$check->remaining);
-            $loan->payable_amount = $request->payable_amount;
-            // $loan->note = 'Deducted amount from previous loan: ' . number_format($check->remaining??0, 2);
+            
+            // Deduct the remaining balance from the new loan's payable amount
+            $loan->payable_amount = (float)$request->payable_amount - $totalRemaining;
+            $loan->note = $totalRemaining > 0 ? 'Deducted amount from previous loan: ' . number_format($totalRemaining, 2) : null;
+            
             $loan->branch_id = $branch;
             $loan->user_id = auth()->user()->id;
-            if (isset($filesJson) == true) {
+            if (!empty($filesJson)) {
                 $loan->file = $filesJson;
             }
             $loan->save();
 
-            // Save each payment row as LoanDetails
+            // Adjust and save loan details with the deducted amount
+            $totalDeduction = $totalRemaining / count($validatedData['rows']); // Distribute deduction evenly
             foreach ($validatedData['rows'] as $row) {
+                $adjustedDueAmount = $row['due_amount'] - ($totalDeduction > 0 ? $totalDeduction : 0);
                 LoanDetails::create([
                     'loan_id' => $loan->id,
                     'loan_due_date' => $row['due_date'],
-                    'loan_due_amount' => $row['due_amount'],
-                    'loan_running_balance' => $row['remaining_balance'],
+                    'loan_due_amount' => max(0, $adjustedDueAmount), // Ensure amount doesn't go negative
+                    'loan_running_balance' => max(0, $row['remaining_balance'] - ($totalDeduction > 0 ? $totalDeduction : 0)),
                     'user_id' => auth()->user()->id,
                     'branch_id' => $branch,
                     'loan_day_no' => $row['id'],
                 ]);
             }
 
+            // Log the new loan creation
             $log = new ActivityLog();
             $log->user_id = auth()->user()->id;
-            $log->description = auth()->user()->name . ' Created the loan request.';
+            $log->description = auth()->user()->name . ' Created the loan request' . 
+                               ($totalRemaining > 0 ? ' with deduction of ' . number_format($totalRemaining, 2) . ' from previous loan.' : '.');
             $log->save();
 
-            $loanDetails = Loan::with([
-                'customer',
-            ])->findOrFail($loan->id);
+            $loanDetails = Loan::with(['customer'])->findOrFail($loan->id);
 
             // Send email to HR
-            $hrEmail = 'hr@almarfinance.com'; // Replace with HR email
-            Mail::to($hrEmail)->send(new LoanApprovalRequestMail($loanDetails));
-            // Redirect back with success message
+            Mail::to('hr@almarfinance.com')->send(new LoanApprovalRequestMail($loanDetails));
+            
             return redirect()->back()->with('success', 'Loan created successfully and is pending approval.');
         } catch (\Throwable $th) {
-            // Redirect back with the error message
             return redirect()->back()->with('error', 'Error: ' . $th->getMessage());
         }
-
     }
 
     public function gracePeriod(LoanCreateRequest $request)

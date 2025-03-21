@@ -270,7 +270,7 @@
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                         {{ $list->renewal_interest_rate ?? '' }}
                                     </td>
-                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-wrap">
                                         {{ $list->notes ?? '' }}
                                     </td>
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">

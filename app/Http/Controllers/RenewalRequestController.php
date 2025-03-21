@@ -8,9 +8,9 @@ use App\Models\CustomerType;
 use App\Models\Loan;
 use App\Models\LoanDetails;
 use App\Models\RenewalRequest;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class RenewalRequestController extends Controller
 {
@@ -94,14 +94,21 @@ class RenewalRequestController extends Controller
     {
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         $branch = auth()->user()->branch_id;
-        $loan = Loan::with(['details' => function ($query) {
-            $query->whereNotNull('loan_date_paid'); // Filter due today
-        }])->where('branch_id', $branch)->find($id);
+        $loan = Loan::with([
+            'details' => function ($query) {
+                $query->whereNotNull('loan_date_paid'); // Filter due today
+            }
+        ])->where('status', 'UNPD')
+        ->where('branch_id', $branch)->find($id);
+
+        if ($loan->status == 'UNPD' && $loan->details->last() == null) {
+            return redirect()->back()->with('error', 'No Loan Payment has been made.');
+        }
 
         $unpaidCount = $loan->details->count();
         // Calculate the equivalent months (2 unpaid details = 1 month)
         $equivalentMonths = floor($unpaidCount / 2);
-        
+
         $renewal = new RenewalRequest();
         $renewal->loan_id = $loan->id;
         $renewal->branch_id = $branch;
@@ -155,47 +162,80 @@ class RenewalRequestController extends Controller
         $unpaid = LoanDetails::where('loan_id', $renewal->loan_id)->where('loan_date_paid', null)->get();
 
         foreach ($unpaid as $detail) {
-            $detail->loan_date_paid = now();
+            $detail->loan_date_paid = now()->toDateString();
             $detail->save();
-        }
-
-        $newLoan = new Loan();
-        $newLoan->branch_id = $renewal->branch_id;
-        $newLoan->customer_id = $renewal->customer_id;
-        $newLoan->date_of_loan = $renewal->approved_date;
-        $newLoan->months_to_pay = $renewal->renewal_tenure;
-        $newLoan->principal_amount = $renewal->renewed_amount;
-        $newLoan->interest = $renewal->renewal_interest_rate;
-        $newLoan->status = 'UNPD';
-        $newLoan->save();
-
-        $staggeredPayments = $renewal->renewed_amount / $renewal->renewal_tenure;
-        $currentBalance = $renewal->renewed_amount;
-
-        $currentDay = $renewal->approved_date->copy()->day;
-        for ($i = 0; $i < $renewal->renewal_tenure; $i++) {
-            $newLoanDetail = new LoanDetails();
-            $newLoanDetail->loan_day_no = $i + 1;
-            $newLoanDetail->loan_id = $newLoan->id;
-            $newLoanDetail->loan_date_paid = null;
-            $newLoanDetail->loan_running_balance = $currentBalance;
-            $newLoanDetail->loan_due_date = $renewal->approved_date->copy()->addMonths($i + 1);
-            $newLoanDetail->loan_due_amount = $staggeredPayments + ($staggeredPayments * ($renewal->renewal_interest_rate / 100));
-            $newLoanDetail->save();
-
-            $currentBalance -= $staggeredPayments;
         }
 
         $loan = Loan::find($renewal->loan_id);
         $loan->status = 'FULPD';
         $loan->save();
 
+        $newLoan = new Loan();
+        $newLoan->branch_id = $renewal->branch_id;
+        $newLoan->customer_id = $renewal->customer_id;
+        $newLoan->date_of_loan = $renewal->approved_date->toDateString();
+        $newLoan->months_to_pay = $renewal->renewal_tenure;
+        $newLoan->principal_amount = $renewal->renewed_amount;
+        $newLoan->interest = number_format($renewal->renewal_interest_rate);
+        $newLoan->interest_amount = ($renewal->renewal_interest_rate / 100) * $renewal->renewed_amount * $renewal->renewal_tenure;
+        $newLoan->transaction_type = $loan->transaction_type;
+        $newLoan->loan_type = $loan->loan_type;
+        $newLoan->payable_amount = number_format(
+            $renewal->renewed_amount + ($renewal->renewed_amount * ($renewal->renewal_interest_rate / 100) * $renewal->renewal_tenure),
+            2,'',''
+        );
+        // Calculate total days across all months in the tenure
+        $totalDays = 0;
+        $currentDate = $renewal->approved_date->copy();
+        for ($i = 0; $i < $renewal->renewal_tenure; $i++) {
+            $totalDays += $currentDate->daysInMonth;
+            $currentDate->addMonth();
+        }
+        $newLoan->days_to_pay = $totalDays;
+        $newLoan->status = 'UNPD';
+        $newLoan->user_id = auth()->user()->id;
+        $newLoan->save();
+        $newLoan->trans_no = $newLoan->id;
+        $newLoan->update();
+
+        // Calculate staggered payments (two payments per month)
+        $staggeredPayments = $renewal->renewed_amount / ($renewal->renewal_tenure * 2);
+        $currentBalance = $renewal->renewed_amount;
+        $startDate = $renewal->approved_date->copy();
+
+        for ($month = 0; $month < $renewal->renewal_tenure; $month++) {
+            // First payment of the month (15th)
+            $newLoanDetail = new LoanDetails();
+            $newLoanDetail->loan_day_no = ($month * 2) + 1;
+            $newLoanDetail->loan_id = $newLoan->id;
+            $newLoanDetail->loan_date_paid = null;
+            $newLoanDetail->loan_running_balance = $currentBalance;
+            $newLoanDetail->loan_due_date = $startDate->copy()->addMonths($month)->setDay(15)->format('Y-m-d');
+            // $newLoanDetail->loan_amount = $staggeredPayments;
+            $newLoanDetail->loan_due_amount = $staggeredPayments + ($staggeredPayments * ($renewal->renewal_interest_rate / 100));
+            $newLoanDetail->save();
+            $currentBalance -= $staggeredPayments;
+
+            // Second payment of the month (last day)
+            $newLoanDetail = new LoanDetails();
+            $newLoanDetail->loan_day_no = ($month * 2) + 2;
+            $newLoanDetail->loan_id = $newLoan->id;
+            $newLoanDetail->loan_date_paid = null;
+            $newLoanDetail->loan_running_balance = $currentBalance;
+            $newLoanDetail->loan_due_date = $startDate->copy()->addMonths($month)->endOfMonth()->format('Y-m-d');
+            // $newLoanDetail->loan_amount = $staggeredPayments;
+            $newLoanDetail->loan_due_amount = $staggeredPayments + ($staggeredPayments * ($renewal->renewal_interest_rate / 100));
+            $newLoanDetail->save();
+
+            $currentBalance -= $staggeredPayments;
+        }
+
         $renewalDate = $newLoanDetail->loan_date_paid;
         $expirationDate = $newLoanDetail->loan_due_date;
         $totalAmount = $newLoanDetail->loan_running_balance;
 
         Mail::to($renewal->customer->email)->send(new RenewalApproved($renewal->customer->name, $renewalDate, $expirationDate, $totalAmount));
-    
+
 
         return redirect()->back()->with('success', 'Renewal request approved.');
     }
@@ -205,6 +245,8 @@ class RenewalRequestController extends Controller
         abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 404);
         $renewal = RenewalRequest::find($id);
         $renewal->status = 'DECLINED';
+        $renewal->approved_by = auth()->user()->id;
+        $renewal->approved_date = now();
         $renewal->save();
 
         return redirect()->back()->with('success', 'Renewal request declined.');
