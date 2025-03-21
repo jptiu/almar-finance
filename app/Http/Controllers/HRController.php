@@ -203,7 +203,7 @@ class HRController extends Controller
 
     public function announcementHr()
     {
-        $lists = Announcement::get();
+        $lists = Announcement::latest()->paginate(10); // Paginate with 10 per page
 
         return view('pages.hr.announce.index', compact('lists'));
     }
