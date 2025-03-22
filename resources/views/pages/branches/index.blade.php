@@ -47,8 +47,9 @@
                     <thead class="bg-bgbody-100 rounded-2xl">
                         <tr class="text-fonts-100 font-extrabold">
                             <th class="p-4 text-fonts-100 font-normal">ID</th>
-                            <th class="p-4 text-fonts-100 font-normal">Name</th>
-                            <th class="p-4 text-fonts-100 font-normal">Location</th>
+                            <th class="p-4 text-fonts-100 font-normal">Branch Name</th>
+                            <th class="p-4 text-fonts-100 font-normal">Branch Location</th>
+                            <th class="p-4 text-fonts-100 font-normal">Branch Type</th>
                             <th class="p-4 text-fonts-100 font-normal">Users</th>
                             <th class="p-4 text-fonts-100 font-normal">Action</th>
                         </tr>
@@ -60,6 +61,7 @@
                                 <td class="p-4">{{ $branch->id }}</td>
                                 <td class="p-4">{{ $branch->name }}</td>
                                 <td class="p-4">{{ $branch->location }}</td>
+                                <td class="p-4">{{ $branch->type }}</td>
                                 <td class="p-4">
                                     <ul>
                                         @foreach ($branch->users as $user)

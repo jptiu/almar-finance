@@ -24,9 +24,10 @@ class BranchController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
+            'type' => 'required|string|max:255',
         ]);
 
-        Branch::create($request->only(['name', 'location']));
+        Branch::create($request->only(['name', 'location', 'type']));
         return redirect()->route('branches.index')->with('success', 'Branch created successfully.');
     }
 
