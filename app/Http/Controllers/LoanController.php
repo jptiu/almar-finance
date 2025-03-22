@@ -257,6 +257,22 @@ class LoanController extends Controller
         }
     }
 
+    public function getCustomerSuggestions(Request $request)
+    {
+        $query = $request->get('query');
+        
+        $customers = Customer::where(function ($q) use ($query) {
+            $q->where('first_name', 'LIKE', '%' . $query . '%')
+              ->orWhere('last_name', 'LIKE', '%' . $query . '%');
+        })
+        ->where('branch_id', auth()->user()->branch_id)
+        ->select('id', 'first_name', 'last_name', 'type', 'status')
+        ->take(10)
+        ->get();
+
+        return response()->json($customers);
+    }
+
     public function gracePeriod(LoanCreateRequest $request)
     {
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);

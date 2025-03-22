@@ -353,12 +353,11 @@
                                 <div class="md:col-span-1">
                                     <label for="loan_type" class="text-black font-medium">Loan Type</label>
                                     <select name="loan_type" id="loan_type" required
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
-                                    <option>Select</option>
-                                    <option value="daily">Daily</option>
-                                    {{-- <option value="weekly">Weekly</option>
-                                    <option value="semi-monthly">Semi-Monthly</option> --}}
-                                    <option value="monthly">Monthly</option>
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
+                                        <option value="daily" {{ auth()->user()->branch->type === 'daily' ? 'selected' : '' }}>Daily</option>
+                                        {{-- <option value="weekly">Weekly</option>
+                                        <option value="semi-monthly">Semi-Monthly</option> --}}
+                                        <option value="monthly" {{ auth()->user()->branch->type === 'monthly' ? 'selected' : '' }}>Monthly</option>
                                     </select>
                                 </div>
 
@@ -392,33 +391,31 @@
                         <div class="lg:col-span-2">
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
 
-                                <div class="md:col-span-1">
-                                    <label for="customer_id" class="text-black font-medium">Customer ID</label>
-                                    <input onchange="getCustomerID()" type="text" name="customer_id"
-                                        id="customer_id"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="" placeholder="" required />
-                                </div>
-
                                 <div class="md:col-span-2">
                                     <label for="name" class="text-black font-medium">Customer Name</label>
-                                    <input type="text" name="name" id="name"
+                                    <input type="text" name="name" id="customer_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="{{ $customer->first_name ?? '' }}" placeholder="" />
+                                        placeholder="Type customer name..." required />
+                                    <div id="customer-suggestions" class="absolute z-10 w-1/2 mt-1 bg-white rounded-md shadow-lg border border-gray-300 hidden"></div>
+                                </div>
+
+                                <div class="md:col-span-1 hidden">
+                                    <label for="customer_id" class="text-black font-medium">Customer ID</label>
+                                    <input type="hidden" name="customer_id" id="customer_id" required />
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="type" class="text-black font-medium">Customer Type</label>
-                                    <input type="text" name="type" id="type"
+                                    <input type="text" name="type" id="customer_type"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="{{ $customer->type ?? '' }}" placeholder="" disabled />
+                                        placeholder="" disabled />
                                 </div>
 
                                 <div class="md:col-span-1">
                                     <label for="status" class="text-black font-medium">Status</label>
-                                    <input type="text" name="status" id="status"
+                                    <input type="text" name="status" id="customer_status"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        value="{{ $customer->status ?? '' }}" placeholder="" />
+                                        placeholder="" disabled />
                                 </div>
                             </div>
                         </div>
@@ -1006,6 +1003,60 @@
         } else {
             fileUploadField.classList.add('hidden');
         }
+    });
+</script>
+<script>
+    // Define the selectCustomer function globally
+    window.selectCustomer = function(id, firstName, lastName, type, status) {
+        const customerNameInput = document.getElementById('customer_name');
+        const customerIdInput = document.getElementById('customer_id');
+        const customerTypeInput = document.getElementById('customer_type');
+        const customerStatusInput = document.getElementById('customer_status');
+        const customerSuggestions = document.getElementById('customer-suggestions');
+
+        customerNameInput.value = `${firstName} ${lastName}`;
+        customerIdInput.value = id;
+        customerTypeInput.value = type;
+        customerStatusInput.value = status;
+        customerSuggestions.classList.add('hidden');
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const customerNameInput = document.getElementById('customer_name');
+        const customerSuggestions = document.getElementById('customer-suggestions');
+        const customerIdInput = document.getElementById('customer_id');
+        const customerTypeInput = document.getElementById('customer_type');
+        const customerStatusInput = document.getElementById('customer_status');
+
+        customerNameInput.addEventListener('input', (e) => {
+            const query = e.target.value;
+            
+            if (query.length >= 2) {
+                fetch(`/loan/customer-suggestions?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(customers => {
+                        if (customers.length > 0) {
+                            customerSuggestions.innerHTML = customers.map(customer => `
+                                <div class="p-2 hover:bg-gray-100 cursor-pointer" onclick="window.selectCustomer(${customer.id}, '${customer.first_name}', '${customer.last_name}', '${customer.type}', '${customer.status}')">
+                                    ${customer.first_name} ${customer.last_name}
+                                </div>
+                            `).join('');
+                            customerSuggestions.classList.remove('hidden');
+                        } else {
+                            customerSuggestions.classList.add('hidden');
+                        }
+                    });
+            } else {
+                customerSuggestions.classList.add('hidden');
+            }
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!customerNameInput.contains(e.target) && !customerSuggestions.contains(e.target)) {
+                customerSuggestions.classList.add('hidden');
+            }
+        });
     });
 </script>
 <script>

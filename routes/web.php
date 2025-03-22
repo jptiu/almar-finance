@@ -135,6 +135,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('request-renewals', [RenewalRequestController::class, 'index'])->name('request-renewals.index');
     Route::get('request-renewals/approve/{id}', [RenewalRequestController::class, 'renewApprove'])->name('request-renewals.approve');
     Route::get('request-renewals/decline/{id}', [RenewalRequestController::class, 'renewDecline'])->name('request-renewals.decline');
+    Route::get('/loan/customer-suggestions', [LoanController::class, 'getCustomerSuggestions'])->name('loan.customer.suggestions');
 
     // Collection
     Route::get('collection', [CollectionController::class, 'index'])->name('collection.index');
