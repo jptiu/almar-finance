@@ -14,6 +14,7 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\ComputeCOHController;
 use App\Http\Controllers\CustomerTypeController;
+use App\Http\Controllers\EditRequestController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\HRController;
@@ -136,6 +137,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('request-renewals/approve/{id}', [RenewalRequestController::class, 'renewApprove'])->name('request-renewals.approve');
     Route::get('request-renewals/decline/{id}', [RenewalRequestController::class, 'renewDecline'])->name('request-renewals.decline');
     Route::get('/loan/customer-suggestions', [LoanController::class, 'getCustomerSuggestions'])->name('loan.customer.suggestions');
+
+    // Edit Requests
+    Route::post('loan/{loanId}/request-edit', [EditRequestController::class, 'store'])->name('loan.request-edit.store');
+    Route::get('loan/edit-requests', [EditRequestController::class, 'index'])->name('loan.edit-requests.index');
+    Route::post('loan/edit-requests/{id}/approve', [EditRequestController::class, 'approve'])->name('loan.edit-requests.approve');
+    Route::post('loan/edit-requests/{id}/decline', [EditRequestController::class, 'decline'])->name('loan.edit-requests.decline');
 
     // Collection
     Route::get('collection', [CollectionController::class, 'index'])->name('collection.index');

@@ -43,70 +43,60 @@
                 <!-- <x-dropdown-filter align="right" /> -->
 
                 <!-- Add view button -->
-                <a id="open-modal" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
-                        fill="#FFFFFF">
-                        <path
-                            d="M216-216h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L297-144H144Zm600-549-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z" />
-                    </svg>
-                    <span class="hidden xs:block ml-2">Request to Edit</span>
-                </a>
+                <button id="open-modal" type="button"
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Request to Edit
+                </button>
 
                 <!-- Modal -->
-                <div id="modal"
-                    class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50 flex items-center justify-center">
-                    <!-- Modal Content -->
-                    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                            <div
-                                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <!-- Modal Header -->
-                                <div class="flex justify-between items-center p-4 mb-4">
-                                    <h2 class="text-lg font-semibold">Request to Edit</h2>
-                                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">&times;</button>
+                <div id="modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+                    <div class="flex items-center justify-center min-h-screen px-4">
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <!-- Modal Header -->
+                            <div class="flex justify-between items-center p-4 mb-4">
+                                <h2 class="text-lg font-semibold">Request to Edit</h2>
+                                <button id="close-modal" class="text-gray-500 hover:text-gray-700">&times;</button>
+                            </div>
+
+                            <!-- Modal Form -->
+                            <form id="modal-form" class="px-6" action="{{ route('loan.request-edit.store', $loan->id) }}" method="POST">
+                                @csrf
+                                <!-- Date Input -->
+                                <div class="mb-4">
+                                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                                    <input type="date" id="date" name="date"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
                                 </div>
 
-                                <!-- Modal Form -->
-                                <form id="modal-form" class="px-6">
-                                    <!-- Date Input -->
-                                    <div class="mb-4">
-                                        <label for="date"
-                                            class="block text-sm font-medium text-gray-700">Date</label>
-                                        <input type="date" id="date" name="date"
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                                            required>
-                                    </div>
+                                <div class="mb-4">
+                                    <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
+                                    <input type="time" id="time" name="time"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                        required>
+                                </div>
 
-                                    <div class="mb-4">
-                                        <label for="time"
-                                            class="block text-sm font-medium text-gray-700">Time</label>
-                                        <input type="time" id="time" name="time"
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                                            required>
-                                    </div>
+                                <!-- Reason Input -->
+                                <div class="mb-4">
+                                    <label for="reason" class="block text-sm font-medium text-gray-700">Reason</label>
+                                    <textarea id="reason" name="reason" rows="3"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Enter reason here..." required></textarea>
+                                </div>
 
-                                    <!-- Reason Input -->
-                                    <div class="mb-4">
-                                        <label for="reason"
-                                            class="block text-sm font-medium text-gray-700">Reason</label>
-                                        <textarea id="reason" name="reason" rows="3"
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                                            placeholder="Enter reason here..." required></textarea>
-                                    </div>
-
-                                    <!-- Modal Actions -->
-                                    <div class="flex justify-end mb-4">
-                                        <button type="button" id="close-modal-btn"
-                                            class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2 hover:bg-gray-400">
-                                            Cancel
-                                        </button>
-                                        <button type="submit"
-                                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                            Submit
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                                <!-- Modal Actions -->
+                                <div class="flex justify-end mb-4">
+                                    <button type="button" id="close-modal-btn"
+                                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2 hover:bg-gray-400">
+                                        Cancel
+                                    </button>
+                                    <button type="submit"
+                                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -117,9 +107,8 @@
                     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
                     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                            <div
-                                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        <div class="flex items-center justify-center min-h-screen px-4">
+                            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                                 <form action="{{ route('barangay.importcsv') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
@@ -136,7 +125,7 @@
                                                     <polyline points="16 16 12 12 8 16" />
                                                 </svg>
                                             </div>
-                                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                            <div class="mt-3 text-center sm:mt-0 sm:text-left">
                                                 <h3 class="text-base font-semibold leading-6 text-gray-900"
                                                     id="modal-title">Import Barangay</h3>
                                                 <div class="mt-2">
@@ -503,7 +492,8 @@
                                                                 class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                                                                 <table
                                                                     class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                                                    <thead class="bg-primary-100">
+                                                                    <thead
+                                                                        class="bg-primary-100">
                                                                         <tr>
                                                                             <th scope="col" id="modal-title"
                                                                                 class="px-4 py-3.5 text-base text-center rtl:text-right text-white dark:text-white">
@@ -743,46 +733,76 @@
     }
 </script>
 
-
 <script>
-    // References to modal elements
-    const modal = document.getElementById("modal");
-    const openModalBtn = document.getElementById("open-modal");
-    const closeModalBtn = document.getElementById("close-modal");
-    const closeModalBtn2 = document.getElementById("close-modal-btn");
-    const modalForm = document.getElementById("modal-form");
+    document.addEventListener('DOMContentLoaded', () => {
+        const openModalBtn = document.getElementById('open-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const closeBtn = document.getElementById('close-modal-btn');
+        const modal = document.getElementById('modal');
+        const modalForm = document.getElementById('modal-form');
+        const loanId = {{ $loan->id }};
 
-    // Show the modal
-    openModalBtn.addEventListener("click", () => {
-        modal.classList.remove("hidden");
-    });
+        // Open modal
+        openModalBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.remove('hidden');
+        });
 
-    // Hide the modal
-    closeModalBtn.addEventListener("click", () => {
-        modal.classList.add("hidden");
-    });
+        // Close modal
+        [closeModalBtn, closeBtn].forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modalForm.reset();
+            });
+        });
 
-    closeModalBtn2.addEventListener("click", () => {
-        modal.classList.add("hidden");
-    });
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                modalForm.reset();
+            }
+        });
 
-    // Handle form submission
-    modalForm.addEventListener("submit", (e) => {
-        e.preventDefault(); // Prevent default form submission
+        // Submit form
+        modalForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(modalForm);
+            
+            try {
+                const response = await fetch(modalForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: formData
+                });
 
-        // Collect form data
-        const date = document.getElementById("date").value;
-        const reason = document.getElementById("reason").value;
-
-        // Log or use form data as needed
-        console.log("Date:", date);
-        console.log("Reason:", reason);
-
-        // Close the modal
-        modal.classList.add("hidden");
-
-        // Optional: Reset form
-        modalForm.reset();
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    modal.classList.add('hidden');
+                    modalForm.reset();
+                    alert(data.message || 'Edit request submitted successfully');
+                } else {
+                    let errorMessage = 'Failed to submit edit request';
+                    if (data.errors) {
+                        errorMessage = Object.values(data.errors).flat().join('\n');
+                    } else if (data.message) {
+                        errorMessage = data.message;
+                    }
+                    alert(errorMessage);
+                }
+            } catch (error) {
+                console.error('Error details:', {
+                    error: error,
+                    message: error.message,
+                    stack: error.stack
+                });
+                alert('An error occurred while submitting the request: ' + error.message);
+            }
+        });
     });
 </script>
 
