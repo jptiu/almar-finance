@@ -395,7 +395,7 @@
                                     <label for="name" class="text-black font-medium">Customer Name</label>
                                     <input type="text" name="name" id="customer_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
-                                        placeholder="Type customer name..." required />
+                                        placeholder="Type to search customer name..." required />
                                     <div id="customer-suggestions" class="absolute z-10 w-1/2 mt-1 bg-white rounded-md shadow-lg border border-gray-300 hidden"></div>
                                 </div>
 
