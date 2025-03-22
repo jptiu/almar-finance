@@ -66,6 +66,9 @@ Route::get('/storage/{path}', function ($path) {
 Route::redirect('/', 'login');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    // Loan Summary Routes
+    require __DIR__.'/loan-summary.php';
+
     // Barangay
     // Route::resource('barangay', App\Http\Controllers\BarangayController::class);
     Route::get('barangay', [BarangayController::class, 'index'])->name('barangay.index');

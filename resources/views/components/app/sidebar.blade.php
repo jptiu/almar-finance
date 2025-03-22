@@ -775,6 +775,20 @@
                     </a>
                 </li>
                 <li
+                    class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['loan-summary'])) {{ 'bg-accent-100' }} @endif">
+                    <a href="{{ route('loan-summary.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loan-summary'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                            </svg>
+                            <span
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                Loan Summary</span>
+                        </div>
+                    </a>
+                </li>
+                <li
                     class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['request-renewals'])) {{ 'bg-accent-100' }} @endif">
                     <a href="{{ route('request-renewals.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['request-renewals'])) {{ 'hover:text-slate-200' }} @endif">
