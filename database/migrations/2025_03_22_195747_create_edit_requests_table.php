@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('edit_requests', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('loan_id')->unsigned();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('user_id');
             $table->date('requested_date');
             $table->time('requested_time');
             $table->text('reason');
             $table->enum('status', ['pending', 'approved', 'declined'])->default('pending');
             $table->timestamps();
-
-            $table->foreign('loan_id')->references('id')->on('loans')->onDelete('cascade');
         });
     }
 
