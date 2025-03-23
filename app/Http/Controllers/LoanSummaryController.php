@@ -8,6 +8,7 @@ use App\Models\Loan;
 use Carbon\Carbon;
 use App\Exports\LoanSummaryExport;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpWord\IOFactory;
 
 class LoanSummaryController extends Controller
 {
@@ -49,15 +50,43 @@ class LoanSummaryController extends Controller
             $dates = explode(' - ', $dateRange);
             $startDate = Carbon::createFromFormat('M j, Y', trim($dates[0]))->format('m/d/Y');
             $endDate = Carbon::createFromFormat('M j, Y', trim($dates[1]))->format('m/d/Y');
-        } else {
-            // Use current month if no date range provided
-            $startDate = Carbon::now()->startOfMonth()->format('m/d/Y');
-            $endDate = Carbon::now()->endOfMonth()->format('m/d/Y');
+
+            $export = new LoanSummaryExport($startDate, $endDate);
+            $phpWord = $export->generate();
+
+            $filename = 'loan_summary_' . Carbon::now()->format('Y-m-d_His') . '.docx';
+            
+            $tempFile = sys_get_temp_dir() . '/' . $filename;
+            $phpWord->save($tempFile);
+            
+            return response()->download($tempFile)->deleteFileAfterSend(true);
         }
 
-        return Excel::download(
-            new LoanSummaryExport($startDate, $endDate),
-            'loan_summary_' . Carbon::now()->format('m_d_Y') . '.xlsx'
-        );
+        return back()->with('error', 'Please select a date range');
+    }
+
+    public function print(Request $request)
+    {
+        abort_unless(Gate::allows('loan_access'), 403);
+
+        $dateRange = $request->input('date');
+        
+        if ($dateRange) {
+            // Extract start and end dates from the range
+            $dates = explode(' - ', $dateRange);
+            $startDate = Carbon::createFromFormat('M j, Y', trim($dates[0]))->format('m/d/Y');
+            $endDate = Carbon::createFromFormat('M j, Y', trim($dates[1]))->format('m/d/Y');
+
+            $loans = Loan::with(['customer', 'customer.customerType'])
+                ->whereBetween('date_of_loan', [
+                    $startDate,
+                    $endDate
+                ])
+                ->get();
+
+            return view('pages.loan-summary.print', compact('loans', 'startDate', 'endDate'));
+        }
+
+        return back()->with('error', 'Please select a date range');
     }
 }

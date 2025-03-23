@@ -10,4 +10,6 @@ Route::middleware(['auth', 'verified'])
             ->name('loan-summary.index');
         Route::post('/export', [LoanSummaryController::class, 'export'])
             ->name('loan-summary.export');
+        Route::get('/print', [LoanSummaryController::class, 'print'])
+            ->name('loan-summary.print');
     });
