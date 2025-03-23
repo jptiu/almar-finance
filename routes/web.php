@@ -42,6 +42,7 @@ use App\Http\Controllers\BranchInfoController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\SavingsController;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\SupplyRequestController;
 
 Route::get('/storage/{path}', function ($path) {
     $file = Storage::disk('public')->path($path);
@@ -68,7 +69,7 @@ Route::redirect('/', 'login');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Loan Summary Routes
-    require __DIR__.'/loan-summary.php';
+    require __DIR__ . '/loan-summary.php';
 
     // Barangay
     // Route::resource('barangay', App\Http\Controllers\BarangayController::class);
@@ -422,7 +423,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('denomination/destroy/{id}', [DenominationController::class, 'destroy'])->name('denomination.destroy');
     Route::post('denomination/import', [DenominationController::class, 'importCSV'])->name('denomination.importcsv');
 
-
     Route::resource('branches', BranchController::class);
 
     // Assign user to a branch
@@ -443,6 +443,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/exportTransaction-csv', [LoanController::class, 'exportTransaction'])->name('loan.export');
 
+    // Supply Request Routes
+    Route::get('/supply-request', [SupplyRequestController::class, 'index'])->name('supply-request.index');
+    Route::get('/supply-request/create', [SupplyRequestController::class, 'create'])->name('supply-request.create');
+    Route::post('/supply-request', [SupplyRequestController::class, 'store'])->name('supply-request.store');
+    Route::post('/supply-request/{supplyRequest}/approve', [SupplyRequestController::class, 'approve'])->name('supply-request.approve');
+    Route::post('/supply-request/{supplyRequest}/reject', [SupplyRequestController::class, 'reject'])->name('supply-request.reject');
 
 
     Route::post('category-expenses/store', [CategoryExpenseController::class, 'store'])->name('category-expenses.store');
