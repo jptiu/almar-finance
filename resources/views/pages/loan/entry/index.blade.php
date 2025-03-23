@@ -354,10 +354,10 @@
                                     <label for="loan_type" class="text-black font-medium">Loan Type</label>
                                     <select name="loan_type" id="loan_type" required
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
-                                        <option value="daily" {{ auth()->user()->branch->type === 'daily' ? 'selected' : '' }}>Daily</option>
+                                        <option value="daily" {{ auth()->user()->branch->type === 'Daily' ? 'selected' : '' }}>Daily</option>
                                         {{-- <option value="weekly">Weekly</option>
                                         <option value="semi-monthly">Semi-Monthly</option> --}}
-                                        <option value="monthly" {{ auth()->user()->branch->type === 'monthly' ? 'selected' : '' }}>Monthly</option>
+                                        <option value="monthly" {{ auth()->user()->branch->type === 'Monthly' ? 'selected' : '' }}>Monthly</option>
                                     </select>
                                 </div>
 
