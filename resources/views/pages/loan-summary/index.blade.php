@@ -13,6 +13,19 @@
                 </div>
             </div>
         @endif
+        @if (session()->has('error'))
+            <div class="alert alert-error">
+                <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm8-8A8 8 0 1 1 2 10a8 8 0 0 1 16 0zm-9-.293a1 1 0 0 0-.707 1.707L10.293 10l-1.586 1.586a1 1 0 1 0 1.414 1.414L11 11.414l1.293 1.293a1 1 0 0 0 1.414-1.414L11.414 10l1.586-1.586a1 1 0 0 0-1.414-1.414L10 8.586 8.707 7.293a1 1 0 0 0-1.414 1.414L8.586 10 7.293 11.293a1 1 0 0 0 1.414 1.414L10 11.414l1.293 1.293a1 1 0 0 0 1.414-1.414L11.414 10l1.586-1.586a1 1 0 0 0-1.414-1.414L10 8.586 8.707 7.293z"/>
+                    </svg>
+                    <span class="sr-only">Error</span>
+                    <div>
+                        <span class="font-medium">{{ session()->get('error') }}</span>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <div class="relative">
             <h1 class="text-2xl md:text-2xl text-fonts-200 dark:text-slate-100 font-bold mb-4">Loan Summary</h1>

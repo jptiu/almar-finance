@@ -19,6 +19,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\LoanSummaryController;
 use App\Http\Controllers\LOController;
 use App\Http\Controllers\RebateController;
 use App\Http\Controllers\RenewalRequestController;
@@ -69,7 +70,10 @@ Route::redirect('/', 'login');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Loan Summary Routes
-    require __DIR__ . '/loan-summary.php';
+    // require __DIR__ . '/loan-summary.php';
+    Route::get('/', [LoanSummaryController::class, 'index'])->name('loan-summary.index');
+    Route::post('/export', [LoanSummaryController::class, 'export'])->name('loan-summary.export');
+    Route::get('/print', [LoanSummaryController::class, 'print'])->name('loan-summary.print');
 
     // Barangay
     // Route::resource('barangay', App\Http\Controllers\BarangayController::class);
