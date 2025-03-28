@@ -327,26 +327,28 @@
                                     class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                     @php
                                         $status = $list->status;
-                                        $statusClass = '';
+                                        $statusClass = 'inline-flex items-center justify-center w-24 h-8 text-sm font-medium rounded-full border';
 
                                         switch ($status) {
                                             case 'CLOSE':
-                                                $statusClass = 'bg-gray-500 text-white rounded';
+                                                $statusClass .= ' bg-gray-100 text-gray-700 border-gray-600';
                                                 break;
                                             case 'CNCLD':
-                                                $statusClass = 'bg-red-500 text-white rounded';
+                                                $statusClass .= ' bg-rose-100 text-rose-700 border-rose-500';
                                                 break;
                                             case 'FULPD':
-                                                $statusClass = 'bg-green-500 text-white rounded';
+                                                $statusClass .= ' bg-emerald-100 text-emerald-700 border-emerald-500';
                                                 break;
                                             case 'UNPD':
-                                                $statusClass = 'bg-orange-500 text-white rounded';
+                                                $statusClass .= ' bg-amber-100 text-amber-700 border-amber-500';
                                                 break;
                                             default:
-                                                $statusClass = 'bg-gray-200 text-gray-800 rounded';
+                                                $statusClass .= ' bg-gray-100 text-gray-700 border-gray-400';
                                                 break;
                                         }
                                     @endphp
+
+
 
                                     <span class="px-2 py-1 {{ $statusClass }}">
                                         {{ $statusMapping[$status] ?? ($status ?? 'PENDING') }}

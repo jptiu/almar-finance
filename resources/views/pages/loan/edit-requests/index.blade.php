@@ -18,62 +18,75 @@
             @endif
 
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                <table class="w-full border-collapse text-left text-sm rounded-md overflow-hidden border border-black">
+                    <thead class="bg-bgbody-100 rounded-2xl">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loan ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request Time</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th class="p-4 text-fonts-100 font-normal">Loan ID</th>
+                            <th class="p-4 text-fonts-100 font-normal">Customer</th>
+                            <th class="p-4 text-fonts-100 font-normal">Request Date</th>
+                            <th class="p-4 text-fonts-100 font-normal">Request Time</th>
+                            <th class="p-4 text-fonts-100 font-normal">Reason</th>
+                            <th class="p-4 text-fonts-100 font-normal">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="text-gray-600 font-semibold text-sm">
                         @foreach($editRequests as $request)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $request->loan->trans_no ?? 'N/A' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $request->loan->customer->first_name }} {{ $request->loan->customer->last_name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $request->requested_date }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $request->requested_time }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $request->reason }}</td>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="px-4 py-4 text-sm  dark:text-gray-200 whitespace-nowrap">{{ $request->loan->trans_no ?? 'N/A' }}</td>
+                                <td class="px-4 py-4 text-sm  dark:text-gray-200 whitespace-nowrap">{{ $request->loan->customer->first_name }} {{ $request->loan->customer->last_name }}</td>
+                                <td class="px-4 py-4 text-sm  dark:text-gray-200 whitespace-nowrap">{{ $request->requested_date }}</td>
+                                <td class="px-4 py-4 text-sm  dark:text-gray-200 whitespace-nowrap">{{ $request->requested_time }}</td>
+                                <td class="px-4 py-4 text-sm  dark:text-gray-200 whitespace-nowrap">{{ $request->reason }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
-                                        <form action="{{ route('loan.edit-requests.approve', $request->id) }}" method="POST" class="flex-1">
-                                            @csrf
-                                            <div class="space-y-2">
-                                                <div class="grid grid-cols-2 gap-2">
-                                                    <div>
-                                                        <label class="block text-sm font-medium text-gray-700">Principal Amount</label>
-                                                        <input type="number" step="0.01" name="principal_amount" value="{{ $request->loan->principal_amount }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                                    </div>
-                                                    <div>
-                                                        <label class="block text-sm font-medium text-gray-700">Interest Rate</label>
-                                                        <input type="number" step="0.01" name="interest" value="{{ $request->loan->interest }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                                    </div>
-                                                    <div>
-                                                        <label class="block text-sm font-medium text-gray-700">Months to Pay</label>
-                                                        <input type="number" name="months_to_pay" value="{{ $request->loan->months_to_pay }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                                    Approve
-                                                </button>
-                                            </div>
-                                        </form>
+                                        <button onclick="openModal('approveModal-{{ $request->id }}')" class="bg-indigo-500 hover:bg-indigo-600 text-white hover:bg-green-600 flex items-center px-4 py-2 font-semibold rounded-full">Approve</button>
+                                        <button onclick="openModal('declineModal-{{ $request->id }}')" class="bg-bgbody-100 border border-bgbody-200  text-red hover:bg-red-600 hover:text-white flex items-center px-4 py-2 font-semibold rounded-full">Decline</button>
+                                    </div>
 
-                                        <form action="{{ route('loan.edit-requests.decline', $request->id) }}" method="POST" class="flex-1">
-                                            @csrf
-                                            <div class="space-y-2">
-                                                <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Decline Reason</label>
-                                                    <textarea name="declined_reason" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                                    <!-- Approve Modal -->
+                                    <div id="approveModal-{{ $request->id }}" class="fixed inset-0 hidden z-50 overflow-y-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
+                                        <div class="bg-white rounded-lg p-6 max-w-lg w-full">
+                                            <h3 class="text-lg font-semibold mb-4">Approve Loan Request</h3>
+                                            <form action="{{ route('loan.edit-requests.approve', $request->id) }}" method="POST">
+                                                @csrf
+                                                <div class="space-y-4">
+                                                    <div>
+                                                        <label class="block text-sm font-medium">Principal Amount</label>
+                                                        <input type="number" step="0.01" name="principal_amount" value="{{ $request->loan->principal_amount }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-sm font-medium">Interest Rate</label>
+                                                        <input type="number" step="0.01" name="interest" value="{{ $request->loan->interest }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-sm font-medium">Months to Pay</label>
+                                                        <input type="number" name="months_to_pay" value="{{ $request->loan->months_to_pay }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm">
+                                                    </div>
                                                 </div>
-                                                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                                    Decline
-                                                </button>
-                                            </div>
-                                        </form>
+                                                <div class="mt-6 flex justify-end space-x-4">
+                                                    <button type="button" onclick="closeModal('approveModal-{{ $request->id }}')" class="text-gray-600">Cancel</button>
+                                                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <!-- Decline Modal -->
+                                    <div id="declineModal-{{ $request->id }}" class="fixed inset-0 hidden z-50 overflow-y-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
+                                        <div class="bg-white rounded-lg p-6 max-w-lg w-full">
+                                            <h3 class="text-lg font-semibold mb-4">Decline Loan Request</h3>
+                                            <form action="{{ route('loan.edit-requests.decline', $request->id) }}" method="POST">
+                                                @csrf
+                                                <div>
+                                                    <label class="block text-sm font-medium">Decline Reason</label>
+                                                    <textarea name="declined_reason" rows="4" class="w-full mt-1 border-gray-300 rounded-md shadow-sm"></textarea>
+                                                </div>
+                                                <div class="mt-6 flex justify-end space-x-4">
+                                                    <button type="button" onclick="closeModal('declineModal-{{ $request->id }}')" class="text-gray-600">Cancel</button>
+                                                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -83,4 +96,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+    </script>
 </x-app-layout>
