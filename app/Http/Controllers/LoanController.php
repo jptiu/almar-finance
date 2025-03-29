@@ -595,6 +595,536 @@ class LoanController extends Controller
         return $outputPath;
     }
 
+    private function generateAffidavitForm($loan)
+    {
+        // Ensure the loan documents directory exists
+        $loanDocumentsPath = storage_path('app/loan_documents/' . $loan->id);
+        if (!file_exists($loanDocumentsPath)) {
+            mkdir($loanDocumentsPath, 0755, true);
+        }
+
+        // Load the template
+        $templatePath = storage_path('template/Affidavit.of.Undertaking.docx');
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Affidavit of Undertaking template not found');
+        }
+
+        // Create TemplateProcessor instance
+        $templateProcessor = new TemplateProcessor($templatePath);
+
+        // Prepare data to replace placeholders
+        $data = [
+            'date_filed' => '',
+            'customer_id' => $loan->customer->id,
+            'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name,
+            'birth_date' => $loan->customer->birth_date,
+            'birth_place' => $loan->customer->birth_place,
+            'civil_status' => $loan->customer->civil_status,
+            'age' => $loan->customer->age,
+            'gender' => $loan->customer->gender,
+            'citizenship' => $loan->customer->citizenship,
+            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'present_address' => '',
+            'cell_number' => $loan->customer->cell_number,
+            'spouse_name' => $loan->customer->spouse_name,
+            'spouse_occupation' => $loan->customer->occupation,
+            'c_nameadd' => $loan->customer->c_nameadd,
+            'spouse_number' => $loan->customer->spouse_number,
+            'spouse_bdate' => $loan->customer->spouse_bdate,
+            'spouse_age' => $loan->customer->spouse_age,
+            'agency_name' => $loan->customer->agency_name,
+            'add_tel' => $loan->customer->add_tel,
+            'comp_name' => $loan->customer->comp_name,
+            'add_telc' => $loan->customer->add_telc,
+            'date_hired' => $loan->customer->date_hired,
+            'job_position' => $loan->customer->job_position,
+            'day_off' => $loan->customer->day_off,
+            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'salary_sched' => $loan->customer->salary_sched,
+            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'pension_sched' => $loan->customer->pension_sched,
+            'fathers_name' => $loan->customer->fathers_name,
+            'mothers_name' => $loan->customer->mothers_name,
+            'fathers_num' => $loan->customer->fathers_num,
+            'mothers_num' => $loan->customer->mothers_num,
+            'branch' => $loan->customer->branch,
+            'card_no' => $loan->customer->card_no,
+            'acc_no' => $loan->customer->acc_no,
+            'pin_no'=> $loan->customer->pin_no,
+            'loan_amount' => number_format($loan->principal_amount, 2),
+            'interest_rate' => number_format($loan->interest, 2) . '%',
+            'term_months' => $loan->months_to_pay,
+            'loan_date' => $loan->created_at->format('F d, Y'),
+        ];
+
+        // Replace placeholders with actual data
+        foreach ($data as $key => $value) {
+            $templateProcessor->setValue($key, $value);
+        }
+
+        // Save the generated document
+        $outputPath = $loanDocumentsPath . '/affidavit_of_undertaking.docx';
+        $templateProcessor->saveAs($outputPath);
+
+        return $outputPath;
+    }
+
+    private function generateAgreementForm($loan)
+    {
+        // Ensure the loan documents directory exists
+        $loanDocumentsPath = storage_path('app/loan_documents/' . $loan->id);
+        if (!file_exists($loanDocumentsPath)) {
+            mkdir($loanDocumentsPath, 0755, true);
+        }
+
+        // Load the template
+        $templatePath = storage_path('template/Agreement.docx');
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Agreement template not found');
+        }
+
+        // Create TemplateProcessor instance
+        $templateProcessor = new TemplateProcessor($templatePath);
+
+        // Prepare data to replace placeholders
+        $data = [
+            'date_filed' => '',
+            'customer_id' => $loan->customer->id,
+            'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name,
+            'birth_date' => $loan->customer->birth_date,
+            'birth_place' => $loan->customer->birth_place,
+            'civil_status' => $loan->customer->civil_status,
+            'age' => $loan->customer->age,
+            'gender' => $loan->customer->gender,
+            'citizenship' => $loan->customer->citizenship,
+            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'present_address' => '',
+            'cell_number' => $loan->customer->cell_number,
+            'spouse_name' => $loan->customer->spouse_name,
+            'spouse_occupation' => $loan->customer->occupation,
+            'c_nameadd' => $loan->customer->c_nameadd,
+            'spouse_number' => $loan->customer->spouse_number,
+            'spouse_bdate' => $loan->customer->spouse_bdate,
+            'spouse_age' => $loan->customer->spouse_age,
+            'agency_name' => $loan->customer->agency_name,
+            'add_tel' => $loan->customer->add_tel,
+            'comp_name' => $loan->customer->comp_name,
+            'add_telc' => $loan->customer->add_telc,
+            'date_hired' => $loan->customer->date_hired,
+            'job_position' => $loan->customer->job_position,
+            'day_off' => $loan->customer->day_off,
+            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'salary_sched' => $loan->customer->salary_sched,
+            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'pension_sched' => $loan->customer->pension_sched,
+            'fathers_name' => $loan->customer->fathers_name,
+            'mothers_name' => $loan->customer->mothers_name,
+            'fathers_num' => $loan->customer->fathers_num,
+            'mothers_num' => $loan->customer->mothers_num,
+            'branch' => $loan->customer->branch,
+            'card_no' => $loan->customer->card_no,
+            'acc_no' => $loan->customer->acc_no,
+            'pin_no'=> $loan->customer->pin_no,
+            'loan_amount' => number_format($loan->principal_amount, 2),
+            'interest_rate' => number_format($loan->interest, 2) . '%',
+            'term_months' => $loan->months_to_pay,
+            'loan_date' => $loan->created_at->format('F d, Y'),
+        ];
+
+        // Replace placeholders with actual data
+        foreach ($data as $key => $value) {
+            $templateProcessor->setValue($key, $value);
+        }
+
+        // Save the generated document
+        $outputPath = $loanDocumentsPath . '/agreement.docx';
+        $templateProcessor->saveAs($outputPath);
+
+        return $outputPath;
+    }
+
+    private function generateCashBreakdownForm($loan)
+    {
+        // Ensure the loan documents directory exists
+        $loanDocumentsPath = storage_path('app/loan_documents/' . $loan->id);
+        if (!file_exists($loanDocumentsPath)) {
+            mkdir($loanDocumentsPath, 0755, true);
+        }
+
+        // Load the template
+        $templatePath = storage_path('template/Cash-Breakdown.docx');
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Cash Breakdown template not found');
+        }
+
+        // Create TemplateProcessor instance
+        $templateProcessor = new TemplateProcessor($templatePath);
+
+        // Prepare data to replace placeholders
+        $data = [
+            'date_filed' => '',
+            'customer_id' => $loan->customer->id,
+            'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name,
+            'birth_date' => $loan->customer->birth_date,
+            'birth_place' => $loan->customer->birth_place,
+            'civil_status' => $loan->customer->civil_status,
+            'age' => $loan->customer->age,
+            'gender' => $loan->customer->gender,
+            'citizenship' => $loan->customer->citizenship,
+            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'present_address' => '',
+            'cell_number' => $loan->customer->cell_number,
+            'spouse_name' => $loan->customer->spouse_name,
+            'spouse_occupation' => $loan->customer->occupation,
+            'c_nameadd' => $loan->customer->c_nameadd,
+            'spouse_number' => $loan->customer->spouse_number,
+            'spouse_bdate' => $loan->customer->spouse_bdate,
+            'spouse_age' => $loan->customer->spouse_age,
+            'agency_name' => $loan->customer->agency_name,
+            'add_tel' => $loan->customer->add_tel,
+            'comp_name' => $loan->customer->comp_name,
+            'add_telc' => $loan->customer->add_telc,
+            'date_hired' => $loan->customer->date_hired,
+            'job_position' => $loan->customer->job_position,
+            'day_off' => $loan->customer->day_off,
+            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'salary_sched' => $loan->customer->salary_sched,
+            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'pension_sched' => $loan->customer->pension_sched,
+            'fathers_name' => $loan->customer->fathers_name,
+            'mothers_name' => $loan->customer->mothers_name,
+            'fathers_num' => $loan->customer->fathers_num,
+            'mothers_num' => $loan->customer->mothers_num,
+            'branch' => $loan->customer->branch,
+            'card_no' => $loan->customer->card_no,
+            'acc_no' => $loan->customer->acc_no,
+            'pin_no'=> $loan->customer->pin_no,
+            'loan_amount' => number_format($loan->principal_amount, 2),
+            'interest_rate' => number_format($loan->interest, 2) . '%',
+            'term_months' => $loan->months_to_pay,
+            'loan_date' => $loan->created_at->format('F d, Y'),
+        ];
+
+        // Replace placeholders with actual data
+        foreach ($data as $key => $value) {
+            $templateProcessor->setValue($key, $value);
+        }
+
+        // Save the generated document
+        $outputPath = $loanDocumentsPath . '/cash-breakdown.docx';
+        $templateProcessor->saveAs($outputPath);
+
+        return $outputPath;
+    }
+
+    private function generateDisclosureStatementForm($loan)
+    {
+        // Ensure the loan documents directory exists
+        $loanDocumentsPath = storage_path('app/loan_documents/' . $loan->id);
+        if (!file_exists($loanDocumentsPath)) {
+            mkdir($loanDocumentsPath, 0755, true);
+        }
+
+        // Load the template
+        $templatePath = storage_path('template/Disclosure-Statement.docx');
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Disclosure Statement template not found');
+        }
+
+        // Create TemplateProcessor instance
+        $templateProcessor = new TemplateProcessor($templatePath);
+
+        // Prepare data to replace placeholders
+        $data = [
+            'date_filed' => '',
+            'customer_id' => $loan->customer->id,
+            'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name,
+            'birth_date' => $loan->customer->birth_date,
+            'birth_place' => $loan->customer->birth_place,
+            'civil_status' => $loan->customer->civil_status,
+            'age' => $loan->customer->age,
+            'gender' => $loan->customer->gender,
+            'citizenship' => $loan->customer->citizenship,
+            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'present_address' => '',
+            'cell_number' => $loan->customer->cell_number,
+            'spouse_name' => $loan->customer->spouse_name,
+            'spouse_occupation' => $loan->customer->occupation,
+            'c_nameadd' => $loan->customer->c_nameadd,
+            'spouse_number' => $loan->customer->spouse_number,
+            'spouse_bdate' => $loan->customer->spouse_bdate,
+            'spouse_age' => $loan->customer->spouse_age,
+            'agency_name' => $loan->customer->agency_name,
+            'add_tel' => $loan->customer->add_tel,
+            'comp_name' => $loan->customer->comp_name,
+            'add_telc' => $loan->customer->add_telc,
+            'date_hired' => $loan->customer->date_hired,
+            'job_position' => $loan->customer->job_position,
+            'day_off' => $loan->customer->day_off,
+            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'salary_sched' => $loan->customer->salary_sched,
+            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'pension_sched' => $loan->customer->pension_sched,
+            'fathers_name' => $loan->customer->fathers_name,
+            'mothers_name' => $loan->customer->mothers_name,
+            'fathers_num' => $loan->customer->fathers_num,
+            'mothers_num' => $loan->customer->mothers_num,
+            'branch' => $loan->customer->branch,
+            'card_no' => $loan->customer->card_no,
+            'acc_no' => $loan->customer->acc_no,
+            'pin_no'=> $loan->customer->pin_no,
+            'loan_amount' => number_format($loan->principal_amount, 2),
+            'interest_rate' => number_format($loan->interest, 2) . '%',
+            'term_months' => $loan->months_to_pay,
+            'loan_date' => $loan->created_at->format('F d, Y'),
+        ];
+
+        // Replace placeholders with actual data
+        foreach ($data as $key => $value) {
+            $templateProcessor->setValue($key, $value);
+        }
+
+        // Save the generated document
+        $outputPath = $loanDocumentsPath . '/disclosure-statement.docx';
+        $templateProcessor->saveAs($outputPath);
+
+        return $outputPath;
+    }
+
+    private function generatePromissoryATMForm($loan)
+    {
+        // Ensure the loan documents directory exists
+        $loanDocumentsPath = storage_path('app/loan_documents/' . $loan->id);
+        if (!file_exists($loanDocumentsPath)) {
+            mkdir($loanDocumentsPath, 0755, true);
+        }
+
+        // Load the template
+        $templatePath = storage_path('template/Promissory-ATM.1.docx');
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Promissory ATM template not found');
+        }
+
+        // Create TemplateProcessor instance
+        $templateProcessor = new TemplateProcessor($templatePath);
+
+        $templatePath2 = storage_path('template/Promissory.Page.2.docx');
+        if (!file_exists($templatePath2)) {
+            throw new \Exception('Promissory ATM template not found');
+        }
+
+        // Create TemplateProcessor instance
+        $templateProcessor2 = new TemplateProcessor($templatePath2);
+
+        // Prepare data to replace placeholders
+        $data = [
+            'date_filed' => '',
+            'customer_id' => $loan->customer->id,
+            'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name,
+            'birth_date' => $loan->customer->birth_date,
+            'birth_place' => $loan->customer->birth_place,
+            'civil_status' => $loan->customer->civil_status,
+            'age' => $loan->customer->age,
+            'gender' => $loan->customer->gender,
+            'citizenship' => $loan->customer->citizenship,
+            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'present_address' => '',
+            'cell_number' => $loan->customer->cell_number,
+            'spouse_name' => $loan->customer->spouse_name,
+            'spouse_occupation' => $loan->customer->occupation,
+            'c_nameadd' => $loan->customer->c_nameadd,
+            'spouse_number' => $loan->customer->spouse_number,
+            'spouse_bdate' => $loan->customer->spouse_bdate,
+            'spouse_age' => $loan->customer->spouse_age,
+            'agency_name' => $loan->customer->agency_name,
+            'add_tel' => $loan->customer->add_tel,
+            'comp_name' => $loan->customer->comp_name,
+            'add_telc' => $loan->customer->add_telc,
+            'date_hired' => $loan->customer->date_hired,
+            'job_position' => $loan->customer->job_position,
+            'day_off' => $loan->customer->day_off,
+            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'salary_sched' => $loan->customer->salary_sched,
+            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'pension_sched' => $loan->customer->pension_sched,
+            'fathers_name' => $loan->customer->fathers_name,
+            'mothers_name' => $loan->customer->mothers_name,
+            'fathers_num' => $loan->customer->fathers_num,
+            'mothers_num' => $loan->customer->mothers_num,
+            'branch' => $loan->customer->branch,
+            'card_no' => $loan->customer->card_no,
+            'acc_no' => $loan->customer->acc_no,
+            'pin_no'=> $loan->customer->pin_no,
+            'loan_amount' => number_format($loan->principal_amount, 2),
+            'interest_rate' => number_format($loan->interest, 2) . '%',
+            'term_months' => $loan->months_to_pay,
+            'loan_date' => $loan->created_at->format('F d, Y'),
+        ];
+
+        // Replace placeholders with actual data
+        foreach ($data as $key => $value) {
+            $templateProcessor->setValue($key, $value);
+            $templateProcessor2->setValue($key, $value);
+        }
+
+        // Save the generated document
+        $outputPath = $loanDocumentsPath . '/promissory-atm-1.docx';
+        $templateProcessor->saveAs($outputPath);
+
+        $outputPath2 = $loanDocumentsPath . '/promissory-atm-2.docx';
+        $templateProcessor2->saveAs($outputPath2);
+
+        return [$outputPath, $outputPath2];
+    }
+
+    private function generateSPAForm($loan)
+    {
+        // Ensure the loan documents directory exists
+        $loanDocumentsPath = storage_path('app/loan_documents/' . $loan->id);
+        if (!file_exists($loanDocumentsPath)) {
+            mkdir($loanDocumentsPath, 0755, true);
+        }
+
+        // Load the template
+        $templatePath = storage_path('template/SPA.docx');
+        if (!file_exists($templatePath)) {
+            throw new \Exception('SPA template not found');
+        }
+
+        // Create TemplateProcessor instance
+        $templateProcessor = new TemplateProcessor($templatePath);
+
+        // Prepare data to replace placeholders
+        $data = [
+            'date_filed' => '',
+            'customer_id' => $loan->customer->id,
+            'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name,
+            'birth_date' => $loan->customer->birth_date,
+            'birth_place' => $loan->customer->birth_place,
+            'civil_status' => $loan->customer->civil_status,
+            'age' => $loan->customer->age,
+            'gender' => $loan->customer->gender,
+            'citizenship' => $loan->customer->citizenship,
+            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'present_address' => '',
+            'cell_number' => $loan->customer->cell_number,
+            'spouse_name' => $loan->customer->spouse_name,
+            'spouse_occupation' => $loan->customer->occupation,
+            'c_nameadd' => $loan->customer->c_nameadd,
+            'spouse_number' => $loan->customer->spouse_number,
+            'spouse_bdate' => $loan->customer->spouse_bdate,
+            'spouse_age' => $loan->customer->spouse_age,
+            'agency_name' => $loan->customer->agency_name,
+            'add_tel' => $loan->customer->add_tel,
+            'comp_name' => $loan->customer->comp_name,
+            'add_telc' => $loan->customer->add_telc,
+            'date_hired' => $loan->customer->date_hired,
+            'job_position' => $loan->customer->job_position,
+            'day_off' => $loan->customer->day_off,
+            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'salary_sched' => $loan->customer->salary_sched,
+            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'pension_sched' => $loan->customer->pension_sched,
+            'fathers_name' => $loan->customer->fathers_name,
+            'mothers_name' => $loan->customer->mothers_name,
+            'fathers_num' => $loan->customer->fathers_num,
+            'mothers_num' => $loan->customer->mothers_num,
+            'branch' => $loan->customer->branch,
+            'card_no' => $loan->customer->card_no,
+            'acc_no' => $loan->customer->acc_no,
+            'pin_no'=> $loan->customer->pin_no,
+            'loan_amount' => number_format($loan->principal_amount, 2),
+            'interest_rate' => number_format($loan->interest, 2) . '%',
+            'term_months' => $loan->months_to_pay,
+            'loan_date' => $loan->created_at->format('F d, Y'),
+        ];
+
+        // Replace placeholders with actual data
+        foreach ($data as $key => $value) {
+            $templateProcessor->setValue($key, $value);
+        }
+
+        // Save the generated document
+        $outputPath = $loanDocumentsPath . '/spa.docx';
+        $templateProcessor->saveAs($outputPath);
+
+        return $outputPath;
+    }
+
+    private function generateVoucherFormDocx($loan)
+    {
+        // Ensure the loan documents directory exists
+        $loanDocumentsPath = storage_path('app/loan_documents/' . $loan->id);
+        if (!file_exists($loanDocumentsPath)) {
+            mkdir($loanDocumentsPath, 0755, true);
+        }
+
+        // Load the template
+        $templatePath = storage_path('template/Voucher.docx');
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Voucher template not found');
+        }
+
+        // Create TemplateProcessor instance
+        $templateProcessor = new TemplateProcessor($templatePath);
+
+        // Prepare data to replace placeholders
+        $data = [
+            'date_filed' => '',
+            'customer_id' => $loan->customer->id,
+            'customer_name' => $loan->customer->first_name . ' ' . $loan->customer->last_name,
+            'birth_date' => $loan->customer->birth_date,
+            'birth_place' => $loan->customer->birth_place,
+            'civil_status' => $loan->customer->civil_status,
+            'age' => $loan->customer->age,
+            'gender' => $loan->customer->gender,
+            'citizenship' => $loan->customer->citizenship,
+            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'present_address' => '',
+            'cell_number' => $loan->customer->cell_number,
+            'spouse_name' => $loan->customer->spouse_name,
+            'spouse_occupation' => $loan->customer->occupation,
+            'c_nameadd' => $loan->customer->c_nameadd,
+            'spouse_number' => $loan->customer->spouse_number,
+            'spouse_bdate' => $loan->customer->spouse_bdate,
+            'spouse_age' => $loan->customer->spouse_age,
+            'agency_name' => $loan->customer->agency_name,
+            'add_tel' => $loan->customer->add_tel,
+            'comp_name' => $loan->customer->comp_name,
+            'add_telc' => $loan->customer->add_telc,
+            'date_hired' => $loan->customer->date_hired,
+            'job_position' => $loan->customer->job_position,
+            'day_off' => $loan->customer->day_off,
+            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'salary_sched' => $loan->customer->salary_sched,
+            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'pension_sched' => $loan->customer->pension_sched,
+            'fathers_name' => $loan->customer->fathers_name,
+            'mothers_name' => $loan->customer->mothers_name,
+            'fathers_num' => $loan->customer->fathers_num,
+            'mothers_num' => $loan->customer->mothers_num,
+            'branch' => $loan->customer->branch,
+            'card_no' => $loan->customer->card_no,
+            'acc_no' => $loan->customer->acc_no,
+            'pin_no'=> $loan->customer->pin_no,
+            'loan_amount' => number_format($loan->principal_amount, 2),
+            'interest_rate' => number_format($loan->interest, 2) . '%',
+            'term_months' => $loan->months_to_pay,
+            'loan_date' => $loan->created_at->format('F d, Y'),
+        ];
+
+        // Replace placeholders with actual data
+        foreach ($data as $key => $value) {
+            $templateProcessor->setValue($key, $value);
+        }
+
+        // Save the generated document
+        $outputPath = $loanDocumentsPath . '/voucher.docx';
+        $templateProcessor->saveAs($outputPath);
+
+        return $outputPath;
+    }
+
     private function generateVoucherForm($loan)
     {
         // Ensure the loan documents directory exists
@@ -696,16 +1226,16 @@ class LoanController extends Controller
         // Generate and save the application form
         try {
             $this->generateApplicationForm($loan);
+            $this->generateVoucherFormDocx($loan);
+            $this->generateAffidavitForm($loan);
+            $this->generateSPAForm($loan);
+            $this->generateAgreementForm($loan);
+            $this->generateCashBreakdownForm($loan);
+            $this->generateDisclosureStatementForm($loan);
+            $this->generatePromissoryATMForm($loan);
             Log::info('success created application form!!!');
         } catch (\Exception $e) {
             Log::error('Failed to generate application form: ' . $e->getMessage());
-        }
-
-        // Generate and save the voucher form
-        try {
-            $this->generateVoucherForm($loan);
-        } catch (\Exception $e) {
-            Log::error('Failed to generate voucher form: ' . $e->getMessage());
         }
 
         $log = new ActivityLog();
@@ -735,15 +1265,15 @@ class LoanController extends Controller
         // Generate and save the application form
         try {
             $this->generateApplicationForm($loan);
+            $this->generateVoucherFormDocx($loan);
+            $this->generateAffidavitForm($loan);
+            $this->generateSPAForm($loan);
+            $this->generateAgreementForm($loan);
+            $this->generateCashBreakdownForm($loan);
+            $this->generateDisclosureStatementForm($loan);
+            $this->generatePromissoryATMForm($loan);
         } catch (\Exception $e) {
             Log::error('Failed to generate application form: ' . $e->getMessage());
-        }
-
-        // Generate and save the voucher form
-        try {
-            $this->generateVoucherForm($loan);
-        } catch (\Exception $e) {
-            Log::error('Failed to generate voucher form: ' . $e->getMessage());
         }
 
         $log = new ActivityLog();
