@@ -213,6 +213,8 @@ class LoanController extends Controller
             $loan->interest_amount = $request->interest_amount;
             $loan->svc_charge = $request->svc_charge ?? '';
             $loan->actual_record = $request->actual_record ?? '';
+            $loan->processing_fee = $request->processing_fee ?? '';
+            $loan->notary_fee = $request->notary_fee ?? '';
             
             // Deduct the remaining balance from the new loan's payable amount
             $loan->payable_amount = (float)$request->payable_amount - $totalRemaining;
@@ -387,6 +389,9 @@ class LoanController extends Controller
             $loan->svc_charge = $request->svc_charge ?? '';
             $loan->actual_record = $request->actual_record ?? '';
             $loan->payable_amount = $request->payable_amount;
+            $loan->processing_fee = $request->processing_fee ?? '';
+            $loan->notary_fee = $request->notary_fee ?? '';
+            
             // if($loan->transaction_customer_status == 'BA'){
             //     $loan->transaction_customer_status = null;
             // }

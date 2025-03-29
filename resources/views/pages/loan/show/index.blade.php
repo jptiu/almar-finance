@@ -250,11 +250,11 @@
                             </div>
                             <div>
                                 <p class="text-gray-900 text-sm">Service Charge</p>
-                                <p class="font-bold text-gray-900 text-base">{{ $loan->svc_charge }}</p>
+                                <p class="font-bold text-gray-900 text-base">{{ $loan->svc_charge??0 }}</p>
                             </div>
                             <div>
                                 <p class="text-gray-900 text-sm">Payable Amount</p>
-                                <p class="font-bold text-gray-900 text-base">{{ $loan->payable_amount }}</p>
+                                <p class="font-bold text-gray-900 text-base">{{ $loan->payable_amount??0 }}</p>
                             </div>
                             <div>
                                 <p class="text-gray-900 text-sm">Days to Pay</p>
@@ -266,7 +266,15 @@
                             </div>
                             <div>
                                 <p class="text-gray-900 text-sm">Actual Record </p>
-                                <p class="font-bold text-gray-900 text-base">Business</p>
+                                <p class="font-bold text-gray-900 text-base">{{ $loan->actual_record }}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-900 text-sm">Processing Fee</p>
+                                <p class="font-bold text-gray-900 text-base">{{ $loan->processing_fee??0 }}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-900 text-sm">Notary Fee</p>
+                                <p class="font-bold text-gray-900 text-base">{{ $loan->notary_fee??0 }}</p>
                             </div>
                         </div>
                     </div>

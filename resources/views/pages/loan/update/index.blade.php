@@ -395,6 +395,18 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
                                         value="{{ $loan->payable_amount }}" placeholder="₱" />
                                 </div>
+                                <div class="md:col-span-1">
+                                    <label for="processing_fee" class="text-black font-medium">Processing Fee</label>
+                                    <input type="text" name="processing_fee" id="processing_fee"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                        value="{{ $loan->processing_fee }}" placeholder="₱" />
+                                </div>
+                                <div class="md:col-span-1">
+                                    <label for="notary_fee" class="text-black font-medium">Notary Fee</label>
+                                    <input type="text" name="notary_fee" id="notary_fee"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5"
+                                        value="{{ $loan->notary_fee }}" placeholder="₱" />
+                                </div>
                             </div>
                         </div>
                     </div>

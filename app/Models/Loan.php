@@ -33,6 +33,8 @@ class Loan extends Model
         'branch_id',
         'file',
         'note',
+        'processing_fee',
+        'notary_fee',
     ];
 
     public function customer()
