@@ -955,9 +955,9 @@
                     </a>
                 </li>
                 <!-- Loan Accounts -->
-                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['regAccount', 'badAccount', 'overdueacc'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
-                    x-data="{ open: {{ in_array(Request::segment(1), ['regAccount', 'badAccount', 'overdueacc']) ? 1 : 0 }} }">
-                    <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (!in_array(Request::segment(1), ['regAccount', 'badAccount', 'overdueacc'])) {{ 'hover:text-gray-900 dark:hover:text-white' }} @endif"
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['regAccount', 'badAccount'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['regAccount', 'badAccount']) ? 1 : 0 }} }">
+                    <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (!in_array(Request::segment(1), ['regAccount', 'badAccount'])) {{ 'hover:text-gray-900 dark:hover:text-white' }} @endif"
                         href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
@@ -996,14 +996,6 @@
                                     href="{{ route('badAccount.index') }}">
                                     <span
                                         class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Bad
-                                        Accounts</span>
-                                </a>
-                            </li>
-                            <li class="mb-1 last:mb-0">
-                                <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('overdueacc.index')) {{ '!text-violet-500' }} @endif"
-                                    href="{{ route('overdueacc.index') }}">
-                                    <span
-                                        class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Overdue
                                         Accounts</span>
                                 </a>
                             </li>
@@ -2283,9 +2275,9 @@
                                     </a>
                                 </li> --}}
                 <!-- Loan Accounts -->
-                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['regAccount', 'badAccount', 'overdueacc'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
-                    x-data="{ open: {{ in_array(Request::segment(1), ['regAccount', 'badAccount', 'overdueacc']) ? 1 : 0 }} }">
-                    <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (!in_array(Request::segment(1), ['regAccount', 'badAccount', 'overdueacc'])) {{ 'hover:text-gray-900 dark:hover:text-white' }} @endif"
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['regAccount', 'badAccount'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['regAccount', 'badAccount']) ? 1 : 0 }} }">
+                    <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (!in_array(Request::segment(1), ['regAccount', 'badAccount'])) {{ 'hover:text-gray-900 dark:hover:text-white' }} @endif"
                         href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
@@ -2324,14 +2316,6 @@
                                     href="{{ route('badAccount.index') }}">
                                     <span
                                         class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Bad
-                                        Accounts</span>
-                                </a>
-                            </li>
-                            <li class="mb-1 last:mb-0">
-                                <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('overdueacc.index')) {{ '!text-violet-500' }} @endif"
-                                    href="{{ route('overdueacc.index') }}">
-                                    <span
-                                        class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Overdue
                                         Accounts</span>
                                 </a>
                             </li>
