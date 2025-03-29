@@ -71,9 +71,9 @@ Route::redirect('/', 'login');
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Loan Summary Routes
     // require __DIR__ . '/loan-summary.php';
-    Route::get('/', [LoanSummaryController::class, 'index'])->name('loan-summary.index');
-    Route::post('/export', [LoanSummaryController::class, 'export'])->name('loan-summary.export');
-    Route::get('/print', [LoanSummaryController::class, 'print'])->name('loan-summary.print');
+    Route::get('/loan-summary', [LoanSummaryController::class, 'index'])->name('loan-summary.index');
+    Route::post('/loan-summary/export', [LoanSummaryController::class, 'export'])->name('loan-summary.export');
+    Route::get('/loan-summary/print', [LoanSummaryController::class, 'print'])->name('loan-summary.print');
 
     // Barangay
     // Route::resource('barangay', App\Http\Controllers\BarangayController::class);
