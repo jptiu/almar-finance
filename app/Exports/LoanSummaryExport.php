@@ -75,21 +75,22 @@ class LoanSummaryExport
         
         foreach ($loans as $loan) {
             $table->addRow();
-            $table->addCell(2000)->addText($loan->id);
-            $table->addCell(2000)->addText($loan->customer->first_name . ' ' . $loan->customer->last_name);
-            $table->addCell(2000)->addText($loan->customer->customerType->description);
-            $table->addCell(2000)->addText($loan->months_to_pay);
-            $table->addCell(2000)->addText($loan->transaction_type);
+            $table->addCell(2000)->addText($loan->id, ['size' => 10]);
+            $table->addCell(2000)->addText($loan->customer->first_name . ' ' . $loan->customer->last_name, ['size' => 10]);
+            $table->addCell(2000)->addText($loan->customer->customerType->description, ['size' => 10]);
+            $table->addCell(2000)->addText($loan->months_to_pay, ['size' => 10]);
+            $table->addCell(2000)->addText($loan->transaction_type, ['size' => 10]);
             $table->addCell(2000)->addText(
                 $loan->customer->house . ', ' .
                 $loan->customer->street . ', ' .
                 $loan->customer->barangay_name . ', ' .
-                $loan->customer->city_town
+                $loan->customer->city_town,
+                ['size' => 10]
             );
-            $table->addCell(2000)->addText(number_format($loan->principal_amount, 2));
-            $table->addCell(2000)->addText($loan->interest_rate);
-            $table->addCell(2000)->addText(number_format($loan->interest_amount, 2));
-            $table->addCell(2000)->addText(number_format($loan->principal_amount - $loan->interest_amount, 2));
+            $table->addCell(2000)->addText(number_format($loan->principal_amount, 2), ['size' => 10]);
+            $table->addCell(2000)->addText($loan->interest_rate, ['size' => 10]);
+            $table->addCell(2000)->addText(number_format($loan->interest_amount, 2), ['size' => 10]);
+            $table->addCell(2000)->addText(number_format($loan->principal_amount - $loan->interest_amount, 2), ['size' => 10]);
         }
         
         return $phpWord;

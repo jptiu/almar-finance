@@ -27,19 +27,19 @@
             <tbody>
                 @foreach($loans as $loan)
                 <tr>
-                    <td class="border border-gray-300 p-2">{{ $loan->id }}</td>
-                    <td class="border border-gray-300 p-2">{{ $loan->customer->first_name }} {{ $loan->customer->last_name }}</td>
-                    <td class="border border-gray-300 p-2">{{ $loan->customer->customerType->description }}</td>
-                    <td class="border border-gray-300 p-2">{{ $loan->months_to_pay }}</td>
-                    <td class="border border-gray-300 p-2">{{ $loan->transaction_type }}</td>
-                    <td class="border border-gray-300 p-2">
+                    <td class="border border-gray-300 p-2 text-xs">{{ $loan->id }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">{{ $loan->customer->first_name }} {{ $loan->customer->last_name }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">{{ $loan->customer->customerType->description }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">{{ $loan->months_to_pay }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">{{ $loan->transaction_type }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">
                         {{ $loan->customer->house }}, {{ $loan->customer->street }}, 
                         {{ $loan->customer->barangay_name }}, {{ $loan->customer->city_town }}
                     </td>
-                    <td class="border border-gray-300 p-2">{{ number_format($loan->principal_amount, 2) }}</td>
-                    <td class="border border-gray-300 p-2">{{ $loan->interest_rate }}</td>
-                    <td class="border border-gray-300 p-2">{{ number_format($loan->interest_amount, 2) }}</td>
-                    <td class="border border-gray-300 p-2">{{ number_format($loan->principal_amount - $loan->interest_amount, 2) }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">{{ number_format($loan->principal_amount, 2) }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">{{ $loan->interest_rate }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">{{ number_format($loan->interest_amount, 2) }}</td>
+                    <td class="border border-gray-300 p-2 text-xs">{{ number_format($loan->principal_amount - $loan->interest_amount, 2) }}</td>
                 </tr>
                 @endforeach
             </tbody>
