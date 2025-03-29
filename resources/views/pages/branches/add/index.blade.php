@@ -39,8 +39,12 @@
                                     <input type="text" name="location" id="location" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
                                 </div>
                                 <div class="md:col-span-1">
-                                    <label for="type">Branch Type ( Monthly / Daily )</label>
-                                    <input type="text" name="type" id="type" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
+                                    <label for="type">Branch Type</label>
+                                    <select name="type" id="type" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
+                                        <option value="">Select Type</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Daily">Daily</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

@@ -127,7 +127,7 @@
                                                     </div>
                                                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                                         <h3 class="text-base font-semibold leading-6 text-gray-900"
-                                                            id="modal-title">Import Customer</h3>
+                                                            id="modal-title">Import Barangay</h3>
                                                         <div class="mt-2">
                                                             <div class="fields">
                                                                 <div class="input-group mb-3">
