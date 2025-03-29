@@ -15,6 +15,7 @@ use App\Models\Branch;
 use App\Models\RenewalRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -565,9 +566,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -639,9 +640,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -713,9 +714,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -787,9 +788,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -861,9 +862,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -943,9 +944,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -1021,9 +1022,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -1095,9 +1096,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -1170,9 +1171,9 @@ class LoanController extends Controller
             'date_hired' => $loan->customer->date_hired,
             'job_position' => $loan->customer->job_position,
             'day_off' => $loan->customer->day_off,
-            'monthly_salary' => number_format($loan->customer->monthly_salary, 2),
+            'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> number_format($loan->customer->monthly_pension,2),
+            'monthly_pension'=> $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -1225,17 +1226,77 @@ class LoanController extends Controller
 
         // Generate and save the application form
         try {
-            $this->generateApplicationForm($loan);
-            $this->generateVoucherFormDocx($loan);
-            $this->generateAffidavitForm($loan);
-            $this->generateSPAForm($loan);
-            $this->generateAgreementForm($loan);
-            $this->generateCashBreakdownForm($loan);
-            $this->generateDisclosureStatementForm($loan);
-            $this->generatePromissoryATMForm($loan);
-            Log::info('success created application form!!!');
+            DB::beginTransaction();
+            try {
+                $this->generateApplicationForm($loan);
+                Log::info('Successfully generated Application Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Application Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateVoucherFormDocx($loan);
+                Log::info('Successfully generated Voucher Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Voucher Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateAffidavitForm($loan);
+                Log::info('Successfully generated Affidavit Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Affidavit Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateSPAForm($loan);
+                Log::info('Successfully generated SPA Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate SPA Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateAgreementForm($loan);
+                Log::info('Successfully generated Agreement Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Agreement Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateCashBreakdownForm($loan);
+                Log::info('Successfully generated Cash Breakdown Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Cash Breakdown Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateDisclosureStatementForm($loan);
+                Log::info('Successfully generated Disclosure Statement Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Disclosure Statement Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generatePromissoryATMForm($loan);
+                Log::info('Successfully generated Promissory ATM Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Promissory ATM Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            DB::commit();
+            Log::info('All loan forms generated successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to generate application form: ' . $e->getMessage());
+            DB::rollBack();
+            Log::error('Failed to generate loan forms: ' . $e->getMessage());
+            throw $e;
         }
 
         $log = new ActivityLog();
@@ -1264,16 +1325,77 @@ class LoanController extends Controller
 
         // Generate and save the application form
         try {
-            $this->generateApplicationForm($loan);
-            $this->generateVoucherFormDocx($loan);
-            $this->generateAffidavitForm($loan);
-            $this->generateSPAForm($loan);
-            $this->generateAgreementForm($loan);
-            $this->generateCashBreakdownForm($loan);
-            $this->generateDisclosureStatementForm($loan);
-            $this->generatePromissoryATMForm($loan);
+            DB::beginTransaction();
+            try {
+                $this->generateApplicationForm($loan);
+                Log::info('Successfully generated Application Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Application Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateVoucherFormDocx($loan);
+                Log::info('Successfully generated Voucher Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Voucher Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateAffidavitForm($loan);
+                Log::info('Successfully generated Affidavit Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Affidavit Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateSPAForm($loan);
+                Log::info('Successfully generated SPA Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate SPA Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateAgreementForm($loan);
+                Log::info('Successfully generated Agreement Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Agreement Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateCashBreakdownForm($loan);
+                Log::info('Successfully generated Cash Breakdown Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Cash Breakdown Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generateDisclosureStatementForm($loan);
+                Log::info('Successfully generated Disclosure Statement Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Disclosure Statement Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            try {
+                $this->generatePromissoryATMForm($loan);
+                Log::info('Successfully generated Promissory ATM Form');
+            } catch (\Exception $e) {
+                Log::error('Failed to generate Promissory ATM Form: ' . $e->getMessage());
+                throw $e;
+            }
+
+            DB::commit();
+            Log::info('All loan forms generated successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to generate application form: ' . $e->getMessage());
+            DB::rollBack();
+            Log::error('Failed to generate loan forms: ' . $e->getMessage());
+            throw $e;
         }
 
         $log = new ActivityLog();
