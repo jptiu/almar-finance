@@ -5,7 +5,7 @@
                 <div class="p-6 text-gray-900">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-2xl font-semibold text-gray-900">Supply Requests</h2>
-                        @can('admin_access')
+                        {{-- @can('admin_access') --}}
                             <a href="{{ route('supply-request.create') }}" 
                                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -13,7 +13,7 @@
                                 </svg>
                                 Create New Request
                             </a>
-                        @endcan
+                        {{-- @endcan --}}
                     </div>
 
                     @if(session('success'))
