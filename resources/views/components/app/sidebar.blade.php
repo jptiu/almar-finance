@@ -296,6 +296,21 @@
                                         </div>
                                     </a>
                                 </li> --}}
+                                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
+                    <a href="{{ route('social_loan_requests.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['employeeRequest'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                width="24px" fill="#FFFFFF">
+                                <path
+                                    d="M320-320h200v-200H320v200Zm0-280h480v-200H320v200Zm280 280h200v-200H600v200Zm-280 80q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Z" />
+                            </svg>
+                            <span
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
+                                Request</span>
+                        </div>
+                    </a>
+                </li>
                 <li
                     class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['expenses'])) {{ 'bg-accent-100' }} @endif">
                     <a href="{{ route('announce.index') }}"
@@ -1014,6 +1029,21 @@
                             </svg>
                             <span
                                 class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">CSOR</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
+                    <a href="{{ route('social_loan_requests.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['employeeRequest'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                width="24px" fill="#FFFFFF">
+                                <path
+                                    d="M320-320h200v-200H320v200Zm0-280h480v-200H320v200Zm280 280h200v-200H600v200Zm-280 80q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Z" />
+                            </svg>
+                            <span
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
+                                Request</span>
                         </div>
                     </a>
                 </li>

@@ -23,6 +23,7 @@ use App\Http\Controllers\LoanSummaryController;
 use App\Http\Controllers\LOController;
 use App\Http\Controllers\RebateController;
 use App\Http\Controllers\RenewalRequestController;
+use App\Http\Controllers\SocialLoanRequestController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DenominationController;
 use App\Http\Controllers\UserController;
@@ -458,4 +459,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('category-expenses/store', [CategoryExpenseController::class, 'store'])->name('category-expenses.store');
     Route::post('category-expenses/update/{id}', [CategoryExpenseController::class, 'update'])->name('category-expenses.update');
     Route::delete('category-expenses/destroy/{id}', [CategoryExpenseController::class, 'destroy'])->name('category-expenses.destroy');
+
+    // Social Loan Requests
+    Route::prefix('social-loan-requests')->group(function () {
+        Route::get('/', [SocialLoanRequestController::class, 'index'])->name('social_loan_requests.index');
+        Route::get('create', [SocialLoanRequestController::class, 'create'])->name('social_loan_requests.create');
+        Route::post('/', [SocialLoanRequestController::class, 'store'])->name('social_loan_requests.store');
+        Route::post('{socialLoanRequest}/approve', [SocialLoanRequestController::class, 'approve'])->name('social_loan_requests.approve');
+        Route::post('{socialLoanRequest}/reject', [SocialLoanRequestController::class, 'reject'])->name('social_loan_requests.reject');
+    });
 });
