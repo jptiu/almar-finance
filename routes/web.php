@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuditorController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BMController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BreakdownController;
@@ -13,48 +14,47 @@ use App\Http\Controllers\CLMController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\ComputeCOHController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
+use App\Http\Controllers\DataFeedController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DenominationController;
 use App\Http\Controllers\EditRequestController;
+use App\Http\Controllers\EmployeeBenefitController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\HRController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoanSummaryController;
 use App\Http\Controllers\LOController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\PerformanceEvaluationController;
+use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\RebateController;
 use App\Http\Controllers\RenewalRequestController;
+use App\Http\Controllers\SavingsController;
 use App\Http\Controllers\SocialLoanRequestController;
 use App\Http\Controllers\SuperAdminController;
-use App\Http\Controllers\DenominationController;
+use App\Http\Controllers\SupplyRequestController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Models\Employee;
 use App\Models\RenewalRequest;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DataFeedController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\JobController;
-use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\BranchInfoController;
-use App\Http\Controllers\PayrollController;
-use App\Http\Controllers\SavingsController;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\SupplyRequestController;
+use Illuminate\Support\Facades\Broadcast as BroadcastFacade;
 
 Route::get('/storage/{path}', function ($path) {
-    $file = Storage::disk('public')->path($path);
-
-    if (!file_exists($file)) {
+    if (!Storage::disk('public')->exists($path)) {
         abort(404);
     }
-
-    return response()->file($file);
-})->where('path', '.*');
+    return Storage::disk('public')->get($path);
+})->name('storage');
 
 /*
 |--------------------------------------------------------------------------
@@ -395,8 +395,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('payroll/store', [PayrollController::class, 'store'])->name('payroll.store');
     Route::get('payroll/payslip', [PayrollController::class, 'payrollPrint'])->name('payroll.print');
     Route::get('payroll/add', [BMController::class, 'payRoll'])->name('paroll.index');
-    // Route::post('payroll/update/{id}', [PayrollController::class, 'resigupdate'])->name('payroll.update');
-    // Route::get('payroll/show/{id}', [PayrollController::class, 'resigshow'])->name('payroll.show');
+    Route::post('payroll/update/{id}', [PayrollController::class, 'update'])->name('payroll.update');
+    Route::get('payroll/show/{id}', [PayrollController::class, 'show'])->name('payroll.show');
 
     // Superadmin
     Route::get('superadmin/monthlyreport', [SuperAdminController::class, 'monthlyReport'])->name('monthlyReport.index');
@@ -434,7 +434,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('branches/{branch}/assign-user', [BranchController::class, 'assignUser'])->name('branches.assignUser');
 
     Route::post('/broadcasting/auth', function () {
-        return Broadcast::auth(request());
+        return BroadcastFacade::auth(request());
     });
 
     Route::post('user/store', [UserController::class, 'store'])->name('user.store');
@@ -447,6 +447,50 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/exportcustomerSavings/{id}-csv', [CustomerController::class, 'exportcustomerSavings'])->name('customersavings.export');
 
     Route::get('/exportTransaction-csv', [LoanController::class, 'exportTransaction'])->name('loan.export');
+
+    // HR Management Routes
+    Route::prefix('hr')->name('hr.')->group(function () {
+        // Attendance
+        Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+        Route::get('/attendance/{employee}', [AttendanceController::class, 'employeeAttendance'])->name('attendance.employee');
+        Route::get('/attendance/{attendance}/edit', [AttendanceController::class, 'edit'])->name('attendance.edit');
+        Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
+        Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
+
+        // Payslips
+        Route::get('/payslips', [PayslipController::class, 'index'])->name('payslips.index');
+        Route::get('/payslips/create', [PayslipController::class, 'create'])->name('payslips.create');
+        Route::post('/payslips', [PayslipController::class, 'store'])->name('payslips.store');
+        Route::get('/payslips/{payslip}', [PayslipController::class, 'show'])->name('payslips.show');
+        Route::get('/payslips/{employee}', [PayslipController::class, 'employeePayslips'])->name('payslips.employee');
+        Route::get('/payslips/{payslip}/print', [PayslipController::class, 'printPayslip'])->name('payslips.print');
+
+        // Leaves
+        Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
+        Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
+        Route::post('/leaves', [LeaveController::class, 'store'])->name('leaves.store');
+        Route::post('/leaves/{leave}/approve', [LeaveController::class, 'approve'])->name('leaves.approve');
+        Route::post('/leaves/{leave}/reject', [LeaveController::class, 'reject'])->name('leaves.reject');
+        Route::get('/leaves/{employee}', [LeaveController::class, 'employeeLeaves'])->name('leaves.employee');
+
+        // Performance Evaluations
+        Route::get('/performance', [PerformanceEvaluationController::class, 'index'])->name('performance.index');
+        Route::get('/performance/create', [PerformanceEvaluationController::class, 'create'])->name('performance.create');
+        Route::post('/performance', [PerformanceEvaluationController::class, 'store'])->name('performance.store');
+        Route::get('/performance/{evaluation}', [PerformanceEvaluationController::class, 'show'])->name('performance.show');
+        Route::get('/performance/{evaluation}/print', [PerformanceEvaluationController::class, 'printEvaluation'])->name('performance.print');
+        Route::get('/performance/{employee}', [PerformanceEvaluationController::class, 'employeeEvaluations'])->name('performance.employee');
+
+        // Employee Benefits
+        Route::get('/benefits', [EmployeeBenefitController::class, 'index'])->name('benefits.index');
+        Route::get('/benefits/create', [EmployeeBenefitController::class, 'create'])->name('benefits.create');
+        Route::post('/benefits', [EmployeeBenefitController::class, 'store'])->name('benefits.store');
+        Route::get('/benefits/{benefit}', [EmployeeBenefitController::class, 'show'])->name('benefits.show');
+        Route::get('/benefits/{benefit}/edit', [EmployeeBenefitController::class, 'edit'])->name('benefits.edit');
+        Route::put('/benefits/{benefit}', [EmployeeBenefitController::class, 'update'])->name('benefits.update');
+        Route::get('/benefits/{benefit}/print', [EmployeeBenefitController::class, 'printBenefit'])->name('benefits.print');
+        Route::get('/benefits/{employee}', [EmployeeBenefitController::class, 'employeeBenefits'])->name('benefits.employee');
+    });
 
     // Supply Request Routes
     Route::get('/supply-request', [SupplyRequestController::class, 'index'])->name('supply-request.index');
