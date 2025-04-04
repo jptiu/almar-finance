@@ -448,7 +448,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Route::prefix('hr')->name('hr.')->group(function () {
         // Attendance
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
-        Route::get('/attendance/{employee}', [AttendanceController::class, 'employeeAttendance'])->name('attendance.employee');
+        Route::get('/attendance/employee/{employee}', [AttendanceController::class, 'employeeAttendance'])->name('attendance.employee');
         Route::get('/attendance/{attendance}/edit', [AttendanceController::class, 'edit'])->name('attendance.edit');
         Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
         Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');

@@ -89,7 +89,10 @@
                                             {{ $attendance->employee_id }}
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-400">
-                                            {{ $attendance->employee->name }}
+                                            <a href="{{ route('attendance.employee', $attendance->employee) }}" 
+                                               class="text-blue-600 hover:text-blue-800 transition-colors">
+                                                {{ $attendance->employee->name }}
+                                            </a>
                                         </td>
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-400">
                                             {{ $attendance->clock_in_formatted }}
