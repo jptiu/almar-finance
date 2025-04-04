@@ -11,7 +11,7 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        // abort_unless(Gate::allows('hr_access'), 403);
         
         $attendances = Attendance::with('employee')
             ->orderBy('attendance_date', 'desc')
@@ -23,7 +23,7 @@ class AttendanceController extends Controller
 
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        // abort_unless(Gate::allows('hr_access'), 403);
 
         // Get today's date
         $today = now()->toDateString();
@@ -49,7 +49,7 @@ class AttendanceController extends Controller
                 'remarks' => $validated['remarks'] ?? null
             ]);
 
-            return redirect()->route('hr.attendance.index')
+            return redirect()->route('attendance.index')
                 ->with('success', 'Successfully clocked out');
         } else {
             // If no existing record, this is a clock in
@@ -69,7 +69,7 @@ class AttendanceController extends Controller
                 'remarks' => $validated['remarks'] ?? null
             ]);
 
-            return redirect()->route('hr.attendance.index')
+            return redirect()->route('attendance.index')
                 ->with('success', 'Successfully clocked in');
         }
     }
@@ -113,7 +113,7 @@ class AttendanceController extends Controller
 
         $attendance->update($validated);
 
-        return redirect()->route('hr.attendance.index')
+        return redirect()->route('attendance.index')
             ->with('success', 'Attendance updated successfully');
     }
 

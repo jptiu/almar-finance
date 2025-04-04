@@ -12,23 +12,15 @@
             <div></div>
 
             <!-- Right: Actions -->
-            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+            {{-- <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
                 <x-dropdown-filter align="right" />
 
                 <!-- Datepicker built with flatpickr -->
                 <x-datepicker />
-
-                <!-- Add view button -->
-                <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
-                    <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
-                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-                    </svg>
-                    <span class="hidden xs:block ml-2">Add View</span>
-                </button>
                 
-            </div>
+            </div> --}}
 
         </div>
         </div>
@@ -82,10 +74,12 @@
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
                                             Remarks
                                         </th>
+                                        @canany(['hr_access', 'admin_access'])
                                         <th scope="col"
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
                                             Actions
                                         </th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-900 dark:divide-gray-700">
@@ -111,13 +105,15 @@
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-400">
                                             {{ $attendance->remarks ?? '-' }}
                                         </td>
+                                        @canany(['hr_access', 'admin_access'])
                                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-400">
-                                            <a href="{{ route('hr.attendance.edit', $attendance) }}" class="text-indigo-600 hover:text-indigo-900">
+                                            <a href="{{ route('attendance.edit', $attendance) }}" class="text-indigo-600 hover:text-indigo-900">
                                                 <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                                                     <path d="M11.73 3.27a.75.75 0 011.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-2.25-2.25a.75.75 0 011.06-1.06l1.75 1.75 3.5-3.5z"/>
                                                 </svg>
                                             </a>
                                         </td>
+                                        @endcan
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -157,7 +153,7 @@
                             <p class="text-gray-600 dark:text-gray-400">You clocked in at {{ $existingAttendance->clock_in_formatted }}</p>
                         </div>
 
-                        <form action="{{ route('hr.attendance.store') }}" method="POST" class="space-y-4">
+                        <form action="{{ route('attendance.store') }}" method="POST" class="space-y-4">
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -181,7 +177,7 @@
                             <p class="text-gray-600 dark:text-gray-400">Today's Date: {{ $today }}</p>
                         </div>
 
-                        <form action="{{ route('hr.attendance.store') }}" method="POST" class="space-y-4">
+                        <form action="{{ route('attendance.store') }}" method="POST" class="space-y-4">
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>

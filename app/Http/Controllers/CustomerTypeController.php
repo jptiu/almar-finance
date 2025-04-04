@@ -18,7 +18,7 @@ class CustomerTypeController extends Controller
      */
     public function index(Request $request)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         if ($request->search) {
             $lists = CustomerType::with('user')
@@ -48,7 +48,7 @@ class CustomerTypeController extends Controller
 
     public function add()
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         $collectors = User::where('branch_id', $branch)->where('roles.title', 'Collector')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
@@ -76,7 +76,7 @@ class CustomerTypeController extends Controller
      */
     public function store(CustomerTypeCreateRequest $request)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         if ($request->validated()) {
             $customer = new CustomerType();
@@ -98,7 +98,7 @@ class CustomerTypeController extends Controller
      */
     public function show($id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $customer = CustomerType::where('id', $id)->first();
         $collectors = User::where('roles.title', 'Collector')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
@@ -128,7 +128,7 @@ class CustomerTypeController extends Controller
      */
     public function update(CustomerTypeUpdateRequest $request, string $id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         if ($request->validated()) {
             $customer = CustomerType::find($id);
             $customer->code = $request->code;
@@ -148,7 +148,7 @@ class CustomerTypeController extends Controller
      */
     public function destroy($id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $customer = CustomerType::find($id);
         $customer->delete();
 

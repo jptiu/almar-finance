@@ -227,7 +227,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('loan-approvals', [HRController::class, 'pendingLoanApprovals'])->name('loan-approvals.index');
     Route::get('evaluations', [HRController::class, 'employeeEvaluation'])->name('evaluations.index');
     Route::get('monthlyrep', [HRController::class, 'monthlyReport'])->name('monthlyrep.index');
-    Route::get('attendance', [HRController::class, 'biometricsAttendance'])->name('attendance.index');
     Route::get('announce', [HRController::class, 'announcementHr'])->name('announce.index');
     Route::get('announce/add', [HRController::class, 'addAnnouncement'])->name('announce.add');
     Route::post('announce/store', [HRController::class, 'storeAnnouncement'])->name('announce.store');
@@ -328,9 +327,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Payment History
     Route::get('branch/payhistory', [BMController::class, 'paymentHistory'])->name('paymentHistory.index');
-
-    //  Attendance
-    Route::get('attendancebm', [BMController::class, 'biometricsAttendance'])->name('biometricsAttendance.index');
 
     // Pending Loan Approval
     Route::get('branch/pending-loan-approval', [BMController::class, 'pendingLoandApproval'])->name('pendingLoandApproval.index');
@@ -449,7 +445,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/exportTransaction-csv', [LoanController::class, 'exportTransaction'])->name('loan.export');
 
     // HR Management Routes
-    Route::prefix('hr')->name('hr.')->group(function () {
+    // Route::prefix('hr')->name('hr.')->group(function () {
         // Attendance
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
         Route::get('/attendance/{employee}', [AttendanceController::class, 'employeeAttendance'])->name('attendance.employee');
@@ -490,7 +486,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/benefits/{benefit}', [EmployeeBenefitController::class, 'update'])->name('benefits.update');
         Route::get('/benefits/{benefit}/print', [EmployeeBenefitController::class, 'printBenefit'])->name('benefits.print');
         Route::get('/benefits/{employee}', [EmployeeBenefitController::class, 'employeeBenefits'])->name('benefits.employee');
-    });
+    // });
 
     // Supply Request Routes
     Route::get('/supply-request', [SupplyRequestController::class, 'index'])->name('supply-request.index');

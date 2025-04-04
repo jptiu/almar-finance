@@ -32,7 +32,7 @@ class CityTownController extends Controller
 
     public function add()
     {
-        abort_unless(Gate::allows('loan_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         $collectors = User::where('branch_id', $branch)->where('roles.title', 'Collector')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
@@ -60,7 +60,7 @@ class CityTownController extends Controller
      */
     public function store(CityTownCreateRequest $request)
     {
-        abort_unless(Gate::allows('loan_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         if ($request->validated()) {
             $city = new CityTown();
@@ -83,7 +83,7 @@ class CityTownController extends Controller
      */
     public function show($id)
     {
-        abort_unless(Gate::allows('loan_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         $city = CityTown::where('branch_id', $branch)->where('id', $id)->first();
         $collectors = User::where('branch_id', $branch)->where('roles.title', 'Collector')
@@ -114,7 +114,7 @@ class CityTownController extends Controller
      */
     public function update(CityTownUpdateRequest $request, $id)
     {
-        abort_unless(Gate::allows('loan_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         if ($request->validated()) {
             $city = CityTown::find($id);
             $city->code = $request->code;

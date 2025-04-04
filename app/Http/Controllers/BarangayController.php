@@ -17,7 +17,7 @@ class BarangayController extends Controller
      */
     public function index(Request $request)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
 
         if (isset($request->search)) {
@@ -33,7 +33,7 @@ class BarangayController extends Controller
 
     public function add()
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         $collectors = User::where('branch_id', $branch)->where('roles.title', 'Collector')
             ->join('role_user', 'users.id', '=', 'role_user.user_id')
@@ -61,7 +61,7 @@ class BarangayController extends Controller
      */
     public function store(BarangayCreateRequest $request)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         if ($request->validated()) {
             $brgy = new Barangay();
@@ -84,7 +84,7 @@ class BarangayController extends Controller
      */
     public function show($id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         $brgy = Barangay::where('branch_id', $branch)->where('id', $id)->first();
         $collectors = User::where('branch_id', $branch)->where('roles.title', 'Collector')
@@ -115,7 +115,7 @@ class BarangayController extends Controller
      */
     public function update(BarangayUpdateRequest $request, string $id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $branch = auth()->user()->branch_id;
         if ($request->validated()) {
             $brgy = Barangay::find($id);
@@ -137,7 +137,7 @@ class BarangayController extends Controller
      */
     public function destroy($id)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('admin_access'), 404);
         $brgy = Barangay::find($id);
         $brgy->delete();
 

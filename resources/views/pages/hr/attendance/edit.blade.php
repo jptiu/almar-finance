@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
 <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
     <!-- Welcome banner -->
     <x-dashboard.welcome-banner />
@@ -26,7 +24,7 @@
     </div>
 
     <div class="mt-6">
-        <form action="{{ route('hr.attendance.update', $attendance) }}" method="POST" class="space-y-4">
+        <form action="{{ route('attendance.update', $attendance) }}" method="POST" class="space-y-4">
             @csrf
             @method('PUT')
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -40,11 +38,11 @@
                 </div>
                 <div>
                     <label for="clock_in" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Clock In</label>
-                    <input type="time" name="clock_in" id="clock_in" value="{{ $attendance->clock_in ? $attendance->clock_in->format('H:i') : '' }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="time" name="clock_in" id="clock_in" value="{{ $attendance->clock_in_formatted }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="clock_out" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Clock Out</label>
-                    <input type="time" name="clock_out" id="clock_out" value="{{ $attendance->clock_out ? $attendance->clock_out->format('H:i') : '' }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="time" name="clock_out" id="clock_out" value="{{ $attendance->clock_out_formatted }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
@@ -68,4 +66,4 @@
         </form>
     </div>
 </div>
-@endsection
+</x-app-layout>
