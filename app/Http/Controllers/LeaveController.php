@@ -11,7 +11,7 @@ class LeaveController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         $leaves = Leave::with(['employee', 'approvedBy'])
             ->orderBy('start_date', 'desc')
@@ -22,18 +22,16 @@ class LeaveController extends Controller
 
     public function create()
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
-        $employees = User::whereHas('roles', function($q) {
-            $q->where('name', 'employee');
-        })->get();
+        $employees = User::whereHas('roles')->get();
 
         return view('pages.hr.leaves.create', compact('employees'));
     }
 
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $validated = $request->validate([
             'employee_id' => 'required|exists:users,id',
@@ -47,13 +45,13 @@ class LeaveController extends Controller
 
         Leave::create($validated);
 
-        return redirect()->route('hr.leaves.index')
+        return redirect()->route('leaves.index')
             ->with('success', 'Leave request created successfully');
     }
 
     public function approve(Request $request, Leave $leave)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $validated = $request->validate([
             'remarks' => 'nullable|string|max:255'
@@ -65,13 +63,13 @@ class LeaveController extends Controller
             'remarks' => $validated['remarks'] ?? null
         ]);
 
-        return redirect()->route('hr.leaves.index')
+        return redirect()->route('leaves.index')
             ->with('success', 'Leave request approved successfully');
     }
 
     public function reject(Request $request, Leave $leave)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $validated = $request->validate([
             'remarks' => 'required|string|max:255'
@@ -82,13 +80,13 @@ class LeaveController extends Controller
             'remarks' => $validated['remarks']
         ]);
 
-        return redirect()->route('hr.leaves.index')
+        return redirect()->route('leaves.index')
             ->with('success', 'Leave request rejected successfully');
     }
 
     public function employeeLeaves(User $employee)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $leaves = Leave::where('employee_id', $employee->id)
             ->orderBy('start_date', 'desc')

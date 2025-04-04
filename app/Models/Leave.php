@@ -37,9 +37,9 @@ class Leave extends Model
     public function getStatusColorAttribute()
     {
         return match($this->status) {
-            'pending' => 'warning',
-            'approved' => 'success',
-            'rejected' => 'danger',
+            'pending' => 'gray',
+            'approved' => 'green',
+            'rejected' => 'red',
             default => 'secondary'
         };
     }

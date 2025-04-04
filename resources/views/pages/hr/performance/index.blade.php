@@ -6,7 +6,7 @@
                 <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold">Performance Evaluations</h1>
             </div>
             <div class="mb-6">
-                <a href="{{ route('hr.performance.create') }}" 
+                <a href="{{ route('performance.create') }}" 
                    class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                         <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
@@ -85,12 +85,12 @@
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="text-left">
                                         <div class="flex items-center space-x-2">
-                                            <a href="{{ route('hr.performance.show', $evaluation) }}" class="text-indigo-500 hover:text-indigo-600">
+                                            <a href="{{ route('performance.show', $evaluation) }}" class="text-indigo-500 hover:text-indigo-600">
                                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
                                                     <path d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                                                 </svg>
                                             </a>
-                                            <a href="{{ route('hr.performance.print', $evaluation) }}" class="text-green-500 hover:text-green-600">
+                                            <a href="{{ route('performance.print', $evaluation) }}" class="text-green-500 hover:text-green-600">
                                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
                                                     <path d="M2.5 8a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-10ZM3 1a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2H3ZM11 5.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5Z"/>
                                                 </svg>

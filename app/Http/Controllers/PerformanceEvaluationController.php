@@ -11,7 +11,7 @@ class PerformanceEvaluationController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         $evaluations = PerformanceEvaluation::with(['employee', 'evaluatedBy'])
             ->orderBy('evaluation_date', 'desc')
@@ -22,18 +22,16 @@ class PerformanceEvaluationController extends Controller
 
     public function create()
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
-        $employees = User::whereHas('roles', function($q) {
-            $q->where('name', 'employee');
-        })->get();
+        $employees = User::whereHas('roles')->get();
 
         return view('pages.hr.performance.create', compact('employees'));
     }
 
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $validated = $request->validate([
             'employee_id' => 'required|exists:users,id',
@@ -51,20 +49,20 @@ class PerformanceEvaluationController extends Controller
 
         PerformanceEvaluation::create($validated);
 
-        return redirect()->route('hr.performance.index')
+        return redirect()->route('performance.index')
             ->with('success', 'Performance evaluation created successfully');
     }
 
     public function show(PerformanceEvaluation $evaluation)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         return view('pages.hr.performance.show', compact('evaluation'));
     }
 
     public function employeePerformance(User $employee)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $evaluations = PerformanceEvaluation::where('employee_id', $employee->id)
             ->orderBy('evaluation_date', 'desc')
@@ -75,7 +73,7 @@ class PerformanceEvaluationController extends Controller
 
     public function printEvaluation(PerformanceEvaluation $evaluation)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         return view('pages.hr.performance.print', compact('evaluation'));
     }

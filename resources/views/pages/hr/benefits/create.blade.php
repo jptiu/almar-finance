@@ -8,7 +8,7 @@
         </div>
 
         <!-- Form -->
-        <form action="{{ route('hr.benefits.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('benefits.store') }}" method="POST" class="space-y-6">
             @csrf
             
             <!-- Employee Selection -->

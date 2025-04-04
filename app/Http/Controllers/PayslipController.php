@@ -11,7 +11,7 @@ class PayslipController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         $payslips = Payslip::with('employee')
             ->orderBy('pay_period_start', 'desc')
@@ -22,7 +22,7 @@ class PayslipController extends Controller
 
     public function create()
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         $employees = User::whereHas('roles')->get();
 
@@ -31,7 +31,7 @@ class PayslipController extends Controller
 
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $validated = $request->validate([
             'employee_id' => 'required|exists:users,id',
@@ -53,20 +53,20 @@ class PayslipController extends Controller
 
         Payslip::create($validated);
 
-        return redirect()->route('hr.payslips.index')
+        return redirect()->route('payslips.index')
             ->with('success', 'Payslip created successfully');
     }
 
     public function show(Payslip $payslip)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         return view('pages.hr.payslips.show', compact('payslip'));
     }
 
     public function employeePayslips(User $employee)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $payslips = Payslip::where('employee_id', $employee->id)
             ->orderBy('pay_period_start', 'desc')
@@ -77,7 +77,7 @@ class PayslipController extends Controller
 
     public function printPayslip(Payslip $payslip)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         return view('pages.hr.payslips.print', compact('payslip'));
     }

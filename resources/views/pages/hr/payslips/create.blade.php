@@ -8,7 +8,7 @@
         </div>
 
         <!-- Form -->
-        <form action="{{ route('hr.payslips.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('payslips.store') }}" method="POST" class="space-y-6">
             @csrf
             
             <!-- Employee Selection -->

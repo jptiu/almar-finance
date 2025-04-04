@@ -6,7 +6,7 @@
                 <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold">Leave Requests</h1>
             </div>
             <div class="mb-6">
-                <a href="{{ route('hr.leaves.create') }}" 
+                <a href="{{ route('leaves.create') }}" 
                    class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                     <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                         <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
@@ -72,7 +72,7 @@
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="text-left">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{ $leave->getStatusColor() }}-100 text-{{ $leave->getStatusColor() }}-800">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{ $leave->getStatusColorAttribute() }}-100 text-{{ $leave->getStatusColorAttribute() }}-800">
                                             {{ ucfirst($leave->status) }}
                                         </span>
                                     </div>
@@ -81,7 +81,7 @@
                                     <div class="text-left">
                                         <div class="flex items-center space-x-2">
                                             @if($leave->status === 'pending')
-                                            <form action="{{ route('hr.leaves.approve', $leave) }}" method="POST" class="inline">
+                                            <form action="{{ route('leaves.approve', $leave) }}" method="POST" class="inline">
                                                 @csrf
                                                 <button type="submit" class="text-green-500 hover:text-green-600">
                                                     <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
@@ -89,7 +89,7 @@
                                                     </svg>
                                                 </button>
                                             </form>
-                                            <form action="{{ route('hr.leaves.reject', $leave) }}" method="POST" class="inline">
+                                            <form action="{{ route('leaves.reject', $leave) }}" method="POST" class="inline">
                                                 @csrf
                                                 <button type="submit" class="text-red-500 hover:text-red-600">
                                                     <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">

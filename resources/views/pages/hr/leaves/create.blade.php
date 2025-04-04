@@ -8,7 +8,7 @@
         </div>
 
         <!-- Form -->
-        <form action="{{ route('hr.leaves.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('leaves.store') }}" method="POST" class="space-y-6">
             @csrf
             
             <!-- Employee Selection -->
