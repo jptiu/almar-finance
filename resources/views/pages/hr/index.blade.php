@@ -185,36 +185,34 @@
                     <div class="space-y-4">
                         <!-- Card 1 -->
                         <div class="max-h-80 overflow-y-auto">
-    @foreach ($announcements as $announcement)
-        <div onclick="openModal({{ $announcement->id }})"
-            class="bg-white rounded-lg shadow p-4 flex items-end justify-between mb-4">
-            <div>
-                <p class="text-gray-400 text-xs mb-1">
-                    {{ $announcement->created_at->diffForHumans() }}
-                </p>
-                <h3 class="text-gray-800 font-semibold mb-4">{{ $announcement->title }}</h3>
-                <div class="flex items-center space-x-2">
-                    <!-- Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                        viewBox="0 -960 960 960" width="24px" fill="#789DE5">
-                        <path
-                            d="M760-200H320q-33 0-56.5-23.5T240-280v-560q0-33 23.5-56.5T320-920h280l240 240v400q0 33-23.5 56.5T760-200ZM560-640v-200H320v560h440v-360H560ZM160-40q-33 0-56.5-23.5T80-120v-560h80v560h440v80H160Zm160-800v200-200 560-560Z" />
-                    </svg>
-                    <!-- Text -->
-                    <span class="text-gray-500 text-sm">{{ $announcement->subject }}</span>
-                </div>
-            </div>
-            <div class="flex items-center space-y-2">
-                <div class="shrink-0 self-end ml-2">
-                    <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                        href="#0">View<span class="hidden sm:inline"> -&gt;</span></a>
-                </div>
-            </div>
-        </div>
-    @endforeach
-</div>
-
-
+                        @foreach ($announcements as $announcement)
+                            <div onclick="openModal({{ $announcement->id }})"
+                                class="bg-white rounded-lg shadow p-4 flex items-end justify-between mb-4">
+                                <div>
+                                    <p class="text-gray-400 text-xs mb-1">
+                                        {{ $announcement->created_at->diffForHumans() }}
+                                    </p>
+                                    <h3 class="text-gray-800 font-semibold mb-4">{{ $announcement->title }}</h3>
+                                    <div class="flex items-center space-x-2">
+                                        <!-- Icon -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                            viewBox="0 -960 960 960" width="24px" fill="#789DE5">
+                                            <path
+                                                d="M760-200H320q-33 0-56.5-23.5T240-280v-560q0-33 23.5-56.5T320-920h280l240 240v400q0 33-23.5 56.5T760-200ZM560-640v-200H320v560h440v-360H560ZM160-40q-33 0-56.5-23.5T80-120v-560h80v560h440v80H160Zm160-800v200-200 560-560Z" />
+                                        </svg>
+                                        <!-- Text -->
+                                        <span class="text-gray-500 text-sm">{{ $announcement->subject }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-y-2">
+                                    <div class="shrink-0 self-end ml-2">
+                                        <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
+                                            href="#0">View<span class="hidden sm:inline"> -&gt;</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                         <!-- Modal Overlay -->
                         <div id="modal-overlay"
                             class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">

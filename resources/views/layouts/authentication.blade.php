@@ -30,42 +30,22 @@
     </head>
     <body class="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400">
 
-        <main class="bg-white dark:bg-slate-900">
+        <main class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('/images/loandes.svg');">
 
-            <div class="relative flex">
-
-                <!-- Content -->
-                <div class="w-full md:w-1/2">
-
-                    <div class="min-h-[100dvh] h-full flex flex-col after:flex-1">
-
-                        <!-- Header -->
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-                                <!-- Logo -->
-                                <a class="block" href="{{ route('dashboard') }}">
-                                    <img class="h-auto" src="/images/Almar-logo-samp.png" alt="image description">
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="max-w-sm mx-auto w-full px-4 py-8">
-                            {{ $slot }}
-                        </div>
-
-                    </div>
-
+            <div class="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-sm">
+                <!-- Logo -->
+                <div class="flex justify-center mb-6">
+                    <a href="{{ route('dashboard') }}">
+                        <img class="h-20" src="/images/fcc.png" alt="Logo">
+                    </a>
                 </div>
-
-                <!-- Image -->
-                <div class="hidden md:block absolute top-0 bottom-0 right-0 md:w-1/2" aria-hidden="true">
-                    <img class="object-cover object-center w-full h-full" src="{{ asset('images/loandes.svg') }}" width="760" height="1024" alt="Authentication image" />
+                <!-- Form Slot -->
+                <div>
+                    {{ $slot }}
                 </div>
-
             </div>
 
-        </main> 
-
+        </main>
         @livewireScripts
     </body>
 </html>
