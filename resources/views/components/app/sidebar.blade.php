@@ -773,6 +773,25 @@
                         </div>
                     </a>
                 </li>
+                <!-- Overtime -->
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['overtime'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['overtime']) ? 1 : 0 }} }">
+                    <a href="{{ route('overtime.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['overtime'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Overtime</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                     <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
@@ -1273,6 +1292,46 @@
                                 </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Attendance</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- Overtime -->
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['overtime'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['overtime']) ? 1 : 0 }} }">
+                    <a href="{{ route('overtime.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['overtime'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Overtime</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- Payslips -->
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['payslips'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['payslips']) ? 1 : 0 }} }">
+                    <a href="{{ route('payslips.employee', Auth::user()->id) }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['payslips'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Payslips</span>
                             </div>
                         </div>
                     </a>

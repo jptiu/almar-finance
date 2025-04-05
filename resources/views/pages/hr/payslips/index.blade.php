@@ -98,14 +98,9 @@
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="text-left">
                                         <div class="flex items-center space-x-2">
-                                            <a href="{{ route('payslips.show', $payslip) }}" class="text-indigo-500 hover:text-indigo-600">
+                                            <a href="{{ route('payslips.pdf', $payslip) }}" class="text-blue-500 hover:text-blue-600">
                                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
-                                                    <path d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                                                </svg>
-                                            </a>
-                                            <a href="{{ route('payslips.print', $payslip) }}" class="text-green-500 hover:text-green-600">
-                                                <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
-                                                    <path d="M2.5 8a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-10ZM3 1a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2H3ZM11 5.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5Z"/>
+                                                    <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
                                                 </svg>
                                             </a>
                                         </div>

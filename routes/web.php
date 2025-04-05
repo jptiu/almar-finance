@@ -30,6 +30,7 @@ use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoanSummaryController;
 use App\Http\Controllers\LOController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OvertimeRequestController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PerformanceEvaluationController;
 use App\Http\Controllers\PayslipController;
@@ -444,6 +445,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/exportTransaction-csv', [LoanController::class, 'exportTransaction'])->name('loan.export');
 
+    // Overtime Routes
+    Route::prefix('overtime')->group(function () {
+        Route::get('/', [OvertimeRequestController::class, 'index'])->name('overtime.index');
+        Route::get('/create', [OvertimeRequestController::class, 'create'])->name('overtime.create');
+        Route::post('/', [OvertimeRequestController::class, 'store'])->name('overtime.store');
+        Route::post('/{overtimeRequest}/approve', [OvertimeRequestController::class, 'approve'])->name('overtime.approve');
+        Route::post('/{overtimeRequest}/reject', [OvertimeRequestController::class, 'reject'])->name('overtime.reject');
+    });
+
     // HR Management Routes
     // Route::prefix('hr')->name('hr.')->group(function () {
         // Attendance
@@ -457,9 +467,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/payslips', [PayslipController::class, 'index'])->name('payslips.index');
         Route::get('/payslips/create', [PayslipController::class, 'create'])->name('payslips.create');
         Route::post('/payslips', [PayslipController::class, 'store'])->name('payslips.store');
-        Route::get('/payslips/{payslip}', [PayslipController::class, 'show'])->name('payslips.show');
-        Route::get('/payslips/{employee}', [PayslipController::class, 'employeePayslips'])->name('payslips.employee');
-        Route::get('/payslips/{payslip}/print', [PayslipController::class, 'printPayslip'])->name('payslips.print');
+        Route::get('/payslips/{id}', [PayslipController::class, 'show'])->name('payslips.show');
+        Route::get('/payslips/employee/{employee}', [PayslipController::class, 'employeePayslips'])->name('payslips.employee');
+        Route::get('/payslips/{id}/print', [PayslipController::class, 'printPayslip'])->name('payslips.print');
+        Route::post('/payslips/get-overtime-hours', [PayslipController::class, 'getOvertimeHours'])->name('payslips.get-overtime-hours');
+        Route::post('/payslips/get-working-hours', [PayslipController::class, 'getWorkingHours'])->name('payslips.get-working-hours');
+        Route::get('/payslips/{payslip}/pdf', [PayslipController::class, 'generatePdf'])->name('payslips.pdf')->middleware(['auth', 'verified']);
 
         // Leaves
         Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
