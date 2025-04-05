@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Payslip;
 use App\Models\User;
 use App\Models\OvertimeRequest;
-use App\Models\Attendance; // Added this line
+use App\Models\Attendance;
+use App\Models\EmployeeSalary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -47,12 +48,16 @@ class PayslipController extends Controller
                 // Calculate total overtime hours
                 $totalOvertimeHours = $approvedOvertime->sum('hours_requested');
             }
+            
+            // Get current salary
+            $currentSalary = EmployeeSalary::getCurrentSalary($employeeId);
         }
 
         return view('pages.hr.payslips.create', [
             'employees' => $employees,
             'approvedOvertime' => $approvedOvertime,
-            'totalOvertimeHours' => $totalOvertimeHours
+            'totalOvertimeHours' => $totalOvertimeHours,
+            'currentSalary' => $currentSalary ?? null
         ]);
     }
 
@@ -66,46 +71,70 @@ class PayslipController extends Controller
             'pay_period_end' => 'required|date|after:pay_period_start',
             'basic_salary' => 'required|numeric|min:0',
             'allowances' => 'nullable|numeric|min:0',
-            'notes' => 'nullable|string'
+            'notes' => 'nullable|string',
+            'overtime_hours' => 'nullable|numeric|min:0',
+            'overtime_pay' => 'nullable|numeric|min:0',
+            'net_pay' => 'nullable|numeric|min:0'
         ]);
 
-        // Create payslip with basic information
-        $payslip = Payslip::create([
-            'employee_id' => $validated['employee_id'],
-            'pay_period_start' => $validated['pay_period_start'],
-            'pay_period_end' => $validated['pay_period_end'],
-            'basic_salary' => $validated['basic_salary'],
-            'allowances' => $validated['allowances'] ?? 0,
-            'notes' => $validated['notes'] ?? null,
-            'status' => 'pending'
-        ]);
+        try {
+            // Get current salary to verify
+            $currentSalary = EmployeeSalary::getCurrentSalary($validated['employee_id']);
+            if (!$currentSalary || $currentSalary->basic_salary != $validated['basic_salary']) {
+                throw new \Exception('Basic salary mismatch with current salary record');
+            }
 
-        // Calculate working hours and overtime hours
-        $workingHours = $payslip->calculateWorkingHours(
-            $validated['pay_period_start'],
-            $validated['pay_period_end']
-        );
+            // Calculate working hours and overtime hours first
+            $workingHours = Attendance::where('employee_id', $validated['employee_id'])
+                ->whereBetween('attendance_date', [$validated['pay_period_start'], $validated['pay_period_end']])
+                ->get()
+                ->sum('working_hours');
 
-        $payslip->total_hours = $workingHours;
-        $payslip->overtime_hours = $payslip->calculateOvertimeHours(
-            $validated['pay_period_start'],
-            $validated['pay_period_end']
-        );
+            $overtimeHours = OvertimeRequest::where('employee_id', $validated['employee_id'])
+                ->where('status', 'approved')
+                ->whereBetween('date', [$validated['pay_period_start'], $validated['pay_period_end']])
+                ->sum('hours_requested');
+                
+            // Calculate expected working hours for the pay period
+            $startDate = new \DateTime($validated['pay_period_start']);
+            $endDate = new \DateTime($validated['pay_period_end']);
+            $interval = $startDate->diff($endDate);
+            $workingDays = $interval->days + 1; // Include both start and end dates
+            $expectedHours = $workingDays * 8; // 8 hours per working day
+            
+            // Prorate basic salary based on actual hours worked
+            $proratedBasicSalary = $workingHours > 0 ? 
+                ($validated['basic_salary'] / $expectedHours) * $workingHours : 0;
+            
+            // Create payslip with all information
+            $payslip = Payslip::create([
+                'employee_id' => $validated['employee_id'],
+                'pay_period_start' => $validated['pay_period_start'],
+                'pay_period_end' => $validated['pay_period_end'],
+                'basic_salary' => round($proratedBasicSalary, 2),
+                'total_hours' => $workingHours,
+                'overtime_hours' => $overtimeHours,
+                'overtime_pay' => $overtimeHours * Payslip::OVERTIME_RATE,
+                'allowances' => $validated['allowances'] ?? 0,
+                'notes' => $validated['notes'] ?? null,
+                'status' => 'pending'
+            ]);
 
-        // Calculate overtime pay
-        $payslip->overtime_pay = $payslip->overtime_hours * Payslip::OVERTIME_RATE;
+            // Calculate and save deductions
+            $payslip->calculateDeductions();
 
-        // Calculate deductions
-        $payslip->calculateDeductions();
+            // Calculate and save net pay
+            $payslip->net_pay = $payslip->calculateNetPay();
+            $payslip->save();
 
-        // Calculate net pay
-        $payslip->net_pay = $payslip->calculateNetPay();
+            return redirect()->route('payslips.index')
+                ->with('success', 'Payslip created successfully');
 
-        // Save all calculated values
-        $payslip->save();
-
-        return redirect()->route('payslips.index')
-            ->with('success', 'Payslip created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Error creating payslip: ' . $e->getMessage());
+        }
     }
 
     public function show(Payslip $payslip)
@@ -181,6 +210,35 @@ class PayslipController extends Controller
                 'success' => true,
                 'total_hours' => $totalHours,
                 'approved_overtime' => $approvedOvertime
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Validation error',
+                'message' => $e->validator->errors()->first()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Server error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getCurrentSalary(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'employee_id' => 'required|integer|exists:users,id'
+            ]);
+
+            $currentSalary = EmployeeSalary::getCurrentSalary($validated['employee_id']);
+
+            return response()->json([
+                'success' => true,
+                'basic_salary' => $currentSalary ? $currentSalary->basic_salary : null
             ]);
 
         } catch (\Illuminate\Validation\ValidationException $e) {

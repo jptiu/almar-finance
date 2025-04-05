@@ -21,7 +21,7 @@
                         <div class="col-span-12">
                             <label class="block text-sm font-medium mb-1" for="employee_id">Employee</label>
                             <select id="employee_id" name="employee_id" class="form-select w-full"
-                                onchange="updateOvertimeHours()">
+                                onchange="updateEmployeeData()">
                                 <option value="">Select Employee</option>
                                 @foreach ($employees as $employee)
                                     <option value="{{ $employee->id }}"
@@ -75,7 +75,7 @@
                         <div class="col-span-6">
                             <label class="block text-sm font-medium mb-1" for="basic_salary">Basic Salary</label>
                             <input id="basic_salary" name="basic_salary" type="number" step="0.01"
-                                class="form-input w-full" required>
+                                class="form-input w-full" value="{{ $currentSalary?->basic_salary }}" required>
                             @error('basic_salary')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
@@ -215,6 +215,40 @@
         }
     }
 
+    async function updateEmployeeData() {
+        const employeeId = document.getElementById('employee_id').value;
+        const startDate = document.getElementById('pay_period_start').value;
+        const endDate = document.getElementById('pay_period_end').value;
+
+        // Fetch current salary
+        try {
+            const salaryResponse = await fetch(`{{ route('payslips.get-current-salary') }}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({ employee_id: employeeId })
+            });
+
+            const salaryData = await salaryResponse.json();
+            if (salaryData.success && salaryData.basic_salary) {
+                document.getElementById('basic_salary').value = salaryData.basic_salary;
+            } else {
+                document.getElementById('basic_salary').value = '';
+            }
+        } catch (error) {
+            console.error('Error fetching salary data:', error);
+            document.getElementById('basic_salary').value = '';
+        }
+
+        // Update overtime and working hours
+        await updateOvertimeHours();
+    }
+
     async function updateOvertimeHours() {
         try {
             const employeeId = document.getElementById('employee_id').value;
@@ -306,8 +340,8 @@
         }
 
         // Add event listeners for form changes
-        document.getElementById('employee_id').addEventListener('change', updateOvertimeHours);
-        document.getElementById('pay_period_start').addEventListener('change', updateOvertimeHours);
-        document.getElementById('pay_period_end').addEventListener('change', updateOvertimeHours);
+        document.getElementById('employee_id').addEventListener('change', updateEmployeeData);
+        document.getElementById('pay_period_start').addEventListener('change', updateEmployeeData);
+        document.getElementById('pay_period_end').addEventListener('change', updateEmployeeData);
     });
 </script>
