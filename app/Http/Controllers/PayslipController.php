@@ -137,10 +137,10 @@ class PayslipController extends Controller
         }
     }
 
-    public function show(Payslip $payslip)
+    public function show($id)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
-        
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        $payslip = Payslip::findOrFail($id);
         return view('pages.hr.payslips.show', compact('payslip'));
     }
 
@@ -148,6 +148,7 @@ class PayslipController extends Controller
     {
 
         $payslips = Payslip::where('employee_id', $employee->id)
+            ->with(['employee'])
             ->orderBy('pay_period_start', 'desc')
             ->paginate(20);
 
@@ -162,8 +163,11 @@ class PayslipController extends Controller
         return view('pages.hr.payslips.print', compact('payslip'));
     }
 
-    public function generatePdf(Payslip $payslip)
+    public function generatePdf($id)
     {
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        $payslip = Payslip::with('employee')->findOrFail($id);
+        
         $branchLocation = $payslip->employee->branch->location ?? 'Manila, Philippines';
         
         $pdf = Pdf::loadView('pages.hr.payslips.pdf', compact('payslip', 'branchLocation'));

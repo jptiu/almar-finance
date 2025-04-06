@@ -235,7 +235,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // DTR Routes
     Route::get('dtr', [DailyTimeRecordController::class, 'index'])->name('dtr.index');
     Route::get('dtr/pdf', [DailyTimeRecordController::class, 'generatePdf'])->name('dtr.pdf');
-    
+
     // Salary Management Routes
     Route::get('salaries', [EmployeeSalaryController::class, 'index'])->name('salaries.index');
     Route::get('salaries/create', [EmployeeSalaryController::class, 'create'])->name('salaries.create');
@@ -481,52 +481,52 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     // HR Management Routes
-    // Route::prefix('hr')->name('hr.')->group(function () {
-        // Attendance
-        Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
-        Route::get('/attendance/employee/{employee}', [AttendanceController::class, 'employeeAttendance'])->name('attendance.employee');
-        Route::get('/attendance/{attendance}/edit', [AttendanceController::class, 'edit'])->name('attendance.edit');
-        Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
-        Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
+    // Attendance
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('/attendance/employee/{employee}', [AttendanceController::class, 'employeeAttendance'])->name('attendance.employee');
+    Route::get('/attendance/{attendance}/edit', [AttendanceController::class, 'edit'])->name('attendance.edit');
+    Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
+    Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
 
-        // Payslips
-        Route::get('/payslips', [PayslipController::class, 'index'])->name('payslips.index');
-        Route::get('/payslips/create', [PayslipController::class, 'create'])->name('payslips.create');
-        Route::post('/payslips', [PayslipController::class, 'store'])->name('payslips.store');
-        Route::get('/payslips/{id}', [PayslipController::class, 'show'])->name('payslips.show');
-        Route::get('/payslips/employee/{employee}', [PayslipController::class, 'employeePayslips'])->name('payslips.employee');
-        Route::get('/payslips/{id}/print', [PayslipController::class, 'printPayslip'])->name('payslips.print');
-        Route::post('/payslips/get-overtime-hours', [PayslipController::class, 'getOvertimeHours'])->name('payslips.get-overtime-hours');
-        Route::post('/payslips/get-working-hours', [PayslipController::class, 'getWorkingHours'])->name('payslips.get-working-hours');
-        Route::post('/payslips/get-current-salary', [PayslipController::class, 'getCurrentSalary'])->name('payslips.get-current-salary');
-        Route::get('/payslips/{payslip}/pdf', [PayslipController::class, 'generatePdf'])->name('payslips.pdf')->middleware(['auth', 'verified']);
+    // Payslips
+    Route::get('/payslips', [PayslipController::class, 'index'])->name('payslips.index');
+    Route::get('/payslips/create', [PayslipController::class, 'create'])->name('payslips.create');
+    Route::post('/payslips', [PayslipController::class, 'store'])->name('payslips.store');
+    Route::get('/payslips/{id}', [PayslipController::class, 'show'])->name('payslips.show');
+    Route::get('/payslips/employee/{employee}', [PayslipController::class, 'employeePayslips'])->name('payslips.employee');
+    Route::get('/payslips/{id}/print', [PayslipController::class, 'printPayslip'])->name('payslips.print');
+    Route::post('/payslips/get-overtime-hours', [PayslipController::class, 'getOvertimeHours'])->name('payslips.get-overtime-hours');
+    Route::post('/payslips/get-working-hours', [PayslipController::class, 'getWorkingHours'])->name('payslips.get-working-hours');
+    Route::post('/payslips/get-current-salary', [PayslipController::class, 'getCurrentSalary'])->name('payslips.get-current-salary');
+    Route::get('/payslips/{payslip}/pdf', [PayslipController::class, 'generatePdf'])->name('payslips.pdf')->middleware(['auth', 'verified']);
+    Route::get('/payslips/{id}/download', [PayslipController::class, 'generatePdf'])->name('payslips.download');
 
-        // Leaves
-        Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
-        Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
-        Route::post('/leaves', [LeaveController::class, 'store'])->name('leaves.store');
-        Route::post('/leaves/{leave}/approve', [LeaveController::class, 'approve'])->name('leaves.approve');
-        Route::post('/leaves/{leave}/reject', [LeaveController::class, 'reject'])->name('leaves.reject');
-        Route::get('/leaves/{employee}', [LeaveController::class, 'employeeLeaves'])->name('leaves.employee');
+    // Leaves
+    Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
+    Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
+    Route::post('/leaves', [LeaveController::class, 'store'])->name('leaves.store');
+    Route::post('/leaves/{leave}/approve', [LeaveController::class, 'approve'])->name('leaves.approve');
+    Route::post('/leaves/{leave}/reject', [LeaveController::class, 'reject'])->name('leaves.reject');
+    Route::get('/leaves/{employee}', [LeaveController::class, 'employeeLeaves'])->name('leaves.employee');
 
-        // Performance Evaluations
-        Route::get('/performance', [PerformanceEvaluationController::class, 'index'])->name('performance.index');
-        Route::get('/performance/create', [PerformanceEvaluationController::class, 'create'])->name('performance.create');
-        Route::post('/performance', [PerformanceEvaluationController::class, 'store'])->name('performance.store');
-        Route::get('/performance/{evaluation}', [PerformanceEvaluationController::class, 'show'])->name('performance.show');
-        Route::get('/performance/{evaluation}/print', [PerformanceEvaluationController::class, 'printEvaluation'])->name('performance.print');
-        Route::get('/performance/{employee}', [PerformanceEvaluationController::class, 'employeeEvaluations'])->name('performance.employee');
+    // Performance Evaluations
+    Route::get('/performance', [PerformanceEvaluationController::class, 'index'])->name('performance.index');
+    Route::get('/performance/create', [PerformanceEvaluationController::class, 'create'])->name('performance.create');
+    Route::post('/performance', [PerformanceEvaluationController::class, 'store'])->name('performance.store');
+    Route::get('/performance/{evaluation}', [PerformanceEvaluationController::class, 'show'])->name('performance.show');
+    Route::get('/performance/{evaluation}/print', [PerformanceEvaluationController::class, 'printEvaluation'])->name('performance.print');
+    Route::get('/performance/{employee}', [PerformanceEvaluationController::class, 'employeeEvaluations'])->name('performance.employee');
 
-        // Employee Benefits
-        Route::get('/benefits', [EmployeeBenefitController::class, 'index'])->name('benefits.index');
-        Route::get('/benefits/create', [EmployeeBenefitController::class, 'create'])->name('benefits.create');
-        Route::post('/benefits', [EmployeeBenefitController::class, 'store'])->name('benefits.store');
-        Route::get('/benefits/{benefit}', [EmployeeBenefitController::class, 'show'])->name('benefits.show');
-        Route::get('/benefits/{benefit}/edit', [EmployeeBenefitController::class, 'edit'])->name('benefits.edit');
-        Route::put('/benefits/{benefit}', [EmployeeBenefitController::class, 'update'])->name('benefits.update');
-        Route::get('/benefits/{benefit}/print', [EmployeeBenefitController::class, 'printBenefit'])->name('benefits.print');
-        Route::get('/benefits/{employee}', [EmployeeBenefitController::class, 'employeeBenefits'])->name('benefits.employee');
-    // });
+    // Employee Benefits
+    Route::get('/benefits', [EmployeeBenefitController::class, 'index'])->name('benefits.index');
+    Route::get('/benefits/create', [EmployeeBenefitController::class, 'create'])->name('benefits.create');
+    Route::post('/benefits', [EmployeeBenefitController::class, 'store'])->name('benefits.store');
+    Route::get('/benefits/{benefit}', [EmployeeBenefitController::class, 'show'])->name('benefits.show');
+    Route::get('/benefits/{benefit}/edit', [EmployeeBenefitController::class, 'edit'])->name('benefits.edit');
+    Route::put('/benefits/{benefit}', [EmployeeBenefitController::class, 'update'])->name('benefits.update');
+    Route::get('/benefits/{benefit}/print', [EmployeeBenefitController::class, 'printBenefit'])->name('benefits.print');
+    Route::get('/benefits/{employee}', [EmployeeBenefitController::class, 'employeeBenefits'])->name('benefits.employee');
+
 
     // Supply Request Routes
     Route::get('/supply-request', [SupplyRequestController::class, 'index'])->name('supply-request.index');
