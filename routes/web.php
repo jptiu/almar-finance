@@ -14,9 +14,12 @@ use App\Http\Controllers\CLMController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\ComputeCOHController;
+use App\Http\Controllers\ConcernLetterController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\DataFeedController;
+use App\Http\Controllers\DailyTimeRecordController;
+use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DenominationController;
 use App\Http\Controllers\EditRequestController;
@@ -228,6 +231,18 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('loan-approvals', [HRController::class, 'pendingLoanApprovals'])->name('loan-approvals.index');
     Route::get('evaluations', [HRController::class, 'employeeEvaluation'])->name('evaluations.index');
     Route::get('monthlyrep', [HRController::class, 'monthlyReport'])->name('monthlyrep.index');
+
+    // DTR Routes
+    Route::get('dtr', [DailyTimeRecordController::class, 'index'])->name('dtr.index');
+    Route::get('dtr/pdf', [DailyTimeRecordController::class, 'generatePdf'])->name('dtr.pdf');
+    
+    // Salary Management Routes
+    Route::get('salaries', [EmployeeSalaryController::class, 'index'])->name('salaries.index');
+    Route::get('salaries/create', [EmployeeSalaryController::class, 'create'])->name('salaries.create');
+    Route::post('salaries', [EmployeeSalaryController::class, 'store'])->name('salaries.store');
+    Route::get('salaries/{salary}/edit', [EmployeeSalaryController::class, 'edit'])->name('salaries.edit');
+    Route::put('salaries/{salary}', [EmployeeSalaryController::class, 'update'])->name('salaries.update');
+    Route::get('salaries/{employee}/history', [EmployeeSalaryController::class, 'history'])->name('salaries.history');
     Route::get('announce', [HRController::class, 'announcementHr'])->name('announce.index');
     Route::get('announce/add', [HRController::class, 'addAnnouncement'])->name('announce.add');
     Route::post('announce/store', [HRController::class, 'storeAnnouncement'])->name('announce.store');
@@ -445,6 +460,17 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/exportTransaction-csv', [LoanController::class, 'exportTransaction'])->name('loan.export');
 
+    // Concern Letters
+    Route::get('/concern-letters', [ConcernLetterController::class, 'index'])->name('concern-letters.index');
+    Route::get('/concern-letters/create', [ConcernLetterController::class, 'create'])->name('concern-letters.create');
+    Route::post('/concern-letters', [ConcernLetterController::class, 'store'])->name('concern-letters.store');
+    Route::get('/concern-letters/{letter}', [ConcernLetterController::class, 'show'])->name('concern-letters.show');
+    Route::get('/concern-letters/{letter}/edit', [ConcernLetterController::class, 'edit'])->name('concern-letters.edit');
+    Route::put('/concern-letters/{letter}', [ConcernLetterController::class, 'update'])->name('concern-letters.update');
+    Route::post('/concern-letters/{letter}/approve', [ConcernLetterController::class, 'approve'])->name('concern-letters.approve');
+    Route::post('/concern-letters/{letter}/reject', [ConcernLetterController::class, 'reject'])->name('concern-letters.reject');
+    Route::get('/concern-letters/{letter}/pdf', [ConcernLetterController::class, 'generatePdf'])->name('concern-letters.pdf');
+
     // Overtime Routes
     Route::prefix('overtime')->group(function () {
         Route::get('/', [OvertimeRequestController::class, 'index'])->name('overtime.index');
@@ -472,6 +498,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/payslips/{id}/print', [PayslipController::class, 'printPayslip'])->name('payslips.print');
         Route::post('/payslips/get-overtime-hours', [PayslipController::class, 'getOvertimeHours'])->name('payslips.get-overtime-hours');
         Route::post('/payslips/get-working-hours', [PayslipController::class, 'getWorkingHours'])->name('payslips.get-working-hours');
+        Route::post('/payslips/get-current-salary', [PayslipController::class, 'getCurrentSalary'])->name('payslips.get-current-salary');
         Route::get('/payslips/{payslip}/pdf', [PayslipController::class, 'generatePdf'])->name('payslips.pdf')->middleware(['auth', 'verified']);
 
         // Leaves

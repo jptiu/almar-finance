@@ -6,7 +6,7 @@
 @import 'additional-styles/flatpickr.css';
 
 @import 'tailwindcss/utilities';
-
+@import 'chat.css';
 
 .loader {
     border-top-color: #3498db;

@@ -12,6 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Auto clock-out employees at 12:01 AM for the previous day
+        $schedule->command('attendance:auto-clock-out')->dailyAt('00:01');
         $schedule->command('loan:notify-due')->dailyAt('08:00');
         $schedule->command('loans:send-past-due-emails')->daily();
     }

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Namu\WireChat\Traits\Chatable;
+use App\Models\EmployeeSalary;
 
 class User extends Authenticatable
 {
@@ -133,6 +134,11 @@ class User extends Authenticatable
     public function customers()
     {
         return $this->hasMany(Customer::class, 'user_id');
+    }
+
+    public function salaries()
+    {
+        return $this->hasMany(EmployeeSalary::class, 'employee_id');
     }
 
 }

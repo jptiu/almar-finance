@@ -20,6 +20,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
+        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/chat-bubble.css') }}" rel="stylesheet">
         @livewireStyles        
 
         <script>
@@ -66,5 +68,6 @@
         </div>
 
         @livewireScripts
+        @livewire('chat-bubble')
     </body>
 </html>

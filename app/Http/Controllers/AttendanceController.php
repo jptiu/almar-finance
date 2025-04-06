@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\DailyTimeRecord;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,7 +20,8 @@ class AttendanceController extends Controller
             ->orderBy('clock_in', 'desc')
             ->paginate(20);
 
-        return view('pages.hr.attendance.index', compact('attendances'));
+        $today = now()->format('Y-m-d');
+        return view('pages.hr.attendance.index', compact('attendances', 'today'));
     }
 
     public function store(Request $request)
@@ -41,13 +44,40 @@ class AttendanceController extends Controller
             ]);
 
             // Set status based on clock out time
-            $status = $this->determineStatus($attendance->clock_in, $validated['clock_out']);
+            $status = $attendance->determineStatus($attendance->clock_in, $validated['clock_out']);
             
+            // Calculate working hours
+            $clockIn = Carbon::parse($attendance->clock_in);
+            $clockOut = Carbon::parse($validated['clock_out']);
+            $workingHours = $clockOut->diffInHours($clockIn);
+            
+            // Update attendance record
             $attendance->update([
                 'clock_out' => $validated['clock_out'],
                 'status' => $status,
                 'remarks' => $validated['remarks'] ?? null
             ]);
+            
+            // Update or create DTR record
+            $dtr = DailyTimeRecord::firstOrNew([
+                'employee_id' => auth()->id(),
+                'attendance_date' => $today
+            ]);
+            
+            $dtr->fill([
+                'clock_in' => $attendance->clock_in,
+                'clock_out' => $validated['clock_out'],
+                'working_hours' => $workingHours,
+                'late_minutes' => max(0, $clockIn->diffInMinutes(Carbon::parse($today . ' 08:00:00'), false)),
+                'undertime_minutes' => max(0, Carbon::parse($today . ' 17:00:00')->diffInMinutes($clockOut, false)),
+                'status' => $status,
+                'is_sunday' => Carbon::parse($today)->isSunday(),
+                'is_branch_meeting' => false // You might want to make this configurable
+            ]);
+            
+            $dtr->save();
+            $dtr->calculateNetAmount();
+            $dtr->save();
 
             return redirect()->route('attendance.index')
                 ->with('success', 'Successfully clocked out');
@@ -58,40 +88,41 @@ class AttendanceController extends Controller
                 'remarks' => 'nullable|string|max:255'
             ]);
 
-            // Set initial status to present
-            $status = 'present';
-
-            Attendance::create([
+            // Set initial status
+            $status = (new Attendance)->determineStatus($validated['clock_in']);
+            
+            // Create attendance record
+            $attendance = Attendance::create([
                 'employee_id' => auth()->id(),
                 'attendance_date' => $today,
                 'clock_in' => $validated['clock_in'],
                 'status' => $status,
                 'remarks' => $validated['remarks'] ?? null
             ]);
+            
+            // Create DTR record
+            $clockIn = Carbon::parse($validated['clock_in']);
+            $dtr = DailyTimeRecord::firstOrNew([
+                'employee_id' => auth()->id(),
+                'attendance_date' => $today
+            ]);
+            
+            $dtr->fill([
+                'clock_in' => $validated['clock_in'],
+                'late_minutes' => max(0, $clockIn->diffInMinutes(Carbon::parse($today . ' 08:00:00'), false)),
+                'status' => $status,
+                'is_sunday' => Carbon::parse($today)->isSunday(),
+                'is_branch_meeting' => false // You might want to make this configurable
+            ]);
+            
+            $dtr->save();
 
             return redirect()->route('attendance.index')
                 ->with('success', 'Successfully clocked in');
         }
     }
 
-    private function determineStatus($clockIn, $clockOut)
-    {
-        // Convert times to timestamps
-        $inTime = strtotime($clockIn);
-        $outTime = strtotime($clockOut);
-        
-        // Calculate working hours
-        $workingHours = round((($outTime - $inTime) / 3600), 2);
 
-        // Simple status logic (you might want to adjust this based on your company's rules)
-        if ($workingHours < 4) {
-            return 'half-day';
-        }
-        if ($workingHours < 8) {
-            return 'late';
-        }
-        return 'present';
-    }
 
     public function edit(Attendance $attendance)
     {

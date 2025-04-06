@@ -3,22 +3,38 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasAttendanceStatus;
 
 class Attendance extends Model
 {
+    use HasAttendanceStatus;
+    const STANDARD_START_TIME = '08:00';
+    const STANDARD_END_TIME = '17:00';
+    const LUNCH_BREAK_HOURS = 1;
+    const WORKING_HOURS_PER_DAY = 8;
     protected $fillable = [
         'employee_id',
         'attendance_date',
         'clock_in',
         'clock_out',
         'status',
-        'remarks'
+        'remarks',
+        'is_sunday',
+        'is_branch_meeting',
+        'late_minutes',
+        'undertime_minutes',
+        'daily_rate'
     ];
 
     protected $casts = [
         'attendance_date' => 'date',
         'clock_in' => 'string',
-        'clock_out' => 'string'
+        'clock_out' => 'string',
+        'is_sunday' => 'boolean',
+        'is_branch_meeting' => 'boolean',
+        'late_minutes' => 'integer',
+        'undertime_minutes' => 'integer',
+        'daily_rate' => 'decimal:2'
     ];
 
     public function employee()
@@ -35,7 +51,14 @@ class Attendance extends Model
         // Convert time strings to timestamps
         $start = strtotime($this->clock_in);
         $end = strtotime($this->clock_out);
-        return round((($end - $start) / 3600), 2);
+        $totalHours = ($end - $start) / 3600;
+        
+        // Subtract lunch break if worked more than 5 hours
+        if ($totalHours > 5) {
+            $totalHours -= self::LUNCH_BREAK_HOURS;
+        }
+        
+        return round($totalHours, 2);
     }
 
     public function getClockInFormattedAttribute()
@@ -46,5 +69,56 @@ class Attendance extends Model
     public function getClockOutFormattedAttribute()
     {
         return $this->clock_out ? date('H:i', strtotime($this->clock_out)) : '-';
+    }
+
+    protected static function booted()
+    {
+        static::saving(function ($attendance) {
+            $attendance->calculateLateAndUndertime();
+        });
+    }
+
+    protected function calculateLateAndUndertime()
+    {
+        if (!$this->clock_in || !$this->clock_out) {
+            return;
+        }
+
+        // Skip calculations for Sundays and branch meetings
+        if ($this->is_sunday || $this->is_branch_meeting) {
+            $this->late_minutes = 0;
+            $this->undertime_minutes = 0;
+            return;
+        }
+
+        // Calculate late minutes
+        $standardStart = strtotime($this->attendance_date . ' ' . self::STANDARD_START_TIME);
+        $actualStart = strtotime($this->attendance_date . ' ' . $this->clock_in);
+        $this->late_minutes = max(0, round(($actualStart - $standardStart) / 60));
+
+        // Calculate undertime minutes
+        $standardEnd = strtotime($this->attendance_date . ' ' . self::STANDARD_END_TIME);
+        $actualEnd = strtotime($this->attendance_date . ' ' . $this->clock_out);
+        $this->undertime_minutes = max(0, round(($standardEnd - $actualEnd) / 60));
+    }
+
+    public function getDeductionsAttribute()
+    {
+        if ($this->is_sunday || $this->is_branch_meeting) {
+            return 0;
+        }
+
+        $hourlyRate = $this->daily_rate / self::WORKING_HOURS_PER_DAY;
+        $minuteRate = $hourlyRate / 60;
+
+        return round(
+            ($this->late_minutes + $this->undertime_minutes) * $minuteRate,
+            2
+        );
+    }
+
+    public function getNetAmountAttribute()
+    {
+        return round($this->daily_rate - $this->deductions, 2);
     }
 }

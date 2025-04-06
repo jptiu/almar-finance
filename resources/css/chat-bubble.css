@@ -1,0 +1,35 @@
+/* Override wirechat's theme colors */
+.chat-bubble-wrapper .bg-primary-600 {
+    background-color: #1d4ed8 !important;
+}
+
+.chat-bubble-wrapper .text-primary-600 {
+    color: #1d4ed8 !important;
+}
+
+.chat-bubble-wrapper .hover:bg-primary-700:hover {
+    background-color: #1e40af !important;
+}
+
+.chat-bubble-wrapper .hover:text-primary-700:hover {
+    color: #1e40af !important;
+}
+
+/* Chat bubble specific styles */
+.chat-bubble-wrapper .chat-bubble {
+    position: fixed;
+    bottom: 4px;
+    right: 4px;
+    z-index: 50;
+}
+
+.chat-bubble-wrapper .notification-dot {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 12px;
+    height: 12px;
+    background-color: #dc2626;
+    border-radius: 50%;
+    border: 2px solid white;
+}

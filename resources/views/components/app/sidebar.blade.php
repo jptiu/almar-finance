@@ -792,6 +792,66 @@
                         </div>
                     </a>
                 </li>
+                {{-- Employee Concern Letters --}}
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['concern-letters']) ? 1 : 0 }} }">
+                    <a href="{{ route('concern-letters.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee Concern Letters</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {{-- DTR --}}
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['dtr'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['dtr']) ? 1 : 0 }} }">
+                    <a href="{{ route('dtr.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['dtr'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily Time Record</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                {{-- Salary Management --}}
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['salaries'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['salaries']) ? 1 : 0 }} }">
+                    <a href="{{ route('salaries.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['salaries'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Salary Management</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                {{-- Chats --}}
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                     <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
@@ -1277,6 +1337,43 @@
                         </ul>
                     </div>
                 </li>
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['concern-letters']) ? 1 : 0 }} }">
+                    <a href="{{ route('concern-letters.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee Concern Letters</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {{-- DTR --}}
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['dtr'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['dtr']) ? 1 : 0 }} }">
+                    <a href="{{ route('dtr.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['dtr'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily Time Record</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
                 <!-- Attendance -->
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['attendance'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['attendance']) ? 1 : 0 }} }">
@@ -1572,6 +1669,25 @@
                                 </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Benefits</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {{-- Employee Concern Letters --}}
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['concern-letters']) ? 1 : 0 }} }">
+                    <a href="{{ route('concern-letters.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee Concern Letters</span>
                             </div>
                         </div>
                     </a>
@@ -1990,6 +2106,24 @@
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Customer
                                     Profile</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['concern-letters']) ? 1 : 0 }} }">
+                    <a href="{{ route('concern-letters.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                                    width="24px" fill="#e8eaed">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee Concern Letters</span>
                             </div>
                         </div>
                     </a>

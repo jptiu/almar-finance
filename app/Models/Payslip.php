@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Attendance;
 use App\Models\OvertimeRequest;
+use App\Models\EmployeeSalary;
 
 class Payslip extends Model
 {
@@ -93,16 +94,15 @@ class Payslip extends Model
 
     public function calculateTotalEarnings()
     {
-        $workingHours = $this->calculateWorkingHours($this->pay_period_start, $this->pay_period_end);
-        $overtimeHours = $this->calculateOvertimeHours($this->pay_period_start, $this->pay_period_end);
-        
-        // Calculate basic salary based on working hours
-        $basicSalary = ($workingHours / self::WORKING_HOURS_PER_DAY) * $this->basic_salary;
-        
-        // Calculate overtime pay
-        $overtimePay = $overtimeHours * self::OVERTIME_RATE;
+        // Use the stored basic salary and overtime pay
+        $totalEarnings = $this->basic_salary + $this->overtime_pay;
 
-        return $basicSalary + $overtimePay + $this->allowances;
+        // Add allowances if any
+        if ($this->allowances) {
+            $totalEarnings += $this->allowances;
+        }
+
+        return $totalEarnings;
     }
 
     public function calculateDeductions()
