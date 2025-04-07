@@ -490,7 +490,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     // HR Management Routes
-    // Route::prefix('hr')->name('hr.')->group(function () {
     // Attendance
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::get('/attendance/employee/{employee}', [AttendanceController::class, 'employeeAttendance'])->name('attendance.employee');
@@ -509,6 +508,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/payslips/get-working-hours', [PayslipController::class, 'getWorkingHours'])->name('payslips.get-working-hours');
     Route::post('/payslips/get-current-salary', [PayslipController::class, 'getCurrentSalary'])->name('payslips.get-current-salary');
     Route::get('/payslips/{payslip}/pdf', [PayslipController::class, 'generatePdf'])->name('payslips.pdf')->middleware(['auth', 'verified']);
+    Route::get('/payslips/{id}/download', [PayslipController::class, 'generatePdf'])->name('payslips.download');
 
     // Leaves
     Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
@@ -535,7 +535,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/benefits/{benefit}', [EmployeeBenefitController::class, 'update'])->name('benefits.update');
     Route::get('/benefits/{benefit}/print', [EmployeeBenefitController::class, 'printBenefit'])->name('benefits.print');
     Route::get('/benefits/{employee}', [EmployeeBenefitController::class, 'employeeBenefits'])->name('benefits.employee');
-    // });
+
 
     // Supply Request Routes
     Route::get('/supply-request', [SupplyRequestController::class, 'index'])->name('supply-request.index');

@@ -11,7 +11,7 @@ class OvertimeRequestController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $requests = OvertimeRequest::with(['employee', 'approver'])
             ->when(auth()->user()->cannot('admin_access'), function ($query) {
