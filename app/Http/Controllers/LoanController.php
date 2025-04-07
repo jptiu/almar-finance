@@ -191,10 +191,10 @@ class LoanController extends Controller
                 // Log the renewal
                 $log = new ActivityLog();
                 $log->user_id = auth()->user()->id;
-                $log->description = 'Client ' . $previousLoan->customer->first_name . ' ' . $previousLoan->customer->last_name . 
-                                   ' renewed a loan with a remaining balance of ' . $equivalentMonths . 
-                                   ' months, amounting to ' . number_format($totalRemaining, 2) . 
-                                   ', which will be deducted from the renewed loan.';
+                $log->description = 'Client ' . $previousLoan->customer->first_name . ' ' . $previousLoan->customer->last_name .
+                    ' renewed a loan with a remaining balance of ' . $equivalentMonths .
+                    ' months, amounting to ' . number_format($totalRemaining, 2) .
+                    ', which will be deducted from the renewed loan.';
                 $log->save();
             }
 
@@ -215,11 +215,11 @@ class LoanController extends Controller
             $loan->actual_record = $request->actual_record ?? '';
             $loan->processing_fee = $request->processing_fee ?? '';
             $loan->notary_fee = $request->notary_fee ?? '';
-            
+
             // Deduct the remaining balance from the new loan's payable amount
-            $loan->payable_amount = (float)$request->payable_amount - $totalRemaining;
+            $loan->payable_amount = (float) $request->payable_amount - $totalRemaining;
             $loan->note = $totalRemaining > 0 ? 'Deducted amount from previous loan: ' . number_format($totalRemaining, 2) : null;
-            
+
             $loan->branch_id = $branch;
             $loan->user_id = auth()->user()->id;
             if (!empty($filesJson)) {
@@ -245,15 +245,15 @@ class LoanController extends Controller
             // Log the new loan creation
             $log = new ActivityLog();
             $log->user_id = auth()->user()->id;
-            $log->description = auth()->user()->name . ' Created the loan request' . 
-                               ($totalRemaining > 0 ? ' with deduction of ' . number_format($totalRemaining, 2) . ' from previous loan.' : '.');
+            $log->description = auth()->user()->name . ' Created the loan request' .
+                ($totalRemaining > 0 ? ' with deduction of ' . number_format($totalRemaining, 2) . ' from previous loan.' : '.');
             $log->save();
 
             $loanDetails = Loan::with(['customer'])->findOrFail($loan->id);
 
             // Send email to HR
             Mail::to('hr@almarfinance.com')->send(new LoanApprovalRequestMail($loanDetails));
-            
+
             return redirect()->back()->with('success', 'Loan created successfully and is pending approval.');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Error: ' . $th->getMessage());
@@ -263,15 +263,15 @@ class LoanController extends Controller
     public function getCustomerSuggestions(Request $request)
     {
         $query = $request->get('query');
-        
+
         $customers = Customer::where(function ($q) use ($query) {
             $q->where('first_name', 'LIKE', '%' . $query . '%')
-              ->orWhere('last_name', 'LIKE', '%' . $query . '%');
+                ->orWhere('last_name', 'LIKE', '%' . $query . '%');
         })
-        ->where('branch_id', auth()->user()->branch_id)
-        ->select('id', 'first_name', 'last_name', 'type', 'status')
-        ->take(10)
-        ->get();
+            ->where('branch_id', auth()->user()->branch_id)
+            ->select('id', 'first_name', 'last_name', 'type', 'status')
+            ->take(10)
+            ->get();
 
         return response()->json($customers);
     }
@@ -391,7 +391,7 @@ class LoanController extends Controller
             $loan->payable_amount = $request->payable_amount;
             $loan->processing_fee = $request->processing_fee ?? '';
             $loan->notary_fee = $request->notary_fee ?? '';
-            
+
             // if($loan->transaction_customer_status == 'BA'){
             //     $loan->transaction_customer_status = null;
             // }
@@ -555,7 +555,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -573,7 +573,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -582,7 +582,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -629,7 +629,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -647,7 +647,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -656,7 +656,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -703,7 +703,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -721,7 +721,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -730,7 +730,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -777,7 +777,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -795,7 +795,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -804,7 +804,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -851,7 +851,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -869,7 +869,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -878,7 +878,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -933,7 +933,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -951,7 +951,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -960,7 +960,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -1011,7 +1011,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -1029,7 +1029,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -1038,7 +1038,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -1085,7 +1085,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -1103,7 +1103,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -1112,7 +1112,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -1160,7 +1160,7 @@ class LoanController extends Controller
             'age' => $loan->customer->age,
             'gender' => $loan->customer->gender,
             'citizenship' => $loan->customer->citizenship,
-            'perm_address' => $loan->customer->house.' '.$loan->customer->street.' '.$loan->customer->barangay_name.' '.$loan->customer->city_town,
+            'perm_address' => $loan->customer->house . ' ' . $loan->customer->street . ' ' . $loan->customer->barangay_name . ' ' . $loan->customer->city_town,
             'present_address' => '',
             'cell_number' => $loan->customer->cell_number,
             'spouse_name' => $loan->customer->spouse_name,
@@ -1178,7 +1178,7 @@ class LoanController extends Controller
             'day_off' => $loan->customer->day_off,
             'monthly_salary' => $loan->customer->monthly_salary,
             'salary_sched' => $loan->customer->salary_sched,
-            'monthly_pension'=> $loan->customer->monthly_pension,
+            'monthly_pension' => $loan->customer->monthly_pension,
             'pension_sched' => $loan->customer->pension_sched,
             'fathers_name' => $loan->customer->fathers_name,
             'mothers_name' => $loan->customer->mothers_name,
@@ -1187,7 +1187,7 @@ class LoanController extends Controller
             'branch' => $loan->customer->branch,
             'card_no' => $loan->customer->card_no,
             'acc_no' => $loan->customer->acc_no,
-            'pin_no'=> $loan->customer->pin_no,
+            'pin_no' => $loan->customer->pin_no,
             'loan_amount' => number_format($loan->principal_amount, 2),
             'interest_rate' => number_format($loan->interest, 2) . '%',
             'term_months' => $loan->months_to_pay,
@@ -1465,6 +1465,64 @@ class LoanController extends Controller
         ])->where('branch_id', $branch)->find($id);
         return view('pages.loan.print.index', compact('loan', 'branchAddress'));
     }
+
+    public function downloadApplicationForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $applicationForm = $this->generateApplicationForm($loan);
+        return response()->download($applicationForm);
+    }
+
+    public function downloadVoucherForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $voucherForm = $this->generateVoucherFormDocx($loan);
+        return response()->download($voucherForm);
+    }
+
+    public function downloadAffidavitForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $affidavitForm = $this->generateAffidavitForm($loan);
+        return response()->download($affidavitForm);
+    }
+
+    public function downloadSPAForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $spaForm = $this->generateSPAForm($loan);
+        return response()->download($spaForm);
+    }
+
+    public function downloadAgreementForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $agreementForm = $this->generateAgreementForm($loan);
+        return response()->download($agreementForm);
+    }
+
+    public function downloadCashBreakdownForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $cashBreakdownForm = $this->generateCashBreakdownForm($loan);
+        return response()->download($cashBreakdownForm);
+    }
+
+    public function downloadDisclosureStatementForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $disclosureStatementForm = $this->generateDisclosureStatementForm($loan);
+        return response()->download($disclosureStatementForm);
+    }
+
+    public function downloadPromissoryATMForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $promissoryATMForm = $this->generatePromissoryATMForm($loan);
+        return response()->download($promissoryATMForm);
+    }
+
+
 
     public function exportloanHistory($id)
     {
