@@ -48,7 +48,7 @@
                         <div class="col-span-6">
                             <label class="block text-sm font-medium mb-1" for="pay_period_start">Start Date</label>
                             <input id="pay_period_start" name="pay_period_start" type="date"
-                                class="form-input w-full" onchange="updateOvertimeHours()" required>
+                                class="form-input w-full" required>
                             @error('pay_period_start')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
@@ -56,7 +56,7 @@
                         <div class="col-span-6">
                             <label class="block text-sm font-medium mb-1" for="pay_period_end">End Date</label>
                             <input id="pay_period_end" name="pay_period_end" type="date" class="form-input w-full"
-                                onchange="updateOvertimeHours()" required>
+                                required>
                             @error('pay_period_end')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
@@ -80,23 +80,23 @@
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="col-span-6">
+                        {{-- <div class="col-span-6">
                             <label class="block text-sm font-medium mb-1" for="total_hours">Total Hours</label>
                             <input id="total_hours" name="total_hours" type="number" step="0.01"
                                 class="form-input w-full" required>
                             @error('total_hours')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
-                        </div>
-                        <div class="col-span-6">
+                        </div> --}}
+                        {{-- <div class="col-span-6">
                             <label class="block text-sm font-medium mb-1" for="overtime_hours">Overtime Hours</label>
                             <input id="overtime_hours" name="overtime_hours" type="number" step="0.01"
                                 class="form-input w-full @error('overtime_hours') border-red-500 @enderror" readonly>
                             @error('overtime_hours')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
-                        </div>
-                        <div class="col-span-6">
+                        </div> --}}
+                        {{-- <div class="col-span-6">
                             <label class="block text-sm font-medium mb-1">Approved Overtime Requests</label>
                             <div id="approved-overtime" class="space-y-2">
                                 @if (isset($approvedOvertime) && $approvedOvertime->isNotEmpty())
@@ -119,7 +119,7 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-span-6">
                             <label class="block text-sm font-medium mb-1" for="allowances">Allowances</label>
                             <input id="allowances" name="allowances" type="number" step="0.01"
@@ -246,7 +246,7 @@
         }
 
         // Update overtime and working hours
-        await updateOvertimeHours();
+        // await updateOvertimeHours();
     }
 
     async function updateOvertimeHours() {
@@ -335,9 +335,9 @@
         const oldStartDate = '{{ old('pay_period_start') }}';
         const oldEndDate = '{{ old('pay_period_end') }}';
         
-        if (oldEmployeeId && oldStartDate && oldEndDate) {
-            updateOvertimeHours();
-        }
+        // if (oldEmployeeId && oldStartDate && oldEndDate) {
+        //     updateOvertimeHours();
+        // }
 
         // Add event listeners for form changes
         document.getElementById('employee_id').addEventListener('change', updateEmployeeData);

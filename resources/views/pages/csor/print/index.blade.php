@@ -20,7 +20,7 @@
                 <div class="text-gray-600">
                     <img class="h-auto" src="/images/almarlogo.png" alt="almar suites">
                     <div class="text-base font-semibold">Almar Freemile Financing Corporation,</div>
-                    <div class="text-base font-semibold">{{ $branchlocation }}</div>
+                    <div class="text-base font-semibold">{{ $branchlocation->location }}</div>
                     {{-- <div class="text-md font-semibold">Lapu-Lapu City, Cebu, 6015</div> --}}
                 </div>
             </div>

@@ -121,6 +121,7 @@ class LoanController extends Controller
         try {
             // Retrieve authenticated user's branch ID
             $branch = auth()->user()->branch_id;
+            $branchType = Branch::find($branch)->type;
 
             // Validate the input data
             $validatedData = $request->validate([
@@ -200,7 +201,7 @@ class LoanController extends Controller
 
             // Create the new loan with adjusted amounts
             $loan = new Loan();
-            $loan->loan_type = $request->loan_type;
+            $loan->loan_type = $branchType;
             $loan->transaction_type = $request->transaction_type;
             $loan->date_of_loan = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');
             $loan->customer_id = $request->customer_id;
@@ -373,7 +374,7 @@ class LoanController extends Controller
         abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access'), 404);
         if ($request->validated()) {
             $loan = Loan::find($id);
-            $loan->loan_type = $request->loan_type;
+            // $loan->loan_type = $request->loan_type;
             $loan->transaction_type = $request->transaction_type;
             $loan->trans_no = $request->trans_no;
             $loan->date_of_loan = Carbon::createFromFormat('Y-m-d', $request->date_of_loan)->format('m/d/Y');

@@ -50,7 +50,7 @@
                     </div>
 
                     <!-- Right: Actions -->
-
+                    @can('loan_access')
                     <a href="{{ route('expenses.create') }}"
                         class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-6 py-3 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -62,6 +62,7 @@
                         </svg>
                         <span class="hidden xs:block ml-2">New</span>
                     </a>
+                    @endcan
 
                     <div id="modal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog"
                         aria-modal="true">
@@ -146,6 +147,7 @@
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                     {{ number_format($list->amount) }}
                                 </td>
+                                @can('loan_access')
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                     <div class="flex items-center gap-x-6">
                                         <a href="{{ route('expenses.show', $list->id) }}"
@@ -170,6 +172,7 @@
                                         </a>
                                     </div>
                                 </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

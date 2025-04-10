@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasAttendanceStatus;
+use Carbon\Carbon;
 
 class Attendance extends Model
 {
@@ -91,15 +92,15 @@ class Attendance extends Model
             return;
         }
 
-        // Calculate late minutes
-        $standardStart = strtotime($this->attendance_date . ' ' . self::STANDARD_START_TIME);
-        $actualStart = strtotime($this->attendance_date . ' ' . $this->clock_in);
-        $this->late_minutes = max(0, round(($actualStart - $standardStart) / 60));
+        // Calculate late minutes using Manila timezone
+        $standardStart = Carbon::parse($this->attendance_date . ' ' . self::STANDARD_START_TIME)->setTimezone('Asia/Manila');
+        $actualStart = Carbon::parse($this->attendance_date . ' ' . $this->clock_in)->setTimezone('Asia/Manila');
+        $this->late_minutes = max(0, $actualStart->diffInMinutes($standardStart, false));
 
-        // Calculate undertime minutes
-        $standardEnd = strtotime($this->attendance_date . ' ' . self::STANDARD_END_TIME);
-        $actualEnd = strtotime($this->attendance_date . ' ' . $this->clock_out);
-        $this->undertime_minutes = max(0, round(($standardEnd - $actualEnd) / 60));
+        // Calculate undertime minutes using Manila timezone
+        $standardEnd = Carbon::parse($this->attendance_date . ' ' . self::STANDARD_END_TIME)->setTimezone('Asia/Manila');
+        $actualEnd = Carbon::parse($this->attendance_date . ' ' . $this->clock_out)->setTimezone('Asia/Manila');
+        $this->undertime_minutes = max(0, $standardEnd->diffInMinutes($actualEnd, false));
     }
 
     public function getDeductionsAttribute()

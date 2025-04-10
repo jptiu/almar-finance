@@ -33,6 +33,7 @@
                     <div>
 
                     </div>
+                    @can('admin_access')
                     <!-- Right: Actions -->
                     <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                         <a href="{{ route('branches.create') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-4 py-3 flex items-center">
@@ -41,6 +42,7 @@
                         </a>
 
                     </div>
+                    @endcan
                 </div>
 
                 <table class="w-full border-collapse text-left text-sm rounded-md overflow-hidden border border-black">
@@ -50,8 +52,10 @@
                             <th class="p-4 text-fonts-100 font-normal">Branch Name</th>
                             <th class="p-4 text-fonts-100 font-normal">Branch Location</th>
                             <th class="p-4 text-fonts-100 font-normal">Branch Type</th>
+                            @can('admin_access')
                             <th class="p-4 text-fonts-100 font-normal">Users</th>
                             <th class="p-4 text-fonts-100 font-normal">Action</th>
+                            @endcan
                         </tr>
                     </thead>
                     
@@ -62,6 +66,7 @@
                                 <td class="p-4">{{ $branch->name }}</td>
                                 <td class="p-4">{{ $branch->location }}</td>
                                 <td class="p-4">{{ $branch->type }}</td>
+                                @can('admin_access')
                                 <td class="p-4">
                                     <ul>
                                         @foreach ($branch->users as $user)
@@ -84,6 +89,7 @@
                                         </form>
                                     </div>
                                 </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

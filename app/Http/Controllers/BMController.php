@@ -17,6 +17,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Cache;
 
 class BMController extends Controller
 {
@@ -196,165 +197,30 @@ class BMController extends Controller
     public function csor(Request $request)
     {
         $branch = auth()->user()->branch_id;
-        if ($request->start_date && $request->end_date) {
-            // If both start_date and end_date are provided
-            $expenses = Expenses::where('branch_id', $branch)
-                ->whereBetween('exp_date', [$request->start_date, $request->end_date])
-                ->orderBy('exp_date', 'asc')
-                ->paginate(10);
-        } elseif ($request->start_date) {
-            // If only start_date is provided
-            $expenses = Expenses::where('branch_id', $branch)
-                ->whereDate('exp_date', $request->start_date)
-                ->orderBy('exp_date', 'asc')
-                ->paginate(10);
+        
+        // Validate request dates
+        $validated = $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date'
+        ]);
 
-        } else {
-            // If no dates are provided
-            $expenses = Expenses::where('branch_id', $branch)
-                ->paginate(10);
-            $breakdowns = Breakdown::where('branch_id', $branch)->get();
+        $query = Expenses::where('branch_id', $branch);
 
-            $denominations = [
-                '1000.00' => 'pbil',
-                '500.00' => 'pbil',
-                '200.00' => 'pbil',
-                '100.00' => 'pbil',
-                '50.00' => 'pbil',
-                '20.00' => 'pbil',
-                '10.00' => 'coin',
-                '5.00' => 'coin',
-                '1.00' => 'coin',
-                '0.25' => 'coin',
-            ];
-
-            $cashBillData = [];
-
-            // Loop through each breakdown
-            foreach ($breakdowns as $breakdown) {
-                foreach ($denominations as $denomination => $type) {
-                    $count = CashBill::where('branch_id', $branch)
-                        ->where('breakdown_id', $breakdown->id)
-                        ->where('denomination', $denomination)
-                        ->count();
-
-                    $sum = CashBill::where('branch_id', $branch)
-                        ->where('breakdown_id', $breakdown->id)
-                        ->where('denomination', $denomination)
-                        ->sum('amount');
-
-                    $cashBillData[] = [
-                        'breakdown_id' => $breakdown->id, // Include breakdown ID
-                        'denomination' => $denomination,
-                        'type' => $type,
-                        'count' => $count,
-                        'sum' => $sum
-                    ];
-                }
+        if ($request->filled('start_date')) {
+            if ($request->filled('end_date')) {
+                $query->whereBetween('exp_date', [$request->start_date, $request->end_date]);
+            } else {
+                $query->whereDate('exp_date', $request->start_date);
             }
-            $comps = ComputeCashOnHand::where('branch_id', $branch)->paginate(10);
-            $customerCountRegular = Loan::where('branch_id', $branch)
-                ->where('transaction_customer_status', '!=', 'BA')
-                ->where('transaction_type', 'NEW')
-                ->orWhere('transaction_type', 'RENEW')
-                ->count();
-            $receivableAmountRegular = Loan::where('branch_id', $branch)
-                ->where('transaction_customer_status', '!=', 'BA')
-                ->where('transaction_type', 'NEW')
-                ->orWhere('transaction_type', 'RENEW')
-                ->sum('payable_amount');
-            $collectionAmountRegular = Collection::where('branch_id', $branch)
-                ->whereHas('loanDetails.loan', function ($query) {
-                    $query->where('transaction_customer_status', '!=', 'BA')
-                        ->where('transaction_type', 'NEW')
-                        ->orWhere('transaction_type', 'RENEW');
-                })
-                ->sum('paid_amount');
-            $customerCountCA = Loan::where('branch_id', $branch)
-                ->where('transaction_customer_status', '!=', 'BA')
-                ->where('transaction_type', 'CA')
-                ->count();
-            $receivableAmountCA = Loan::where('branch_id', $branch)
-                ->where('transaction_customer_status', '!=', 'BA')
-                ->where('transaction_type', 'CA')
-                ->sum('payable_amount');
-            $collectionAmountCA = Collection::where('branch_id', $branch)
-                ->whereHas('loanDetails.loan', function ($query) {
-                    $query->where('transaction_customer_status', '!=', 'BA')
-                        ->where('transaction_type', 'CA');
-                })
-                ->sum('paid_amount');
-            $customerCountBad = Loan::where('branch_id', $branch)
-                ->where('transaction_customer_status', 'BA')
-                ->count();
-            $receivableAmountBA = Loan::where('branch_id', $branch)
-                ->where('transaction_customer_status', 'BA')
-                ->sum('payable_amount');
-            $collectionAmountBA = Collection::where('branch_id', $branch)
-                ->whereHas('loanDetails.loan', function ($query) {
-                    $query->where('transaction_customer_status', 'BA');
-                })
-                ->sum('paid_amount');
-            $customerCountCABad = Loan::where('branch_id', $branch)
-                ->where('transaction_customer_status', 'BA')
-                ->where('transaction_type', 'CA')
-                ->count();
-            $receivableAmountCABA = Loan::where('branch_id', $branch)
-                ->where('transaction_customer_status', 'BA')
-                ->where('transaction_type', 'CA')
-                ->sum('payable_amount');
-            $collectionAmountCABA = Collection::where('branch_id', $branch)
-                ->whereHas('loanDetails.loan', function ($query) {
-                    $query->where('transaction_customer_status', 'BA')
-                        ->where('transaction_type', 'CA');
-                })
-                ->sum('paid_amount');
         }
-        return view('pages.csor.index', compact(
-            'expenses',
-            'breakdowns',
-            'cashBillData',
-            'comps',
-            'customerCountRegular',
-            'receivableAmountRegular',
-            'collectionAmountRegular',
-            'customerCountCA',
-            'receivableAmountCA',
-            'collectionAmountCA',
-            'customerCountBad',
-            'receivableAmountBA',
-            'collectionAmountBA',
-            'customerCountCABad',
-            'receivableAmountCABA',
-            'collectionAmountCABA'
-        ));
-    }
 
-    public function csorPrint(Request $request)
-    {
-        $branch = auth()->user()->branch_id;
-        $branchlocation = Branch::find($branch);
+        $expenses = $query->orderBy('exp_date', 'asc')->paginate(10);
 
-        // Get the start and end dates of the current month
-        // Assume this is the input from $request->date_range
-        $dateRange = $request->date_range;
+        // Cache breakdowns for better performance
+        $breakdowns = Cache::remember('branch_breakdowns_' . $branch, now()->addHours(1), function () use ($branch) {
+            return Breakdown::where('branch_id', $branch)->get();
+        });
 
-        // Split the date range into start and end dates
-        [$startOfMonth, $endOfMonth] = explode(' - ', $dateRange);
-        // dd($startOfMonth.' - '.$endOfMonth);
-
-        // Optionally convert the dates to a standard format (Y-m-d) if needed
-        $startOfMonth = date('Y-m-d', strtotime($startOfMonth));
-        $endOfMonth = date('Y-m-d', strtotime($endOfMonth));
-
-        // Fetch expenses for the current month and branch
-        $expenses = Expenses::where('branch_id', $branch)
-            ->whereBetween('exp_date', [Carbon::parse($startOfMonth)->format('m/d/Y'), Carbon::parse($endOfMonth)->format('m/d/Y')])
-            ->get();
-
-        $breakdown = Breakdown::where('branch_id', $branch)->latest('created_at')->first();
-
-        // Denominations and their types
         $denominations = [
             '1000.00' => 'pbil',
             '500.00' => 'pbil',
@@ -370,107 +236,275 @@ class BMController extends Controller
 
         $cashBillData = [];
 
-        // Fetch data for each denomination
-        foreach ($denominations as $denomination => $type) {
-            $count = CashBill::where('branch_id', $branch)
-                ->where('breakdown_id', $breakdown->id)
-                ->where('denomination', $denomination)
-                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                ->count();
+        foreach ($breakdowns as $breakdown) {
+            foreach ($denominations as $denomination => $type) {
+                $count = Cache::remember('cash_bill_count_' . $branch . '_' . $breakdown->id . '_' . $denomination, now()->addHours(1), function () use ($branch, $breakdown, $denomination) {
+                    return CashBill::where('branch_id', $branch)
+                        ->where('breakdown_id', $breakdown->id)
+                        ->where('denomination', $denomination)
+                        ->count();
+                });
 
-            $sum = CashBill::where('branch_id', $branch)
-                ->where('breakdown_id', $breakdown->id)
-                ->where('denomination', $denomination)
-                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                ->sum('amount');
+                $sum = Cache::remember('cash_bill_sum_' . $branch . '_' . $breakdown->id . '_' . $denomination, now()->addHours(1), function () use ($branch, $breakdown, $denomination) {
+                    return CashBill::where('branch_id', $branch)
+                        ->where('breakdown_id', $breakdown->id)
+                        ->where('denomination', $denomination)
+                        ->sum('amount');
+                });
 
-            $cashBillData[] = [
-                'denomination' => $denomination,
-                'type' => $type,
-                'count' => $count, // fix this for quantity count error
-                'sum' => $sum
-            ];
+                $cashBillData[] = [
+                    'breakdown_id' => $breakdown->id,
+                    'denomination' => $denomination,
+                    'type' => $type,
+                    'count' => $count,
+                    'sum' => $sum
+                ];
+            }
         }
 
-        // Find compute cash on hand record
-        $comps = ComputeCashOnHand::find($request->coh_id);
-        $customerCountRegular = Loan::where('branch_id', $branch)
-            ->where('transaction_customer_status', '!=', 'BA')
-            ->where('transaction_type', 'NEW')
-            ->orWhere('transaction_type', 'RENEW')
-            ->count();
-        $receivableAmountRegular = Loan::where('branch_id', $branch)
-            ->where('transaction_customer_status', '!=', 'BA')
-            ->where('transaction_type', 'NEW')
-            ->orWhere('transaction_type', 'RENEW')
-            ->sum('payable_amount');
-        $collectionAmountRegular = Collection::where('branch_id', $branch)
-            ->whereHas('loanDetails.loan', function ($query) {
-                $query->where('transaction_customer_status', '!=', 'BA')
-                    ->where('transaction_type', 'NEW')
-                    ->orWhere('transaction_type', 'RENEW');
-            })
-            ->sum('paid_amount');
-        $customerCountCA = Loan::where('branch_id', $branch)
-            ->where('transaction_customer_status', '!=', 'BA')
-            ->where('transaction_type', 'CA')
-            ->count();
-        $receivableAmountCA = Loan::where('branch_id', $branch)
-            ->where('transaction_customer_status', '!=', 'BA')
-            ->where('transaction_type', 'CA')
-            ->sum('payable_amount');
-        $collectionAmountCA = Collection::where('branch_id', $branch)
-            ->whereHas('loanDetails.loan', function ($query) {
-                $query->where('transaction_customer_status', '!=', 'BA')
-                    ->where('transaction_type', 'CA');
-            })
-            ->sum('paid_amount');
-        $customerCountBad = Loan::where('branch_id', $branch)
-            ->where('transaction_customer_status', 'BA')
-            ->count();
-        $receivableAmountBA = Loan::where('branch_id', $branch)
-            ->where('transaction_customer_status', 'BA')
-            ->sum('payable_amount');
-        $collectionAmountBA = Collection::where('branch_id', $branch)
-            ->whereHas('loanDetails.loan', function ($query) {
-                $query->where('transaction_customer_status', 'BA');
-            })
-            ->sum('paid_amount');
-        $customerCountCABad = Loan::where('branch_id', $branch)
-            ->where('transaction_customer_status', 'BA')
-            ->where('transaction_type', 'CA')
-            ->count();
-        $receivableAmountCABA = Loan::where('branch_id', $branch)
-            ->where('transaction_customer_status', 'BA')
-            ->where('transaction_type', 'CA')
-            ->sum('payable_amount');
-        $collectionAmountCABA = Collection::where('branch_id', $branch)
-            ->whereHas('loanDetails.loan', function ($query) {
-                $query->where('transaction_customer_status', 'BA')
-                    ->where('transaction_type', 'CA');
-            })
-            ->sum('paid_amount');
+        $comps = Cache::remember('branch_comps_' . $branch, now()->addHours(1), function () use ($branch, $request) {
+            return ComputeCashOnHand::where('branch_id', $branch)->where('id', $request->coh_id)->first();
+        });
 
-        // Return the view with compacted data
-        return view('pages.csor.print.index', [
-            'expenses' => $expenses,
-            'cashBillData' => $cashBillData,
-            'comps' => $comps,
-            'branchlocation' => $branchlocation->location,
-            'breakdowns' => $breakdown,
-            'customerCountRegular' => $customerCountRegular,
-            'receivableAmountRegular' => $receivableAmountRegular,
-            'collectionAmountRegular' => $collectionAmountRegular,
-            'customerCountCA' => $customerCountCA,
-            'receivableAmountCA' => $receivableAmountCA,
-            'collectionAmountCA' => $collectionAmountCA,
-            'customerCountBad' => $customerCountBad,
-            'receivableAmountBA' => $receivableAmountBA,
-            'collectionAmountBA' => $collectionAmountBA,
-            'customerCountCABad' => $customerCountCABad,
-            'receivableAmountCABA' => $receivableAmountCABA,
-            'collectionAmountCABA' => $collectionAmountCABA,
+        // Cache loan and collection metrics
+        $metrics = Cache::remember('branch_metrics_' . $branch, now()->addHours(1), function () use ($branch) {
+            return [
+                'customerCountRegular' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', null)
+                    ->where(function ($query) {
+                        $query->where('transaction_type', 'NEW')
+                            ->orWhere('transaction_type', 'RENEW');
+                    })
+                    ->count(),
+
+                'receivableAmountRegular' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', null)
+                    ->where(function ($query) {
+                        $query->where('transaction_type', 'NEW')
+                            ->orWhere('transaction_type', 'RENEW');
+                    })
+                    ->sum('payable_amount'),
+
+                'collectionAmountRegular' => Collection::where('branch_id', $branch)
+                    ->whereHas('loanDetails.loan', function ($query) {
+                        $query->where('transaction_customer_status', null)
+                            ->where(function ($subquery) {
+                                $subquery->where('transaction_type', 'NEW')
+                                    ->orWhere('transaction_type', 'RENEW');
+                            });
+                    })
+                    ->sum('paid_amount'),
+
+                'customerCountCA' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', null)
+                    ->where('transaction_type', 'CA')
+                    ->count(),
+
+                'receivableAmountCA' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', null)
+                    ->where('transaction_type', 'CA')
+                    ->sum('payable_amount'),
+
+                'collectionAmountCA' => Collection::where('branch_id', $branch)
+                    ->whereHas('loanDetails.loan', function ($query) {
+                        $query->where('transaction_customer_status', null)
+                            ->where('transaction_type', 'CA');
+                    })
+                    ->sum('paid_amount'),
+
+                'customerCountBad' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', 'BA')
+                    ->count(),
+
+                'receivableAmountBA' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', 'BA')
+                    ->sum('payable_amount'),
+
+                'collectionAmountBA' => Collection::where('branch_id', $branch)
+                    ->whereHas('loanDetails.loan', function ($query) {
+                        $query->where('transaction_customer_status', 'BA');
+                    })
+                    ->sum('paid_amount'),
+
+                'customerCountCABad' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', 'BA')
+                    ->where('transaction_type', 'CA')
+                    ->count(),
+
+                'receivableAmountCABA' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', 'BA')
+                    ->where('transaction_type', 'CA')
+                    ->sum('payable_amount'),
+
+                'collectionAmountCABA' => Collection::where('branch_id', $branch)
+                    ->whereHas('loanDetails.loan', function ($query) {
+                        $query->where('transaction_customer_status', 'BA')
+                            ->where('transaction_type', 'CA');
+                    })
+                    ->sum('paid_amount'),
+            ];
+        });
+
+        return view('pages.csor.index', array_merge(
+            compact('expenses', 'breakdowns', 'cashBillData', 'comps'),
+            $metrics
+        ));
+    }
+
+    public function csorPrint(Request $request)
+    {
+        $branch = auth()->user()->branch_id;
+        $branchlocation = Branch::find($branch);
+        
+        // Validate request dates
+        $validated = $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date'
         ]);
+
+        $query = Expenses::where('branch_id', $branch);
+
+        if ($request->filled('start_date')) {
+            if ($request->filled('end_date')) {
+                $query->whereBetween('exp_date', [$request->start_date, $request->end_date]);
+            } else {
+                $query->whereDate('exp_date', $request->start_date);
+            }
+        }
+
+        $expenses = $query->orderBy('exp_date', 'asc')->paginate(10);
+
+        // Cache breakdowns for better performance
+        $breakdowns = Cache::remember('branch_breakdowns_' . $branch, now()->addHours(1), function () use ($branch) {
+            return Breakdown::where('branch_id', $branch)->get();
+        });
+
+        $denominations = [
+            '1000.00' => 'pbil',
+            '500.00' => 'pbil',
+            '200.00' => 'pbil',
+            '100.00' => 'pbil',
+            '50.00' => 'pbil',
+            '20.00' => 'pbil',
+            '10.00' => 'coin',
+            '5.00' => 'coin',
+            '1.00' => 'coin',
+            '0.25' => 'coin',
+        ];
+
+        $cashBillData = [];
+
+        foreach ($breakdowns as $breakdown) {
+            foreach ($denominations as $denomination => $type) {
+                $count = Cache::remember('cash_bill_count_' . $branch . '_' . $breakdown->id . '_' . $denomination, now()->addHours(1), function () use ($branch, $breakdown, $denomination) {
+                    return CashBill::where('branch_id', $branch)
+                        ->where('breakdown_id', $breakdown->id)
+                        ->where('denomination', $denomination)
+                        ->count();
+                });
+
+                $sum = Cache::remember('cash_bill_sum_' . $branch . '_' . $breakdown->id . '_' . $denomination, now()->addHours(1), function () use ($branch, $breakdown, $denomination) {
+                    return CashBill::where('branch_id', $branch)
+                        ->where('breakdown_id', $breakdown->id)
+                        ->where('denomination', $denomination)
+                        ->sum('amount');
+                });
+
+                $cashBillData[] = [
+                    'breakdown_id' => $breakdown->id,
+                    'denomination' => $denomination,
+                    'type' => $type,
+                    'count' => $count,
+                    'sum' => $sum
+                ];
+            }
+        }
+
+        $comps = ComputeCashOnHand::find($request->coh_id);
+
+        // Cache loan and collection metrics
+        $metrics = Cache::remember('branch_metrics_' . $branch, now()->addHours(1), function () use ($branch) {
+            return [
+                'customerCountRegular' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', null)
+                    ->where(function ($query) {
+                        $query->where('transaction_type', 'NEW')
+                            ->orWhere('transaction_type', 'RENEW');
+                    })
+                    ->count(),
+
+                'receivableAmountRegular' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', null)
+                    ->where(function ($query) {
+                        $query->where('transaction_type', 'NEW')
+                            ->orWhere('transaction_type', 'RENEW');
+                    })
+                    ->sum('payable_amount'),
+
+                'collectionAmountRegular' => Collection::where('branch_id', $branch)
+                    ->whereHas('loanDetails.loan', function ($query) {
+                        $query->where('transaction_customer_status', null)
+                            ->where(function ($subquery) {
+                                $subquery->where('transaction_type', 'NEW')
+                                    ->orWhere('transaction_type', 'RENEW');
+                            });
+                    })
+                    ->sum('paid_amount'),
+
+                'customerCountCA' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', null)
+                    ->where('transaction_type', 'CA')
+                    ->count(),
+
+                'receivableAmountCA' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', null)
+                    ->where('transaction_type', 'CA')
+                    ->sum('payable_amount'),
+
+                'collectionAmountCA' => Collection::where('branch_id', $branch)
+                    ->whereHas('loanDetails.loan', function ($query) {
+                        $query->where('transaction_customer_status', null)
+                            ->where('transaction_type', 'CA');
+                    })
+                    ->sum('paid_amount'),
+
+                'customerCountBad' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', 'BA')
+                    ->count(),
+
+                'receivableAmountBA' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', 'BA')
+                    ->sum('payable_amount'),
+
+                'collectionAmountBA' => Collection::where('branch_id', $branch)
+                    ->whereHas('loanDetails.loan', function ($query) {
+                        $query->where('transaction_customer_status', 'BA');
+                    })
+                    ->sum('paid_amount'),
+
+                'customerCountCABad' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', 'BA')
+                    ->where('transaction_type', 'CA')
+                    ->count(),
+
+                'receivableAmountCABA' => Loan::where('branch_id', $branch)
+                    ->where('transaction_customer_status', 'BA')
+                    ->where('transaction_type', 'CA')
+                    ->sum('payable_amount'),
+
+                'collectionAmountCABA' => Collection::where('branch_id', $branch)
+                    ->whereHas('loanDetails.loan', function ($query) {
+                        $query->where('transaction_customer_status', 'BA')
+                            ->where('transaction_type', 'CA');
+                    })
+                    ->sum('paid_amount'),
+            ];
+        });
+
+        return view('pages.csor.print.index', array_merge(
+            compact('expenses', 'breakdowns', 'cashBillData', 'comps', 'branchlocation'),
+            $metrics
+        ));
     }
 
 

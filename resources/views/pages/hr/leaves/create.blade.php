@@ -19,6 +19,7 @@
                 <div class="p-3">
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12">
+                            @can('hr_access')
                             <label class="block text-sm font-medium mb-1" for="employee_id">Employee</label>
                             <select id="employee_id" name="employee_id" class="form-select w-full" required>
                                 <option value="">Select Employee</option>
@@ -29,6 +30,14 @@
                             @error('employee_id')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
+                            @endcan
+                            @cannot('hr_access')
+                            <label class="block text-sm font-medium mb-1">Employee</label>
+                            <div class="flex items-center bg-gray-50 dark:bg-slate-700 rounded-md p-2">
+                                <input type="hidden" name="employee_id" value="{{ auth()->id() }}">
+                                <span class="text-gray-700 dark:text-gray-300">{{ auth()->user()->name }}</span>
+                            </div>
+                            @endcannot
                         </div>
                     </div>
                 </div>
@@ -77,6 +86,7 @@
                             @enderror
                         </div>
                         <div class="col-span-6">
+                            @can('hr_access')
                             <label class="block text-sm font-medium mb-1" for="status">Status</label>
                             <select id="status" name="status" class="form-select w-full" required>
                                 <option value="pending">Pending</option>
@@ -86,6 +96,14 @@
                             @error('status')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
+                            @endcan
+                            @cannot('hr_access')
+                            <label class="block text-sm font-medium mb-1">Status</label>
+                            <div class="flex items-center bg-gray-50 dark:bg-slate-700 rounded-md p-2">
+                                <input type="hidden" name="status" value="pending">
+                                <span class="text-gray-700 dark:text-gray-300">Pending</span>
+                            </div>
+                            @endcannot
                         </div>
                     </div>
                 </div>

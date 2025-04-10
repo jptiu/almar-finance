@@ -46,9 +46,11 @@
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Status</div>
                                 </th>
+                                @can('hr_access')
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Actions</div>
                                 </th>
+                                @endcan
                             </tr>
                         </thead>
                         <!-- Table body -->
@@ -77,6 +79,7 @@
                                         </span>
                                     </div>
                                 </td>
+                                @can('hr_access')
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="text-left">
                                         <div class="flex items-center space-x-2">
@@ -102,6 +105,7 @@
                                         </div>
                                     </div>
                                 </td>
+                                @endcan
                             </tr>
                             @endforeach
                         </tbody>

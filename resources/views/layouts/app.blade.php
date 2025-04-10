@@ -7,6 +7,10 @@
 
         <title>{{ config('app.name', 'Almar Freemile Finance System') }}</title>
 
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- External Assets -->
         <!-- Date Picker -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -16,11 +20,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        <!-- Styles -->
-        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+        <!-- Custom Styles -->
         <link href="{{ asset('css/chat-bubble.css') }}" rel="stylesheet">
         @livewireStyles        
 

@@ -15,12 +15,12 @@ class AttendanceController extends Controller
     {
         // abort_unless(Gate::allows('hr_access'), 403);
         
+        $today = Carbon::now('Asia/Manila')->format('Y-m-d');
         $attendances = Attendance::with('employee')
-            ->orderBy('attendance_date', 'desc')
+            ->where('attendance_date', $today)
             ->orderBy('clock_in', 'desc')
             ->paginate(20);
 
-        $today = now()->format('Y-m-d');
         return view('pages.hr.attendance.index', compact('attendances', 'today'));
     }
 
@@ -28,8 +28,8 @@ class AttendanceController extends Controller
     {
         // abort_unless(Gate::allows('hr_access'), 403);
 
-        // Get today's date
-        $today = now()->toDateString();
+        $today = Carbon::now('Asia/Manila')->format('Y-m-d');
+        $now = Carbon::now('Asia/Manila');
 
         // Check if there's an existing attendance record for today
         $attendance = Attendance::where('employee_id', auth()->id())
@@ -46,9 +46,9 @@ class AttendanceController extends Controller
             // Set status based on clock out time
             $status = $attendance->determineStatus($attendance->clock_in, $validated['clock_out']);
             
-            // Calculate working hours
-            $clockIn = Carbon::parse($attendance->clock_in);
-            $clockOut = Carbon::parse($validated['clock_out']);
+            // Calculate working hours using Manila timezone
+            $clockIn = Carbon::parse($attendance->clock_in)->setTimezone('Asia/Manila');
+            $clockOut = Carbon::parse($validated['clock_out'])->setTimezone('Asia/Manila');
             $workingHours = $clockOut->diffInHours($clockIn);
             
             // Update attendance record
@@ -68,11 +68,13 @@ class AttendanceController extends Controller
                 'clock_in' => $attendance->clock_in,
                 'clock_out' => $validated['clock_out'],
                 'working_hours' => $workingHours,
-                'late_minutes' => max(0, $clockIn->diffInMinutes(Carbon::parse($today . ' 08:00:00'), false)),
-                'undertime_minutes' => max(0, Carbon::parse($today . ' 17:00:00')->diffInMinutes($clockOut, false)),
+                'late_minutes' => max(0, $clockIn->diffInMinutes(Carbon::parse($now->format('Y-m-d') . ' 08:00:00'), false)),
+                'undertime_minutes' => max(0, Carbon::parse($now->format('Y-m-d') . ' 17:00:00')->diffInMinutes($clockOut, false)),
                 'status' => $status,
-                'is_sunday' => Carbon::parse($today)->isSunday(),
-                'is_branch_meeting' => false // You might want to make this configurable
+                'employee_id' => auth()->id(),
+                'attendance_date' => $today,
+                'is_sunday' => $now->isSunday(),
+                'is_branch_meeting' => false
             ]);
             
             $dtr->save();
@@ -101,7 +103,7 @@ class AttendanceController extends Controller
             ]);
             
             // Create DTR record
-            $clockIn = Carbon::parse($validated['clock_in']);
+            $clockIn = Carbon::parse($validated['clock_in'])->setTimezone('Asia/Manila');
             $dtr = DailyTimeRecord::firstOrNew([
                 'employee_id' => auth()->id(),
                 'attendance_date' => $today
@@ -109,10 +111,12 @@ class AttendanceController extends Controller
             
             $dtr->fill([
                 'clock_in' => $validated['clock_in'],
-                'late_minutes' => max(0, $clockIn->diffInMinutes(Carbon::parse($today . ' 08:00:00'), false)),
+                'late_minutes' => max(0, $clockIn->diffInMinutes(Carbon::parse($now->format('Y-m-d') . ' 08:00:00'), false)),
                 'status' => $status,
-                'is_sunday' => Carbon::parse($today)->isSunday(),
-                'is_branch_meeting' => false // You might want to make this configurable
+                'employee_id' => auth()->id(),
+                'attendance_date' => $today,
+                'is_sunday' => $now->isSunday(),
+                'is_branch_meeting' => false
             ]);
             
             $dtr->save();
@@ -121,8 +125,6 @@ class AttendanceController extends Controller
                 ->with('success', 'Successfully clocked in');
         }
     }
-
-
 
     public function edit(Attendance $attendance)
     {
@@ -152,7 +154,9 @@ class AttendanceController extends Controller
     {
         abort_unless(Gate::allows('hr_access'), 403);
 
+        $today = Carbon::now('Asia/Manila')->format('Y-m-d');
         $attendances = Attendance::where('employee_id', $employee->id)
+            ->where('attendance_date', $today)
             ->orderBy('attendance_date', 'desc')
             ->paginate(20);
 

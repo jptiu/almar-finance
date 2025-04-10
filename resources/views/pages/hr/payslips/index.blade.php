@@ -40,9 +40,9 @@
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Total Hours</div>
                                 </th>
-                                <th class="p-2 whitespace-nowrap">
+                                {{-- <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Overtime</div>
-                                </th>
+                                </th> --}}
                                 <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Allowances</div>
                                 </th>
@@ -76,9 +76,9 @@
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="text-left">{{ $payslip->total_hours }} hrs</div>
                                 </td>
-                                <td class="p-2 whitespace-nowrap">
+                                {{-- <td class="p-2 whitespace-nowrap">
                                     <div class="text-left">{{ $payslip->overtime_hours }} hrs (₱{{ number_format($payslip->overtime_pay, 2) }})</div>
-                                </td>
+                                </td> --}}
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="text-left">₱{{ number_format($payslip->allowances, 2) }}</div>
                                 </td>

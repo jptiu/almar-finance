@@ -12,7 +12,19 @@ class ConcernLetterController extends Controller
 {
     public function index()
     {
+        if(Auth::user()->cannot("super_access")) {
         $letters = ConcernLetter::with(['user', 'issuer', 'approver'])
+            ->when(request('status'), function ($query, $status) {
+                return $query->where('status', $status);
+            })
+            ->when(request('type'), function ($query, $type) {
+                return $query->where('type', $type);
+            })
+            ->where('user_id', Auth::id())
+            ->orderBy('date_issued', 'desc')
+            ->paginate(10);
+        } else {
+            $letters = ConcernLetter::with(['user', 'issuer', 'approver'])
             ->when(request('status'), function ($query, $status) {
                 return $query->where('status', $status);
             })
@@ -21,6 +33,7 @@ class ConcernLetterController extends Controller
             })
             ->orderBy('date_issued', 'desc')
             ->paginate(10);
+        }
 
         return view('pages.hr.concern_letters.index', [
             'letters' => $letters,

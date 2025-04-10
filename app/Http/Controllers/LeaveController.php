@@ -11,7 +11,7 @@ class LeaveController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         $leaves = Leave::with(['employee', 'approvedBy'])
             ->orderBy('start_date', 'desc')
@@ -22,7 +22,7 @@ class LeaveController extends Controller
 
     public function create()
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         $employees = User::whereHas('roles')->get();
 
@@ -31,7 +31,7 @@ class LeaveController extends Controller
 
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $validated = $request->validate([
             'employee_id' => 'required|exists:users,id',

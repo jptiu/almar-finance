@@ -144,7 +144,7 @@
 
                 <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
                     @php
-                        $today = now()->toDateString();
+                        $today = \Carbon\Carbon::now('Asia/Manila')->format('Y-m-d');
                         $existingAttendance = App\Models\Attendance::where('employee_id', auth()->id())
                             ->where('attendance_date', $today)
                             ->first();
@@ -161,7 +161,10 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label for="clock_out" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Clock Out Time</label>
-                                    <input type="time" name="clock_out" id="clock_out" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    <input type="time" name="clock_out" id="clock_out" 
+                                        value="{{ now('Asia/Manila')->format('H:i') }}" 
+                                        readonly 
+                                        class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 dark:bg-slate-700 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 </div>
                                 <div>
                                     <label for="remarks" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Remarks</label>
@@ -185,7 +188,10 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label for="clock_in" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Clock In Time</label>
-                                    <input type="time" name="clock_in" id="clock_in" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    <input type="time" name="clock_in" id="clock_in" 
+                                        value="{{ now('Asia/Manila')->format('H:i') }}" 
+                                        readonly 
+                                        class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 dark:bg-slate-700 dark:border-slate-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 </div>
                                 <div>
                                     <label for="remarks" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Remarks</label>
