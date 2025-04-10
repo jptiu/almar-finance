@@ -141,6 +141,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('loan/approve/{id}', [LoanController::class, 'approve'])->name('loan.approve');
     Route::post('loan/decline/{id}', [LoanController::class, 'decline'])->name('loan.decline');
     Route::get('loan/print/{id}', [LoanController::class, 'printGrantLoan'])->name('printGrantLoan.index');
+    Route::get('loan/print-application/{id}', [LoanController::class, 'printApplication'])->name('printApplication.index');
+    Route::get('loan/print-application-form/{id}', [LoanController::class, 'downloadApplicationForm'])->name('printApplicationForm.index');
+    Route::get('loan/print-voucher/{id}', [LoanController::class, 'downloadVoucherForm'])->name('printVoucher.index');
+    Route::get('loan/print-agreement/{id}', [LoanController::class, 'downloadAgreementForm'])->name('printAgreement.index');
+    Route::get('loan/print-cash-breakdown/{id}', [LoanController::class, 'downloadCashBreakdownForm'])->name('printCashBreakdown.index');
+    Route::get('loan/print-disclosure-statement/{id}', [LoanController::class, 'downloadDisclosureStatementForm'])->name('printDisclosureStatement.index');
+    Route::get('loan/print-promissory-atm/{id}', [LoanController::class, 'downloadPromissoryATMForm'])->name('printPromissoryATM.index');
+    Route::get('loan/print-spa/{id}', [LoanController::class, 'downloadSPAForm'])->name('printSPA.index');
+    Route::get('loan/print-affidavit/{id}', [LoanController::class, 'downloadAffidavitForm'])->name('printAffidavit.index');
     Route::post('/update-due-date/{detail}', [LoanController::class, 'updateDueDate'])->name('loan.duedateupdate');
     Route::post('loan/request/renew/{id}', [RenewalRequestController::class, 'renew'])->name('loan.request');
     Route::get('request-renewals', [RenewalRequestController::class, 'index'])->name('request-renewals.index');
