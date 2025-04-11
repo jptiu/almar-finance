@@ -128,6 +128,7 @@ class PayslipController extends Controller
 
             // Calculate and save deductions
             $payslip->calculateDeductions();
+            $payslip->save();
 
             // Calculate and save net pay
             $payslip->net_pay = $payslip->calculateNetPay();

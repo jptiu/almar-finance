@@ -26,12 +26,15 @@ class Payslip extends Model
         'other_deductions',
         'net_pay',
         'status',
-        'notes'
+        'notes',
+        'thirteenth_month_pay',
+        'sil_value',
+        'remaining_sil_days'
     ];
 
     protected $casts = [
-        'pay_period_start' => 'date',
-        'pay_period_end' => 'date',
+        'pay_period_start' => 'datetime',
+        'pay_period_end' => 'datetime',
         'basic_salary' => 'decimal:2',
         'total_hours' => 'decimal:2',
         'overtime_hours' => 'decimal:2',
@@ -43,19 +46,24 @@ class Payslip extends Model
         'tax_deduction' => 'decimal:2',
         'cash_advance' => 'decimal:2',
         'other_deductions' => 'decimal:2',
-        'net_pay' => 'decimal:2'
+        'net_pay' => 'decimal:2',
+        'thirteenth_month_pay' => 'decimal:2',
+        'sil_value' => 'decimal:2'
     ];
 
-    // Fixed deduction rates
-    const SS_RATE = 0.045; // 4.5%
-    const PHILHEALTH_RATE = 0.50; // 50%
-    const PAGIBIG_RATE = 0.50; // 50%
-    const TAX_RATE = 0.10; // 10%
+    // Fixed deduction rates based on client's requirements
+    const SS_RATE_EMPLOYEE = 0.045; // 4.5% of basic salary (employee portion)
+    const SS_RATE_EMPLOYER = 0.095; // 9.5% of basic salary (employer portion)
+    const PHILHEALTH_RATE_EMPLOYEE = 0.01; // 1% of basic salary (employee portion)
+    const PHILHEALTH_RATE_EMPLOYER = 0.01; // 1% of basic salary (employer portion)
+    const PAGIBIG_RATE_EMPLOYEE = 0.01; // 1% of basic salary (employee portion)
+    const PAGIBIG_RATE_EMPLOYER = 0.01; // 1% of basic salary (employer portion)
+    const TAX_RATE = 0.10; // 10% of basic salary
     const WORKING_HOURS_PER_DAY = 8;
 
     public function employee()
     {
-        return $this->belongsTo(User::class, 'employee_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
     public function calculateWorkingHours($startDate, $endDate)
@@ -118,18 +126,34 @@ class Payslip extends Model
 
     public function calculateDeductions()
     {
-        $totalEarnings = $this->calculateTotalEarnings();
+        // Calculate deductions based on basic salary only
+        $basicSalary = $this->basic_salary;
 
-        $this->sss_contribution = $totalEarnings * self::SS_RATE;
-        $this->philhealth_contribution = $totalEarnings * self::PHILHEALTH_RATE;
-        $this->pagibig_contribution = $totalEarnings * self::PAGIBIG_RATE;
-        $this->tax_deduction = $totalEarnings * self::TAX_RATE;
+        // Employee contributions
+        $this->sss_contribution = $basicSalary * self::SS_RATE_EMPLOYEE;
+        $this->philhealth_contribution = $basicSalary * self::PHILHEALTH_RATE_EMPLOYEE;
+        $this->pagibig_contribution = $basicSalary * self::PAGIBIG_RATE_EMPLOYEE;
+        $this->tax_deduction = $basicSalary * self::TAX_RATE;
 
         // Additional deductions like cash advance can be added here
         $this->other_deductions = 0; // Initialize to 0
 
         // Save the individual deductions to the database
         $this->save();
+    }
+
+    public function calculateEmployerContributions()
+    {
+        // Calculate employer contributions based on basic salary
+        $basicSalary = $this->basic_salary;
+
+        $employerContributions = [
+            'sss' => $basicSalary * self::SS_RATE_EMPLOYER,
+            'philhealth' => $basicSalary * self::PHILHEALTH_RATE_EMPLOYER,
+            'pagibig' => $basicSalary * self::PAGIBIG_RATE_EMPLOYER
+        ];
+
+        return $employerContributions;
     }
 
     public function calculateTotalDeductions()
@@ -139,12 +163,81 @@ class Payslip extends Model
                $this->cash_advance + $this->other_deductions;
     }
 
+    public function calculateThirteenthMonthPay()
+    {
+        // Calculate 13th month pay only for December payslips
+        $month = $this->pay_period_start->format('m');
+        if ($month !== '12') {
+            return 0;
+        }
+        
+        // Calculate 1/13 of annual basic salary
+        $annualSalary = $this->employee->salaries()
+            ->where('status', 'active')
+            ->latest('effective_date')
+            ->first()
+            ->basic_salary * 12;
+            
+        return $annualSalary / 13;
+    }
+
+    public function calculateSilValue()
+    {
+        // Calculate SIL value only for December payslips
+        $month = $this->pay_period_start->format('m');
+        if ($month !== '12') {
+            return 0;
+        }
+
+        // Get SIL credit for this employee
+        $silCredit = $this->employee->leaveCredits()
+            ->where('leave_type', 'service_incentive')
+            ->first();
+            
+        if (!$silCredit) {
+            return 0;
+        }
+        
+        // Calculate SIL value based on remaining days
+        return $silCredit->calculateSILValue();
+    }
+
+    public function calculateRemainingSilDays()
+    {
+        // Get SIL credit for this employee
+        $silCredit = $this->employee->leaveCredits()
+            ->where('leave_type', 'service_incentive')
+            ->first();
+            
+        return $silCredit ? $silCredit->remaining_credits : 0;
+    }
+
     public function calculateNetPay()
     {
-        $totalEarnings = $this->calculateTotalEarnings();
-        $totalDeductions = $this->calculateTotalDeductions();
+        // Get base net pay (total earnings minus deductions)
+        $baseNetPay = $this->calculateTotalEarnings() - $this->calculateTotalDeductions();
+        
+        // Add 13th month pay if applicable (only in December)
+        $thirteenthMonthPay = $this->calculateThirteenthMonthPay();
+        
+        // Add SIL value if applicable (only in December)
+        $silValue = $this->calculateSilValue();
+        
+        // Ensure net pay is not negative
+        $totalNetPay = $baseNetPay + $thirteenthMonthPay + $silValue;
+        return max(0, $totalNetPay); // Ensure net pay is not negative
+    }
 
-        return $totalEarnings - $totalDeductions;
+    public function save(array $options = [])
+    {
+        // Calculate and set 13th month pay
+        $this->thirteenth_month_pay = $this->calculateThirteenthMonthPay();
+        
+        // Calculate and set SIL value and remaining days
+        $this->sil_value = $this->calculateSilValue();
+        $this->remaining_sil_days = $this->calculateRemainingSilDays();
+        
+        return parent::save($options);
     }
 
     public function getPayPeriodAttribute()

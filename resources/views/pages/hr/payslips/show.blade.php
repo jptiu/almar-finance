@@ -33,55 +33,75 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-2 gap-6">
                     <div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Earnings</h3>
-                        <div class="space-y-3">
+                        <h3 class="text-lg font-semibold mb-4">Earnings</h3>
+                        <div class="space-y-2">
                             <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Basic Salary</span>
-                                <span class="font-medium">{{ number_format($payslip->basic_salary, 2) }}</span>
+                                <span>Basic Salary</span>
+                                <span>₱{{ number_format($payslip->basic_salary, 2) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Overtime</span>
-                                <span class="font-medium">{{ number_format($payslip->overtime_amount, 2) }}</span>
+                                <span>Overtime Pay</span>
+                                <span>₱{{ number_format($payslip->overtime_pay, 2) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Allowances</span>
-                                <span class="font-medium">{{ number_format($payslip->allowances, 2) }}</span>
+                                <span>Allowances</span>
+                                <span>₱{{ number_format($payslip->allowances, 2) }}</span>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 my-3"></div>
-                            <div class="flex justify-between font-bold text-lg">
+                            @if($payslip->thirteenth_month_pay > 0)
+                            <div class="flex justify-between">
+                                <span>13th Month Pay</span>
+                                <span>₱{{ number_format($payslip->thirteenth_month_pay, 2) }}</span>
+                            </div>
+                            @endif
+                            <div class="flex justify-between">
                                 <span>Total Earnings</span>
-                                <span>{{ number_format($payslip->total_earnings, 2) }}</span>
+                                <span class="font-semibold">₱{{ number_format($payslip->calculateTotalEarnings(), 2) }}</span>
                             </div>
                         </div>
                     </div>
-
                     <div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Deductions</h3>
-                        <div class="space-y-3">
+                        <h3 class="text-lg font-semibold mb-4">Deductions</h3>
+                        <div class="space-y-2">
                             <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">SSS</span>
-                                <span class="font-medium">{{ number_format($payslip->sss_contribution, 2) }}</span>
+                                <span>Tax Deduction</span>
+                                <span>₱{{ number_format($payslip->tax_deduction, 2) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">PhilHealth</span>
-                                <span class="font-medium">{{ number_format($payslip->philhealth_contribution, 2) }}</span>
+                                <span>Cash Advance</span>
+                                <span>₱{{ number_format($payslip->cash_advance, 2) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Pag-Ibig</span>
-                                <span class="font-medium">{{ number_format($payslip->pagibig_contribution, 2) }}</span>
+                                <span>Other Deductions</span>
+                                <span>₱{{ number_format($payslip->other_deductions, 2) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Tax</span>
-                                <span class="font-medium">{{ number_format($payslip->tax_deduction, 2) }}</span>
-                            </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 my-3"></div>
-                            <div class="flex justify-between font-bold text-lg">
                                 <span>Total Deductions</span>
-                                <span>{{ number_format($payslip->total_deductions, 2) }}</span>
+                                <span class="font-semibold">₱{{ number_format($payslip->calculateTotalDeductions(), 2) }}</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-4">Service Incentive Leave (SIL)</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span>Remaining SIL Days</span>
+                            <span>{{ $payslip->remaining_sil_days }} days</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>SIL Value</span>
+                            <span>₱{{ number_format($payslip->sil_value, 2) }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+                    <div class="flex justify-between font-semibold">
+                        <span>Net Pay</span>
+                        <span class="text-2xl">₱{{ number_format($payslip->net_pay, 2) }}</span>
                     </div>
                 </div>
 

@@ -170,16 +170,24 @@
                 <td class="total">P {{ number_format($payslip->basic_salary, 2) }}</td>
             </tr>
             <tr>
+                <td colspan="2">13th Month Pay</td>
+                <td class="total">P {{ number_format($payslip->thirteenth_month_pay, 2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">SIL Value</td>
+                <td class="total">P {{ number_format($payslip->sil_value, 2) }}</td>
+            </tr>
+            {{-- <tr>
                 <td colspan="2">Overtime Pay</td>
                 <td class="total">P {{ number_format($payslip->overtime_pay, 2) }}</td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td colspan="2">Allowances</td>
                 <td class="total">P {{ number_format($payslip->allowances, 2) }}</td>
             </tr>
             <tr class="total-cell">
                 <td colspan="2">Total Earnings</td>
-                <td class="total">P {{ number_format($payslip->basic_salary + $payslip->overtime_pay + $payslip->allowances, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->basic_salary + $payslip->thirteenth_month_pay + $payslip->sil_value + $payslip->overtime_pay + $payslip->allowances, 2) }}</td>
             </tr>
         </tbody>
     </table>
