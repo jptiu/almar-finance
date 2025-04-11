@@ -167,19 +167,19 @@
         <tbody>
             <tr>
                 <td colspan="2">Basic Salary</td>
-                <td class="total">₱{{ number_format($payslip->basic_salary, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->basic_salary, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2">Overtime Pay</td>
-                <td class="total">₱{{ number_format($payslip->overtime_pay, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->overtime_pay, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2">Allowances</td>
-                <td class="total">₱{{ number_format($payslip->allowances, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->allowances, 2) }}</td>
             </tr>
             <tr class="total-cell">
                 <td colspan="2">Total Earnings</td>
-                <td class="total">₱{{ number_format($payslip->basic_salary + $payslip->overtime_pay + $payslip->allowances, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->basic_salary + $payslip->overtime_pay + $payslip->allowances, 2) }}</td>
             </tr>
         </tbody>
     </table>
@@ -195,31 +195,31 @@
         <tbody>
             <tr>
                 <td colspan="2">SSS Contribution</td>
-                <td class="total">₱{{ number_format($payslip->sss_contribution, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->sss_contribution, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2">PhilHealth</td>
-                <td class="total">₱{{ number_format($payslip->philhealth_contribution, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->philhealth_contribution, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2">Pag-IBIG</td>
-                <td class="total">₱{{ number_format($payslip->pagibig_contribution, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->pagibig_contribution, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2">Tax Deduction</td>
-                <td class="total">₱{{ number_format($payslip->tax_deduction, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->tax_deduction, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2">Cash Advance</td>
-                <td class="total">₱{{ number_format($payslip->cash_advance, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->cash_advance, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2">Other Deductions</td>
-                <td class="total">₱{{ number_format($payslip->other_deductions, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->other_deductions, 2) }}</td>
             </tr>
             <tr class="total-cell">
                 <td colspan="2">Total Deductions</td>
-                <td class="total">₱{{ number_format($payslip->calculateTotalDeductions(), 2) }}</td>
+                <td class="total">P {{ number_format($payslip->calculateTotalDeductions(), 2) }}</td>
             </tr>
         </tbody>
     </table>
@@ -235,7 +235,7 @@
         <tbody>
             <tr>
                 <td colspan="2">Net Pay</td>
-                <td class="total">₱{{ number_format($payslip->net_pay, 2) }}</td>
+                <td class="total">P {{ number_format($payslip->net_pay, 2) }}</td>
             </tr>
         </tbody>
     </table>

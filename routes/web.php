@@ -52,6 +52,7 @@ use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\BranchInfoController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Broadcast as BroadcastFacade;
+use App\Http\Controllers\COERequestController;
 
 Route::get('/storage/{path}', function ($path) {
     if (!Storage::disk('public')->exists($path)) {
@@ -557,4 +558,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('{socialLoanRequest}/approve', [SocialLoanRequestController::class, 'approve'])->name('social_loan_requests.approve');
         Route::post('{socialLoanRequest}/reject', [SocialLoanRequestController::class, 'reject'])->name('social_loan_requests.reject');
     });
+
+    Route::get('/coe-requests', [COERequestController::class, 'create'])->name('coe-requests.create');
+    Route::post('/coe-requests/generate', [COERequestController::class, 'generateCOE'])->name('coe-requests.generate');
 });

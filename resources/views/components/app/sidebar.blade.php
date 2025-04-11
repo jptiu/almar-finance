@@ -1,48 +1,43 @@
 <div class="relative">
     <!-- Sidebar backdrop (mobile only) -->
-    <div 
-        class="fixed inset-0 bg-accent-100 bg-opacity-30 z-40 transition-opacity duration-200 lg:hidden" 
-        :class="sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'" 
-        aria-hidden="true" 
-        x-cloak>
+    <div class="fixed inset-0 bg-accent-100 bg-opacity-30 z-40 transition-opacity duration-200 lg:hidden"
+        :class="sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'" aria-hidden="true" x-cloak>
     </div>
 
     <!-- Sidebar -->
     <div id="sidebar"
         class="fixed lg:static z-50 left-0 top-0 h-screen w-72 bg-primary-100 p-4 overflow-auto transition-transform duration-300 ease-in-out transform lg:translate-x-0"
-        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-72'"
-        @click.outside="sidebarOpen = false"
-        @keydown.escape.window="sidebarOpen = false"
-        x-cloak>
-        
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-72'" @click.outside="sidebarOpen = false"
+        @keydown.escape.window="sidebarOpen = false" x-cloak>
+
         <!-- Sidebar Header with Close Button -->
         <div class="flex justify-between items-center bg-primary-100 pt-6 px-4">
             <a href="{{ route('dashboard') }}">
                 <img class="h-auto w-auto" src="/images/fcc.png" alt="Company Logo">
             </a>
             <!-- Close Button (Mobile) -->
-            
+
         </div>
 
         <!-- Sidebar Navigation -->
-        
+
         <ul class="mt-4">
             @can('hr_access')
-            <li
-                class="px-3 py-3 hover:bg-accent-100 rounded-lg transition hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['hr'])) {{ 'bg-accent-100' }} @endif">
-                <a href="{{ route('hr.index') }}"
-                    class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
-                    <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
-                            width="24px" fill="#e8eaed">
-                            <path d="M0 0h24v24H0z" fill="none" />
-                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
-                        </svg>
-                        <span
-                            class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Dashboard</span>
-                    </div>
-                </a>
-            </li>
+                <li
+                    class="px-3 py-3 hover:bg-accent-100 rounded-lg transition hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['hr'])) {{ 'bg-accent-100' }} @endif">
+                    <a href="{{ route('hr.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['hr'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                                fill="#e8eaed">
+                                <path d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
+                            </svg>
+                            <span
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Dashboard</span>
+                        </div>
+                    </a>
+                </li>
                 {{-- <li
                     class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] @if (in_array(Request::segment(1), ['employee', 'employee-add', 'bm-probation', 'new-hire', 'resignation'])) {{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['employee', 'employee-add', 'bm-probation', 'new-hire', 'resignation']) ? 1 : 0 }} }">
@@ -113,8 +108,8 @@
                     <a href="{{ route('loanhistory.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loanhistory'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                width="24px" fill="#FFFFFF">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#FFFFFF">
                                 <path
                                     d="M480-80q-155 0-269-103T82-440h81q15 121 105.5 200.5T480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-86 0-159.5 42.5T204-640h116v80H88q29-140 139-230t253-90q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm112-232L440-464v-216h80v184l128 128-56 56Z" />
                             </svg>
@@ -146,16 +141,24 @@
                     <a href="{{ route('request-renewals.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['request-renewals'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive-restore-icon lucide-archive-restore"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h2"/><path d="M20 8v11a2 2 0 0 1-2 2h-2"/><path d="m9 15 3-3 3 3"/><path d="M12 12v9"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-archive-restore-icon lucide-archive-restore">
+                                <rect width="20" height="5" x="2" y="3" rx="1" />
+                                <path d="M4 8v11a2 2 0 0 0 2 2h2" />
+                                <path d="M20 8v11a2 2 0 0 1-2 2h-2" />
+                                <path d="m9 15 3-3 3 3" />
+                                <path d="M12 12v9" />
+                            </svg>
                             <span
-                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Request Renewal</span>
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Request
+                                Renewal</span>
                         </div>
                     </a>
                 </li>
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['requestcheck'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['requestcheck']) ? 1 : 0 }} }">
-                    <a href="{{ route('requestcheck.index') }}"
-                        class="block text-slate-200 transition duration-150"
+                    <a href="{{ route('requestcheck.index') }}" class="block text-slate-200 transition duration-150"
                         :class="open ? 'hover:text-slate-200' : 'hover:text-white'">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
@@ -176,8 +179,8 @@
                     <a href="{{ route('audit.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['audit'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
-                                width="24px" fill="#e8eaed">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                                fill="#e8eaed">
                                 <path d="M0 0h24v24H0z" fill="none" />
                                 <path
                                     d="M16.53 11.06L15.47 10l-4.88 4.88-2.12-2.12-1.06 1.06L10.59 17l5.94-5.94zM19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" />
@@ -195,8 +198,8 @@
                         href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                    height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                    viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                     <g>
                                         <rect fill="none" height="24" width="24" />
                                         <path
@@ -291,38 +294,39 @@
                                         </div>
                                     </a>
                                 </li> --}}
-                                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
-                                    <a href="{{ route('social_loan_requests.index') }}"
-                                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['employeeRequest'])) {{ 'hover:text-slate-200' }} @endif">
-                                        <div class="flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                                width="24px" fill="#FFFFFF">
-                                                <path
-                                                    d="M320-320h200v-200H320v200Zm0-280h480v-200H320v200Zm280 280h200v-200H600v200Zm-280 80q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Z" />
-                                            </svg>
-                                            <span
-                                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
-                                                Request</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li
-                                    class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['expenses'])) {{ 'bg-accent-100' }} @endif">
-                                    <a href="{{ route('announce.index') }}"
-                                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['expenses'])) {{ 'hover:text-slate-200' }} @endif">
-                                        <div class="flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960"
-                                                width="26px" fill="#FFFFFF">
-                                                <path
-                                                    d="M720-440v-80h160v80H720Zm48 280-128-96 48-64 128 96-48 64Zm-80-480-48-64 128-96 48 64-128 96ZM200-200v-160h-40q-33 0-56.5-23.5T80-440v-80q0-33 23.5-56.5T160-600h160l200-120v480L320-360h-40v160h-80Zm240-182v-196l-98 58H160v80h182l98 58Zm120 36v-268q27 24 43.5 58.5T620-480q0 41-16.5 75.5T560-346ZM300-480Z" />
-                                            </svg>
-                                            <span
-                                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Announcement</span>
-                                            <span
-                                                class="inline-flex items-center justify-center w-3 h-3 p-3 ms-6 text-sm font-semibold text-red-700 bg-red-200 rounded-full">5</span>
-                                        </div>
-                                    </a>
-                                </li>
+                <li
+                    class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
+                    <a href="{{ route('social_loan_requests.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['employeeRequest'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                width="24px" fill="#FFFFFF">
+                                <path
+                                    d="M320-320h200v-200H320v200Zm0-280h480v-200H320v200Zm280 280h200v-200H600v200Zm-280 80q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Z" />
+                            </svg>
+                            <span
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
+                                Social Request</span>
+                        </div>
+                    </a>
+                </li>
+                <li
+                    class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['expenses'])) {{ 'bg-accent-100' }} @endif">
+                    <a href="{{ route('announce.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['expenses'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960"
+                                width="26px" fill="#FFFFFF">
+                                <path
+                                    d="M720-440v-80h160v80H720Zm48 280-128-96 48-64 128 96-48 64Zm-80-480-48-64 128-96 48 64-128 96ZM200-200v-160h-40q-33 0-56.5-23.5T80-440v-80q0-33 23.5-56.5T160-600h160l200-120v480L320-360h-40v160h-80Zm240-182v-196l-98 58H160v80h182l98 58Zm120 36v-268q27 24 43.5 58.5T620-480q0 41-16.5 75.5T560-346ZM300-480Z" />
+                            </svg>
+                            <span
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Announcement</span>
+                            <span
+                                class="inline-flex items-center justify-center w-3 h-3 p-3 ms-6 text-sm font-semibold text-red-700 bg-red-200 rounded-full">5</span>
+                        </div>
+                    </a>
+                </li>
                 {{-- <li
                                     class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                                     <a href="{{ route('hr.index') }}"
@@ -420,8 +424,8 @@
                         href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                    height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                    viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                     <g>
                                         <path d="M0,0h24v24H0V0z" fill="none" />
                                     </g>
@@ -456,6 +460,7 @@
                                 'cashReqForm',
                                 'cashBond',
                                 'dailyWorkRequest',
+                                'coe-requests'
                             ])) {{ 'hidden' }} @endif"
                             :class="open ? '!block' : 'hidden'">
                             {{-- <li class="mb-1 last:mb-0">
@@ -510,7 +515,7 @@
                                                         Work Order</span>
                                                 </a>
                                             </li> --}}
-                            <li class="mb-1 last:mb-0">
+                            {{-- <li class="mb-1 last:mb-0">
                                 <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('cashBond.index')) {{ '!text-violet-500' }} @endif"
                                     href="{{ route('cashBond.index') }}">
                                     <span
@@ -518,6 +523,15 @@
                                         Bond Loan</span>
                                     <span
                                         class="inline-flex items-center justify-center w-3 h-3 p-3 ms-6 text-sm font-semibold text-red-700 bg-red-200 rounded-full">2</span>
+                                </a>
+                            </li> --}}
+                            <!-- Certificate of Employment -->
+                            <li class="mb-1 last:mb-0">
+                                <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('coe-requests.create')) {{ '!text-violet-500' }} @endif"
+                                    href="{{ route('coe-requests.create') }}">
+                                    <span
+                                        class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Certificate
+                                        of Employment</span>
                                 </a>
                             </li>
                         </ul>
@@ -640,8 +654,8 @@
                         href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                    height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                    viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                     <g>
                                         <path d="M0,0h24v24H0V0z" fill="none" />
                                     </g>
@@ -710,7 +724,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['attendance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check-icon lucide-book-open-check"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-book-open-check-icon lucide-book-open-check">
+                                    <path d="M12 21V7" />
+                                    <path d="m16 12 2 2 4-4" />
+                                    <path
+                                        d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Attendance</span>
                             </div>
@@ -724,7 +746,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['payslips'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                                    <path d="M14 8H8" />
+                                    <path d="M16 12H8" />
+                                    <path d="M13 16H8" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Payslips</span>
                             </div>
@@ -738,7 +768,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leaves'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock-icon lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.3V14"/><circle cx="16" cy="16" r="6"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                    <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                    <path d="M16 2v4" />
+                                    <path d="M8 2v4" />
+                                    <path d="M3 10h5" />
+                                    <path d="M17.5 17.5 16 16.3V14" />
+                                    <circle cx="16" cy="16" r="6" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Leaves</span>
                             </div>
@@ -752,7 +792,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['performance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined">
+                                    <path d="M12 16v5" />
+                                    <path d="M16 14v7" />
+                                    <path d="M20 10v11" />
+                                    <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+                                    <path d="M4 18v3" />
+                                    <path d="M8 14v7" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Performance</span>
                             </div>
@@ -766,7 +816,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['benefits'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-heart-icon lucide-hand-heart"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-hand-heart-icon lucide-hand-heart">
+                                    <path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" />
+                                    <path
+                                        d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+                                    <path d="m2 15 6 6" />
+                                    <path
+                                        d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Benefits</span>
                             </div>
@@ -801,7 +861,8 @@
                                         d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
                                 </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee Concern Letters</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
+                                    Concern Letters</span>
                             </div>
                         </div>
                     </a>
@@ -820,7 +881,8 @@
                                         d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
                                 </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily Time Record</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily
+                                    Time Record</span>
                             </div>
                         </div>
                     </a>
@@ -840,7 +902,8 @@
                                         d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
                                 </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Salary Management</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Salary
+                                    Management</span>
                             </div>
                         </div>
                     </a>
@@ -911,8 +974,8 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loan'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                    height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                    viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                     <g>
                                         <rect fill="none" height="24" width="24" />
                                     </g>
@@ -933,11 +996,15 @@
                     <a href="{{ route('loan-summary.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loan-summary'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+                                </path>
                             </svg>
                             <span
-                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Loan Summary</span>
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Loan
+                                Summary</span>
                         </div>
                     </a>
                 </li>
@@ -953,7 +1020,8 @@
                                     d="M17.66,9.53l-7.07,7.07l-4.24-4.24l1.41-1.41l2.83,2.83l5.66-5.66L17.66,9.53z M4,12c0-2.33,1.02-4.42,2.62-5.88L9,8.5v-6H3 l2.2,2.2C3.24,6.52,2,9.11,2,12c0,5.19,3.95,9.45,9,9.95v-2.02C7.06,19.44,4,16.07,4,12z M22,12c0-5.19-3.95-9.45-9-9.95v2.02 c3.94,0.49,7,3.86,7,7.93c0,2.33-1.02,4.42-2.62,5.88L15,15.5v6h6l-2.2-2.2C20.76,17.48,22,14.89,22,12z" />
                             </svg>
                             <span
-                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Request Renewal</span>
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Request
+                                Renewal</span>
                         </div>
                     </a>
                 </li>
@@ -983,7 +1051,14 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['rebates'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-philippine-peso-icon lucide-philippine-peso"><path d="M20 11H4"/><path d="M20 7H4"/><path d="M7 21V4a1 1 0 0 1 1-1h4a1 1 0 0 1 0 12H7"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-philippine-peso-icon lucide-philippine-peso">
+                                    <path d="M20 11H4" />
+                                    <path d="M20 7H4" />
+                                    <path d="M7 21V4a1 1 0 0 1 1-1h4a1 1 0 0 1 0 12H7" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Rebates</span>
                             </div>
@@ -997,8 +1072,8 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['breakdown'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                    height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                    viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                     <g>
                                         <rect fill="none" height="24" width="24" />
                                     </g>
@@ -1020,7 +1095,17 @@
                     <a href="{{ route('expenses.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['expenses'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-banknote-arrow-down-icon lucide-banknote-arrow-down"><path d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5"/><path d="m16 19 3 3 3-3"/><path d="M18 12h.01"/><path d="M19 16v6"/><path d="M6 12h.01"/><circle cx="12" cy="12" r="2"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="lucide lucide-banknote-arrow-down-icon lucide-banknote-arrow-down">
+                                <path d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5" />
+                                <path d="m16 19 3 3 3-3" />
+                                <path d="M18 12h.01" />
+                                <path d="M19 16v6" />
+                                <path d="M6 12h.01" />
+                                <circle cx="12" cy="12" r="2" />
+                            </svg>
                             <span
                                 class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Expenses
                                 Data Entry</span>
@@ -1059,8 +1144,8 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['daily'])) {{ 'hover:text-slate-200' }} @endif"
                         href="#0">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                 <rect fill="none" height="24" width="24" />
                                 <path
                                     d="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z M12,10c1.1,0,2,0.9,2,2c0,1.1-0.9,2-2,2s-2-0.9-2-2 C10,10.9,10.9,10,12,10z M16,18H8v-0.57c0-0.81,0.48-1.53,1.22-1.85C10.07,15.21,11.01,15,12,15c0.99,0,1.93,0.21,2.78,0.58 C15.52,15.9,16,16.62,16,17.43V18z" />
@@ -1078,8 +1163,8 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['monthly'])) {{ 'hover:text-slate-200' }} @endif"
                         href="#0">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                 <g>
                                     <path d="M0,0h24v24H0V0z" fill="none" />
                                 </g>
@@ -1101,9 +1186,20 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['supply-request'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-container-icon lucide-container"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-container-icon lucide-container">
+                                    <path
+                                        d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z" />
+                                    <path d="M10 21.9V14L2.1 9.1" />
+                                    <path d="m10 14 11.9-6.9" />
+                                    <path d="M14 19.8v-8.1" />
+                                    <path d="M18 17.5V9.4" />
+                                </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Supply Request</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Supply
+                                    Request</span>
                             </div>
                         </div>
                     </a>
@@ -1171,7 +1267,8 @@
                         </div>
                     </a>
                 </li>
-                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
+                <li
+                    class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
                     <a href="{{ route('social_loan_requests.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['employeeRequest'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
@@ -1182,7 +1279,7 @@
                             </svg>
                             <span
                                 class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
-                                Request</span>
+                                Social Request</span>
                         </div>
                     </a>
                 </li>
@@ -1210,8 +1307,8 @@
                         href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                    height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                    viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                     <g>
                                         <path d="M0,0h24v24H0V0z" fill="none" />
                                     </g>
@@ -1345,7 +1442,8 @@
                                         d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
                                 </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee Concern Letters</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
+                                    Concern Letters</span>
                             </div>
                         </div>
                     </a>
@@ -1364,7 +1462,8 @@
                                         d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
                                 </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily Time Record</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daily
+                                    Time Record</span>
                             </div>
                         </div>
                     </a>
@@ -1411,14 +1510,22 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['payslips'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                                    <path d="M14 8H8" />
+                                    <path d="M16 12H8" />
+                                    <path d="M13 16H8" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Payslips</span>
                             </div>
                         </div>
                     </a>
                 </li>
-            
+
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                     <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
@@ -1438,7 +1545,7 @@
                 </li>
                 <br>
             @endcan
-            
+
             @can('auditor_access')
                 <!-- Dashboard -->
                 <!-- Customer Profile -->
@@ -1468,8 +1575,8 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['loan'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                    height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                    viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                     <g>
                                         <rect fill="none" height="24" width="24" />
                                     </g>
@@ -1511,7 +1618,8 @@
                                     d="M80-120v-720h400v160h400v560H80Zm80-80h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 480h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 480h320v-400H480v80h80v80h-80v80h80v80h-80v80Zm160-240v-80h80v80h-80Zm0 160v-80h80v80h-80Z" />
                             </svg>
                             <span
-                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Branch List</span>
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Branch
+                                List</span>
                         </div>
                     </a>
                 </li>
@@ -1521,7 +1629,17 @@
                     <a href="{{ route('expenses.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['expenses'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-banknote-arrow-down-icon lucide-banknote-arrow-down"><path d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5"/><path d="m16 19 3 3 3-3"/><path d="M18 12h.01"/><path d="M19 16v6"/><path d="M6 12h.01"/><circle cx="12" cy="12" r="2"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="lucide lucide-banknote-arrow-down-icon lucide-banknote-arrow-down">
+                                <path d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5" />
+                                <path d="m16 19 3 3 3-3" />
+                                <path d="M18 12h.01" />
+                                <path d="M19 16v6" />
+                                <path d="M6 12h.01" />
+                                <circle cx="12" cy="12" r="2" />
+                            </svg>
                             <span
                                 class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Expenses
                                 Data Entry</span>
@@ -1552,8 +1670,8 @@
                     <a href="{{ route('worksheet.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['worksheet'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
-                                width="24px" fill="#e8eaed">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                                fill="#e8eaed">
                                 <path d="M0 0h24v24H0z" fill="none" />
                                 <path
                                     d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" />
@@ -1589,7 +1707,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['payslips'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                                    <path d="M14 8H8" />
+                                    <path d="M16 12H8" />
+                                    <path d="M13 16H8" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Payslips</span>
                             </div>
@@ -1603,7 +1729,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leaves'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock-icon lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.3V14"/><circle cx="16" cy="16" r="6"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                    <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                    <path d="M16 2v4" />
+                                    <path d="M8 2v4" />
+                                    <path d="M3 10h5" />
+                                    <path d="M17.5 17.5 16 16.3V14" />
+                                    <circle cx="16" cy="16" r="6" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Leaves</span>
                             </div>
@@ -1624,8 +1760,25 @@
                                         d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
                                 </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee Concern Letters</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
+                                    Concern Letters</span>
                             </div>
+                        </div>
+                    </a>
+                </li>
+                <li
+                    class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), [''])) {{ 'bg-accent-100' }} @endif">
+                    <a href="{{ route('social_loan_requests.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['employeeRequest'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                width="24px" fill="#FFFFFF">
+                                <path
+                                    d="M320-320h200v-200H320v200Zm0-280h480v-200H320v200Zm280 280h200v-200H600v200Zm-280 80q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Z" />
+                            </svg>
+                            <span
+                                class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
+                                Social Request</span>
                         </div>
                     </a>
                 </li>
@@ -1635,7 +1788,14 @@
                         href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-minus-icon lucide-clipboard-minus"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 14h6"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-clipboard-minus-icon lucide-clipboard-minus">
+                                    <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                                    <path d="M9 14h6" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">BA
                                     Reports</span>
@@ -1726,7 +1886,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['payslips'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                                    <path d="M14 8H8" />
+                                    <path d="M16 12H8" />
+                                    <path d="M13 16H8" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Payslips</span>
                             </div>
@@ -1740,7 +1908,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leaves'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock-icon lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.3V14"/><circle cx="16" cy="16" r="6"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                    <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                    <path d="M16 2v4" />
+                                    <path d="M8 2v4" />
+                                    <path d="M3 10h5" />
+                                    <path d="M17.5 17.5 16 16.3V14" />
+                                    <circle cx="16" cy="16" r="6" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Leaves</span>
                             </div>
@@ -1754,7 +1932,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['performance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined">
+                                    <path d="M12 16v5" />
+                                    <path d="M16 14v7" />
+                                    <path d="M20 10v11" />
+                                    <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+                                    <path d="M4 18v3" />
+                                    <path d="M8 14v7" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Performance</span>
                             </div>
@@ -1768,7 +1956,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['benefits'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-heart-icon lucide-hand-heart"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-hand-heart-icon lucide-hand-heart">
+                                    <path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" />
+                                    <path
+                                        d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+                                    <path d="m2 15 6 6" />
+                                    <path
+                                        d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Benefits</span>
                             </div>
@@ -2040,7 +2238,8 @@
                                         d="M16.5 12c1.38 0 2.49-1.12 2.49-2.5S17.88 7 16.5 7C15.12 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5.92-5.5 2.75V19h11v-2.25c0-1.83-3.67-2.75-5.5-2.75zM9 13c-2.33 0-7 1.17-7 3.5V19h7v-2.25c0-.85.33-2.34 2.37-3.47C10.5 13.1 9.66 13 9 13z" />
                                 </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee Concern Letters</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Employee
+                                    Concern Letters</span>
                             </div>
                         </div>
                     </a>
@@ -2052,7 +2251,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['attendance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check-icon lucide-book-open-check"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-book-open-check-icon lucide-book-open-check">
+                                    <path d="M12 21V7" />
+                                    <path d="m16 12 2 2 4-4" />
+                                    <path
+                                        d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Attendance</span>
                             </div>
@@ -2066,7 +2273,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['payslips'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                                    <path d="M14 8H8" />
+                                    <path d="M16 12H8" />
+                                    <path d="M13 16H8" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Payslips</span>
                             </div>
@@ -2080,7 +2295,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leaves'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock-icon lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.3V14"/><circle cx="16" cy="16" r="6"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                    <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                    <path d="M16 2v4" />
+                                    <path d="M8 2v4" />
+                                    <path d="M3 10h5" />
+                                    <path d="M17.5 17.5 16 16.3V14" />
+                                    <circle cx="16" cy="16" r="6" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Leaves</span>
                             </div>
@@ -2094,7 +2319,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['performance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined">
+                                    <path d="M12 16v5" />
+                                    <path d="M16 14v7" />
+                                    <path d="M20 10v11" />
+                                    <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+                                    <path d="M4 18v3" />
+                                    <path d="M8 14v7" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Performance</span>
                             </div>
@@ -2108,7 +2343,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['benefits'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-heart-icon lucide-hand-heart"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-hand-heart-icon lucide-hand-heart">
+                                    <path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" />
+                                    <path
+                                        d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+                                    <path d="m2 15 6 6" />
+                                    <path
+                                        d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Benefits</span>
                             </div>
@@ -2159,9 +2404,18 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['edit-requests'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-pen-icon lucide-user-pen"><path d="M11.5 15H7a4 4 0 0 0-4 4v2"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="7" r="4"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-user-pen-icon lucide-user-pen">
+                                    <path d="M11.5 15H7a4 4 0 0 0-4 4v2" />
+                                    <path
+                                        d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
+                                    <circle cx="10" cy="7" r="4" />
+                                </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Edit Requests</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Edit
+                                    Requests</span>
                             </div>
                         </div>
                     </a>
@@ -2173,9 +2427,20 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['supply-request'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-container-icon lucide-container"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1"/><path d="m10 14 11.9-6.9"/><path d="M14 19.8v-8.1"/><path d="M18 17.5V9.4"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-container-icon lucide-container">
+                                    <path
+                                        d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z" />
+                                    <path d="M10 21.9V14L2.1 9.1" />
+                                    <path d="m10 14 11.9-6.9" />
+                                    <path d="M14 19.8v-8.1" />
+                                    <path d="M18 17.5V9.4" />
+                                </svg>
                                 <span
-                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Supply Request</span>
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Supply
+                                    Request</span>
                             </div>
                         </div>
                     </a>
@@ -2187,7 +2452,14 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['rebates'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-philippine-peso-icon lucide-philippine-peso"><path d="M20 11H4"/><path d="M20 7H4"/><path d="M7 21V4a1 1 0 0 1 1-1h4a1 1 0 0 1 0 12H7"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-philippine-peso-icon lucide-philippine-peso">
+                                    <path d="M20 11H4" />
+                                    <path d="M20 7H4" />
+                                    <path d="M7 21V4a1 1 0 0 1 1-1h4a1 1 0 0 1 0 12H7" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Rebates</span>
                             </div>
@@ -2457,8 +2729,7 @@
                 <!-- Setup Customer Type -->
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['customer-type'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['customer-type']) ? 1 : 0 }} }">
-                    <a href="{{ route('customerType.index') }}"
-                        class="block text-slate-200 transition duration-150"
+                    <a href="{{ route('customerType.index') }}" class="block text-slate-200 transition duration-150"
                         :class="open ? 'hover:text-slate-200' : 'hover:text-white'">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
@@ -2482,7 +2753,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['attendance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check-icon lucide-book-open-check"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-book-open-check-icon lucide-book-open-check">
+                                    <path d="M12 21V7" />
+                                    <path d="m16 12 2 2 4-4" />
+                                    <path
+                                        d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Attendance</span>
                             </div>
@@ -2496,7 +2775,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['payslips'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                                    <path d="M14 8H8" />
+                                    <path d="M16 12H8" />
+                                    <path d="M13 16H8" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Payslips</span>
                             </div>
@@ -2510,7 +2797,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leaves'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock-icon lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.3V14"/><circle cx="16" cy="16" r="6"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                    <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                    <path d="M16 2v4" />
+                                    <path d="M8 2v4" />
+                                    <path d="M3 10h5" />
+                                    <path d="M17.5 17.5 16 16.3V14" />
+                                    <circle cx="16" cy="16" r="6" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Leaves</span>
                             </div>
@@ -2524,7 +2821,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['performance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined">
+                                    <path d="M12 16v5" />
+                                    <path d="M16 14v7" />
+                                    <path d="M20 10v11" />
+                                    <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+                                    <path d="M4 18v3" />
+                                    <path d="M8 14v7" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Performance</span>
                             </div>
@@ -2538,7 +2845,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['benefits'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-heart-icon lucide-hand-heart"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-hand-heart-icon lucide-hand-heart">
+                                    <path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" />
+                                    <path
+                                        d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+                                    <path d="m2 15 6 6" />
+                                    <path
+                                        d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Benefits</span>
                             </div>
@@ -2588,8 +2905,8 @@
                     <a href="{{ route('renewals.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['renewals'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-                                height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
+                                viewBox="0 0 24 24" width="24px" fill="#e8eaed">
                                 <rect fill="none" height="24" width="24" />
                                 <path
                                     d="M17.66,9.53l-7.07,7.07l-4.24-4.24l1.41-1.41l2.83,2.83l5.66-5.66L17.66,9.53z M4,12c0-2.33,1.02-4.42,2.62-5.88L9,8.5v-6H3 l2.2,2.2C3.24,6.52,2,9.11,2,12c0,5.19,3.95,9.45,9,9.95v-2.02C7.06,19.44,4,16.07,4,12z M22,12c0-5.19-3.95-9.45-9-9.95v2.02 c3.94,0.49,7,3.86,7,7.93c0,2.33-1.02,4.42-2.62,5.88L15,15.5v6h6l-2.2-2.2C20.76,17.48,22,14.89,22,12z" />
@@ -2730,7 +3047,17 @@
                     <a href="{{ route('performance.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['performance-record'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined">
+                                <path d="M12 16v5" />
+                                <path d="M16 14v7" />
+                                <path d="M20 10v11" />
+                                <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+                                <path d="M4 18v3" />
+                                <path d="M8 14v7" />
+                            </svg>
                             <span
                                 class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Performance
                                 Record</span>
@@ -2987,8 +3314,8 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['requestcheck'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                    viewBox="0 -960 960 960" width="24px" fill="#F3F3F3">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#F3F3F3">
                                     <path
                                         d="M440-200h80v-40h40q17 0 28.5-11.5T600-280v-120q0-17-11.5-28.5T560-440H440v-40h160v-80h-80v-40h-80v40h-40q-17 0-28.5 11.5T360-520v120q0 17 11.5 28.5T400-360h120v40H360v80h80v40ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-560v-160H240v640h480v-480H520ZM240-800v160-160 640-640Z" />
                                 </svg>
@@ -3074,7 +3401,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['attendance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check-icon lucide-book-open-check"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-book-open-check-icon lucide-book-open-check">
+                                    <path d="M12 21V7" />
+                                    <path d="m16 12 2 2 4-4" />
+                                    <path
+                                        d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Attendance</span>
                             </div>
@@ -3088,7 +3423,15 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['payslips'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text-icon lucide-receipt-text"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                                    <path d="M14 8H8" />
+                                    <path d="M16 12H8" />
+                                    <path d="M13 16H8" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Payslips</span>
                             </div>
@@ -3102,7 +3445,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leaves'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock-icon lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.3V14"/><circle cx="16" cy="16" r="6"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                    <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                    <path d="M16 2v4" />
+                                    <path d="M8 2v4" />
+                                    <path d="M3 10h5" />
+                                    <path d="M17.5 17.5 16 16.3V14" />
+                                    <circle cx="16" cy="16" r="6" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Leaves</span>
                             </div>
@@ -3116,7 +3469,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['performance'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined">
+                                    <path d="M12 16v5" />
+                                    <path d="M16 14v7" />
+                                    <path d="M20 10v11" />
+                                    <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+                                    <path d="M4 18v3" />
+                                    <path d="M8 14v7" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Performance</span>
                             </div>
@@ -3130,7 +3493,17 @@
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['benefits'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-heart-icon lucide-hand-heart"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-hand-heart-icon lucide-hand-heart">
+                                    <path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" />
+                                    <path
+                                        d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+                                    <path d="m2 15 6 6" />
+                                    <path
+                                        d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.73 2.73 0 0 0 16 4a2.78 2.78 0 0 0-5 1.8c0 1.2.8 2 1.5 2.8L16 12Z" />
+                                </svg>
                                 <span
                                     class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Benefits</span>
                             </div>
@@ -3143,8 +3516,8 @@
                         href="/chats">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                    viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
                                     <path
                                         d="M280-240q-17 0-28.5-11.5T240-280v-80h520v-360h80q17 0 28.5 11.5T880-680v600L720-240H280ZM80-280v-560q0-17 11.5-28.5T120-880h520q17 0 28.5 11.5T680-840v360q0 17-11.5 28.5T640-440H240L80-280Z" />
                                 </svg>
@@ -3162,7 +3535,7 @@
     <button @click="sidebarOpen = !sidebarOpen"
         class="fixed bottom-4 left-4 z-50 lg:hidden bg-primary-100 text-white p-2 rounded-full shadow-lg focus:outline-none focus:ring">
         <svg class="h-6 w-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M4 6h16M4 12h16M4 18h16"/>
+            <path d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </button>
 </div>
