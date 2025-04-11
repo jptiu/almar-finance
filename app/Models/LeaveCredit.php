@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\EmployeeSalary;
 
 class LeaveCredit extends Model
 {
@@ -33,7 +35,8 @@ class LeaveCredit extends Model
             'sick' => 10,
             'vacation' => 15,
             'maternity' => 60,
-            'paternity' => 7
+            'paternity' => 7,
+            'service_incentive' => 10
         ];
     }
 
@@ -50,5 +53,25 @@ class LeaveCredit extends Model
                 'effective_date' => now()
             ]);
         }
+    }
+
+    public function updateSIL($daysTaken)
+    {
+        if ($this->leave_type === 'service_incentive' && $this->remaining_credits >= $daysTaken) {
+            $this->remaining_credits -= $daysTaken;
+            $this->used_credits += $daysTaken;
+            $this->save();
+            return true;
+        }
+        return false;
+    }
+
+    public function calculateSILValue($currentSalary = null)
+    {
+        if ($this->leave_type === 'service_incentive') {
+            $salary = $currentSalary ?? EmployeeSalary::getCurrentSalary($this->employee_id);
+            return $salary ? $salary->daily_rate * $this->remaining_credits : 0;
+        }
+        return 0;
     }
 }

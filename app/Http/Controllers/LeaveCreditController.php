@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\LeaveCredit;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\ServiceIncentiveLog;
+use App\Models\EmployeeSalary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -49,83 +52,80 @@ class LeaveCreditController extends Controller
         $departments = Department::orderBy('name')->get();
 
         // Build query
-        $query = User::with(['leaveCredits' => function($q) use ($filters) {
-            if ($filters['start_date']) {
-                $q->where('start_date', '>=', $filters['start_date']);
-            }
-            if ($filters['end_date']) {
-                $q->where('end_date', '<=', $filters['end_date']);
-            }
-            if ($filters['leave_type']) {
-                $q->where('leave_type', $filters['leave_type']);
-            }
-        }])->withCount([
-            'leaveCredits as total_credits' => function($q) use ($filters) {
+        $query = User::with([
+            'leaveCredits' => function($q) use ($filters) {
                 if ($filters['start_date']) {
-                    $q->where('start_date', '>=', $filters['start_date']);
+                    $q->where('effective_date', '>=', $filters['start_date']);
                 }
                 if ($filters['end_date']) {
-                    $q->where('end_date', '<=', $filters['end_date']);
+                    $q->where('effective_date', '<=', $filters['end_date']);
                 }
-                if ($filters['leave_type']) {
-                    $q->where('leave_type', $filters['leave_type']);
-                }
-            },
-            'leaveCredits as total_used_credits' => function($q) use ($filters) {
-                if ($filters['start_date']) {
-                    $q->where('start_date', '>=', $filters['start_date']);
-                }
-                if ($filters['end_date']) {
-                    $q->where('end_date', '<=', $filters['end_date']);
-                }
-                if ($filters['leave_type']) {
-                    $q->where('leave_type', $filters['leave_type']);
-                }
-                $q->where('used_credits', '>', 0);
             }
         ]);
 
         // Apply filters
         if ($filters['department']) {
-            $query->whereHas('department', function($q) use ($filters) {
-                $q->where('name', $filters['department']);
+            $query->whereHas('department', function ($q) use ($filters) {
+                $q->where('id', $filters['department']);
             });
         }
 
-        // Get the data
+        // Get users and their leave credits
         $users = $query->get();
-
-        // Process each user's leave credits
         $employees = [];
-        $summary = $this->calculateSummary($users);
+        $summary = [
+            'total_employees' => 0,
+            'total_credits' => 0,
+            'total_used' => 0,
+            'total_remaining' => 0,
+            'total_sil_days' => 0,
+            'total_sil_value' => 0,
+            'percentage_used' => 0,
+            'status' => []
+        ];
 
         foreach ($users as $user) {
+            $totalCredits = 0;
+            $totalUsedCredits = 0;
             $leaveCredits = $user->leaveCredits;
-            $totalCredits = $user->total_credits;
-            $totalUsedCredits = $user->total_used_credits;
+
+            // Calculate totals for all leave types
+            foreach ($leaveCredits as $credit) {
+                $totalCredits += $credit->total_credits;
+                $totalUsedCredits += $credit->used_credits;
+            }
+
             $totalRemainingCredits = $totalCredits - $totalUsedCredits;
             $percentageUsed = $totalCredits > 0 ? ($totalUsedCredits / $totalCredits) * 100 : 0;
 
-            // Calculate status
-            $status = $this->getCreditStatus($totalCredits, $totalRemainingCredits);
+            // Get SIL balance and value
+            $silCredit = $leaveCredits->where('leave_type', 'service_incentive')->first();
+            $silBalance = $silCredit ? $silCredit->remaining_credits : 0;
+            $currentSalary = EmployeeSalary::getCurrentSalary($user->id);
+            
+            // Debugging
+            \Log::info('SIL Debug for user ' . $user->id);
+            \Log::info('Sil Credit: ' . json_encode($silCredit));
+            \Log::info('Sil Balance: ' . $silBalance);
+            \Log::info('Current Salary: ' . json_encode($currentSalary));
+            \Log::info('Daily Rate: ' . ($currentSalary ? $currentSalary->daily_rate : 'No salary'));
+            
+            $silValue = $silCredit ? $silCredit->calculateSILValue($currentSalary) : 0;
 
-            // Process leave types
-            $leaveTypes = collect($leaveCredits)->groupBy('leave_type')->map(function($group) {
-                $totalCredits = $group->sum('total_credits');
-                $usedCredits = $group->sum('used_credits');
-                $remainingCredits = $totalCredits - $usedCredits;
-                $percentageUsed = $totalCredits > 0 ? ($usedCredits / $totalCredits) * 100 : 0;
-                $typeStatus = $this->getCreditStatus($totalCredits, $remainingCredits);
-                
+            // Get leave types with status
+            $leaveTypes = $leaveCredits->map(function ($credit) {
+                $status = $this->getCreditStatus($credit->total_credits, $credit->remaining_credits);
                 return [
-                    'leave_type' => $group[0]->leave_type,
-                    'total_credits' => $totalCredits,
-                    'used_credits' => $usedCredits,
-                    'remaining_credits' => $remainingCredits,
-                    'percentage_used' => $percentageUsed,
-                    'status' => $typeStatus
+                    'type' => $credit->leave_type,
+                    'total' => $credit->total_credits,
+                    'used' => $credit->used_credits,
+                    'remaining' => $credit->remaining_credits,
+                    'status' => $status
                 ];
-            })->values()->toArray();
+            })->toArray();
+
+            // Calculate overall status for the employee
+            $overallStatus = $this->getOverallStatus($leaveTypes);
 
             $employees[] = [
                 'id' => $user->id,
@@ -134,17 +134,31 @@ class LeaveCreditController extends Controller
                 'total_credits' => $totalCredits,
                 'used_credits' => $totalUsedCredits,
                 'remaining_credits' => $totalRemainingCredits,
+                'sil_balance' => $silBalance,
+                'sil_value' => $silValue,
                 'percentage_used' => $percentageUsed,
-                'status' => $status,
+                'status' => $overallStatus,
                 'leave_types' => $leaveTypes
             ];
+
+            // Update summary
+            $summary['total_employees']++;
+            $summary['total_credits'] += $totalCredits;
+            $summary['total_used'] += $totalUsedCredits;
+            $summary['total_remaining'] += $totalRemainingCredits;
+            $summary['total_sil_days'] += $silBalance;
+            $summary['total_sil_value'] += $silValue;
+            if ($summary['total_credits'] > 0) {
+                $summary['percentage_used'] = ($summary['total_used'] / $summary['total_credits']) * 100;
+            }
         }
 
         // Sort the results
         $sort = $request->input('sort', 'name');
         $direction = $request->input('direction', 'asc');
 
-        $employees = collect($employees)->sortBy($sort, SORT_REGULAR, $direction === 'desc')
+        $employees = collect($employees)
+            ->sortBy($sort, SORT_REGULAR, $direction === 'desc')
             ->values()
             ->toArray();
 
@@ -201,7 +215,9 @@ class LeaveCreditController extends Controller
             'Remaining Credits',
             'Usage %',
             'Status',
-            'Leave Types'
+            'Leave Types',
+            'SIL Balance',
+            'SIL Value'
         ];
         $headerRow = 4;
         foreach ($headers as $index => $header) {
@@ -209,7 +225,7 @@ class LeaveCreditController extends Controller
         }
 
         // Style headers
-        $sheet->getStyle('A4:H4')->applyFromArray([
+        $sheet->getStyle('A4:J4')->applyFromArray([
             'font' => ['bold' => true],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -245,12 +261,15 @@ class LeaveCreditController extends Controller
             // Format leave types as string
             $leaveTypes = '';
             foreach ($employee['leave_types'] as $type) {
-                $leaveTypes .= $type['leave_type'] . ': ' . $type['remaining_credits'] . ' (' . $type['status'] . ')\n';
+                $leaveTypes .= $type['type'] . ': ' . $type['remaining'] . ' (' . $type['status'] . ')\n';
             }
             $sheet->setCellValueByColumnAndRow(8, $row, $leaveTypes);
             
+            $sheet->setCellValueByColumnAndRow(9, $row, $employee['sil_balance']);
+            $sheet->setCellValueByColumnAndRow(10, $row, $employee['sil_value']);
+            
             // Style data rows
-            $sheet->getStyle('A' . $row . ':H' . $row)->applyFromArray([
+            $sheet->getStyle('A' . $row . ':J' . $row)->applyFromArray([
                 'borders' => [
                     'allBorders' => [
                         'borderStyle' => Border::BORDER_THIN,
@@ -272,12 +291,11 @@ class LeaveCreditController extends Controller
         $summaryMetrics = [
             'Total Employees' => $summary['total_employees'],
             'Total Credits' => $summary['total_credits'],
-            'Used Credits' => $summary['used_credits'],
-            'Remaining Credits' => $summary['remaining_credits'],
-            'Overall Usage Rate' => $summary['percentage_used'] . '%',
-            'Employees with Low Credits' => $summary['low_credit_employees'],
-            'Employees with No Credits' => $summary['no_credit_employees'],
-            'Employees with Overdrawn Credits' => $summary['overdrawn_employees']
+            'Used Credits' => $summary['total_used'],
+            'Remaining Credits' => $summary['total_remaining'],
+            'Overall Usage Rate' => $summary['total_credits'] > 0 ? ($summary['total_used'] / $summary['total_credits']) * 100 . '%' : '0%',
+            'Total SIL Days' => $summary['total_sil_days'],
+            'Total SIL Value' => $summary['total_sil_value']
         ];
 
         foreach ($summaryMetrics as $metric => $value) {
@@ -289,8 +307,27 @@ class LeaveCreditController extends Controller
             $row++;
         }
 
+        // Add status summary
+        $sheet->setCellValue('A' . $row, 'Status Summary:');
+        $sheet->getStyle('A' . $row)->applyFromArray([
+            'font' => ['bold' => true],
+        ]);
+        $row++;
+
+        foreach ($summary['status'] as $type => $status) {
+            $sheet->setCellValue('A' . $row, $type . ':');
+            $sheet->setCellValue('B' . $row, $status['total'] . ' credits');
+            $sheet->setCellValue('C' . $row, $status['used'] . ' credits used');
+            $sheet->setCellValue('D' . $row, $status['remaining'] . ' credits remaining');
+            $sheet->setCellValue('E' . $row, $status['status']);
+            $sheet->getStyle('A' . $row . ':E' . $row)->applyFromArray([
+                'font' => ['bold' => true],
+            ]);
+            $row++;
+        }
+
         // Auto-size columns
-        foreach (range('A', 'H') as $columnID) {
+        foreach (range('A', 'J') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
@@ -356,7 +393,7 @@ class LeaveCreditController extends Controller
                 // Add leave types as a string
                 $leaveTypes = '';
                 foreach ($employee['leave_types'] as $type) {
-                    $leaveTypes .= $type['leave_type'] . ': ' . $type['remaining_credits'] . ' (' . $type['status'] . ')\n';
+                    $leaveTypes .= $type['type'] . ': ' . $type['remaining'] . ' (' . $type['status'] . ')\n';
                 }
                 $sheet->setCellValue('H' . $row, $leaveTypes);
                 
@@ -366,6 +403,109 @@ class LeaveCreditController extends Controller
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
             $writer->save('php://output');
         }, 'leave_credits_report_' . date('Y-m-d') . '.xlsx', $headers);
+    }
+
+    public function updateSIL(Request $request)
+    {
+        $validated = $request->validate([
+            'employee_id' => 'required|exists:users,id',
+            'days_taken' => 'required|integer|min:1',
+            'date' => 'required|date'
+        ]);
+
+        $employee = User::findOrFail($validated['employee_id']);
+        $credit = LeaveCredit::where('employee_id', $employee->id)
+            ->where('leave_type', 'service_incentive')
+            ->first();
+
+        if (!$credit || $credit->remaining_credits < $validated['days_taken']) {
+            return response()->json([
+                'error' => 'Insufficient SIL days remaining'
+            ], 422);
+        }
+
+        // Update credit
+        $credit->updateSIL($validated['days_taken']);
+
+        // Create log
+        ServiceIncentiveLog::create([
+            'employee_id' => $validated['employee_id'],
+            'date_taken' => $validated['date'],
+            'days_taken' => $validated['days_taken'],
+            'amount_paid' => $credit->calculateSILValue()
+        ]);
+
+        return response()->json([
+            'message' => 'SIL updated successfully',
+            'remaining_days' => $credit->remaining_credits
+        ]);
+    }
+
+    public function companyReportSIL(Request $request)
+    {
+        $validated = $request->validate([
+            'department_id' => 'nullable|exists:departments,id',
+            'date_range' => 'nullable|array',
+            'date_range.*' => 'date',
+            'status' => 'nullable|string',
+            'sort_by' => 'nullable|string',
+            'order' => 'nullable|string|in:asc,desc'
+        ]);
+
+        $query = User::query()->with(['leaveCredits']);
+
+        if ($validated['department_id']) {
+            $query->whereHas('department', function ($q) use ($validated) {
+                $q->where('id', $validated['department_id']);
+            });
+        }
+
+        if (isset($validated['date_range'])) {
+            $query->whereHas('leaveCredits', function ($q) use ($validated) {
+                $q->whereBetween('effective_date', $validated['date_range']);
+            });
+        }
+
+        $users = $query->get();
+        $employees = [];
+
+        foreach ($users as $user) {
+            $leaveCredits = $user->leaveCredits;
+            $totalCredits = $user->total_credits;
+            $totalUsedCredits = $user->total_used_credits;
+            $totalRemainingCredits = $totalCredits - $totalUsedCredits;
+            $percentageUsed = $totalCredits > 0 ? ($totalUsedCredits / $totalCredits) * 100 : 0;
+
+            // Get SIL balance
+            $silCredit = $leaveCredits->where('leave_type', 'service_incentive')->first();
+            $silBalance = $silCredit ? $silCredit->remaining_credits : 0;
+            $silValue = $silCredit ? $silCredit->calculateSILValue() : 0;
+
+            $employees[] = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'department' => $user->department ? $user->department->name : 'No Department',
+                'total_credits' => $totalCredits,
+                'used_credits' => $totalUsedCredits,
+                'remaining_credits' => $totalRemainingCredits,
+                'sil_balance' => $silBalance,
+                'sil_value' => $silValue,
+                'percentage_used' => $percentageUsed,
+                'leave_types' => $leaveCredits->map(function ($credit) {
+                    return [
+                        'type' => $credit->leave_type,
+                        'total' => $credit->total_credits,
+                        'used' => $credit->used_credits,
+                        'remaining' => $credit->remaining_credits
+                    ];
+                })
+            ];
+        }
+
+        return response()->json([
+            'employees' => $employees,
+            'total_employees' => count($employees)
+        ]);
     }
 
     public function checkCredits(Request $request)
@@ -439,32 +579,28 @@ class LeaveCreditController extends Controller
         ];
     }
 
+    private function getOverallStatus(array $leaveTypes): string
+    {
+        foreach ($leaveTypes as $type) {
+            if ($type['status'] === 'Low credits remaining') {
+                return 'low';
+            }
+        }
+        return 'normal';
+    }
+
     private function getCreditStatus(int $totalCredits, int $remainingCredits): string
     {
-        // If total credits is 0, we can't calculate percentage
         if ($totalCredits === 0) {
             return 'No credits assigned';
         }
 
-        // Calculate percentage remaining
         $percentageRemaining = ($remainingCredits / $totalCredits) * 100;
 
-        // Handle edge cases where remaining credits might be negative
-        if ($remainingCredits < 0) {
-            return 'Overdrawn credits';
-        }
-
-        // Handle cases where all credits are used
-        if ($remainingCredits === 0) {
-            return 'No credits remaining';
-        }
-
-        // Low credits warning threshold
-        if ($percentageRemaining <= 20) {
+        if ($percentageRemaining < 20) {
             return 'Low credits remaining';
         }
 
-        // Normal case
-        return 'Credits available';
+        return 'Normal';
     }
 }

@@ -571,9 +571,18 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     // Leave Credits Routes
-    Route::get('/leave-credits', [LeaveCreditController::class, 'index'])->name('leave-credits.index');
-    Route::get('/leave-credits/report', [LeaveCreditController::class, 'companyReport'])->name('leave-credits.report');
-    Route::get('/leave-credits/export', [LeaveCreditController::class, 'export'])->name('leave-credits.export');
+    Route::group(['prefix' => 'leave-credits', 'middleware' => ['auth']], function () {
+        Route::get('/', [LeaveCreditController::class, 'index'])->name('leave-credits.index');
+        Route::get('/create', [LeaveCreditController::class, 'create'])->name('leave-credits.create');
+        Route::post('/', [LeaveCreditController::class, 'store'])->name('leave-credits.store');
+        Route::get('/{id}/edit', [LeaveCreditController::class, 'edit'])->name('leave-credits.edit');
+        Route::put('/{id}', [LeaveCreditController::class, 'update'])->name('leave-credits.update');
+        Route::delete('/{id}', [LeaveCreditController::class, 'destroy'])->name('leave-credits.destroy');
+        Route::get('/report', [LeaveCreditController::class, 'companyReport'])->name('leave-credits.report');
+        Route::get('/company-report', [LeaveCreditController::class, 'companyReport'])->name('leave-credits.company-report');
+        Route::post('/update-sil', [LeaveCreditController::class, 'updateSIL'])->name('leave-credits.update-sil');
+        Route::get('/export', [LeaveCreditController::class, 'export'])->name('leave-credits.export');
+    });
 
     // Departments Routes
     Route::middleware(['auth', 'can:hr_access'])->group(function () {

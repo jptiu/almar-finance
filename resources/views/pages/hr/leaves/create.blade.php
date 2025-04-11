@@ -58,6 +58,7 @@
                                 <option value="vacation">Vacation Leave</option>
                                 <option value="maternity">Maternity Leave</option>
                                 <option value="paternity">Paternity Leave</option>
+                                <option value="service_incentive">Service Incentive</option>
                             </select>
                             @error('leave_type')
                                 <div class="text-xs mt-1 text-rose-500">{{ $message }}</div>
