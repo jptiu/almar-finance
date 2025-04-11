@@ -47,9 +47,9 @@ class Payslip extends Model
     ];
 
     // Fixed deduction rates
-    const SS_RATE = 0.03; // 3%
-    const PHILHEALTH_RATE = 0.01; // 1%
-    const PAGIBIG_RATE = 0.01; // 1%
+    const SS_RATE = 0.045; // 4.5%
+    const PHILHEALTH_RATE = 0.50; // 50%
+    const PAGIBIG_RATE = 0.50; // 50%
     const TAX_RATE = 0.10; // 10%
     const WORKING_HOURS_PER_DAY = 8;
     const OVERTIME_RATE = 150; // PHP per hour
