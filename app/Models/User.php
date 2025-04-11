@@ -141,4 +141,13 @@ class User extends Authenticatable
         return $this->hasMany(EmployeeSalary::class, 'employee_id');
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function leaveCredits()
+    {
+        return $this->hasMany(LeaveCredit::class, 'employee_id');
+    }
 }

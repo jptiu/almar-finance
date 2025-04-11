@@ -94,6 +94,7 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
             RoleUserTableSeeder::class,
+            LeaveCreditSeeder::class,
             // BarangayTableSeeder::class,
             // CityTownTableSeeder::class,
             // CustomerTypeTableSeeder::class,

@@ -761,6 +761,81 @@
                         </div>
                     </a>
                 </li>
+                <!-- Leave Credits -->
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['leave-credits'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['leave-credits']) ? 1 : 0 }} }">
+                    <a href="{{ route('leave-credits.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leave-credits'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                    <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                    <path d="M16 2v4" />
+                                    <path d="M13 16H8" />
+                                    <path d="M13 12H8" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Leave Credits</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- Departments -->
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['departments'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['departments']) ? 1 : 0 }} }">
+                    <a href="{{ route('departments.index') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['departments'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-building-2-icon lucide-building-2">
+                                    <path d="M19 19H5" />
+                                    <path d="M19 15H5" />
+                                    <path d="M19 11H5" />
+                                    <path d="M19 7H5" />
+                                    <path d="M19 3H5" />
+                                    <path d="M19 21H5" />
+                                    <path d="M19 17H5" />
+                                    <path d="M19 13H5" />
+                                    <path d="M19 9H5" />
+                                    <path d="M19 5H5" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Departments</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                
+                <!-- Leave Credits Report -->
+                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['leave-credits-report'])) {{ 'bg-accent-100' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['leave-credits-report']) ? 1 : 0 }} }">
+                    <a href="{{ route('leave-credits.report') }}"
+                        class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['leave-credits-report'])) {{ 'hover:text-slate-200' }} @endif">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar-clock-icon lucide-calendar-clock">
+                                    <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+                                    <path d="M16 2v4" />
+                                    <path d="M13 16H8" />
+                                    <path d="M13 12H8" />
+                                </svg>
+                                <span
+                                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Leave Credits Report</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
                 <!-- Leaves -->
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['leaves'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['leaves']) ? 1 : 0 }} }">

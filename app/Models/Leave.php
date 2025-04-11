@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Services\LeaveCreditService;
 
 class Leave extends Model
 {
@@ -32,6 +33,18 @@ class Leave extends Model
     public function approvedBy()
     {
         return $this->belongsTo(User::class, 'approved_by','id');
+    }
+
+    public function hasSufficientCredits()
+    {
+        $service = app(LeaveCreditService::class);
+        return $service->hasSufficientCredits($this);
+    }
+
+    public function updateCredits()
+    {
+        $service = app(LeaveCreditService::class);
+        $service->updateLeaveCredits($this);
     }
 
     public function getStatusColorAttribute()

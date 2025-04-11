@@ -19,6 +19,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\DailyTimeRecordController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DenominationController;
@@ -53,6 +54,7 @@ use App\Http\Controllers\BranchInfoController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Broadcast as BroadcastFacade;
 use App\Http\Controllers\COERequestController;
+use App\Http\Controllers\LeaveCreditController;
 
 Route::get('/storage/{path}', function ($path) {
     if (!Storage::disk('public')->exists($path)) {
@@ -561,4 +563,25 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/coe-requests', [COERequestController::class, 'create'])->name('coe-requests.create');
     Route::post('/coe-requests/generate', [COERequestController::class, 'generateCOE'])->name('coe-requests.generate');
+
+    // Leave Credits API Routes
+    Route::prefix('api')->group(function () {
+        Route::get('/leave-credits/{employeeId}/{leaveType}', [\App\Http\Controllers\Api\LeaveCreditController::class, 'getEmployeeCredits']);
+        Route::get('/leave-credits/{employeeId}', [\App\Http\Controllers\Api\LeaveCreditController::class, 'getAllEmployeeCredits']);
+    });
+
+    // Leave Credits Routes
+    Route::get('/leave-credits', [LeaveCreditController::class, 'index'])->name('leave-credits.index');
+    Route::get('/leave-credits/report', [LeaveCreditController::class, 'companyReport'])->name('leave-credits.report');
+    Route::get('/leave-credits/export', [LeaveCreditController::class, 'export'])->name('leave-credits.export');
+
+    // Departments Routes
+    Route::middleware(['auth', 'can:hr_access'])->group(function () {
+        Route::get('/hr/departments', [DepartmentController::class, 'index'])->name('departments.index');
+        Route::get('/hr/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
+        Route::post('/hr/departments', [DepartmentController::class, 'store'])->name('departments.store');
+        Route::get('/hr/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
+        Route::put('/hr/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
+        Route::delete('/hr/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
+    });
 });
