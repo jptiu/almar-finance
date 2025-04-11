@@ -10,6 +10,7 @@ class EmployeeSalary extends Model
         'employee_id',
         'basic_salary',
         'daily_rate',
+        'overtime_rate',
         'effective_date',
         'status',
         'notes'
@@ -18,6 +19,7 @@ class EmployeeSalary extends Model
     protected $casts = [
         'basic_salary' => 'decimal:2',
         'daily_rate' => 'decimal:2',
+        'overtime_rate' => 'decimal:2',
         'effective_date' => 'date'
     ];
 

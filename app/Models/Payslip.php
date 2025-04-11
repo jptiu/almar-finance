@@ -52,7 +52,6 @@ class Payslip extends Model
     const PAGIBIG_RATE = 0.50; // 50%
     const TAX_RATE = 0.10; // 10%
     const WORKING_HOURS_PER_DAY = 8;
-    const OVERTIME_RATE = 150; // PHP per hour
 
     public function employee()
     {
@@ -69,7 +68,7 @@ class Payslip extends Model
             ->get();
 
         foreach ($attendances as $attendance) {
-            $totalHours += $attendance->working_hours;
+            $totalHours += $attendance->total_hours;
         }
 
         return $totalHours;
@@ -90,6 +89,18 @@ class Payslip extends Model
         }
 
         return $totalOvertime;
+    }
+
+    public function calculateOvertimePay($overtimeHours)
+    {
+        // Get the employee's current salary record
+        $currentSalary = EmployeeSalary::getCurrentSalary($this->employee_id);
+        
+        // If no overtime rate is set, calculate it as 1.25x of hourly rate
+        $hourlyRate = $currentSalary->daily_rate / self::WORKING_HOURS_PER_DAY;
+        $overtimeRate = $currentSalary->overtime_rate ?? ($hourlyRate * 1.25);
+
+        return $overtimeHours * $overtimeRate;
     }
 
     public function calculateTotalEarnings()

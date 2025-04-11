@@ -114,11 +114,17 @@ class PayslipController extends Controller
                 'basic_salary' => round($proratedBasicSalary, 2),
                 'total_hours' => $workingHours,
                 'overtime_hours' => $overtimeHours,
-                'overtime_pay' => $overtimeHours * Payslip::OVERTIME_RATE,
                 'allowances' => $validated['allowances'] ?? 0,
                 'notes' => $validated['notes'] ?? null,
                 'status' => 'pending'
             ]);
+
+            // Calculate overtime pay using the employee's current salary
+            $currentSalary = EmployeeSalary::getCurrentSalary($validated['employee_id']);
+            $hourlyRate = $currentSalary->daily_rate / Payslip::WORKING_HOURS_PER_DAY;
+            $overtimeRate = $currentSalary->overtime_rate ?? ($hourlyRate * 1.25);
+            $payslip->overtime_pay = $overtimeHours * $overtimeRate;
+            $payslip->save();
 
             // Calculate and save deductions
             $payslip->calculateDeductions();

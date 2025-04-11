@@ -41,6 +41,15 @@
                         </div>
 
                         <div>
+                            <label class="block text-sm font-medium mb-1" for="overtime_rate">Overtime Rate <span class="text-rose-500">*</span></label>
+                            <input id="overtime_rate" name="overtime_rate" class="form-input w-full" type="number" step="0.01" required />
+                            <div class="text-xs text-slate-400 mt-1">Leave blank to use the default rate (1.25x of hourly rate)</div>
+                            @error('overtime_rate')
+                                <div class="text-xs mt-1 text-rose-500">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div>
                             <label class="block text-sm font-medium mb-1" for="effective_date">Effective Date <span class="text-rose-500">*</span></label>
                             <input id="effective_date" name="effective_date" class="form-input w-full" type="date" required value="{{ now()->format('Y-m-d') }}" />
                             @error('effective_date')
@@ -72,11 +81,21 @@
         const basicSalary = parseFloat(this.value) || 0;
         const dailyRate = basicSalary / 22; // Assuming 22 working days per month
         document.getElementById('daily_rate').value = dailyRate.toFixed(2);
+        
+        // Update overtime rate based on daily rate
+        const hourlyRate = dailyRate / 8;
+        const overtimeRate = hourlyRate * 1.25;
+        document.getElementById('overtime_rate').value = overtimeRate.toFixed(2);
     });
 
     document.getElementById('daily_rate').addEventListener('input', function() {
         const dailyRate = parseFloat(this.value) || 0;
         const basicSalary = dailyRate * 22; // Assuming 22 working days per month
         document.getElementById('basic_salary').value = basicSalary.toFixed(2);
+        
+        // Update overtime rate based on daily rate
+        const hourlyRate = dailyRate / 8;
+        const overtimeRate = hourlyRate * 1.25;
+        document.getElementById('overtime_rate').value = overtimeRate.toFixed(2);
     });
 </script>
