@@ -34,7 +34,7 @@ class LeaveController extends Controller
     {
         $validated = $request->validate([
             'employee_id' => 'required|exists:users,id',
-            'leave_type' => 'required|in:sick,vacation,maternity,paternity',
+            'leave_type' => 'required|in:sick,vacation,maternity,paternity,service_incentive',
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'days_requested' => 'required|integer|min:1',

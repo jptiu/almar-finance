@@ -19,25 +19,11 @@
                 <div class="p-3">
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12">
-                            @can('hr_access')
-                            <label class="block text-sm font-medium mb-1" for="employee_id">Employee</label>
-                            <select id="employee_id" name="employee_id" class="form-select w-full" required>
-                                <option value="">Select Employee</option>
-                                @foreach($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('employee_id')
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
-                            @endcan
-                            @cannot('hr_access')
                             <label class="block text-sm font-medium mb-1">Employee</label>
                             <div class="flex items-center bg-gray-50 dark:bg-slate-700 rounded-md p-2">
-                                <input type="hidden" name="employee_id" value="{{ auth()->id() }}">
+                                <input type="hidden" name="employee_id" value="{{ auth()->user()->id }}">
                                 <span class="text-gray-700 dark:text-gray-300">{{ auth()->user()->name }}</span>
                             </div>
-                            @endcannot
                         </div>
                     </div>
                 </div>
@@ -165,7 +151,7 @@
         const daysInput = document.getElementById('days_requested');
         const availableCreditsSpan = document.getElementById('availableCredits');
         const creditWarning = document.getElementById('creditWarning');
-        const employeeId = {{ $employee->id }};
+        const employeeId = {{ auth()->user()->id }};
 
         async function getAvailableCredits(leaveType) {
             try {
