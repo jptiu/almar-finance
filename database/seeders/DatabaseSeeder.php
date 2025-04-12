@@ -88,6 +88,29 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now()
         ]);
 
+        // Create regularized onboarding records for all users
+        \App\Models\User::all()->each(function ($user) {
+            $onboarding = new \App\Models\EmployeeOnboarding([
+                'probation_start_date' => now()->subMonths(3),
+                'probation_end_date' => now()->subMonths(2),
+                'probation_status' => \App\Models\EmployeeOnboarding::PROBATION_STATUS_COMPLETED,
+                'performance_metrics' => 'Exceeded expectations in all key metrics',
+                'training_requirements' => 'Completed all required training programs',
+                'probation_evaluation' => 'Excellent performance during probation period',
+                'regularization_notes' => 'Regularized due to excellent performance',
+                'probation_duration' => 30,
+                'is_regularized' => true,
+                'regularization_date' => now()->subMonths(1)
+            ]);
+            
+            $user->onboarding()->save($onboarding);
+            
+            // Update user's employment type
+            $user->update([
+                'employment_type' => 'regular'
+            ]);
+        });
+
         $this->call([
             DashboardTableSeeder::class,
             PermissionsTableSeeder::class,

@@ -16,6 +16,7 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Namu\WireChat\Traits\Chatable;
 use App\Models\EmployeeSalary;
+use App\Models\EmployeeOnboarding;
 
 class User extends Authenticatable
 {
@@ -25,6 +26,11 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use Chatable;
+
+    const EMPLOYMENT_STATUS_ACTIVE = 'active';
+    const EMPLOYMENT_STATUS_INACTIVE = 'inactive';
+    const EMPLOYMENT_TYPE_PROBATION = 'probation';
+    const EMPLOYMENT_TYPE_REGULAR = 'regular';
 
     /**
      * The attributes that are mass assignable.
@@ -41,7 +47,11 @@ class User extends Authenticatable
         'remember_token',
         'email_verified_at',
         'last_login_at',
-        'signature'
+        'signature',
+        'employment_status',
+        'employment_type',
+        'employment_status_updated_at',
+        'employment_type_updated_at'
     ];
 
     /**
@@ -62,6 +72,8 @@ class User extends Authenticatable
         'deleted_at',
         'email_verified_at',
         'last_login_at',
+        'employment_status_updated_at',
+        'employment_type_updated_at'
     ];
 
     /**
@@ -71,6 +83,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'employment_status_updated_at' => 'datetime',
+        'employment_type_updated_at' => 'datetime'
     ];
 
     /**
@@ -91,6 +105,11 @@ class User extends Authenticatable
             if (!$user->roles()->get()->contains($registrationRole)) {
                 $user->roles()->attach($registrationRole);
             }
+            
+            // Set default employment status and type
+            $user->employment_status = 'active';
+            $user->employment_type = 'probation';
+            $user->save();
         });
     }
 
@@ -114,6 +133,28 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $this->id,
+            'password' => 'required|string|min:8|confirmed',
+            'employment_status' => 'required|in:active,inactive',
+            'employment_type' => 'required|in:probation,regular',
+        ];
+    }
+
+    public function updateRules()
+    {
+        return [
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $this->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'employment_status' => 'sometimes|required|in:active,inactive',
+            'employment_type' => 'sometimes|required|in:probation,regular',
+        ];
     }
 
     public function roles()
@@ -149,5 +190,59 @@ class User extends Authenticatable
     public function leaveCredits()
     {
         return $this->hasMany(LeaveCredit::class, 'employee_id');
+    }
+
+    public function onboarding()
+    {
+        return $this->hasOne(EmployeeOnboarding::class);
+    }
+
+    public function isActive()
+    {
+        return $this->employment_status === 'active';
+    }
+
+    public function isProbation()
+    {
+        return $this->employment_type === 'probation';
+    }
+
+    public function isRegular()
+    {
+        return $this->employment_type === 'regular';
+    }
+
+    public function setStatus($status)
+    {
+        $this->employment_status = $status;
+        $this->employment_status_updated_at = now();
+        return $this->save();
+    }
+
+    public function setType($type)
+    {
+        $this->employment_type = $type;
+        $this->employment_type_updated_at = now();
+        return $this->save();
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('employment_status', 'active');
+    }
+
+    public function scopeInactive($query)
+    {
+        return $query->where('employment_status', 'inactive');
+    }
+
+    public function scopeProbation($query)
+    {
+        return $query->where('employment_type', 'probation');
+    }
+
+    public function scopeRegular($query)
+    {
+        return $query->where('employment_type', 'regular');
     }
 }

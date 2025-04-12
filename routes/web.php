@@ -26,6 +26,7 @@ use App\Http\Controllers\DenominationController;
 use App\Http\Controllers\EditRequestController;
 use App\Http\Controllers\EmployeeBenefitController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeOnboardingController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\JobController;
@@ -244,6 +245,22 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('evaluations', [HRController::class, 'employeeEvaluation'])->name('evaluations.index');
     Route::get('monthlyrep', [HRController::class, 'monthlyReport'])->name('monthlyrep.index');
 
+    // HR Routes - Grouped and organized
+    Route::middleware(['auth', 'can:hr_access'])->prefix('hr')->group(function () {
+        // Employee Onboarding
+        Route::prefix('onboarding')->group(function () {
+            Route::get('/', [EmployeeOnboardingController::class, 'index'])->name('hr.onboarding.index');
+            Route::post('/start', [EmployeeOnboardingController::class, 'selectEmployee'])->name('hr.onboarding.select');
+            Route::get('/create/{user}', [EmployeeOnboardingController::class, 'create'])->name('hr.onboarding.create');
+            Route::post('/store/{user}', [EmployeeOnboardingController::class, 'store'])->name('hr.onboarding.store');
+            Route::post('/add', [EmployeeOnboardingController::class, 'addEmployee'])->name('hr.onboarding.add');
+            Route::put('/extend/{onboarding}', [EmployeeOnboardingController::class, 'extendProbation'])->name('hr.onboarding.extend');
+            Route::put('/fail/{onboarding}', [EmployeeOnboardingController::class, 'failProbation'])->name('hr.onboarding.fail');
+            Route::put('/complete/{onboarding}', [EmployeeOnboardingController::class, 'completeProbation'])->name('hr.onboarding.complete');
+            Route::put('/regularize/{onboarding}', [EmployeeOnboardingController::class, 'regularize'])->name('hr.onboarding.regularize');
+        });
+    });
+
     // DTR Routes
     Route::get('dtr', [DailyTimeRecordController::class, 'index'])->name('dtr.index');
     Route::get('dtr/pdf', [DailyTimeRecordController::class, 'generatePdf'])->name('dtr.pdf');
@@ -423,6 +440,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('payroll/show/{id}', [PayrollController::class, 'show'])->name('payroll.show');
 
     // Superadmin
+    Route::middleware(['auth', 'can:super_access'])->group(function () {
+        // User Accounts
+        Route::get('/useracc', [UserController::class, 'index'])->name('useracc.index');
+        Route::get('/useracc/create', [UserController::class, 'create'])->name('useracc.create');
+        Route::post('/useracc', [UserController::class, 'store'])->name('useracc.store');
+        Route::put('/useracc/{user}/employment-status', [UserController::class, 'updateEmploymentStatus'])->name('useracc.update.status');
+        Route::put('/useracc/{user}/employment-type', [UserController::class, 'updateEmploymentType'])->name('useracc.update.type');
+    });
+
     Route::get('superadmin/monthlyreport', [SuperAdminController::class, 'monthlyReport'])->name('monthlyReport.index');
     Route::get('superadmin', [SuperAdminController::class, 'index'])->name('superadmin.index');
     Route::get('useracc', [SuperAdminController::class, 'userAccounts'])->name('useracc.index');

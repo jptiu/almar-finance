@@ -11,11 +11,37 @@ class ActivityLog extends Model
 
     protected $fillable = [
         'user_id',
-        'description',
+        'action',
+        'details',
+        'description'
     ];
 
-    function user()
+    protected $casts = [
+        'details' => 'array'
+    ];
+
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeEmploymentStatusChanges($query)
+    {
+        return $query->where('action', 'employment_status_updated');
+    }
+
+    public function scopeEmploymentTypeChanges($query)
+    {
+        return $query->where('action', 'employment_type_updated');
+    }
+
+    public function getDetailsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setDetailsAttribute($value)
+    {
+        $this->attributes['details'] = json_encode($value);
     }
 }

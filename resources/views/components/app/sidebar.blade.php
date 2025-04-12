@@ -984,6 +984,8 @@
                     </a>
                 </li>
 
+                <x-app.sidebar.hr-section />
+
                 {{-- Chats --}}
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
