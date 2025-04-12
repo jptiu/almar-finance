@@ -3,7 +3,7 @@
         <!-- Page header -->
         <div class="mb-8">
             <div class="mb-4">
-                <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold">Payslips</h1>
+                <h1 class="text-2xl md:text-2xl text-fonts-200 dark:text-slate-100 font-bold mb-4">Payslips</h1>
             </div>
             <div class="mb-6">
                 <a href="{{ route('payslips.create') }}" 

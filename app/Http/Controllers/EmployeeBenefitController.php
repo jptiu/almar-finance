@@ -11,7 +11,7 @@ class EmployeeBenefitController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         
         $benefits = EmployeeBenefit::with(['employee'])
             ->orderBy('effective_date', 'desc')
@@ -22,7 +22,7 @@ class EmployeeBenefitController extends Controller
 
     public function create()
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         
         $employees = User::whereHas('roles')->get();
 
@@ -31,7 +31,7 @@ class EmployeeBenefitController extends Controller
 
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
 
         $validated = $request->validate([
             'employee_id' => 'required|exists:users,id',
@@ -51,7 +51,7 @@ class EmployeeBenefitController extends Controller
 
     public function update(Request $request, EmployeeBenefit $benefit)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
 
         $validated = $request->validate([
             'amount' => 'nullable|numeric|min:0',
@@ -68,7 +68,7 @@ class EmployeeBenefitController extends Controller
 
     public function employeeBenefits(User $employee)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
 
         $benefits = EmployeeBenefit::where('employee_id', $employee->id)
             ->orderBy('effective_date', 'desc')
@@ -79,7 +79,7 @@ class EmployeeBenefitController extends Controller
 
     public function printBenefit(EmployeeBenefit $benefit)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         
         return view('pages.hr.benefits.print', compact('benefit'));
     }

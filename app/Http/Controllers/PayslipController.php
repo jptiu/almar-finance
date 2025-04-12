@@ -15,7 +15,7 @@ class PayslipController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         
         $payslips = Payslip::with('employee')
             ->orderBy('pay_period_start', 'desc')
@@ -26,7 +26,7 @@ class PayslipController extends Controller
 
     public function create(Request $request)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         
         $employees = User::whereHas('roles')->get();
         
@@ -63,7 +63,7 @@ class PayslipController extends Controller
 
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
 
         $validated = $request->validate([
             'employee_id' => 'required|exists:users,id',
@@ -146,7 +146,7 @@ class PayslipController extends Controller
 
     public function show($id)
     {
-        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         $payslip = Payslip::findOrFail($id);
         return view('pages.hr.payslips.show', compact('payslip'));
     }
@@ -164,7 +164,7 @@ class PayslipController extends Controller
 
     public function printPayslip($id)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         $payslip = Payslip::with('employee')->findOrFail($id);
         
         return view('pages.hr.payslips.print', compact('payslip'));
@@ -172,7 +172,7 @@ class PayslipController extends Controller
 
     public function generatePdf($id)
     {
-        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         $payslip = Payslip::with('employee')->findOrFail($id);
         
         $branchLocation = $payslip->employee->branch->location ?? 'Manila, Philippines';
