@@ -2283,7 +2283,7 @@
                 <!-- Customer Profile -->
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['customer'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['customer']) ? 1 : 0 }} }">
-                    <a href="{{ route('customerprof.index') }}"
+                    <a href="{{ route('customer.index') }}"
                         class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['customer'])) {{ 'hover:text-slate-200' }} @endif">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
@@ -2300,6 +2300,7 @@
                         </div>
                     </a>
                 </li>
+
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['concern-letters'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['concern-letters']) ? 1 : 0 }} }">
                     <a href="{{ route('concern-letters.index') }}"
@@ -2435,6 +2436,7 @@
                         </div>
                     </a>
                 </li>
+                {{-- 
                 <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                     <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
@@ -2451,7 +2453,7 @@
                             </div>
                         </div>
                     </a>
-                </li>
+                </li> --}}
             @endcan
             @can('admin_access')
                 <!-- Dashboard -->

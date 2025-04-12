@@ -19,7 +19,7 @@
         @endif
 
         <div class="relative">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold mb-12 lg:px-4">BA Monthly Report</h1>
+            <h1 class="text-2xl md:text-2xl text-fonts-200 dark:text-slate-100 font-bold mb-4">BA Monthly Report</h1>
         </div>
 
         <div></div>
