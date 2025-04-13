@@ -16,11 +16,13 @@ jobs:
       with:
         php-version: '8.0'
     - uses: actions/checkout@v4
-    - name: Set up env
+    - name: Building Web App
+      run: | 
+        npm install
+        npm run build
+        composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
       env:
           DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
     - name: 📂Sync Files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
