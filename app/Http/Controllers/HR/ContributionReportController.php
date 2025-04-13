@@ -41,7 +41,7 @@ class ContributionReportController extends Controller
         $endDate = $startDate->copy()->endOfMonth();
 
         $payslips = Payslip::whereBetween('pay_period_end', [$startDate, $endDate])
-            ->where('status', 'approved')
+            ->where('status', 'processed')
             ->with(['employee', 'employee.benefits'])
             ->get();
 

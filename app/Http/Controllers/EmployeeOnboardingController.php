@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Role;
 
 class EmployeeOnboardingController extends Controller
 {
@@ -32,7 +33,9 @@ class EmployeeOnboardingController extends Controller
         // Get departments
         $departments = Department::all();
 
-        return view('pages.hr.onboarding.index', compact('employees', 'regularEmployees', 'departments'));
+        $roles = Role::all();
+
+        return view('pages.hr.onboarding.index', compact('employees', 'regularEmployees', 'departments', 'roles'));
     }
 
     public function selectEmployee(Request $request)
@@ -167,6 +170,7 @@ class EmployeeOnboardingController extends Controller
             'name' => 'required|string|max:255',
             'employee_id' => 'required|string|max:255|unique:users',
             'department_id' => 'required|exists:departments,id',
+            'role_id' => 'required|id',
         ]);
 
         try {
@@ -177,6 +181,7 @@ class EmployeeOnboardingController extends Controller
                 'employee_id' => $validated['employee_id'],
                 'department_id' => $validated['department_id'],
             ]);
+            $user->roles()->sync($validated['role_id']);
 
             return redirect()->route('hr.onboarding.index')->with('success', 'Employee added successfully');
         } catch (\Exception $e) {

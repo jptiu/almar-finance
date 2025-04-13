@@ -249,6 +249,15 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-slate-500 dark:text-slate-400">User Account Role</label>
+                                    <select name="role_id" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                        <option value="">Select Role</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="flex justify-end space-x-3">
                                     <button type="button" class="px-4 py-2 rounded-md text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
                                             onclick="closeModal('addEmployeeModal')">

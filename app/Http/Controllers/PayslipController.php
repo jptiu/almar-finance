@@ -74,7 +74,8 @@ class PayslipController extends Controller
             'notes' => 'nullable|string',
             'overtime_hours' => 'nullable|numeric|min:0',
             'overtime_pay' => 'nullable|numeric|min:0',
-            'net_pay' => 'nullable|numeric|min:0'
+            'net_pay' => 'nullable|numeric|min:0',
+            'status' => 'required|in:pending,processed,paid'
         ]);
 
         try {
@@ -116,7 +117,7 @@ class PayslipController extends Controller
                 'overtime_hours' => $overtimeHours,
                 'allowances' => $validated['allowances'] ?? 0,
                 'notes' => $validated['notes'] ?? null,
-                'status' => 'pending'
+                'status' => $validated['status']
             ]);
 
             // Calculate overtime pay using the employee's current salary
