@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /public_html/
-          timeout: 60000000000000000
+          timeout: 2147483647
           exclude: |
             /.git
             /.git/
