@@ -1,0 +1,31 @@
+name: Almar Staging Build
+
+on:
+  push:
+    branches: [ "private/testing" ]
+  pull_request:
+    branches: [ "private/testing" ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: '8.0'
+    - uses: actions/checkout@v4
+    - name: Set up env
+      env:
+          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+    - name: 📂Sync Files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /
+  
