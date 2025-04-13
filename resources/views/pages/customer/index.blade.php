@@ -110,11 +110,13 @@
                             </div>
                         </form>
                     </div>
-                    
+                    @cannot('auditor_access')
                     <a href="{{ route('customer.add') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-4 py-3 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
                         <span class="hidden xs:block ml-2 text-sm">Add Customer</span>
                     </a>
+                    @endcannot
+                    @cannot('auditor_access')
                     <a id="show-modal" href="#" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-6 py-3 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus">
                             <circle cx="12" cy="12" r="10"/>
@@ -123,6 +125,7 @@
                         </svg>
                         <span class="hidden xs:block ml-2 text-sm">Import</span>
                     </a>
+                    @endcannot
 
                         <div id="modal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>

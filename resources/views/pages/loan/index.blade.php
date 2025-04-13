@@ -160,10 +160,12 @@
                         </div>
 
                         <!-- New Entry Button -->
+                        @cannot('auditor_access')
                         <a href="{{ route('loan.create') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-4 sm:px-6 py-2 sm:py-3 flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
                             <span class="hidden sm:block ml-2">New</span>
                         </a>
+                        @endcannot
                     </div>
                 </div>
 
