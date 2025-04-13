@@ -1602,13 +1602,8 @@
                         </div>
                     </a>
                 </li>
-<<<<<<< HEAD
             
                 <!--<li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
-=======
-
-                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
->>>>>>> 63db7520860a075b7a004eafa09073e2ff48210d
                     x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                     <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
                         href="/chats">
@@ -2246,7 +2241,7 @@
                                 <a class="block text-white hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if (Route::is('deleted.index')) {{ '!text-violet-500' }} @endif"
                                     href="{{ route('deleted.index') }}">
                                     <span
-                                        class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Deleted
+                                        class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Deactivated
                                         Account</span>
                                 </a>
                             </li>
@@ -2443,12 +2438,7 @@
                         </div>
                     </a>
                 </li>
-<<<<<<< HEAD
                 <!--<li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
-=======
-                {{-- 
-                <li class="px-3 py-3 hover:bg-accent-100 rounded-lg transition rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['chats'])) {{ 'bg-accent-100' }} @endif"
->>>>>>> 63db7520860a075b7a004eafa09073e2ff48210d
                     x-data="{ open: {{ in_array(Request::segment(1), ['chats']) ? 1 : 0 }} }">
                     <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['chats'])) {{ 'hover:text-slate-200' }} @endif"
                         href="/chats">
@@ -2464,11 +2454,7 @@
                             </div>
                         </div>
                     </a>
-<<<<<<< HEAD
                 </li>-->
-=======
-                </li> --}}
->>>>>>> 63db7520860a075b7a004eafa09073e2ff48210d
             @endcan
             @can('admin_access')
                 <!-- Dashboard -->
