@@ -15,7 +15,7 @@ class PayslipController extends Controller
 {
     public function index()
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         
         $payslips = Payslip::with('employee')
             ->orderBy('pay_period_start', 'desc')
@@ -26,7 +26,7 @@ class PayslipController extends Controller
 
     public function create(Request $request)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         
         $employees = User::whereHas('roles')->get();
         
@@ -63,7 +63,7 @@ class PayslipController extends Controller
 
     public function store(Request $request)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
 
         $validated = $request->validate([
             'employee_id' => 'required|exists:users,id',
@@ -114,14 +114,21 @@ class PayslipController extends Controller
                 'basic_salary' => round($proratedBasicSalary, 2),
                 'total_hours' => $workingHours,
                 'overtime_hours' => $overtimeHours,
-                'overtime_pay' => $overtimeHours * Payslip::OVERTIME_RATE,
                 'allowances' => $validated['allowances'] ?? 0,
                 'notes' => $validated['notes'] ?? null,
                 'status' => 'pending'
             ]);
 
+            // Calculate overtime pay using the employee's current salary
+            $currentSalary = EmployeeSalary::getCurrentSalary($validated['employee_id']);
+            $hourlyRate = $currentSalary->daily_rate / Payslip::WORKING_HOURS_PER_DAY;
+            $overtimeRate = $currentSalary->overtime_rate ?? ($hourlyRate * 1.25);
+            $payslip->overtime_pay = $overtimeHours * $overtimeRate;
+            $payslip->save();
+
             // Calculate and save deductions
             $payslip->calculateDeductions();
+            $payslip->save();
 
             // Calculate and save net pay
             $payslip->net_pay = $payslip->calculateNetPay();
@@ -139,7 +146,7 @@ class PayslipController extends Controller
 
     public function show($id)
     {
-        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         $payslip = Payslip::findOrFail($id);
         return view('pages.hr.payslips.show', compact('payslip'));
     }
@@ -157,7 +164,7 @@ class PayslipController extends Controller
 
     public function printPayslip($id)
     {
-        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         $payslip = Payslip::with('employee')->findOrFail($id);
         
         return view('pages.hr.payslips.print', compact('payslip'));
@@ -165,7 +172,7 @@ class PayslipController extends Controller
 
     public function generatePdf($id)
     {
-        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
+        // abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access') || Gate::allows('super_access'), 403);
         $payslip = Payslip::with('employee')->findOrFail($id);
         
         $branchLocation = $payslip->employee->branch->location ?? 'Manila, Philippines';

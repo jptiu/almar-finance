@@ -30,6 +30,9 @@
                                     <div class="font-semibold text-left">Daily Rate</div>
                                 </th>
                                 <th class="p-2 whitespace-nowrap">
+                                    <div class="font-semibold text-left">Overtime Rate</div>
+                                </th>
+                                <th class="p-2 whitespace-nowrap">
                                     <div class="font-semibold text-left">Effective Date</div>
                                 </th>
                                 <th class="p-2 whitespace-nowrap">
@@ -52,10 +55,13 @@
                                         </div>
                                     </td>
                                     <td class="p-2 whitespace-nowrap">
-                                        <div class="text-left">₱{{ number_format($currentSalary->basic_salary ?? 0, 2) }}</div>
+                                        <div class="text-left">₱{{ number_format($currentSalary?->basic_salary ?? 0, 2) }}</div>
                                     </td>
                                     <td class="p-2 whitespace-nowrap">
-                                        <div class="text-left">₱{{ number_format($currentSalary->daily_rate ?? 0, 2) }}</div>
+                                        <div class="text-left">₱{{ number_format($currentSalary?->daily_rate ?? 0, 2) }}</div>
+                                    </td>
+                                    <td class="p-2 whitespace-nowrap">
+                                        <div class="text-left">₱{{ number_format($currentSalary?->overtime_rate ?? ($currentSalary?->daily_rate ?? 0) / 8 * 1.25, 2) }}</div>
                                     </td>
                                     <td class="p-2 whitespace-nowrap">
                                         <div class="text-left">{{ $currentSalary ? $currentSalary->effective_date->format('M d, Y') : 'Not set' }}</div>

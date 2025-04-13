@@ -19,12 +19,14 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\DailyTimeRecordController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DenominationController;
 use App\Http\Controllers\EditRequestController;
 use App\Http\Controllers\EmployeeBenefitController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeOnboardingController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\HRController;
 use App\Http\Controllers\JobController;
@@ -52,6 +54,8 @@ use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\BranchInfoController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Broadcast as BroadcastFacade;
+use App\Http\Controllers\COERequestController;
+use App\Http\Controllers\LeaveCreditController;
 
 Route::get('/storage/{path}', function ($path) {
     if (!Storage::disk('public')->exists($path)) {
@@ -241,6 +245,22 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('evaluations', [HRController::class, 'employeeEvaluation'])->name('evaluations.index');
     Route::get('monthlyrep', [HRController::class, 'monthlyReport'])->name('monthlyrep.index');
 
+    // HR Routes - Grouped and organized
+    Route::middleware(['auth', 'can:hr_access'])->prefix('hr')->group(function () {
+        // Employee Onboarding
+        Route::prefix('onboarding')->group(function () {
+            Route::get('/', [EmployeeOnboardingController::class, 'index'])->name('hr.onboarding.index');
+            Route::post('/start', [EmployeeOnboardingController::class, 'selectEmployee'])->name('hr.onboarding.select');
+            Route::get('/create/{user}', [EmployeeOnboardingController::class, 'create'])->name('hr.onboarding.create');
+            Route::post('/store/{user}', [EmployeeOnboardingController::class, 'store'])->name('hr.onboarding.store');
+            Route::post('/add', [EmployeeOnboardingController::class, 'addEmployee'])->name('hr.onboarding.add');
+            Route::put('/extend/{onboarding}', [EmployeeOnboardingController::class, 'extendProbation'])->name('hr.onboarding.extend');
+            Route::put('/fail/{onboarding}', [EmployeeOnboardingController::class, 'failProbation'])->name('hr.onboarding.fail');
+            Route::put('/complete/{onboarding}', [EmployeeOnboardingController::class, 'completeProbation'])->name('hr.onboarding.complete');
+            Route::put('/regularize/{onboarding}', [EmployeeOnboardingController::class, 'regularize'])->name('hr.onboarding.regularize');
+        });
+    });
+
     // DTR Routes
     Route::get('dtr', [DailyTimeRecordController::class, 'index'])->name('dtr.index');
     Route::get('dtr/pdf', [DailyTimeRecordController::class, 'generatePdf'])->name('dtr.pdf');
@@ -420,6 +440,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('payroll/show/{id}', [PayrollController::class, 'show'])->name('payroll.show');
 
     // Superadmin
+    Route::middleware(['auth', 'can:super_access'])->group(function () {
+        // User Accounts
+        Route::get('/useracc', [UserController::class, 'index'])->name('useracc.index');
+        Route::get('/useracc/create', [UserController::class, 'create'])->name('useracc.create');
+        Route::post('/useracc', [UserController::class, 'store'])->name('useracc.store');
+        Route::put('/useracc/{user}/employment-status', [UserController::class, 'updateEmploymentStatus'])->name('useracc.update.status');
+        Route::put('/useracc/{user}/employment-type', [UserController::class, 'updateEmploymentType'])->name('useracc.update.type');
+    });
+
     Route::get('superadmin/monthlyreport', [SuperAdminController::class, 'monthlyReport'])->name('monthlyReport.index');
     Route::get('superadmin', [SuperAdminController::class, 'index'])->name('superadmin.index');
     Route::get('useracc', [SuperAdminController::class, 'userAccounts'])->name('useracc.index');
@@ -556,5 +585,38 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/', [SocialLoanRequestController::class, 'store'])->name('social_loan_requests.store');
         Route::post('{socialLoanRequest}/approve', [SocialLoanRequestController::class, 'approve'])->name('social_loan_requests.approve');
         Route::post('{socialLoanRequest}/reject', [SocialLoanRequestController::class, 'reject'])->name('social_loan_requests.reject');
+    });
+
+    Route::get('/coe-requests', [COERequestController::class, 'create'])->name('coe-requests.create');
+    Route::post('/coe-requests/generate', [COERequestController::class, 'generateCOE'])->name('coe-requests.generate');
+
+    // Leave Credits API Routes
+    Route::prefix('api')->group(function () {
+        Route::get('/leave-credits/{employeeId}/{leaveType}', [\App\Http\Controllers\Api\LeaveCreditController::class, 'getEmployeeCredits']);
+        Route::get('/leave-credits/{employeeId}', [\App\Http\Controllers\Api\LeaveCreditController::class, 'getAllEmployeeCredits']);
+    });
+
+    // Leave Credits Routes
+    Route::group(['prefix' => 'leave-credits', 'middleware' => ['auth']], function () {
+        Route::get('/', [LeaveCreditController::class, 'index'])->name('leave-credits.index');
+        Route::get('/create', [LeaveCreditController::class, 'create'])->name('leave-credits.create');
+        Route::post('/', [LeaveCreditController::class, 'store'])->name('leave-credits.store');
+        Route::get('/{id}/edit', [LeaveCreditController::class, 'edit'])->name('leave-credits.edit');
+        Route::put('/{id}', [LeaveCreditController::class, 'update'])->name('leave-credits.update');
+        Route::delete('/{id}', [LeaveCreditController::class, 'destroy'])->name('leave-credits.destroy');
+        Route::get('/report', [LeaveCreditController::class, 'companyReport'])->name('leave-credits.report');
+        Route::get('/company-report', [LeaveCreditController::class, 'companyReport'])->name('leave-credits.company-report');
+        Route::post('/update-sil', [LeaveCreditController::class, 'updateSIL'])->name('leave-credits.update-sil');
+        Route::get('/export', [LeaveCreditController::class, 'export'])->name('leave-credits.export');
+    });
+
+    // Departments Routes
+    Route::middleware(['auth', 'can:hr_access'])->group(function () {
+        Route::get('/hr/departments', [DepartmentController::class, 'index'])->name('departments.index');
+        Route::get('/hr/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
+        Route::post('/hr/departments', [DepartmentController::class, 'store'])->name('departments.store');
+        Route::get('/hr/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
+        Route::put('/hr/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
+        Route::delete('/hr/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
     });
 });

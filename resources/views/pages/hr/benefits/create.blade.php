@@ -45,14 +45,23 @@
                             <label class="block text-sm font-medium mb-1" for="benefit_type">Benefit Type</label>
                             <select id="benefit_type" name="benefit_type" class="form-select w-full" required>
                                 <option value="">Select Benefit Type</option>
-                                <option value="health_insurance">Health Insurance</option>
-                                <option value="life_insurance">Life Insurance</option>
-                                <option value="dental">Dental</option>
-                                <option value="vision">Vision</option>
-                                <option value="retirement">Retirement</option>
-                                <option value="bonus">Bonus</option>
-                                <option value="stock_options">Stock Options</option>
-                                <option value="other">Other</option>
+                                <!-- Identification Numbers -->
+                                <optgroup label="Identification Numbers">
+                                    <option value="sss">SSS Number</option>
+                                    <option value="philhealth">PhilHealth Number</option>
+                                    <option value="pagibig">Pag-IBIG Number</option>
+                                </optgroup>
+                                <!-- Other Benefits -->
+                                <optgroup label="Other Benefits">
+                                    <option value="health_insurance">Health Insurance</option>
+                                    <option value="life_insurance">Life Insurance</option>
+                                    <option value="dental">Dental</option>
+                                    <option value="vision">Vision</option>
+                                    <option value="retirement">Retirement</option>
+                                    <option value="bonus">Bonus</option>
+                                    <option value="stock_options">Stock Options</option>
+                                    <option value="other">Other</option>
+                                </optgroup>
                             </select>
                             @error('benefit_type')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -64,7 +73,20 @@
                                 <span class="inline-flex items-center px-3 text-sm text-slate-800 dark:text-slate-100 bg-slate-100 dark:bg-slate-700 border border-r-0 border-slate-200 dark:border-slate-700 rounded-l-md">
                                     ₱
                                 </span>
-                                <input id="amount" name="amount" type="number" step="0.01" class="form-input w-full" required>
+                                <input id="amount" name="amount" type="text" class="form-input flex-1" placeholder="0.00" 
+                                       data-validation="{{ json_encode([
+                                           'sss' => ['required', 'regex:^0[0-9]{9}$', 'numeric'],
+                                           'philhealth' => ['required', 'regex:^0[0-9]{11}$', 'numeric'],
+                                           'pagibig' => ['required', 'regex:^0[0-9]{11}$', 'numeric'],
+                                           'health_insurance' => ['nullable', 'numeric', 'min:0'],
+                                           'life_insurance' => ['nullable', 'numeric', 'min:0'],
+                                           'dental' => ['nullable', 'numeric', 'min:0'],
+                                           'vision' => ['nullable', 'numeric', 'min:0'],
+                                           'retirement' => ['nullable', 'numeric', 'min:0'],
+                                           'bonus' => ['nullable', 'numeric', 'min:0'],
+                                           'stock_options' => ['nullable', 'numeric', 'min:0'],
+                                           'other' => ['nullable', 'numeric', 'min:0']
+                                       ]) }}">
                             </div>
                             @error('amount')
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -138,3 +160,63 @@
         </form>
     </div>
 </x-app-layout>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const benefitType = document.getElementById('benefit_type');
+    const amountInput = document.getElementById('amount');
+    const amountValidation = JSON.parse(amountInput.dataset.validation);
+
+    function updateAmountInput() {
+        const selectedType = benefitType.value;
+        const validationRules = amountValidation[selectedType] || [];
+        
+        // Update input type based on benefit type
+        amountInput.type = selectedType.startsWith('sss') || 
+                         selectedType.startsWith('philhealth') || 
+                         selectedType.startsWith('pagibig') 
+                         ? 'text' 
+                         : 'number';
+        
+        // Update validation rules
+        let required = false;
+        let pattern = '';
+        let message = '';
+        
+        validationRules.forEach(rule => {
+            if (rule === 'required') required = true;
+            if (rule.startsWith('regex:')) {
+                pattern = rule.split(':')[1];
+                if (selectedType === 'sss') {
+                    message = 'Please enter a valid SSS number (10 digits, starts with 0)';
+                } else if (selectedType === 'philhealth') {
+                    message = 'Please enter a valid PhilHealth number (12 digits, starts with 0)';
+                } else if (selectedType === 'pagibig') {
+                    message = 'Please enter a valid Pag-IBIG number (12 digits, starts with 0)';
+                }
+            }
+        });
+        
+        amountInput.required = required;
+        amountInput.pattern = pattern;
+        amountInput.title = message;
+        
+        // Update placeholder
+        if (selectedType.startsWith('sss')) {
+            amountInput.placeholder = '0825424696';
+        } else if (selectedType.startsWith('philhealth')) {
+            amountInput.placeholder = '012345678901';
+        } else if (selectedType.startsWith('pagibig')) {
+            amountInput.placeholder = '012345678901';
+        } else {
+            amountInput.placeholder = '0.00';
+        }
+    }
+
+    // Initial update
+    updateAmountInput();
+    
+    // Update on change
+    benefitType.addEventListener('change', updateAmountInput);
+});
+</script>

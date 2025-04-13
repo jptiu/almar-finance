@@ -128,14 +128,14 @@ class AttendanceController extends Controller
 
     public function edit(Attendance $attendance)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
         
         return view('pages.hr.attendance.edit', compact('attendance'));
     }
 
     public function update(Request $request, Attendance $attendance)
     {
-        abort_unless(Gate::allows('hr_access'), 403);
+        abort_unless(Gate::allows('hr_access') || Gate::allows('admin_access'), 403);
 
         $validated = $request->validate([
             'clock_in' => 'nullable|date_format:H:i',

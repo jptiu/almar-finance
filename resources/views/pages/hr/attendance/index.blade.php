@@ -6,7 +6,7 @@
         
          <!-- Cards -->
          <div class="flex justify-between relative items-center mb-4">
-            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold lg:px-4">Biometrics Attendance</h1>
+            <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold lg:px-4"></h1>
             <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center">
             <div></div>

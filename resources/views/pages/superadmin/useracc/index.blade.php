@@ -41,7 +41,7 @@
                         aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">
                         <svg class="w-4 h-4 fill-current mr-2" viewBox="0 0 16 16">
                             <path
-                                d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2zM15 3H1a1 1 0 010-2h14a1 1 0 010 2z" />
+                                d="M9 15H7a1 1 0 010-2h2a1 1 0 010 2zM11 11H5a1 1 0 010-2h6a1 1 0 010 2zM13 7H3a1 1 0 010-2h10a1 1 0 010 2z" />
                         </svg>
                         <span class="not-sr-only">Role</span>
                     </button>
@@ -120,16 +120,20 @@
                                         </th>
                                         <th scope="col"
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
+                                            Status
+                                        </th>
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
+                                            Type
+                                        </th>
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
                                             Email
                                         </th>
                                         <th scope="col"
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
                                             Signature
                                         </th>
-                                        {{-- <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-black font-medium">
-                                            Action
-                                        </th> --}}
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-500 dark:bg-gray-900">
@@ -149,9 +153,40 @@
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{ $user->employment_status === 'active' ? 'green' : 'red' }}-100 text-{{ $user->employment_status === 'active' ? 'green' : 'red' }}-800">
+                                                    {{ ucfirst($user->employment_status) }}
+                                                </span>
+                                                <div class="ml-2">
+                                                    <form action="{{ route('useracc.update.status', $user) }}" method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <select name="employment_status" onchange="this.form.submit()" class="form-select">
+                                                            <option value="active" {{ $user->employment_status === 'active' ? 'selected' : '' }}>Active</option>
+                                                            <option value="inactive" {{ $user->employment_status === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                                        </select>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td
+                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{ $user->employment_type === 'regular' ? 'blue' : 'yellow' }}-100 text-{{ $user->employment_type === 'regular' ? 'blue' : 'yellow' }}-800">
+                                                    {{ ucfirst($user->employment_type) }}
+                                                </span>
+                                                <div class="ml-2">
+                                                    <form action="{{ route('useracc.update.type', $user) }}" method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <select name="employment_type" onchange="this.form.submit()" class="form-select">
+                                                            <option value="probation" {{ $user->employment_type === 'probation' ? 'selected' : '' }}>Probation</option>
+                                                            <option value="regular" {{ $user->employment_type === 'regular' ? 'selected' : '' }}>Regular</option>
+                                                        </select>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td
+                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {{ $user->email }}
                                             </td>
-
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 <a href="data:application/image;base64,{{ $user->signature }}"

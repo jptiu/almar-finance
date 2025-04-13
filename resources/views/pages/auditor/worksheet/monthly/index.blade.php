@@ -20,7 +20,7 @@
 
         <div class="relative">
             <div class="flex justify-between items-center mb-12 lg:px-4">
-                <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">Worksheet Report</h1>
+                <h1 class="text-2xl md:text-2xl text-fonts-200 dark:text-slate-100 font-bold mb-4">Worksheet Report</h1>
                 <div class="flex items-center gap-4">
                     <!-- Filter Section -->
                     <div class="flex items-center gap-4">
@@ -134,17 +134,12 @@
                                     <tr class="hover:bg-gray-100">
                                         <td class="py-2 px-4 border text-xs"></td>
                                        
-                                        <td class="py-2 px-4 border text-xs">
-                                             
-                                                   
+                                        <td class="py-2 px-4 border text-xs">           
                                                     @foreach($capital as $cap)
                                                        
                                                             {{ number_format($cap->sum('cash_beginning'), 2) }}
                                                        
-                                                    @endforeach
-                                                   
-                                           
-                                         
+                                                    @endforeach                                         
                                         </td>
                                         @foreach($columns as $column)
                                             <td class="py-2 px-4 border text-xs column-total">

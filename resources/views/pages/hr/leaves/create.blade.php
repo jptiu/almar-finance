@@ -19,25 +19,11 @@
                 <div class="p-3">
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12">
-                            @can('hr_access')
-                            <label class="block text-sm font-medium mb-1" for="employee_id">Employee</label>
-                            <select id="employee_id" name="employee_id" class="form-select w-full" required>
-                                <option value="">Select Employee</option>
-                                @foreach($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('employee_id')
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
-                            @endcan
-                            @cannot('hr_access')
                             <label class="block text-sm font-medium mb-1">Employee</label>
                             <div class="flex items-center bg-gray-50 dark:bg-slate-700 rounded-md p-2">
-                                <input type="hidden" name="employee_id" value="{{ auth()->id() }}">
+                                <input type="hidden" name="employee_id" value="{{ auth()->user()->id }}">
                                 <span class="text-gray-700 dark:text-gray-300">{{ auth()->user()->name }}</span>
                             </div>
-                            @endcannot
                         </div>
                     </div>
                 </div>
@@ -51,24 +37,28 @@
                 <div class="p-3">
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-6">
-                            <label class="block text-sm font-medium mb-1" for="leave_type">Leave Type</label>
+                            <label class="block text-sm font-medium mb-1" for="leave_type">Leave Type <span class="text-rose-500">*</span></label>
                             <select id="leave_type" name="leave_type" class="form-select w-full" required>
                                 <option value="">Select Leave Type</option>
                                 <option value="sick">Sick Leave</option>
                                 <option value="vacation">Vacation Leave</option>
-                                <option value="emergency">Emergency Leave</option>
                                 <option value="maternity">Maternity Leave</option>
                                 <option value="paternity">Paternity Leave</option>
+                                <option value="service_incentive">Service Incentive</option>
                             </select>
                             @error('leave_type')
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                                <div class="text-xs mt-1 text-rose-500">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div id="leaveCredits" class="mt-2 text-sm text-slate-400 col-span-6">
+                            Available Credits: <span id="availableCredits">Loading...</span>
+                        </div>
                         <div class="col-span-6">
-                            <label class="block text-sm font-medium mb-1" for="days_requested">Days Requested</label>
-                            <input id="days_requested" name="days_requested" type="number" min="1" class="form-input w-full" required>
+                            <label class="block text-sm font-medium mb-1" for="days_requested">Days Requested <span class="text-rose-500">*</span></label>
+                            <input id="days_requested" name="days_requested" class="form-input w-full" type="number" min="1" required />
+                            <div id="creditWarning" class="text-xs text-rose-500 hidden mt-1">Insufficient leave credits available</div>
                             @error('days_requested')
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                                <div class="text-xs mt-1 text-rose-500">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-span-6">
@@ -154,3 +144,49 @@
         </form>
     </div>
 </x-app-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const leaveTypeSelect = document.getElementById('leave_type');
+        const daysInput = document.getElementById('days_requested');
+        const availableCreditsSpan = document.getElementById('availableCredits');
+        const creditWarning = document.getElementById('creditWarning');
+        const employeeId = {{ auth()->user()->id }};
+
+        async function getAvailableCredits(leaveType) {
+            try {
+                const response = await fetch(`/api/leave-credits/${employeeId}/${leaveType}`);
+                const data = await response.json();
+                availableCreditsSpan.textContent = data.remaining_credits;
+                return data.remaining_credits;
+            } catch (error) {
+                console.error('Error fetching credits:', error);
+                availableCreditsSpan.textContent = 'Error loading credits';
+                return 0;
+            }
+        }
+
+        function validateCredits() {
+            const leaveType = leaveTypeSelect.value;
+            const days = parseInt(daysInput.value) || 0;
+            const availableCredits = parseInt(availableCreditsSpan.textContent) || 0;
+
+            if (leaveType && days > availableCredits) {
+                creditWarning.classList.remove('hidden');
+                daysInput.setCustomValidity('Insufficient leave credits available');
+            } else {
+                creditWarning.classList.add('hidden');
+                daysInput.setCustomValidity('');
+            }
+        }
+
+        leaveTypeSelect.addEventListener('change', async function() {
+            if (this.value) {
+                const credits = await getAvailableCredits(this.value);
+                validateCredits();
+            }
+        });
+
+        daysInput.addEventListener('input', validateCredits);
+    });
+</script>

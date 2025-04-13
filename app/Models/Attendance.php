@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasAttendanceStatus;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class Attendance extends Model
 {
@@ -92,15 +93,57 @@ class Attendance extends Model
             return;
         }
 
-        // Calculate late minutes using Manila timezone
-        $standardStart = Carbon::parse($this->attendance_date . ' ' . self::STANDARD_START_TIME)->setTimezone('Asia/Manila');
-        $actualStart = Carbon::parse($this->attendance_date . ' ' . $this->clock_in)->setTimezone('Asia/Manila');
-        $this->late_minutes = max(0, $actualStart->diffInMinutes($standardStart, false));
+        try {
+            // Create base date
+            $date = new \DateTime($this->attendance_date);
+            
+            // Calculate late minutes using Manila timezone
+            $standardStart = \DateTime::createFromFormat('Y-m-d H:i:s', 
+                $date->format('Y-m-d') . ' ' . self::STANDARD_START_TIME);
+            
+            if (!$standardStart) {
+                throw new \Exception('Invalid standard start time format');
+            }
+            
+            $standardStart->setTimezone(new \DateTimeZone('Asia/Manila'));
+            
+            $actualStart = \DateTime::createFromFormat('Y-m-d H:i:s', 
+                $date->format('Y-m-d') . ' ' . $this->clock_in);
+            
+            if (!$actualStart) {
+                throw new \Exception('Invalid clock in time format');
+            }
+            
+            $actualStart->setTimezone(new \DateTimeZone('Asia/Manila'));
+            
+            $this->late_minutes = max(0, $actualStart->diff($standardStart)->i);
 
-        // Calculate undertime minutes using Manila timezone
-        $standardEnd = Carbon::parse($this->attendance_date . ' ' . self::STANDARD_END_TIME)->setTimezone('Asia/Manila');
-        $actualEnd = Carbon::parse($this->attendance_date . ' ' . $this->clock_out)->setTimezone('Asia/Manila');
-        $this->undertime_minutes = max(0, $standardEnd->diffInMinutes($actualEnd, false));
+            // Calculate undertime minutes using Manila timezone
+            $standardEnd = \DateTime::createFromFormat('Y-m-d H:i:s', 
+                $date->format('Y-m-d') . ' ' . self::STANDARD_END_TIME);
+            
+            if (!$standardEnd) {
+                throw new \Exception('Invalid standard end time format');
+            }
+            
+            $standardEnd->setTimezone(new \DateTimeZone('Asia/Manila'));
+            
+            $actualEnd = \DateTime::createFromFormat('Y-m-d H:i:s', 
+                $date->format('Y-m-d') . ' ' . $this->clock_out);
+            
+            if (!$actualEnd) {
+                throw new \Exception('Invalid clock out time format');
+            }
+            
+            $actualEnd->setTimezone(new \DateTimeZone('Asia/Manila'));
+            
+            $this->undertime_minutes = max(0, $standardEnd->diff($actualEnd)->i);
+        } catch (\Exception $e) {
+            // Log the error and set default values
+            Log::error('Attendance time calculation error: ' . $e->getMessage());
+            $this->late_minutes = 0;
+            $this->undertime_minutes = 0;
+        }
     }
 
     public function getDeductionsAttribute()

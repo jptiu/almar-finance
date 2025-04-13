@@ -22,7 +22,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('admin_access') || Gate::allows('auditor_access'), 404);
+        abort_unless(Gate::allows('loan_access') || Gate::allows('branch_access') || Gate::allows('admin_access') || Gate::allows('auditor_access') || Gate::allows('super_access'), 404);
         try {
             $branch = auth()->user()->branch_id;
             $query = Customer::with('branches')->where('branch_id', $branch);

@@ -2,7 +2,7 @@
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
         <div class="p-6">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Payslip History</h1>
+            <h1 class="text-2xl md:text-2xl text-fonts-200 dark:text-slate-100 font-bold mb-4">Payslip History</h1>
 
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

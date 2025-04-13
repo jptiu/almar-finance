@@ -62,4 +62,26 @@ class UserController extends Controller
 
         return redirect()->route('useracc.index')->with('success', 'User created successfully!');
     }
+
+    public function updateEmploymentStatus(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'employment_status' => 'required|in:active,inactive',
+        ]);
+
+        $user->setStatus($validated['employment_status']);
+
+        return redirect()->back()->with('success', 'Employment status updated successfully');
+    }
+
+    public function updateEmploymentType(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'employment_type' => 'required|in:probation,regular',
+        ]);
+
+        $user->setType($validated['employment_type']);
+
+        return redirect()->back()->with('success', 'Employment type updated successfully');
+    }
 }
