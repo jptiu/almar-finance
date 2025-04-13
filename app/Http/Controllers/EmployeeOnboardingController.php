@@ -170,7 +170,7 @@ class EmployeeOnboardingController extends Controller
             'name' => 'required|string|max:255',
             'employee_id' => 'required|string|max:255|unique:users',
             'department_id' => 'required|exists:departments,id',
-            'role_id' => 'required|id',
+            'role_id' => 'required',
         ]);
 
         try {
