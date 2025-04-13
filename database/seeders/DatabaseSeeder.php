@@ -121,6 +121,9 @@ class DatabaseSeeder extends Seeder
             // BarangayTableSeeder::class,
             // CityTownTableSeeder::class,
             // CustomerTypeTableSeeder::class,
+            AttendanceSeeder::class,
+            PayslipSeeder::class,
+            DepartmentSeeder::class
         ]);
     }
 }

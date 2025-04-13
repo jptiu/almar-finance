@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Namu\WireChat\Traits\Chatable;
 use App\Models\EmployeeSalary;
 use App\Models\EmployeeOnboarding;
+use App\Models\EmployeeBenefit;
 
 class User extends Authenticatable
 {
@@ -190,6 +191,11 @@ class User extends Authenticatable
     public function leaveCredits()
     {
         return $this->hasMany(LeaveCredit::class, 'employee_id');
+    }
+
+    public function benefits()
+    {
+        return $this->hasMany(EmployeeBenefit::class, 'id', 'employee_id');
     }
 
     public function onboarding()

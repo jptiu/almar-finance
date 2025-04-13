@@ -56,6 +56,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Broadcast as BroadcastFacade;
 use App\Http\Controllers\COERequestController;
 use App\Http\Controllers\LeaveCreditController;
+use App\Http\Controllers\HR\ContributionReportController;
 
 Route::get('/storage/{path}', function ($path) {
     if (!Storage::disk('public')->exists($path)) {
@@ -619,4 +620,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/hr/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
         Route::delete('/hr/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
     });
+
+    // Contributions Routes
+    Route::get('/hr/contributions', [ContributionReportController::class, 'index'])->name('hr.contributions.index');
+    Route::get('/hr/contributions/create', [ContributionReportController::class, 'create'])->name('hr.contributions.create');
+    Route::post('/hr/contributions', [ContributionReportController::class, 'store'])->name('hr.contributions.store');
+    Route::get('/hr/contributions/{id}/edit', [ContributionReportController::class, 'edit'])->name('hr.contributions.edit');
+    Route::put('/hr/contributions/{id}', [ContributionReportController::class, 'update'])->name('hr.contributions.update');
+    Route::delete('/hr/contributions/{id}', [ContributionReportController::class, 'destroy'])->name('hr.contributions.destroy');
+    Route::post('/hr/contributions/generate', [ContributionReportController::class, 'generate'])->name('hr.contributions.generate');
+    Route::get('/hr/contributions/{id}/print', [ContributionReportController::class, 'print'])->name('hr.contributions.print');
 });
