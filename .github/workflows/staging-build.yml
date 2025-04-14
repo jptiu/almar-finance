@@ -32,9 +32,9 @@ jobs:
           server-dir: /public_html/
           timeout: 2147483647
           exclude: |
-            /.git
-            /.git/
-            /vendor/
-            /node_modules/
+            **/.git**
+            **/.git/**
+            **/vendor/**
+            **/node_modules/**
 
   
