@@ -107,16 +107,3 @@
         </section>
     </div>
 </x-app-layout>
-<script>
-    const showModalButton = document.getElementById('show-modal');
-    const hideModalButton = document.getElementById('hide-modal');
-    const modal = document.getElementById('modal');
-
-    showModalButton.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-    });
-
-    hideModalButton.addEventListener('click', () => {
-        modal.classList.add('hidden');
-    });
-</script>
