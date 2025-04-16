@@ -61,7 +61,7 @@
                     <p><span class="font-bold">Full Name:</span> {{$customer->first_name??""}} {{$customer->middle_name??""}} {{$customer->last_name??""}}</p>
                     <p><span class="font-bold">Personal Contact Number:</span> {{$customer->cell_number??""}}</p>
                     <p><span class="font-bold">Birthdate:</span> {{$customer->birth_date??""}}</p>
-                    <p><span class="font-bold">Birthdate:</span> {{$customer->birth_place??""}}</p>
+                    <p><span class="font-bold">Birth Place:</span> {{$customer->birth_place??""}}</p>
                     <p><span class="font-bold">Address:</span> {{$customer->house??""}}, {{$customer->street??""}},
                     {{$customer->barangay??""}}, {{$customer->city??""}}</p>
                     <p><span class="font-bold">Civil Status:</span> {{$customer->civil_status??""}}</p>
