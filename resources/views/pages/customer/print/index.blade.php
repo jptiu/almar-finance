@@ -81,7 +81,7 @@
             <div id="spousal-data" class="p-4 bg-gray-50 rounded-md ">
                 <div class="grid grid-cols-2 gap-4">
                     <p><span class="font-bold">Complete Name of Spouse:</span> {{$customer->spouse_name??""}}</p>
-                    <p><span class="font-bold">Personal Contact Number:</span> {{$customer->cell_number??""}}</p>
+                    <p><span class="font-bold">Personal Contact Number:</span> {{$customer->spouse_number??""}}</p>
                     <p><span class="font-bold">Birthdate:</span> {{$customer->spouse_bdate??""}}</p>
                     <p><span class="font-bold">Age:</span> {{$customer->spouse_age??""}}</p>
                     <p><span class="font-bold">Occupation:</span> {{$customer->occupation??""}}</p>
