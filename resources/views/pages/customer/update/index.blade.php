@@ -95,7 +95,7 @@
                                 <label for="first_name" class="block text-sm font-medium text-gray-700">First
                                     Name</label>
                                 <input value="{{ $customer->first_name }}" type="text" name="first_name"
-                                    id="first_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
                                     required.</span>
                             </div>
@@ -105,7 +105,7 @@
                                 <label for="middle_name" class="block text-sm font-medium text-gray-700">Middle
                                     Name</label>
                                 <input value="{{ $customer->middle_name }}" type="text" name="middle_name"
-                                    id="middle_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="middle_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
                                     required.</span>
                             </div>
@@ -114,7 +114,7 @@
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">Last
                                     Name</label>
                                 <input value="{{ $customer->last_name }}" type="text" name="last_name" id="last_name"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_applicant_name">This field is
                                     required.</span>
                             </div>
@@ -123,7 +123,7 @@
                                 <label for="cell_number" class="block text-sm font-medium text-gray-700">Personal
                                     Contact Number</label>
                                 <input value="{{ $customer->cell_number }}" type="text" name="cell_number"
-                                    id="cell_number" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="cell_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_cell_number">This field is
                                     required.</span>
                             </div>
@@ -132,7 +132,7 @@
                                 <label for="birth_date"
                                     class="block text-sm font-medium text-gray-700">Birthdate</label>
                                 <input value="{{ $customer->birth_date }}" type="date" name="birth_date"
-                                    id="birth_date" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="birth_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_birthdate">This field is
                                     required.</span>
                             </div>
@@ -141,7 +141,7 @@
                                 <label for="birth_place" class="block text-sm font-medium text-gray-700">Birth
                                     Place</label>
                                 <input value="{{ $customer->birth_place }}" type="text" name="birth_place"
-                                    id="birth_place" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="birth_place" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_birth_place">This field is
                                     required.</span>
                             </div>
@@ -150,7 +150,7 @@
                                 <label for="house" class="block text-sm font-medium text-gray-700">House
                                     Address</label>
                                 <input value="{{ $customer->house }}" type="text" name="" id="house"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_house">This field is
                                     required.</span>
                             </div>
@@ -159,7 +159,7 @@
                                 <label for="street" class="block text-sm font-medium text-gray-700">Street
                                     Address</label>
                                 <input value="{{ $customer->street }}" type="text" name="" id="street"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_street">This field is
                                     required.</span>
                             </div>
@@ -176,7 +176,7 @@
                                     @endforeach
                                 </select>
                                 {{-- <input value="{{ $customer->barangay_name }}" type="text" name="barangay"
-                                    id="barangay" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="barangay" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_barangay">This field is
                                     required.</span> --}}
                             </div>
@@ -193,7 +193,7 @@
                                     @endforeach
                                 </select>
                                 {{-- <input value="{{ $customer->city_town }}" type="text" name="city"
-                                    id="city" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_city">This field is
                                     required.</span> --}}
                             </div>
@@ -202,7 +202,7 @@
                                 <label for="civil_status" class="block text-sm font-medium text-gray-700">Civil
                                     Status</label>
                                 <input value="{{ $customer->civil_status }}" type="text" name="civil_status"
-                                    id="civil_status" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="civil_status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_civil_status">This field is
                                     required.</span>
                             </div>
@@ -210,7 +210,7 @@
                             <div class="md:col-span-1">
                                 <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
                                 <input value="{{ $customer->age }}" type="number" name="age" id="age"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_age">This field is
                                     required.</span>
                             </div>
@@ -218,7 +218,7 @@
                             <div class="md:col-span-1">
                                 <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
                                 <input value="{{ $customer->gender }}" type="text" name="gender" id="gender"
-                                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_gender">This field is
                                     required.</span>
                             </div>
@@ -227,7 +227,7 @@
                                 <label for="citizenship"
                                     class="block text-sm font-medium text-gray-700">Citizenship</label>
                                 <input value="{{ $customer->citizenship }}" type="text" name="citizenship"
-                                    id="citizenship" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="citizenship" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_citizenship">This field is
                                     required.</span>
                             </div>
@@ -236,7 +236,7 @@
                                 <label for="email" class="block text-sm font-medium text-gray-700">Facebook
                                     Name</label>
                                 <input value="{{ $customer->email }}" type="text" name="email"
-                                    id="email" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_email">This field is
                                     required.</span>
                             </div>
@@ -245,7 +245,7 @@
                                 <label for="facebook_name" class="block text-sm font-medium text-gray-700">Facebook
                                     Name</label>
                                 <input value="{{ $customer->facebook_name }}" type="text" name="facebook_name"
-                                    id="facebook_name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                    id="facebook_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5">
                                 <span class="text-red-500 text-xs hidden" id="error_facebook_name">This field is
                                     required.</span>
                             </div>
