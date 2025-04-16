@@ -129,7 +129,7 @@
             </button>
             <div id="bank-info" class="p-4 bg-gray-50 rounded-md ">
                 <div class="grid grid-cols-2 gap-4">
-                    <p><span class="font-bold">Bank/Branch:</span> {{$customer->fathers_name??""}}</p>
+                    <p><span class="font-bold">Father's Name:</span> {{$customer->fathers_name??""}}</p>
                     <p><span class="font-bold">Contact No.:</span> {{$customer->fathers_num??""}}</p>
                     <p><span class="font-bold">Mother's Name:</span> {{$customer->mothers_name??""}}</p>
                     <p><span class="font-bold">Contact No.:</span> {{$customer->mothers_num??""}}</p>
