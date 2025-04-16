@@ -156,7 +156,7 @@
                         @foreach ($lists as $list)
                             <tr class="border-b hover:bg-gray-50">
                                 <td class="p-4">{{ $list->id }}</td>
-                                <td class="p-4">{{ $list->customer->first_name }} {{ $list->customer->last_name }}</td>
+                                <td class="p-4">{{ $list->customer->first_name??"" }} {{ $list->customer->last_name??"" }}</td>
                                 <td class="p-4 whitespace-wrap">
                                     {{ $list->customer->house }} {{ $list->customer->street }}
                                     {{ $list->customer->bry->barangay_name }}
