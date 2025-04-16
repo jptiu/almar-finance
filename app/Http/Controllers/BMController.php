@@ -143,7 +143,7 @@ class BMController extends Controller
     public function pendingLoandApproval(Request $request)
     {
         $branch = auth()->user()->branch_id;
-        $lists = Loan::where('principal_amount', '<', '50000')
+        $lists = Loan::with('customer')->where('principal_amount', '<', '50000')
             ->where('branch_id', $branch)
             ->where('status', null)
             ->paginate(10);
