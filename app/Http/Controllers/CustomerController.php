@@ -114,7 +114,7 @@ class CustomerController extends Controller
         $customer->add_tel = $request->add_tel;
         $customer->add_telc = $request->add_telc;
         $customer->comp_name = $request->comp_name;
-        // $customer->date_hired = $request->date_hired;
+        $customer->date_hired = $request->date_hired;
         $customer->day_off = $request->day_off;
         $customer->monthly_salary = $request->monthly_salary;
         $customer->salary_sched = $request->salary_sched;

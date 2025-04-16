@@ -101,7 +101,7 @@
                     <p><span class="font-bold">Address / Tel. no:</span> {{$customer->add_tel??""}}</p>
                     <p><span class="font-bold">Company Name:</span> {{$customer->comp_name??""}}</p>
                     <p><span class="font-bold">Address / Tel. no:</span> {{$customer->add_telc??""}}</p>
-                    <p><span class="font-bold">Date of Hire:</span> {{$customer->date_hired??""}}</p>
+                    <p><span class="font-bold">Date of Hired:</span> {{$customer->date_hired??""}}</p>
                     <p><span class="font-bold">Day Off:</span> {{$customer->day_off??""}}</p>
                     <p><span class="font-bold">Position:</span> {{$customer->job_position??""}}</p>
                     <p><span class="font-bold">Monthly Salary:</span> {{$customer->monthly_salary??""}}</p>
