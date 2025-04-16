@@ -82,8 +82,8 @@
                 <div class="grid grid-cols-2 gap-4">
                     <p><span class="font-bold">Complete Name of Spouse:</span> {{$customer->spouse_name??""}}</p>
                     <p><span class="font-bold">Personal Contact Number:</span> {{$customer->cell_number??""}}</p>
-                    <p><span class="font-bold">Birthdate:</span> {{$customer->birth_date??""}}</p>
-                    <p><span class="font-bold">Age:</span> {{$customer->cell_age??""}}</p>
+                    <p><span class="font-bold">Birthdate:</span> {{$customer->spouse_bdate??""}}</p>
+                    <p><span class="font-bold">Age:</span> {{$customer->spouse_age??""}}</p>
                     <p><span class="font-bold">Occupation:</span> {{$customer->occupation??""}}</p>
                     <p><span class="font-bold">Company Name/ Address:</span> {{$customer->c_nameadd??""}}</p>
                     <p><span class="font-bold">Facebook:</span> {{$customer->spouse_fb??""}}</p>
