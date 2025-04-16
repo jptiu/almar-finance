@@ -233,6 +233,15 @@
                             </div>
 
                             <div class="md:col-span-2">
+                                <label for="email" class="block text-sm font-medium text-gray-700">Facebook
+                                    Name</label>
+                                <input value="{{ $customer->email }}" type="text" name="email"
+                                    id="email" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm">
+                                <span class="text-red-500 text-xs hidden" id="error_email">This field is
+                                    required.</span>
+                            </div>
+
+                            <div class="md:col-span-2">
                                 <label for="facebook_name" class="block text-sm font-medium text-gray-700">Facebook
                                     Name</label>
                                 <input value="{{ $customer->facebook_name }}" type="text" name="facebook_name"
@@ -438,10 +447,10 @@
                             </div>
 
                             <div class="md:col-span-2">
-                                <label for="cell_number">Contact No.</label>
+                                <label for="fathers_num">Contact No.</label>
                                 <div>
-                                    <input value="{{ $customer->cell_number }}" type="number" name="cell_number"
-                                        id="cell_number"
+                                    <input value="{{ $customer->fathers_num }}" type="number" name="fathers_num"
+                                        id="fathers_num"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
                                 </div>
                             </div>
@@ -456,10 +465,10 @@
                             </div>
 
                             <div class="md:col-span-2">
-                                <label for="cell_number">Contact No.</label>
+                                <label for="mothers_num">Contact No.</label>
                                 <div>
-                                    <input value="{{ $customer->cell_number }}" type="number" name="cell_number"
-                                        id="cell_number"
+                                    <input value="{{ $customer->mothers_num }}" type="number" name="mothers_num"
+                                        id="mothers_num"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-2 p-2.5" />
                                 </div>
                             </div>
@@ -575,6 +584,11 @@
                                 <li class="flex flex-wrap mb-2">
                                     <div class="text-gray-500 w-72">Citizenship:</div>
                                     <div class="text-gray-900">{{ $customer->citizenship }}</div>
+                                </li>
+
+                                <li class="flex flex-wrap mb-2">
+                                    <div class="text-gray-500 w-72">Email:</div>
+                                    <div class="text-gray-900">{{ $customer->email }}</div>
                                 </li>
 
                                 <li class="flex flex-wrap mb-2">
