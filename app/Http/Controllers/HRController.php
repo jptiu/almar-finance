@@ -130,16 +130,26 @@ class HRController extends Controller
 
     public function approvedLoans()
     {
+        $branch = auth()->user()->branch_id;
+        // Fetch loans with principal amount greater than 50,000 and status not null or 'CNCLD'
+        // and paginate the results with 10 items per page
         $loans = Loan::where('principal_amount', '>', '50000')
-            ->where('status', '=', 'FULPD')->paginate(10);
+        ->where('branch_id', $branch)
+        ->where('status', '!=', null)
+        ->where('status', '!=', 'CNCLD')->paginate(10);
 
         return view('pages.hr.loanapprovals.approved.index', compact('loans'));
     }
 
     public function approvedLoansAPI()
     {
+        $branch = auth()->user()->branch_id;
+        // Fetch loans with principal amount greater than 50,000 and status not null or 'CNCLD'
+        // and paginate the results with 10 items per page
         $loans = Loan::with('customer')->where('principal_amount', '>', '50000')
-            ->where('status', '!=', 'CNCLD')->paginate(10);
+        ->where('branch_id', $branch)
+        ->where('status', '!=', null)
+        ->where('status', '!=', 'CNCLD')->paginate(10);
 
         return response()->json($loans, 200);
     }
